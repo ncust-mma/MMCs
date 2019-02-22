@@ -1,0 +1,2 @@
+FLASK_APP=MMCS
+FLASK_ENV=development
