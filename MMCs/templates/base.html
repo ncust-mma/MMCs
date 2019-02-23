@@ -1,0 +1,119 @@
+{% from 'bootstrap/nav.html' import render_nav_item %}
+{% from 'macros.html' import link_field %}
+
+<!DOCTYPE html>
+<html lang="zh">
+
+    <head>
+        {% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}{% endblock title %} - MMCs</title>
+        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+        {% block styles %}
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='open-iconic/font/css/open-iconic-bootstrap.css') }}">
+        {% endblock %}
+
+        {% endblock head %}
+    </head>
+
+    <body>
+        {% block navbar %}
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url_for('index') }}">
+                    <img src="{{ url_for('static', filename='favicon.ico') }}" alt="MMCs">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                    aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <div class="navbar-nav mr-auto">
+                        {{ render_nav_item('index', 'Home') }}
+                        {{ render_nav_item('about', 'about') }}
+                        {{ render_nav_item('FAQ', 'FAQ') }}
+                    </div>
+
+                    <div class="navbar-nav ml-auto">
+                        {% if current_user.is_authenticated %}
+                        <div class="dropdown nav-item">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                                aria-expanded="false">
+                                <span class="oi oi-person"></span>
+                                <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <h6 class="dropdown-header">Logged in as {{ current_user.realname }}</h6>
+
+                                <a class="dropdown-item" href="{{ url_for('user.edit_profile') }}">
+                                    <span class="oi oi-cog"></span> Settings
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ url_for('auth.logout') }}">
+                                    <span class="oi oi-power-standby"></span> Logout
+                                </a>
+                            </div>
+                        </div>
+                        {% else %}
+                        <a class="btn btn-outline-primary" href="{{ url_for('login') }}">Welcome to MMCs</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+        {% endblock nav %}
+
+
+        <main>
+            <div class="container">
+                {% for message in get_flashed_messages(with_categories=True) %}
+                <div class="alert alert-{{ message[0] }}">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message[1] }}
+                </div>
+                {% endfor %}
+
+                {% block content %}
+                {% endblock content %}
+
+                {% block footer %}
+                <footer>
+                    <p class="float-left">
+                        <small> &copy; 2019
+                            {{ link_field("Zero", "https://github.com/Zeroto521", "Written by Zeroto521") }} -
+                            {{ link_field("华北理工大学数学建模协会", "http://sxjm.ncst.edu.cn", "Organization") }} -
+                            {{ link_field("MMCs", "https://github.com/Zeroto521/MMCs", "Fork me on GitHub") }}
+                        </small>
+                    </p>
+                    <p class="float-right">
+                        <small>华北理工大学数学建模校赛管理系统</small>
+                    </p>
+                </footer>
+                {% endblock %}
+            </div>
+        </main>
+
+        <div id="toast"></div>
+
+        {% block scripts %}
+        <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+        <script type="text/javascript">
+            var csrf_token = "{{ csrf_token() }}";
+            {% if current_user.is_authenticated %}
+                var is_authenticated = true;
+            {% else %}
+                var is_authenticated = false;
+            {% endif %}
+        </script>
+        {% endblock %}
+    </body>
+
+</html>
