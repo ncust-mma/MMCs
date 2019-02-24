@@ -1,30 +1,18 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Index{% endblock title %}
 
 {% block content %}
-
-{% if current_user.is_authenticated %}
-    {% if current_user.is_root %}
-        {% include 'backstage/root.html' %}
-    {% else current_user.is_admin %}
-        {% include 'backstage/root.html' %}
-    {% else %}
-        {% include 'backstage/teacher.html' %}
-    {% endif %}
-
-{% else %}
-    <div class="jumbotron">
-        <div class="row">
-            <div class="col-md-8">
-                <img src="{{ url_for('static', filename='index.jpg') }}" class="rounded img-fluid">
-            </div>
-            <div class="col-md-4 align-self-center">
-                <h1>MMCs</h1>
-                <p>华北理工大学数学建模校赛管理系统</p>
-                <p><a class="btn btn-primary btn-lg" href="{{ url_for('login') }}">Sign in Now</a></p>
-            </div>
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-8">
+            <img src="{{ url_for('static', filename='images/index.jpg') }}" class="rounded img-fluid">
+        </div>
+        <div class="col-md-4 align-self-center">
+            <h1>MMCs</h1>
+            <p>华北理工大学数学建模校赛管理系统</p>
+            <p><a class="btn btn-primary btn-lg" href="{{ url_for('auth.login') }}">Sign in Now</a></p>
         </div>
     </div>
-{% endif %}
-{% endblock %}
+</div>
+{% endblock content %}

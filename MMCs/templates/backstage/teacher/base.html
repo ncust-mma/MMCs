@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% from 'bootstrap/form.html' import render_form %}
+{% from 'macros.html' import render_nav_item %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Teacher</h1>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="nav nav-pills flex-column" role="tablist" aria-orientation="vertical">
+            {{ render_nav_item('teacher.index', 'Overview') }}
+            {% if is_start(get_current_year()) %}
+                {{ render_nav_item('teacher.score_management', 'Score Management') }}
+            {% else %}
+                {{ render_nav_item('teacher.score_management', 'Score Management', disable=True) }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-9">
+        {% block setting_content %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

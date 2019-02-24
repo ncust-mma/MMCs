@@ -1,0 +1,21 @@
+{% extends 'backstage/root/base.html' %}
+{% from 'bootstrap/form.html' import render_form %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
+
+{% block title %}Task{% endblock %}
+
+{% block styles %}
+{{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dropzone.min.css') }}" type="text/css">
+    {{ dropzone.style('margin: 20px 0; border: 2px dashed #0087F7; min-height: 400px;') }}
+{% endblock styles %}
+
+{% block setting_content %}
+    {% include "backstage/_task_management.html" %}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+    <script src="{{ url_for('static', filename='js/dropzone.min.js') }}"></script>
+    {{ dropzone.config() }}
+{% endblock scripts %}

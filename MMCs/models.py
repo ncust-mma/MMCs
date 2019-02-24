@@ -2,9 +2,11 @@
 
 from flask import current_app
 from flask_login import UserMixin
+from werkzeug import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from MMCs.extensions import db, whooshee
+from MMCs.extensions import db
+from MMCs.utils import random_filename
 
 
 class User(db.Model, UserMixin):
@@ -16,8 +18,8 @@ class User(db.Model, UserMixin):
     remark = db.Column(db.Text)
     password_hash = db.Column(db.String(128), nullable=False)
 
-    solutions = db.relationship(
-        'Solutions', cascade='save-update, merge, delete')
+    # solutions = db.relationship(
+    #     'Solution', cascade='save-update, merge, delete')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -37,6 +39,10 @@ class User(db.Model, UserMixin):
     def is_root(self):
         return self.permission == 'Root'
 
+    def can(self, permission_name):
+        user = User.query.filter_by(permission=permission_name).first()
+        return user is not None and user.permission == permission_name
+
 
 class Solution(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -44,8 +50,15 @@ class Solution(db.Model):
     uuid = db.Column(db.String, index=True, nullable=False)
     year = db.Column(db.Integer, nullable=False)
 
-    teachers = db.relationship(
-        'Teachers', cascade='save-update, merge, delete')
+    # teachers = db.relationship(
+    #     'Teacher', cascade='save-update, merge, delete')
+
+    def set_uuid(self, name):
+        self.uuid = random_filename(name)
+
+    def filter_name(self, name):
+        self.name = secure_filename(name)
+        return self.name
 
 
 class Distribution(db.Model):
@@ -65,4 +78,9 @@ class Distribution(db.Model):
 class StartConfirm(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     year = db.Column(db.Integer, unique=True, index=True, nullable=False)
-    is_start = db.Column(db.Boolean, default=False)
+    start_flag = db.Column(db.Boolean, default=False)
+
+    @classmethod
+    def is_start(self, current_year):
+        flag = StartConfirm.query.filter_by(year=current_year).first()
+        return flag.start_flag if flag is not None else False

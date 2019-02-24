@@ -1,4 +1,4 @@
-{% from 'bootstrap/nav.html' import render_nav_item %}
+{% from 'macros.html' import render_nav_item %}
 {% from 'macros.html' import link_field %}
 
 <!DOCTYPE html>
@@ -8,13 +8,15 @@
         {% block head %}
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>{% block title %}{% endblock title %} - MMCs</title>
+        <title>{% block title %}Index{% endblock title %} - MMCs</title>
+
         <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
         {% block styles %}
         <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{ url_for('static', filename='open-iconic/font/css/open-iconic-bootstrap.css') }}">
-        {% endblock %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        {% endblock styles %}
 
         {% endblock head %}
     </head>
@@ -23,8 +25,8 @@
         {% block navbar %}
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
-                <a class="navbar-brand" href="{{ url_for('index') }}">
-                    <img src="{{ url_for('static', filename='favicon.ico') }}" alt="MMCs">
+                <a class="navbar-brand" href="{{ url_for('front.index') }}">
+                    <img src="{{ url_for('static', filename='navbar-brand.ico') }}" alt="MMCs" class="img-responsive center-block">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
                     aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,41 +34,40 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarColor01">
-                    <div class="navbar-nav mr-auto">
-                        {{ render_nav_item('index', 'Home') }}
-                        {{ render_nav_item('about', 'about') }}
-                        {{ render_nav_item('FAQ', 'FAQ') }}
+                        {{ render_nav_item('front.index', 'Home', "oi oi-home") }}
+                        {{ render_nav_item('front.about', 'About', "oi oi-bookmark") }}
+                        {{ render_nav_item('front.faq', 'Q&A', "oi oi-question-mark") }}
                     </div>
 
                     <div class="navbar-nav ml-auto">
                         {% if current_user.is_authenticated %}
-                        <div class="dropdown nav-item">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                                aria-expanded="false">
-                                <span class="oi oi-person"></span>
-                                <span class="caret"></span>
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <h6 class="dropdown-header">Logged in as {{ current_user.realname }}</h6>
-
-                                <a class="dropdown-item" href="{{ url_for('user.edit_profile') }}">
-                                    <span class="oi oi-cog"></span> Settings
+                            <div class="dropdown nav-item">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                                    aria-expanded="false">
+                                    <span class="oi oi-person"></span>
+                                    <span class="caret"></span>
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ url_for('auth.logout') }}">
-                                    <span class="oi oi-power-standby"></span> Logout
-                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <h6 class="dropdown-header">Logged in as {{ current_user.realname }}</h6>
+
+                                    <a class="dropdown-item" href="{{ url_for('backstage.edit_profile') }}">
+                                        <span class="oi oi-cog"></span> Settings
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ url_for('auth.logout') }}">
+                                        <span class="oi oi-power-standby"></span> Logout
+                                    </a>
+                                </div>
                             </div>
-                        </div>
                         {% else %}
-                        <a class="btn btn-outline-primary" href="{{ url_for('login') }}">Welcome to MMCs</a>
+                            <a class="btn btn-outline-primary" href="{{ url_for('auth.login') }}">Welcome to MMCs</a>
                         {% endif %}
                     </div>
                 </div>
             </div>
         </nav>
-        {% endblock nav %}
+        {% endblock navbar %}
 
 
         <main>
@@ -84,9 +85,9 @@
                 {% block footer %}
                 <footer>
                     <p class="float-left">
-                        <small> &copy; 2019
-                            {{ link_field("Zero", "https://github.com/Zeroto521", "Written by Zeroto521") }} -
-                            {{ link_field("华北理工大学数学建模协会", "http://sxjm.ncst.edu.cn", "Organization") }} -
+                        <small> &copy; {{ get_current_year() }}
+                            {{ link_field("Zero", "https://github.com/Zeroto521", "Written by Zeroto521") }} /
+                            {{ link_field("华北理工大学数学建模协会", "http://sxjm.ncst.edu.cn", "Organization") }} /
                             {{ link_field("MMCs", "https://github.com/Zeroto521/MMCs", "Fork me on GitHub") }}
                         </small>
                     </p>
@@ -94,7 +95,7 @@
                         <small>华北理工大学数学建模校赛管理系统</small>
                     </p>
                 </footer>
-                {% endblock %}
+                {% endblock footer %}
             </div>
         </main>
 
@@ -113,7 +114,7 @@
                 var is_authenticated = false;
             {% endif %}
         </script>
-        {% endblock %}
+        {% endblock scripts %}
     </body>
 
 </html>

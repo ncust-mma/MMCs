@@ -1,0 +1,13 @@
+{% extends 'backstage/root/base.html' %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %}System{% endblock %}
+
+{% block setting_content %}
+<div class="card w-100 bg-light">
+    <h3 class="card-header">System Settings</h3>
+    <div class="card-body">
+        {{ generate_text() }}
+    </div>
+</div>
+{% endblock %}

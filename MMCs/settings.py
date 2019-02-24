@@ -14,6 +14,11 @@ else:
     prefix = 'sqlite:////'
 
 
+class Operations:
+    CONFIRM = 'confirm'
+    RESET_PASSWORD = 'reset-password'
+
+
 class BaseConfig(object):
     SECRET_KEY = os.getenv('SECRET_KEY', 'dev key')
 
@@ -27,9 +32,17 @@ class BaseConfig(object):
 
     TEACHER_POINT_TIMES = 1
 
+    BOOTSTRAP_SERVE_LOCAL = True
+
+    # DROPZONE_ALLOWED_FILE_TYPE = 'pdf'
+    DROPZONE_MAX_FILE_SIZE = 3
+    DROPZONE_MAX_FILES = 30
+    DROPZONE_ENABLE_CSRF = True
+
 
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = prefix + os.path.join(basedir, 'data-dev.db')
+    REDIS_URL = "redis://localhost"
 
 
 class TestingConfig(BaseConfig):

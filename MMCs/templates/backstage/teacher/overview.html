@@ -1,0 +1,36 @@
+{% extends 'backstage/teacher/base.html' %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %}Overview{% endblock %}
+
+{% block setting_content %}
+<div class="card w-100 bg-light">
+    <h3 class="card-header">Overview</h3>
+    {% if is_start(get_current_year()) %}
+        {% if progress != False %}
+            <div class="card-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{progress}}">
+                        已评阅: {{ progress }}
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="float-right">
+                    <a class="btn btn-primary" href="{{ url_for('teacher.score_management') }}">Contiune</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="tip">
+                <span class="oi oi-ban"></span>
+                No Tasks.
+            </div>
+        {% endif %}
+        
+    {% else %}
+        {% include "backstage/_tip.html" %}
+    {% endif %}
+</div>
+{% endblock %}
+
+

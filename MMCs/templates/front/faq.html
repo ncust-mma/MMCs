@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}404 Error{% endblock %}
+{% block title %}Q&A{% endblock %}
 
 {% block content %}
 <div class="row justify-content-md-center">
     <div class="card w-50 bg-light">
-        <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/error.jpg') }}">
+        <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/faq.jpg') }}">
         <div class="card-body">
-            <h5 class="card-title">404 Error</h5>
-            <p class="card-text">Page Not Found</p>
+            <h2 class="card-title">Q&A</h2>
+            <p class="card-text">{{ generate_text() }}</p>
         </div>
         <div class="card-footer">
             <div class="float-right">

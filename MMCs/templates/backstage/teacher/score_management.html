@@ -1,0 +1,56 @@
+{% extends 'backstage/teacher/base.html' %}
+{% from 'bootstrap/form.html' import render_form %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
+
+{% block title %}Score{% endblock %}
+
+{% block setting_content %}
+<div class="card w-100 bg-light">
+    <h3 class="card-header">Score Management</h3>
+    {% if is_start(get_current_year()) %}
+        <div class="card-body">
+            {% if distributions %}
+            <div class="page-header">
+                <h2>Solutions
+                    <small class="text-muted">{{ pagination.total }}</small>
+                </h2>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>UUID</th>
+                        <th>Score</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                {% for distribution in distributions %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ distribution.solution_uuid }}</td>
+                    <td>{{ distribution.point }}</td>
+                    <td>
+                        <form class="inline" action="#" method="post">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <input type="submit" onclick="return confirm('Are you sure?');" class="btn btn-danger btn-sm" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <div class="page-footer">{{ render_pagination(pagination) }}</div>
+            {% else %}
+                <div class="tip">
+                    <span class="oi oi-ban"></span>
+                    No solutions.
+                </div>
+            {% endif %}
+        </div>
+
+    {% else %}
+        <div class="tip">
+            <span class="oi oi-ban"></span> 暂未开始
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
