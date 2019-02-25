@@ -53,11 +53,11 @@ def register_extensions(app):
 
 def register_blueprints(app):
     app.register_blueprint(front_bp)
-    app.register_blueprint(auth_bp)
-    app.register_blueprint(admin_bp)
     app.register_blueprint(backstage_bp)
-    app.register_blueprint(root_bp)
-    app.register_blueprint(teacher_bp)
+    app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(admin_bp, url_prefix='/admin')
+    app.register_blueprint(root_bp, url_prefix='/root')
+    app.register_blueprint(teacher_bp, url_prefix='/teacher')
 
 
 def register_errors(app):

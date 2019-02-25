@@ -1,17 +1,23 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template, flash, redirect, url_for, Blueprint
-from flask_login import login_user, logout_user, login_required, current_user, login_fresh, confirm_login
+from flask import render_template, redirect, url_for, Blueprint
+from flask_login import current_user, login_fresh
 
-from MMCs.extensions import db
 from MMCs.models import User
-from MMCs.utils import redirect_back
+
 
 front_bp = Blueprint('front', __name__)
 
 
 @front_bp.route('/')
 def index():
+    if current_user.is_authenticated:
+        if current_user.is_root:
+            return redirect(url_for('root.index'))
+        elif current_user.is_admin:
+            return redirect(url_for('admin.index'))
+        elif current_user.is_teacher:
+            return redirect(url_for('teacher.index'))
     return render_template('front/index.html')
 
 

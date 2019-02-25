@@ -3,9 +3,9 @@
 ## BUG
 
 -   数据库关系
--   数据库权限
--   多用户 index 页面
--   admin 与 root 部分代码重复
+-   [x] 数据库权限
+-   [x] 多用户 index 页面
+-   [x] admin 与 root 部分代码重复
 
 ## TODO
 

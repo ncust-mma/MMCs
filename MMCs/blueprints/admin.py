@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, flash, redirect, render_template, url_for, request
-from flask_login import (confirm_login, current_user, login_fresh,
-                         login_required, login_user, logout_user)
+from flask import Blueprint, render_template, request
+from flask_login import login_required
 
 from MMCs.decorators import admin_required
 from MMCs.extensions import db
-from MMCs.forms import LoginForm
-from MMCs.models import User, Solution, Distribution
-from MMCs.settings import Operations
-from MMCs.utils import generate_token, redirect_back, validate_token
+from MMCs.models import Solution, Distribution
 
 
 admin_bp = Blueprint('admin', __name__)
 
 
-@admin_bp.route('/admin')
+@admin_bp.route('/')
 @login_required
 @admin_required
 def index():
@@ -40,7 +36,7 @@ def index():
     return render_template('backstage/admin/overview.html')
 
 
-@admin_bp.route('/admin/task-management', methods=['GET', 'POST'])
+@admin_bp.route('/task-management', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def task_management():
@@ -56,9 +52,9 @@ def task_management():
     return render_template('backstage/admin/task_management.html', pagination=pagination, solutions=solutions)
 
 
-@admin_bp.route('/admin/score-management')
+@admin_bp.route('/score-management')
 @login_required
 @admin_required
 def score_management():
-    
+
     return render_template('backstage/admin/score_management.html')

@@ -11,7 +11,56 @@
 {% endblock styles %}
 
 {% block setting_content %}
-    {% include "backstage/_task_management.html" %}
+    <div class="card w-100 bg-light">
+        <h3 class="card-header">Task Management</h3>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    {{ dropzone.create(action='admin.task_management') }}
+                    <a class="btn btn-light float-right" href="#">
+                        Done
+                    </a>
+                </div>
+            </div>
+            <div>
+                {% if solutions %}
+                <div class="page-header">
+                    <h2>Solutions
+                        <small class="text-muted">{{ pagination.total }}</small>
+                    </h2>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>File Name</th>
+                            <th>UUID</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    {% for solution in solutions %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ solution.name }}</td>
+                        <td>{{ solution.uuid }}</td>
+                        <td>
+                            <form class="inline" action="#" method="post">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <input type="submit" onclick="return confirm('Are you sure?');" class="btn btn-danger btn-sm" value="Delete">
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <div class="page-footer">{{ render_pagination(pagination) }}</div>
+                {% else %}
+                <div class="tip">
+                    <h5>No solutions.</h5>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}

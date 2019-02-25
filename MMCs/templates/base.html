@@ -5,11 +5,10 @@
 <html lang="zh">
 
     <head>
-        {% block head %}
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% block head %}
         <title>{% block title %}Index{% endblock title %} - MMCs</title>
-
         <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
         {% block styles %}
@@ -34,11 +33,11 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarColor01">
+                    <div class="navbar-nav mr-auto">
                         {{ render_nav_item('front.index', 'Home', "oi oi-home") }}
                         {{ render_nav_item('front.about', 'About', "oi oi-bookmark") }}
                         {{ render_nav_item('front.faq', 'Q&A', "oi oi-question-mark") }}
                     </div>
-
                     <div class="navbar-nav ml-auto">
                         {% if current_user.is_authenticated %}
                             <div class="dropdown nav-item">
@@ -49,7 +48,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <h6 class="dropdown-header">Logged in as {{ current_user.realname }}</h6>
+                                    <h6 class="dropdown-header">Logged in as {{ current_user.username }}</h6>
 
                                     <a class="dropdown-item" href="{{ url_for('backstage.edit_profile') }}">
                                         <span class="oi oi-cog"></span> Settings

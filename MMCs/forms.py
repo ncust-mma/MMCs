@@ -4,7 +4,7 @@ from flask_login import current_user
 from flask_wtf import FlaskForm
 from wtforms import (BooleanField, PasswordField, RadioField, StringField,
                      SubmitField, TextAreaField, ValidationError)
-from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
+from wtforms.validators import DataRequired, EqualTo, Length, Regexp
 
 from MMCs.models import User
 

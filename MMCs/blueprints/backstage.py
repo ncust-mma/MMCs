@@ -1,17 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from flask import (Blueprint, current_app, flash, redirect, render_template,
-                   url_for, request)
-from flask_login import (current_user, fresh_login_required, login_required,
-                         logout_user)
+from flask import Blueprint, flash, redirect, render_template, url_for
+from flask_login import current_user, fresh_login_required, login_required
 
-from MMCs.decorators import (admin_required, permission_required)
 from MMCs.extensions import db
 from MMCs.forms import ChangePasswordForm, EditProfileForm
 from MMCs.models import User
-from MMCs.settings import Operations
-from MMCs.utils import (flash_errors, generate_token, redirect_back,
-                        validate_token)
+
 
 backstage_bp = Blueprint('backstage', __name__)
 

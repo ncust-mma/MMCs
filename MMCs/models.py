@@ -40,8 +40,7 @@ class User(db.Model, UserMixin):
         return self.permission == 'Root'
 
     def can(self, permission_name):
-        user = User.query.filter_by(permission=permission_name).first()
-        return user is not None and user.permission == permission_name
+        return self.permission == permission_name
 
 
 class Solution(db.Model):

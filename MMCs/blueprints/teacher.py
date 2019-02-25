@@ -1,20 +1,15 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint, render_template, request
-from flask_login import (confirm_login, current_user, login_fresh,
-                         login_required, login_user, logout_user)
+from flask_login import current_user, login_required
 
 from MMCs.decorators import teacher_required
-from MMCs.extensions import db
-from MMCs.forms import LoginForm
 from MMCs.models import Distribution, User
-from MMCs.settings import Operations
-from MMCs.utils import generate_token, redirect_back, validate_token
 
 teacher_bp = Blueprint('teacher', __name__)
 
 
-@teacher_bp.route('/teacher')
+@teacher_bp.route('/')
 @login_required
 @teacher_required
 def index():
@@ -34,7 +29,7 @@ def index():
     return render_template('backstage/teacher/overview.html', progress=progress)
 
 
-@teacher_bp.route('/teacher/score-management')
+@teacher_bp.route('/score-management')
 @login_required
 @teacher_required
 def score_management():
