@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from faker import Faker
-from sqlalchemy.exc import IntegrityError
 from sqlalchemy.sql.expression import func
 
 from MMCs import db
-from MMCs.models import Distribution, Solution, StartConfirm, User
+from MMCs.models import (Distribution, Solution, StartConfirm, UploadFileType,
+                         User)
 
 fake = Faker()
 fake_zh = Faker('zh_CN')
@@ -14,7 +14,7 @@ fake_zh = Faker('zh_CN')
 def fake_root():
     user = User(
         username='root',
-        realname='Test for Root',
+        realname=fake_zh.name(),
         permission="Root",
         remark=fake_zh.text(),
     )
@@ -26,7 +26,7 @@ def fake_root():
 def fake_admin():
     user = User(
         username='admin',
-        realname='Test for Admin',
+        realname=fake_zh.name(),
         permission="Admin",
         remark=fake_zh.text(),
     )
@@ -39,7 +39,7 @@ def fake_teacher(count=10):
     for _ in range(count):
         user = User(
             username=fake_zh.user_name(),
-            realname='Test for Teacher',
+            realname=fake_zh.name(),
             permission="Teacher",
             remark=fake_zh.text(),
         )
@@ -48,7 +48,7 @@ def fake_teacher(count=10):
         db.session.add(user)
         try:
             db.session.commit()
-        except IntegrityError:
+        except:
             db.session.rollback()
 
 
@@ -65,7 +65,7 @@ def fake_solution(count=30):
         db.session.add(solution)
         try:
             db.session.commit()
-        except IntegrityError:
+        except:
             db.session.rollback()
 
 
@@ -87,5 +87,18 @@ def fake_distribution():
             db.session.add(distribution)
             try:
                 db.session.commit()
-            except IntegrityError:
+            except:
                 db.session.rollback()
+
+
+def fake_file_type(count=5):
+    for _ in range(count):
+        upload_file_type = UploadFileType(
+            file_type=fake.file_extension()
+        )
+        db.session.add(upload_file_type)
+
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()

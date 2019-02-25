@@ -1,5 +1,4 @@
 {% extends 'backstage/root/base.html' %}
-{% from 'bootstrap/form.html' import render_form %}
 
 {% block title %}Competition{% endblock %}
 
@@ -7,7 +6,7 @@
 <div class="card w-100 bg-light">
     <h3 class="card-header">Competition Management</h3>
     <div class="card-body">
-        {{ generate_text() }}
+        {{ lipsum(1) }}
     </div>
 </div>
 {% endblock %}

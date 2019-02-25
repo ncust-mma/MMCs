@@ -7,7 +7,6 @@ from flask import Flask, render_template, request
 from flask_login import current_user
 from flask_sqlalchemy import get_debug_queries
 from flask_wtf.csrf import CSRFError
-from jinja2.utils import generate_lorem_ipsum
 
 from MMCs.blueprints.auth import auth_bp
 from MMCs.blueprints.root import root_bp
@@ -19,6 +18,8 @@ from MMCs.extensions import bootstrap, db, login_manager, csrf, ckeditor, dropzo
 from MMCs.settings import config
 from MMCs.models import User, Solution, Distribution, StartConfirm
 from MMCs.utils import current_year
+
+
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 
@@ -77,6 +78,10 @@ def register_errors(app):
     def page_not_found(e):
         return render_template('errors/404.html'), 404
 
+    @app.errorhandler(405)
+    def page_not_found(e):
+        return render_template('errors/405.html'), 405
+
     @app.errorhandler(500)
     def internal_server_error(e):
         return render_template('errors/500.html'), 500
@@ -98,10 +103,6 @@ def register_global_func(app):
     @app.template_global()
     def get_current_year():
         return current_year()
-
-    @app.template_global()
-    def generate_text(n=1):
-        return generate_lorem_ipsum(n=n)
 
     @app.template_global()
     def is_start(year):
@@ -134,10 +135,11 @@ def register_commands(app):
     @app.cli.command()
     @click.option('--teacher', default=10, help='Quantity of teacher, default is 10.')
     @click.option('--solution', default=30, help='Quantity of solution, default is 30.')
-    def forge(teacher, solution):
+    @click.option('--filetype', default=5, help='Quantity of filetype, default is 5.')
+    def forge(teacher, solution, filetype):
         """Generate fake data."""
 
-        from MMCs.fakes import fake_root, fake_admin, fake_teacher, fake_solution, fake_start_confirm, fake_distribution
+        from MMCs.fakes import fake_root, fake_admin, fake_teacher, fake_solution, fake_start_confirm, fake_distribution, fake_file_type
 
         db.drop_all()
         db.create_all()
@@ -159,6 +161,9 @@ def register_commands(app):
 
         fake_distribution()
         click.echo('Generating the distribution...')
+
+        fake_file_type()
+        click.echo('Generating %d filetype...' % filetype)
 
         click.echo('Done.')
 

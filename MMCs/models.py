@@ -11,9 +11,9 @@ from MMCs.utils import random_filename
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(30), unique=True,
+    username = db.Column(db.String(20), unique=True,
                          index=True, nullable=False)
-    realname = db.Column(db.String(30), nullable=False)
+    realname = db.Column(db.String(20), nullable=False)
     permission = db.Column(db.String(10), nullable=False, default='Teacher')
     remark = db.Column(db.Text)
     password_hash = db.Column(db.String(128), nullable=False)
@@ -21,8 +21,13 @@ class User(db.Model, UserMixin):
     # solutions = db.relationship(
     #     'Solution', cascade='save-update, merge, delete')
 
+    def set_username(self, username):
+        self.username = username
+        db.session.commit()
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
+        db.session.commit()
 
     def validate_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -54,9 +59,11 @@ class Solution(db.Model):
 
     def set_uuid(self, name):
         self.uuid = random_filename(name)
+        db.session.commit()
 
     def filter_name(self, name):
         self.name = secure_filename(name)
+        db.session.commit()
         return self.name
 
 
@@ -83,3 +90,15 @@ class StartConfirm(db.Model):
     def is_start(self, current_year):
         flag = StartConfirm.query.filter_by(year=current_year).first()
         return flag.start_flag if flag is not None else False
+
+
+class UploadFileType(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    file_type = db.Column(
+        db.String(10), index=True,
+        unique=True, nullable=False
+    )
+
+
+class SysSettings(db.Model):
+    id = db.Column(db.Integer, primary_key=True)

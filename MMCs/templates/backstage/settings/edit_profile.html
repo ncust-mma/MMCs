@@ -5,9 +5,15 @@
 
 {% block setting_content %}
 <div class="card w-100 bg-light">
-    <h3 class="card-header">Edit Privacy</h3>
+    <h3 class="card-header">Edit Profile</h3>
     <div class="card-body">
         {{ render_form(form) }}
     </div>
 </div>
+{% endblock %}
+
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript" src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"></script>
 {% endblock %}

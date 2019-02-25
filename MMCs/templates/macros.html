@@ -3,10 +3,10 @@
 {% endmacro %}
 
 {% macro render_nav_item(endpoint, text, icon='', badge='', disable=False, use_li=False) %}
-    {% if use_li %}
+    {% if use_li %}personnel_list_editpersonnel_list_edit
         <li class="nav-item">
     {% endif %}
-    
+
     <a class="{% if not use_li %}nav-item{% endif %} nav-link {% if request.endpoint and request.endpoint == endpoint %}active{% endif %} {% if disable %}disabled{% endif %}" href="{{ url_for(endpoint, **kwargs) }}">
 
         {% if icon %}

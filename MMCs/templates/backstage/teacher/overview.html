@@ -1,5 +1,4 @@
 {% extends 'backstage/teacher/base.html' %}
-{% from 'bootstrap/form.html' import render_form %}
 
 {% block title %}Overview{% endblock %}
 
@@ -17,7 +16,7 @@
             </div>
             <div class="card-footer">
                 <div class="float-right">
-                    <a class="btn btn-primary" href="{{ url_for('teacher.score_management') }}">Contiune</a>
+                    <a class="btn btn-primary" href="{{ url_for('teacher.score_management') }}">Start</a>
                 </div>
             </div>
         {% else %}

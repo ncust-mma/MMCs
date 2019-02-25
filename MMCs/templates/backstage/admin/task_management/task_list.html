@@ -1,0 +1,47 @@
+{% extends 'backstage/admin/task_management/base.html' %}
+
+{% block task_setting_content %}
+{% if is_start(get_current_year()) %}
+    <h3>
+        Solutions
+        <small class="text-muted">{{ pagination.total }}</small>
+    </h3>
+    <div>
+        {% if solutions %}
+            <table class="table table-striped table-hover table-sm">
+                <thead>
+                    <tr class="text-center">
+                        <th>#</th>
+                        <th>File Name</th>
+                        <th>UUID</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                {% for solution in solutions %}
+                <tr class="text-center">
+                    <td>{{ pagination.total - (per_page*(page-1) + loop.index) + 1 }}</td>
+                    <td>{{ solution.name }}</td>
+                    <td><a href="#">{{ solution.uuid }}</a></td>
+                    <td>
+                        <form class="inline" action="{{ url_for('admin.delete_task', task_id=solution.id) }}" method="post">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <input type="submit" onclick="return confirm('Are you sure?');" 
+                                    class="btn btn-danger btn-sm" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <div class="page-footer">{{ render_pagination(pagination) }}</div>
+        {% else %}
+            <div class="tip">
+                <span class="oi oi-ban"></span>
+                No solutions
+            </div>
+        {% endif %}
+    </div>
+{% else %}
+    {% include "backstage/_tip.html" %}
+{% endif %}
+{% endblock %}
+

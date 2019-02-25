@@ -1,13 +1,16 @@
 {% extends 'backstage/admin/base.html' %}
-{% from 'bootstrap/form.html' import render_form %}
 
 {% block title %}Score{% endblock %}
 
 {% block setting_content %}
 <div class="card w-100 bg-light">
     <h3 class="card-header">Score Management</h3>
-    <div class="card-body">
-        {{ generate_text() }}
-    </div>
+    {% if is_start(get_current_year()) %}
+        <div class="card-body">
+            {{ lipsum(1) }}
+        </div>
+    {% else %}
+        {% include "backstage/_tip.html" %}
+    {% endif %}
 </div>
 {% endblock %}

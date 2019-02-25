@@ -48,7 +48,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <h6 class="dropdown-header">Logged in as {{ current_user.username }}</h6>
+                                    <h6 class="dropdown-header">Logged in as {{ current_user.realname }}</h6>
 
                                     <a class="dropdown-item" href="{{ url_for('backstage.edit_profile') }}">
                                         <span class="oi oi-cog"></span> Settings

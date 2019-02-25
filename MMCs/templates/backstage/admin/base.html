@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% from 'bootstrap/form.html' import render_form %}
 {% from 'macros.html' import render_nav_item %}
 
 {% block title %}Home{% endblock title %}
@@ -13,8 +12,13 @@
     <div class="col-md-3">
         <div class="nav nav-pills flex-column" role="tablist" aria-orientation="vertical">
             {{ render_nav_item('admin.index', 'Overview') }}
-            {{ render_nav_item('admin.task_management', 'Task Management') }}
-            {{ render_nav_item('admin.score_management', 'Score Management') }}
+            {% if is_start(get_current_year()) %}
+                {{ render_nav_item('admin.task_management', 'Task Management') }}
+                {{ render_nav_item('admin.score_management', 'Score Management') }}
+            {% else %}
+                {{ render_nav_item('admin.task_management', 'Task Management', disable=True) }}
+                {{ render_nav_item('admin.score_management', 'Score Management', disable=True) }}
+            {% endif %}
         </div>
     </div>
     <div class="col-md-9">

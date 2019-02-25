@@ -41,4 +41,4 @@ def score_management():
     ).order_by(Distribution.id.desc()).paginate(page, per_page)
     distributions = pagination.items
 
-    return render_template('backstage/teacher/score_management.html', pagination=pagination, distributions=distributions)
+    return render_template('backstage/teacher/score_management.html', pagination=pagination, distributions=distributions, page=page, per_page=per_page)

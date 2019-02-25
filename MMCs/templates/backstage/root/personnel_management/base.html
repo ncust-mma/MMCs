@@ -1,0 +1,26 @@
+{% extends 'backstage/root/base.html' %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
+
+{% block title %}Personnel{% endblock %}
+
+{% block setting_content %}
+<div class="card">
+    <div class="card-header">
+        <div class="nav nav-tabs card-header-tabs" role="tablist">
+            {{ render_nav_item('root.personnel_list', 'Personnel List') }}
+            {{ render_nav_item('root.register', 'Register') }}
+
+            {% set endpoint = "root.personnel_list_edit_profile" %}
+            <a class="nav-link {% if request.endpoint and request.endpoint == endpoint %}active{% endif %} disabled">Edit Profile</a>
+            {% set endpoint = "root.personnel_list_change_username" %}
+            <a class="nav-link {% if request.endpoint and request.endpoint == endpoint %}active{% endif %} disabled">Change Username</a>
+            {% set endpoint = "root.personnel_list_change_password" %}
+            <a class="nav-link {% if request.endpoint and request.endpoint == endpoint %}active{% endif %} disabled">Change Password</a>
+        </div>
+    </div>
+    <div class="card-body">
+        {% block personnel_setting_content %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

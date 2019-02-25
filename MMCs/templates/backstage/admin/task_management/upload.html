@@ -1,0 +1,28 @@
+{% extends 'backstage/admin/task_management/base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dropzone.min.css') }}" type="text/css">
+    {{ dropzone.style('margin: 20px 0; border: 2px dashed #0087F7; min-height: 400px;') }}
+{% endblock styles %}
+
+
+{% block task_setting_content %}
+{% if is_start(get_current_year()) %}
+    <div class="col-md-12">
+        {{ dropzone.create(action='admin.task_management') }}
+        <a class="btn btn-light float-right" href="{{ url_for('front.index') }}">
+            Done
+        </a>
+    </div>
+{% else %}
+    {% include "backstage/_tip.html" %}
+{% endif %}
+{% endblock %}
+
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/dropzone.min.js') }}"></script>
+    {{ dropzone.config() }}
+{% endblock scripts %}
