@@ -2,6 +2,7 @@
 
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
+from flask_debugtoolbar import DebugToolbarExtension
 from flask_dropzone import Dropzone
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -13,6 +14,7 @@ login_manager = LoginManager()
 csrf = CSRFProtect()
 ckeditor = CKEditor()
 dropzone = Dropzone()
+toolbar = DebugToolbarExtension()
 
 
 @login_manager.user_loader

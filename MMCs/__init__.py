@@ -14,7 +14,7 @@ from MMCs.blueprints.teacher import teacher_bp
 from MMCs.blueprints.admin import admin_bp
 from MMCs.blueprints.backstage import backstage_bp
 from MMCs.blueprints.front import front_bp
-from MMCs.extensions import bootstrap, db, login_manager, csrf, ckeditor, dropzone
+from MMCs.extensions import bootstrap, db, login_manager, csrf, ckeditor, dropzone, toolbar
 from MMCs.settings import config
 from MMCs.models import User, Solution, Distribution, StartConfirm
 from MMCs.utils import current_year
@@ -50,6 +50,7 @@ def register_extensions(app):
     csrf.init_app(app)
     ckeditor.init_app(app)
     dropzone.init_app(app)
+    toolbar.init_app(app)
 
 
 def register_blueprints(app):
@@ -64,27 +65,27 @@ def register_blueprints(app):
 def register_errors(app):
     @app.errorhandler(400)
     def bad_request(e):
-        return render_template('errors/400.html'), 400
+        return render_template('errors/400.html', description=e.description), 400
 
     @app.errorhandler(401)
     def bad_request(e):
-        return render_template('errors/401.html'), 401
+        return render_template('errors/401.html', description=e.description), 401
 
     @app.errorhandler(403)
     def forbidden(e):
-        return render_template('errors/403.html'), 403
+        return render_template('errors/403.html', description=e.description), 403
 
     @app.errorhandler(404)
     def page_not_found(e):
-        return render_template('errors/404.html'), 404
+        return render_template('errors/404.html', description=e.description), 404
 
     @app.errorhandler(405)
     def page_not_found(e):
-        return render_template('errors/405.html'), 405
+        return render_template('errors/405.html', description=e.description), 405
 
     @app.errorhandler(500)
     def internal_server_error(e):
-        return render_template('errors/500.html'), 500
+        return render_template('errors/500.html', description=e.description), 500
 
     @app.errorhandler(CSRFError)
     def handle_csrf_error(e):
@@ -139,16 +140,19 @@ def register_commands(app):
     def forge(teacher, solution, filetype):
         """Generate fake data."""
 
-        from MMCs.fakes import fake_root, fake_admin, fake_teacher, fake_solution, fake_start_confirm, fake_distribution, fake_file_type
+        from MMCs.fakes import fake_root, fake_admin, fake_teacher, fake_solution, fake_start_confirm, fake_distribution, fake_file_type, fake_default_teacher
 
         db.drop_all()
         db.create_all()
 
         fake_root()
-        click.echo('Generating the root administrator...')
+        click.echo('Generating the default root administrator...')
 
         fake_admin()
-        click.echo('Generating the administrator...')
+        click.echo('Generating the default administrator...')
+
+        fake_default_teacher()
+        click.echo('Generating the default teacher...')
 
         fake_teacher(teacher)
         click.echo('Generating %d teacher...' % teacher)

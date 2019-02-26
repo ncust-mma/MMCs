@@ -4,12 +4,12 @@
 
 {% block setting_content %}
 <div class="card w-100 bg-light">
-    <h3 class="card-header">Overview</h3>
+    <h3 class="card-header">Progress</h3>
     {% if is_start(get_current_year()) %}
     <div class="card-body">
         <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 45%">
-                教师完成: 45%
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ progress|default(0) }}%">
+                教师完成度: {{'%0.2f'| format(progress|float)}}%
             </div>
         </div>
     </div>

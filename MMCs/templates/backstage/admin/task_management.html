@@ -44,8 +44,7 @@
                             <td>
                                 <form class="inline" action="{{ url_for('admin.delete_task', task_id=solution.id) }}" method="post">
                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                    <input type="submit" onclick="return confirm('Are you sure?');" 
-                                           class="btn btn-danger btn-sm" value="Delete">
+                                    <input type="submit" onclick="return confirm('Are you sure?');" class="btn btn-danger btn-sm" value="Delete">
                                 </form>
                             </td>
                         </tr>

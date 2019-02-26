@@ -21,13 +21,8 @@ class User(db.Model, UserMixin):
     # solutions = db.relationship(
     #     'Solution', cascade='save-update, merge, delete')
 
-    def set_username(self, username):
-        self.username = username
-        db.session.commit()
-
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
-        db.session.commit()
 
     def validate_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -59,11 +54,9 @@ class Solution(db.Model):
 
     def set_uuid(self, name):
         self.uuid = random_filename(name)
-        db.session.commit()
 
     def filter_name(self, name):
         self.name = secure_filename(name)
-        db.session.commit()
         return self.name
 
 
@@ -72,7 +65,7 @@ class Distribution(db.Model):
     teacher_id = db.Column(
         db.Integer, db.ForeignKey('user.id'))
     solution_uuid = db.Column(db.Integer, db.ForeignKey('solution.uuid'))
-    point = db.Column(db.Integer)
+    score = db.Column(db.Integer)
     times = db.Column(db.Integer, default=0)
     year = db.Column(db.Integer, nullable=False)
 

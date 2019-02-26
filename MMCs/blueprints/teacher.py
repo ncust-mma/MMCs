@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, render_template, request
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
 from MMCs.decorators import teacher_required
+from MMCs.extensions import db
+from MMCs.forms import ChangeScoreForm
 from MMCs.models import Distribution, User
+from MMCs.utils import flash_errors, redirect_back
 
 teacher_bp = Blueprint('teacher', __name__)
 
@@ -16,7 +19,8 @@ def index():
     solutions_right = Distribution.query.filter(
         Distribution.year == 2019,
         Distribution.teacher_id == current_user.id,
-        Distribution.point != None).count()
+        Distribution.score != None,
+        Distribution.score != '').count()
 
     solutions_all = Distribution.query.filter(
         Distribution.year == 2019,
@@ -24,12 +28,12 @@ def index():
 
     progress = False
     if solutions_all:
-        progress = "{:.2f}%".format(solutions_right/solutions_all*100)
+        progress = solutions_right/solutions_all*100
 
     return render_template('backstage/teacher/overview.html', progress=progress)
 
 
-@teacher_bp.route('/score-management')
+@teacher_bp.route('/score-management', methods=['GET', 'POST'])
 @login_required
 @teacher_required
 def score_management():
@@ -41,4 +45,17 @@ def score_management():
     ).order_by(Distribution.id.desc()).paginate(page, per_page)
     distributions = pagination.items
 
-    return render_template('backstage/teacher/score_management.html', pagination=pagination, distributions=distributions, page=page, per_page=per_page)
+    form = ChangeScoreForm()
+    if form.validate_on_submit():
+        distribution = Distribution.query.get(form.id.data)
+        distribution.score = form.score.data
+        db.session.commit()
+
+        flash('Score Updated.', 'info')
+        return redirect_back()
+
+    flash_errors(form)
+    return render_template(
+        'backstage/teacher/score_management.html',
+        pagination=pagination, distributions=distributions,
+        page=page, per_page=per_page, form=form)

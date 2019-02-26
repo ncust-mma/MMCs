@@ -1,39 +1,39 @@
 {% extends 'backstage/teacher/base.html' %}
 {% from 'bootstrap/pagination.html' import render_pagination %}
+{% from 'bootstrap/form.html' import render_field %}
 
 {% block title %}Score{% endblock %}
 
 {% block setting_content %}
 <div class="card w-100 bg-light">
-    <h3 class="card-header">Score Management</h3>
+    <h3 class="card-header">
+        Solutions <small class="text-muted">{{ pagination.total }}</small>
+    </h3>
     {% if is_start(get_current_year()) %}
         <div class="card-body">
             {% if distributions %}
-            <div class="page-header">
-                <h2>Solutions
-                    <small class="text-muted">{{ pagination.total }}</small>
-                </h2>
-            </div>
             <table class="table table-striped table-hover table-sm">
                 <thead>
                     <tr class="text-center">
-                        <th>#</th>
-                        <th>UUID</th>
-                        <th>Score</th>
-                        <th>Actions</th>
+                        <th hidden>ID</th>
+                        <th scope="col">#</th>
+                        <th scope="col">UUID</th>
+                        <th scope="col">Score</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 {% for distribution in distributions %}
                 <tr class="text-center">
-                    <td>{{ pagination.total - (per_page*(page-1) + loop.index) + 1 }}</td>
-                    <td><a href="#">{{ distribution.solution_uuid }}</a></td>
-                    <td>{{ distribution.point }}</td>
-                    <td>
-                        <form class="inline" action="#" method="post">
-                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                            <input type="submit" onclick="return confirm('Are you sure?');" class="btn btn-sm btn-info" value="Edit">
-                        </form>
-                    </td>
+                    <form method="post">
+                        {{ form.csrf_token() }}
+                        <td hidden>{{ form.id(value=distribution.id, readonly=True, hidden=True) }}</td>
+                        <td scope="row">{{ pagination.total - (per_page*(page-1) + loop.index) + 1 }}</td>
+                        <td><a href="#">{{ distribution.solution_uuid }}</a></td>
+                        <td>
+                            {{ form.score(class="form-control form-control-sm text-center", value=distribution.score) }}
+                        </td>
+                        <td>{{ form.submit(class="btn btn-info btn-sm") }}</td>
+                    </form>
                 </tr>
                 {% endfor %}
             </table>
@@ -45,7 +45,6 @@
                 </div>
             {% endif %}
         </div>
-
     {% else %}
         {% include "backstage/_tip.html" %}
     {% endif %}

@@ -5,10 +5,10 @@ from flask_login import current_user, login_required
 
 from MMCs.decorators import root_required
 from MMCs.extensions import db
-from MMCs.forms import (AddUploadFileTypeForm, RegisterForm, 
+from MMCs.forms import (AddUploadFileTypeForm, RegisterForm,
                         RootChangePasswordForm, EditProfileForm, ChangeUsernameForm)
 from MMCs.models import UploadFileType, User
-from MMCs.utils import redirect_back
+from MMCs.utils import redirect_back, flash_errors
 
 root_bp = Blueprint('root', __name__)
 
@@ -57,10 +57,10 @@ def personnel_list_change_password(user_id):
     if form.validate_on_submit():
         user = User.query.get(user_id)
         user.set_password(form.password.data)
-
         db.session.commit()
-        flash('Account registered.', 'success')
-        return redirect_back()
+
+        flash('Password updated.', 'success')
+        return redirect(url_for('.personnel_list'))
 
     return render_template(
         'backstage/root/personnel_management/personnel_list_edit.html', form=form)
@@ -75,13 +75,15 @@ def personnel_list_edit_profile(user_id):
     if form.validate_on_submit():
         user.realname = form.realname.data
         user.remark = form.remark.data
+        db.session.commit()
 
-        flash('Account registered.', 'success')
-        return redirect_back()
+        flash('Profile updated.', 'success')
+        return redirect(url_for('.personnel_list'))
 
     form.realname.data = user.realname
     form.remark.data = user.remark
 
+    flash_errors(form)
     return render_template(
         'backstage/root/personnel_management/personnel_list_edit.html', form=form)
 
@@ -94,13 +96,15 @@ def personnel_list_change_username(user_id):
     form = ChangeUsernameForm()
     if form.validate_on_submit():
         user.username = form.username.data
+        db.session.commit()
 
         flash('Account registered.', 'success')
-        return redirect_back()
+        return redirect(url_for('.personnel_list'))
 
     form.username.data = user.username
     form.username2.data = user.username
 
+    flash_errors(form)
     return render_template(
         'backstage/root/personnel_management/personnel_list_edit.html', form=form)
 
@@ -123,6 +127,7 @@ def register():
         flash('Account registered.', 'success')
         return redirect_back()
 
+    flash_errors(form)
     return render_template('backstage/root/personnel_management/register.html', form=form)
 
 
@@ -144,6 +149,7 @@ def system_settings():
         flash('Upload file type added.', 'success')
         return redirect_back()
 
+    flash_errors(form)
     return render_template('backstage/root/system_settings.html', form=form, pagination=pagination, file_types=file_types, page=page, per_page=per_page)
 
 

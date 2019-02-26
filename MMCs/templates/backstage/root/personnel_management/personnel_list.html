@@ -15,7 +15,7 @@
                     <th class="text-center">Username</th>
                     <th class="text-center">Realname</th>
                     <th class="text-center">Permission</th>
-                    <th>Actions</th>
+                    <th class="text-center">Actions</th>
                 </tr>
             </thead>
             {% for user in users %}
@@ -24,28 +24,26 @@
                 <td class="text-center">{{ user.username }}</td>
                 <td class="text-center">{{ user.realname }}</td>
                 <td class="text-center">{{ user.permission }}</td>
-                <td>
+                <td class="text-center">
                     {% if not user.is_root %}
-                    <a class="btn btn-primary btn-sm" data-toggle="modal" data-target=".editModal">Edit</a>
-                    <div class="modal fade editModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <a class="btn btn-info btn-sm" href="{{ url_for('root.personnel_list_edit_profile', user_id=user.id) }}">Edit Profile</a>
-                                    <a class="btn btn-info btn-sm" href="{{ url_for('root.personnel_list_change_username', user_id=user.id) }}">Change Username</a>
-                                    <a class="btn btn-info btn-sm" href="{{ url_for('root.personnel_list_change_password', user_id=user.id) }}">Change Password</a>
-                                </div>
-                            </div>
-                        </div>
+
+                    <div class="dropdown">
+                      <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Edit
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ url_for('root.personnel_list_edit_profile', user_id=user.id) }}">Edit Profile</a>
+                        <a class="dropdown-item" href="{{ url_for('root.personnel_list_change_username', user_id=user.id) }}">Change Username</a>
+                        <a class="dropdown-item" href="{{ url_for('root.personnel_list_change_password', user_id=user.id) }}">Change Password</a>
+                        <div class="dropdown-divider"></div>
+                        <form class="inline" action="{{ url_for('root.delete_user', user_id=user.id) }}" method="post">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="dropdown-item badge-danger" onclick="return confirm('Are you sure?');">
+                            <span class="oi oi-trash" aria-hidden="true"></span> Delete
+                        </form>
+                      </div>
                     </div>
 
-                    <form class="inline" action="{{ url_for('root.delete_user', user_id=user.id) }}" method="post">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <input type="submit" onclick="return confirm('Are you sure?');" class="btn btn-danger btn-sm" value="Delete">
-                    </form>
                     {% endif %}
                 </td>
             </tr>

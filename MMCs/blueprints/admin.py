@@ -23,7 +23,7 @@ def index():
         solutions_right = Distribution.query.filter(
             Distribution.year == 2019,
             Distribution.teacher_id == teacher_id,
-            Distribution.point != None).count()
+            Distribution.score != None).count()
 
         solutions_all = Distribution.query.filter(
             Distribution.year == 2019,
@@ -31,9 +31,9 @@ def index():
         if solutions_right == solutions_all:
             count += 1
 
-    progress = "{:.2f}%".format(count/len(teacher_ids)*100)
-
-    return render_template('backstage/admin/overview.html')
+    progress = count/len(teacher_ids)*100
+    flash(progress)
+    return render_template('backstage/admin/overview.html', progress=progress)
 
 
 @admin_bp.route('/task-management/')

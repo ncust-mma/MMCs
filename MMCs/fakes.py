@@ -18,7 +18,7 @@ def fake_root():
         permission="Root",
         remark=fake_zh.text(),
     )
-    user.set_password('mmcs4test')
+    user.set_password('mmcs4sxjm')
     db.session.add(user)
     db.session.commit()
 
@@ -30,10 +30,22 @@ def fake_admin():
         permission="Admin",
         remark=fake_zh.text(),
     )
-    user.set_password('mmcs4test')
+    user.set_password('mmcs4sxjm')
     db.session.add(user)
     db.session.commit()
 
+
+def fake_default_teacher():
+    user = User(
+        username='teacher',
+        realname=fake_zh.name(),
+        permission="Teacher",
+        remark=fake_zh.text(),
+    )
+    user.set_password('mmcs4sxjm')
+
+    db.session.add(user)
+    db.session.commit()
 
 def fake_teacher(count=10):
     for _ in range(count):
@@ -43,7 +55,7 @@ def fake_teacher(count=10):
             permission="Teacher",
             remark=fake_zh.text(),
         )
-        user.set_password('mmcs4test')
+        user.set_password('mmcs4sxjm')
 
         db.session.add(user)
         try:

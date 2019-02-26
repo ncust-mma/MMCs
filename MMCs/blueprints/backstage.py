@@ -5,7 +5,7 @@ from flask_login import current_user, fresh_login_required, login_required
 
 from MMCs.extensions import db
 from MMCs.forms import ChangePasswordForm, EditProfileForm, ChangeUsernameForm
-from MMCs.utils import redirect_back
+from MMCs.utils import redirect_back, flash_errors
 
 
 backstage_bp = Blueprint('backstage', __name__)
@@ -26,6 +26,7 @@ def edit_profile():
     form.realname.data = current_user.realname
     form.remark.data = current_user.remark
 
+    flash_errors(form)
     return render_template('backstage/settings/edit_profile.html', form=form)
 
 
@@ -34,7 +35,8 @@ def edit_profile():
 def change_username():
     form = ChangeUsernameForm()
     if form.validate_on_submit():
-        current_user.set_username(form.username.data)
+        current_user.username = form.username.data
+        db.session.commit()
 
         flash('Username updated.', 'success')
         return redirect_back()
@@ -59,4 +61,5 @@ def change_password():
         else:
             flash('Old password is incorrect.', 'warning')
 
+    flash_errors(form)
     return render_template('backstage/settings/change_password.html', form=form)
