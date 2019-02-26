@@ -21,7 +21,7 @@
                 <tr class="text-center">
                     <td>{{ pagination.total - (per_page*(page-1) + loop.index) + 1 }}</td>
                     <td>{{ solution.name }}</td>
-                    <td><a href="#">{{ solution.uuid }}</a></td>
+                    <td><a href="{{ url_for('admin.get_solution', filename=solution.uuid) }}">{{ solution.uuid }}</a></td>
                     <td>
                         <form class="inline" action="{{ url_for('admin.delete_task', task_id=solution.id) }}" method="post">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

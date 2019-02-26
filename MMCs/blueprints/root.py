@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import (Blueprint, current_app, flash, redirect, render_template,
+                   request, url_for)
 from flask_login import current_user, login_required
 
 from MMCs.decorators import root_required
 from MMCs.extensions import db
-from MMCs.forms import (AddUploadFileTypeForm, RegisterForm,
-                        RootChangePasswordForm, EditProfileForm, ChangeUsernameForm)
+from MMCs.forms import (AddUploadFileTypeForm, ChangeUsernameForm,
+                        EditProfileForm, RegisterForm, RootChangePasswordForm)
 from MMCs.models import UploadFileType, User
-from MMCs.utils import redirect_back, flash_errors
+from MMCs.utils import flash_errors, redirect_back
 
 root_bp = Blueprint('root', __name__)
 
@@ -39,7 +40,7 @@ def personnel_management():
 @root_required
 def personnel_list():
     page = request.args.get('page', 1, type=int)
-    per_page = 10
+    per_page = current_app.config['USER_PER_PAGE']
     pagination = User.query.order_by(
         User.id.desc()).paginate(page, per_page)
     users = pagination.items
@@ -136,7 +137,7 @@ def register():
 @root_required
 def system_settings():
     page = request.args.get('page', 1, type=int)
-    per_page = 3
+    per_page = current_app.config['FILETYPE_PER_PAGE']
     pagination = UploadFileType.query.order_by(
         UploadFileType.id.desc()).paginate(page, per_page)
     file_types = pagination.items

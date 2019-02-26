@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}401 Error{% endblock %}
+{% block title %}405 Error{% endblock %}
 
 {% block content %}
 <div class="row justify-content-md-center">
@@ -8,7 +8,7 @@
         <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/error.jpg') }}">
         <div class="card-body">
             <h5 class="card-title">405 Error</h5>
-            <p class="card-text">{{ description|default('Bad Request') }}</p>
+            <p class="card-text">{{ description|default('Method not allowed') }}</p>
         </div>
         <div class="card-footer">
             <div class="float-right">

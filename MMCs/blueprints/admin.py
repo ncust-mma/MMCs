@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+import os
+
+from flask import (Blueprint, current_app, flash, redirect, render_template,
+                   request, send_file, url_for)
 from flask_login import login_required
 
 from MMCs.decorators import admin_required
@@ -17,8 +20,8 @@ admin_bp = Blueprint('admin', __name__)
 def index():
     distribution = Distribution.query.filter(Distribution.year == 2019).all()
     teacher_ids = list(set([i.teacher_id for i in distribution]))
-    count = 0
 
+    count = 0
     for teacher_id in teacher_ids:
         solutions_right = Distribution.query.filter(
             Distribution.year == 2019,
@@ -32,7 +35,7 @@ def index():
             count += 1
 
     progress = count/len(teacher_ids)*100
-    flash(progress)
+
     return render_template('backstage/admin/overview.html', progress=progress)
 
 
@@ -65,6 +68,11 @@ def task_list():
 def upload():
     if request.method == 'POST' and 'file' in request.files:
         f = request.files.get('file')
+        if f.filename.split('.')[1].lower() not in ['pdf', 'doc', 'docx']:
+            return 'pdf, doc or docx only!', 400
+
+        f.save(
+            os.path.join(current_app.config['SOLUTION_SAVE_PATH'], f.filename))
 
     return render_template('backstage/admin/task_management/upload.html')
 
@@ -87,5 +95,10 @@ def delete_task(task_id):
     db.session.commit()
 
     flash('Task deleted.', 'info')
-
     return redirect_back()
+
+
+@admin_bp.route('/solution/<path:filename>')
+def get_solution(filename):
+    path = os.path.join(current_app.config['SOLUTION_SAVE_PATH'], filename)
+    return send_file(path, as_attachment=True)

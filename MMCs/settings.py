@@ -14,13 +14,12 @@ else:
     prefix = 'sqlite:////'
 
 
-class Operations:
-    CONFIRM = 'confirm'
-    RESET_PASSWORD = 'reset-password'
-
-
 class BaseConfig(object):
-    SECRET_KEY = os.getenv('SECRET_KEY', 'dev key')
+    SECRET_KEY = os.getenv('SECRET_KEY', 'secret key')
+
+    USER_PER_PAGE = 30
+    SOLUTION_PER_PAGE = 10
+    FILETYPE_PER_PAGE = 30
 
     DEBUG_TB_INTERCEPT_REDIRECTS = False
 
@@ -28,16 +27,23 @@ class BaseConfig(object):
     SQLALCHEMY_RECORD_QUERIES = True
 
     CKEDITOR_ENABLE_CSRF = True
-    CKEDITOR_FILE_UPLOADER = 'admin.upload_image'
 
-    TEACHER_POINT_TIMES = 1
+    TEACHER_EDIT_TIMES = 1
 
     BOOTSTRAP_SERVE_LOCAL = True
 
-    DROPZONE_ALLOWED_FILE_TYPE = 'image'
-    DROPZONE_MAX_FILE_SIZE = 3
-    DROPZONE_MAX_FILES = 30
+    UPLOAD_PATH = os.path.join(basedir, 'uploads')
+    # file size exceed to 17 Mb will return a 413 error response.
+    MAX_CONTENT_LENGTH = 17 * 1024 * 1024
+    SOLUTION_SAVE_PATH = os.path.join(UPLOAD_PATH, 'solutions')
+
+    DROPZONE_MAX_FILE_SIZE = MAX_CONTENT_LENGTH
+    DROPZONE_MAX_FILES = 20
+    DROPZONE_ALLOWED_FILE_CUSTOM = True
     DROPZONE_ENABLE_CSRF = True
+    DROPZONE_ALLOWED_FILE_TYPE = '.pdf, .doc, docx'
+
+    ALLOWED_SOLUTION_EXTENSIONS = ['pdf', 'doc', 'docx']
 
 
 class DevelopmentConfig(BaseConfig):

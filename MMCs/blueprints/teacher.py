@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import (Blueprint, current_app, flash, redirect, render_template,
+                   request, url_for)
 from flask_login import current_user, login_required
 
 from MMCs.decorators import teacher_required
@@ -38,7 +39,7 @@ def index():
 @teacher_required
 def score_management():
     page = request.args.get('page', 1, type=int)
-    per_page = 10
+    per_page = current_app.config['SOLUTION_PER_PAGE']
     pagination = Distribution.query.filter(
         Distribution.year == 2019,
         Distribution.teacher_id == current_user.id
