@@ -28,7 +28,7 @@
                         {{ form.csrf_token() }}
                         <td hidden>{{ form.id(value=distribution.id, readonly=True, hidden=True) }}</td>
                         <td scope="row">{{ pagination.total - (per_page*(page-1) + loop.index) + 1 }}</td>
-                        <td><a href="{{ url_for('admin.get_solution', filename=distribution.solution_uuid) }}">{{ distribution.solution_uuid }}</a></td>
+                        <td><a href="{{ url_for('admin.get_solution', filename=distribution.solution_uuid) }}" target="_blank">{{ distribution.solution_uuid }}</a></td>
                         <td>
                             {{ form.score(class="form-control form-control-sm text-center", value=distribution.score) }}
                         </td>

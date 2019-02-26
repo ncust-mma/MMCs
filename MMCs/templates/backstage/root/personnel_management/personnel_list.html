@@ -28,19 +28,17 @@
                     {% if not user.is_root %}
 
                     <div class="dropdown">
-                      <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Edit
-                      </button>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ url_for('root.personnel_list_edit_profile', user_id=user.id) }}">Edit Profile</a>
                         <a class="dropdown-item" href="{{ url_for('root.personnel_list_change_username', user_id=user.id) }}">Change Username</a>
                         <a class="dropdown-item" href="{{ url_for('root.personnel_list_change_password', user_id=user.id) }}">Change Password</a>
                         <div class="dropdown-divider"></div>
-                        <form class="inline" action="{{ url_for('root.delete_user', user_id=user.id) }}" method="post">
-                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                            <button type="submit" class="dropdown-item badge-danger" onclick="return confirm('Are you sure?');">
+                        <a class="dropdown-item badge-danger" data-toggle="modal" data-target="#confirm-delete" data-href="{{ url_for('root.delete_user', user_id=user.id) }}">
                             <span class="oi oi-trash" aria-hidden="true"></span> Delete
-                        </form>
+                        </a>
                       </div>
                     </div>
 
@@ -57,6 +55,27 @@
         No solutions
     </div>
 {% endif %}
+
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Delete Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this item?</p>
+            </div>
+            <div class="modal-footer">
+                <form class="delete-form" action="" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-danger btn-confirm" type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block scripts %}

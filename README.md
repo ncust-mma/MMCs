@@ -2,25 +2,18 @@
 
 ## TODO
 
--   [ ] 访问权限管理
-n
+-   [ ] 访问权限管理, jinja 当前用户判断 和 代码访问权限限制
+
 ### root
 
--   [ ] Competition Management
--   [x] Personnel Management 测试/按钮组
--   [ ] System Settings 完成配置
+-   [ ] Competition Management，两个功能按钮
+-   [ ] System Settings 几个小页面
 
-### admin
+## admin
 
--   [x] overview 进度条
--   [x] 上传控制
--   [x] 文件存储控制
--   [x] 文件下载控制
-
-### teacher
-
--   [x] 评分
--   [x] 文件下载控制
+-   [ ] Task Management -> Solution Management
+-   [ ] Score Management -> Task Management
+-   [ ] Score Management 几个小页面
 
 ### db
 

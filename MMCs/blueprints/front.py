@@ -24,8 +24,3 @@ def index():
 @front_bp.route('/about')
 def about():
     return render_template('front/about.html')
-
-
-@front_bp.route('/faq')
-def faq():
-    return render_template('front/faq.html')

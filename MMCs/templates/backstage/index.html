@@ -1,0 +1,87 @@
+{% from 'macros.html' import render_nav_item %}
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('front.index') }}">
+            <img src="{{ url_for('static', filename='navbar-brand.ico') }}" alt="MMCs" width="80">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="navbar-nav ml-auto">
+                <div class="navbar-nav mr-auto">
+                    {{ render_nav_item('front.index', 'Dashboard', "oi oi-dashboard") }}
+                    <a class="nav-item nav-link" data-toggle="modal" data-target="#aboutModal">
+                        <span class="oi oi-bookmark"></span> About
+                    </a>
+
+                <div class="navbar-nav ml-auto">
+                    <div class="dropdown nav-item">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            Manage<span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" role="menu">
+                            {% if current_user.is_root %}
+                                <a class="dropdown-item" href="{{ url_for('root.index') }}">Overview</a>
+                                <a class="dropdown-item" href="{{ url_for('root.competition_management') }}">Competition Management</a>
+                                <a class="dropdown-item" href="{{ url_for('root.personnel_management') }}">Personnel Management</a>
+                                <a class="dropdown-item" href="{{ url_for('root.system_settings') }}">System Settings</a>
+                            {% elif current_user.is_admin %}
+                                <a class="dropdown-item" href="{{ url_for('admin.index') }}">Overview</a>
+                                <a class="dropdown-item" href="{{ url_for('admin.task_management') }}">Task Management</a>
+                                <a class="dropdown-item" href="{{ url_for('admin.score_management') }}">Score Settings</a>
+                            {% elif current_user.is_teacher %}
+                                <a class="dropdown-item" href="{{ url_for('teacher.index') }}">Overview</a>
+                                <a class="dropdown-item" href="{{ url_for('teacher.score_management') }}">Score Management</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="dropdown nav-item">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <span class="oi oi-person"></span>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" role="menu">
+                            <h6 class="dropdown-header">Logged in as {{ current_user.realname }}</h6>
+
+                            <a class="dropdown-item" href="{{ url_for('backstage.edit_profile') }}">
+                                <span class="oi oi-cog"></span> Settings
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ url_for('auth.logout') }}">
+                                <span class="oi oi-account-logout"></span> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<!-- about modal -->
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="aboutModalTitle">About</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                {{ lipsum(1) }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
