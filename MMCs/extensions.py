@@ -26,4 +26,4 @@ def load_user(user_id):
 
 login_manager.login_view = 'auth.login'
 login_manager.login_message = 'welcome~'
-login_manager.login_message_category = 'warning'
+login_manager.login_message_category = 'primary'
