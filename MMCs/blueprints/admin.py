@@ -3,7 +3,7 @@
 import os
 
 from flask import (Blueprint, current_app, flash, redirect, render_template,
-                   request, send_file, url_for)
+                   request, send_file, url_for, abort)
 from flask_login import login_required
 
 from MMCs.decorators import admin_required
@@ -101,4 +101,7 @@ def delete_task(task_id):
 @admin_bp.route('/solution/<path:filename>')
 def get_solution(filename):
     path = os.path.join(current_app.config['SOLUTION_SAVE_PATH'], filename)
+    if not os.path.exists(path):
+        abort(404)
+
     return send_file(path, as_attachment=True)

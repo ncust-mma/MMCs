@@ -17,7 +17,7 @@ from MMCs.blueprints.front import front_bp
 from MMCs.extensions import bootstrap, db, login_manager, csrf, ckeditor, dropzone, toolbar
 from MMCs.settings import config
 from MMCs.models import User, Solution, Distribution, StartConfirm
-from MMCs.utils import current_year
+from MMCs.utils import current_year, redirect_back
 
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
@@ -108,6 +108,10 @@ def register_global_func(app):
     @app.template_global()
     def is_start(year):
         return StartConfirm.is_start(year)
+
+    @app.template_global()
+    def redirect2back():
+        return redirect_back()
 
 
 def register_commands(app):

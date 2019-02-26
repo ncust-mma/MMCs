@@ -3,7 +3,7 @@
 ## TODO
 
 -   [ ] 访问权限管理
-
+n
 ### root
 
 -   [ ] Competition Management
@@ -20,7 +20,7 @@
 ### teacher
 
 -   [x] 评分
--   [ ] 文件下载控制
+-   [x] 文件下载控制
 
 ### db
 
