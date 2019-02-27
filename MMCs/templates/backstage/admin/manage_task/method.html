@@ -1,0 +1,43 @@
+{% extends 'backstage/admin/manage_task/base.html' %}
+
+{% block task_setting_content %}
+{% if is_start(get_current_year()) %}
+<div class="btn-group btn-group-vertical btn-block" role="group" aria-label="Button group with nested dropdown">
+    <button class="btn btn-danger text-white" data-toggle="modal" data-target="#confirm-random" data-href="{{ url_for('admin.method_random') }}">
+        Random
+    </button>
+    <a class="btn btn-primary" type="button" class="btn btn-secondary" href="{{ url_for('admin.method_manual') }}">Manual</a>
+</div>
+{% else %}
+    {% include "backstage/_tip.html" %}
+{% endif %}
+
+<div class="modal fade" id="confirm-random" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">
+                    Random Confirm
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to randomly assign?</p>
+            </div>
+            <div class="modal-footer">
+                <form class="delete-form" action="" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button class="btn btn-danger btn-confirm" type="submit">
+                        Random
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

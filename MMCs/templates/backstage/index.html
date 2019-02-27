@@ -29,16 +29,17 @@
                         <div class="dropdown-menu dropdown-menu-right" role="menu">
                             {% if current_user.is_root %}
                                 <a class="dropdown-item" href="{{ url_for('root.index') }}">Overview</a>
-                                <a class="dropdown-item" href="{{ url_for('root.competition_management') }}">Competition Management</a>
-                                <a class="dropdown-item" href="{{ url_for('root.personnel_management') }}">Personnel Management</a>
+                                <a class="dropdown-item" href="{{ url_for('root.manage_competition') }}">Competition Management</a>
+                                <a class="dropdown-item" href="{{ url_for('root.manage_personnel') }}">Personnel Management</a>
                                 <a class="dropdown-item" href="{{ url_for('root.system_settings') }}">System Settings</a>
                             {% elif current_user.is_admin %}
                                 <a class="dropdown-item" href="{{ url_for('admin.index') }}">Overview</a>
-                                <a class="dropdown-item" href="{{ url_for('admin.task_management') }}">Task Management</a>
-                                <a class="dropdown-item" href="{{ url_for('admin.score_management') }}">Score Settings</a>
+                                <a class="dropdown-item" href="{{ url_for('admin.manage_solution') }}">Solution Management</a>
+                                <a class="dropdown-item" href="{{ url_for('admin.manage_task') }}">Task Management</a>
+                                <a class="dropdown-item" href="{{ url_for('admin.manage_score') }}">Score Management</a>
                             {% elif current_user.is_teacher %}
                                 <a class="dropdown-item" href="{{ url_for('teacher.index') }}">Overview</a>
-                                <a class="dropdown-item" href="{{ url_for('teacher.score_management') }}">Score Management</a>
+                                <a class="dropdown-item" href="{{ url_for('teacher.manage_task') }}">Task Management</a>
                             {% endif %}
                         </div>
                     </div>

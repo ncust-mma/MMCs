@@ -8,6 +8,8 @@ from flask_login import current_user
 from flask_sqlalchemy import get_debug_queries
 from flask_wtf.csrf import CSRFError
 
+import logging
+from logging.handlers import RotatingFileHandler
 from MMCs.blueprints.auth import auth_bp
 from MMCs.blueprints.root import root_bp
 from MMCs.blueprints.teacher import teacher_bp
@@ -16,7 +18,7 @@ from MMCs.blueprints.backstage import backstage_bp
 from MMCs.blueprints.front import front_bp
 from MMCs.extensions import bootstrap, db, login_manager, csrf, ckeditor, dropzone, toolbar
 from MMCs.settings import config
-from MMCs.models import User, Solution, Distribution, StartConfirm
+from MMCs.models import User, Solution, Task, StartConfirm
 from MMCs.utils import current_year, redirect_back
 
 
@@ -39,8 +41,34 @@ def create_app(config_name=None):
     register_global_func(app)
     register_commands(app)
     register_shell_context(app)
+    register_logging(app)
 
     return app
+
+
+def register_logging(app):
+    class RequestFormatter(logging.Formatter):
+
+        def format(self, record):
+            record.url = request.url
+            record.remote_addr = request.remote_addr
+            return super(RequestFormatter, self).format(record)
+
+    request_formatter = RequestFormatter(
+        '[%(asctime)s] %(remote_addr)s requested %(url)s\n'
+        '%(levelname)s in %(module)s: %(message)s'
+    )
+
+    formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+    file_handler = RotatingFileHandler(os.path.join(basedir, 'logs/MMCs.log'),
+                                       maxBytes=10 * 1024 * 1024, backupCount=10)
+    file_handler.setFormatter(formatter)
+    file_handler.setLevel(logging.INFO)
+
+    if not app.debug:
+        app.logger.addHandler(file_handler)
 
 
 def register_extensions(app):
@@ -50,7 +78,7 @@ def register_extensions(app):
     csrf.init_app(app)
     ckeditor.init_app(app)
     dropzone.init_app(app)
-    toolbar.init_app(app)
+    # toolbar.init_app(app)
 
 
 def register_blueprints(app):
@@ -96,7 +124,7 @@ def register_shell_context(app):
     @app.shell_context_processor
     def make_shell_context():
         return dict(db=db, User=User, StartConfirm=StartConfirm,
-                    Solution=Solution, Distribution=Distribution)
+                    Solution=Solution, Task=Task)
 
 
 def register_global_func(app):
@@ -168,7 +196,7 @@ def register_commands(app):
         click.echo('Generating the start confirm...')
 
         fake_distribution()
-        click.echo('Generating the distribution...')
+        click.echo('Generating the task...')
 
         fake_file_type()
         click.echo('Generating %d filetype...' % filetype)

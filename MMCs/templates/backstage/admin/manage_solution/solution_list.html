@@ -1,0 +1,106 @@
+{% extends 'backstage/admin/manage_solution/base.html' %} {% from
+'bootstrap/pagination.html' import render_pagination %} {% block
+solution_setting_content %} {% if is_start(get_current_year()) %}
+<h3>
+    Solutions
+    <small class="text-muted">{{ pagination.total }}</small>
+</h3>
+<div>
+    {% if solutions %}
+    <table class="table table-striped table-hover table-sm">
+        <thead>
+            <tr class="text-center">
+                <th>#</th>
+                <th>File Name</th>
+                <th>UUID</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        {% for solution in solutions %}
+        <tr class="text-center">
+            <td>
+                {{
+                    pagination.total - (per_page * (page - 1) + loop.index) + 1
+                }}
+            </td>
+            <td>{{ solution.name }}</td>
+            <td>
+                <a
+                    href="{{ url_for('admin.get_solution', filename=solution.uuid) }}"
+                    target="_blank"
+                    >{{ solution.uuid }}
+                </a>
+            </td>
+            <td>
+                <a
+                    class="btn btn-danger btn-sm text-white"
+                    data-toggle="modal"
+                    data-target="#confirm-delete"
+                    data-href="{{ url_for('admin.delete_solution_task', solution_id=solution.id) }}"
+                >
+                    Delete
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="page-footer">{{ render_pagination(pagination) }}</div>
+    {% else %}
+    <div class="tip">
+        <span class="oi oi-ban"></span>
+        No solutions
+    </div>
+    {% endif %}
+</div>
+{% else %} {% include "backstage/_tip.html" %} {% endif %}
+
+<div
+    class="modal fade"
+    id="confirm-delete"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="confirmModalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">
+                    Delete Confirm
+                </h5>
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this item?</p>
+            </div>
+            <div class="modal-footer">
+                <form class="delete-form" action="" method="post">
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        value="{{ csrf_token() }}"
+                    />
+                    <button
+                        type="button"
+                        class="btn btn-default"
+                        data-dismiss="modal"
+                    >
+                        Cancel
+                    </button>
+                    <button class="btn btn-danger btn-confirm" type="submit">
+                        Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

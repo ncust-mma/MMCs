@@ -4,7 +4,7 @@ from faker import Faker
 from sqlalchemy.sql.expression import func
 
 from MMCs import db
-from MMCs.models import (Distribution, Solution, StartConfirm, UploadFileType,
+from MMCs.models import (Task, Solution, StartConfirm, UploadFileType,
                          User)
 
 fake = Faker()
@@ -47,6 +47,7 @@ def fake_default_teacher():
     db.session.add(user)
     db.session.commit()
 
+
 def fake_teacher(count=10):
     for _ in range(count):
         user = User(
@@ -82,7 +83,7 @@ def fake_solution(count=30):
 
 
 def fake_start_confirm():
-    sc = StartConfirm(year=2019)
+    sc = StartConfirm(year=2019, start_flag=True)
     db.session.add(sc)
     db.session.commit()
 
@@ -90,13 +91,13 @@ def fake_start_confirm():
 def fake_distribution():
     for solution in Solution.query.filter_by(year=2019).all():
         for teacher in User.query.filter_by(permission='Teacher').order_by(func.random()).limit(3).all():
-            distribution = Distribution(
+            task = Task(
                 teacher_id=teacher.id,
                 solution_uuid=solution.uuid,
                 year=solution.year
             )
 
-            db.session.add(distribution)
+            db.session.add(task)
             try:
                 db.session.commit()
             except:

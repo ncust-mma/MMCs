@@ -6,14 +6,14 @@
 
 ### root
 
--   [ ] Competition Management，两个功能按钮
+-   [x] Competition Management，两个功能按钮
 -   [ ] System Settings 几个小页面
 
 ## admin
 
--   [ ] Task Management -> Solution Management
--   [ ] Score Management -> Task Management
--   [ ] Score Management 几个小页面
+-   [x] Task Management -> Solution Management
+-   [x] Score Management -> Task Management
+-   [x] Score Management 几个小页面
 -   [ ] 上传文件后清理文件名同时传入数据库
 
 ### db

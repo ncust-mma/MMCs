@@ -1,0 +1,35 @@
+{% extends 'backstage/admin/manage_task/base.html' %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
+
+{% block task_setting_content %}
+{% if is_start(get_current_year()) %}
+    <div>
+        <table class="table table-striped table-hover table-sm">
+            <thead>
+                <tr>
+                    <th hidden>ID</th>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">UUID</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            {% for solution in solutions %}
+            <tr>
+                <form method="post">
+                    {{ form.csrf_token() }}
+                    <td hidden>{{ form.id(value=solution.id, readonly=True, hidden=True) }}</td>
+                    <td class="text-center">{{ pagination.total - (per_page*(page-1) + loop.index) + 1 }}</td>
+                    <td class="text-center">{{ solution.name }}</td>
+                    <td class="text-center">{{ solution.uuid }}</td>
+                    <td class="text-center">{{ form.submit(class="btn btn-info btn-sm") }}</td>
+                </form>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="page-footer">{{ render_pagination(pagination) }}</div>
+    </div>
+{% else %}
+    {% include "backstage/_tip.html" %}
+{% endif %}
+{% endblock %}

@@ -11,7 +11,7 @@
     </h3>
     {% if is_start(get_current_year()) %}
         <div class="card-body">
-            {% if distributions %}
+            {% if tasks %}
             <table class="table table-striped table-hover table-sm">
                 <thead>
                     <tr class="text-center">
@@ -22,15 +22,15 @@
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
-                {% for distribution in distributions %}
+                {% for task in tasks %}
                 <tr class="text-center">
                     <form method="post">
                         {{ form.csrf_token() }}
-                        <td hidden>{{ form.id(value=distribution.id, readonly=True, hidden=True) }}</td>
+                        <td hidden>{{ form.id(value=task.id, readonly=True, hidden=True) }}</td>
                         <td scope="row">{{ pagination.total - (per_page*(page-1) + loop.index) + 1 }}</td>
-                        <td><a href="{{ url_for('admin.get_solution', filename=distribution.solution_uuid) }}" target="_blank">{{ distribution.solution_uuid }}</a></td>
+                        <td><a href="{{ url_for('admin.get_solution', filename=task.solution_uuid) }}" target="_blank">{{ task.solution_uuid }}</a></td>
                         <td>
-                            {{ form.score(class="form-control form-control-sm text-center", value=distribution.score) }}
+                            {{ form.score(class="form-control form-control-sm text-center", value=task.score) }}
                         </td>
                         <td>{{ form.submit(class="btn btn-info btn-sm") }}</td>
                     </form>

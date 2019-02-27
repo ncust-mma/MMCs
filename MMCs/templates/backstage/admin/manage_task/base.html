@@ -1,0 +1,22 @@
+{% extends 'backstage/admin/base.html' %}
+
+{% block title %}Task{% endblock %}
+
+{% block setting_content %}
+<div class="card">
+    <div class="card-header">
+        <div class="nav nav-tabs card-header-tabs" role="tablist">
+            {{ render_nav_item("admin.method", "Method") }}
+            {{ render_nav_item("admin.method_manual", "Manual") }}
+            {% set endpoint = "admin.check_user" %}
+            <a class="nav-link {% if request.endpoint and request.endpoint == endpoint %}active{% endif %}">Check</a>
+            {% set endpoint = "admin.user_solution_add_page" %}
+            <a class="nav-link {% if request.endpoint and request.endpoint == endpoint %}active{% endif %}">Add</a>
+        </div>
+    </div>
+    <div class="card-body">
+        {% block task_setting_content %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

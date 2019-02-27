@@ -1,18 +1,25 @@
-{% extends 'backstage/index.html' %}
-{% from 'macros.html' import render_nav_item %}
-
-{% block title %}Home{% endblock title %}
-
-{% block content %}
+{% extends 'backstage/index.html' %} {% from 'macros.html' import
+render_nav_item %} {% block title %}Home{% endblock title %} {% block content %}
 <div class="page-header">
     <h1>Root</h1>
 </div>
 <div class="row">
     <div class="col-md-3">
-        <div class="nav nav-pills flex-column" role="tablist" aria-orientation="vertical">
-            {{ render_nav_item('root.competition_management', 'Competition Management') }}
-            {{ render_nav_item('root.personnel_management', 'Personnel Management') }}
-            {{ render_nav_item('root.system_settings', 'System Settings') }}
+        <div
+            class="nav nav-pills flex-column"
+            role="tablist"
+            aria-orientation="vertical"
+        >
+            {{
+                render_nav_item(
+                    "root.manage_competition",
+                    "Competition Management"
+                )
+            }}
+            {{
+                render_nav_item("root.manage_personnel", "Personnel Management")
+            }}
+            {{ render_nav_item("root.system_settings", "System Settings") }}
         </div>
     </div>
     <div class="col-md-9">

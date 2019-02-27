@@ -6,6 +6,7 @@ verify_ssl = true
 [dev-packages]
 autopep8 = "*"
 flask-debugtoolbar = "*"
+pylint = "*"
 
 [packages]
 flask = "*"
@@ -18,6 +19,7 @@ flask-wtf = "*"
 faker = "*"
 sqlalchemy = "*"
 python-dotenv = "*"
+logging = "*"
 
 [requires]
 python_version = "3.6"

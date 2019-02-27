@@ -18,7 +18,7 @@ class BaseConfig(object):
     SECRET_KEY = os.getenv('SECRET_KEY', 'secret key')
 
     USER_PER_PAGE = 30
-    SOLUTION_PER_PAGE = 10
+    SOLUTION_PER_PAGE = 30
     FILETYPE_PER_PAGE = 30
 
     DEBUG_TB_INTERCEPT_REDIRECTS = False

@@ -4,11 +4,11 @@ from flask_ckeditor import CKEditorField
 from flask_login import current_user
 from flask_wtf import FlaskForm
 from wtforms import (BooleanField, FloatField, PasswordField, RadioField, IntegerField,
-                     StringField, SubmitField, TextAreaField, ValidationError)
+                     StringField, SubmitField, ValidationError, SelectMultipleField)
 from wtforms.validators import (AnyOf, DataRequired, EqualTo, InputRequired,
                                 Length, Regexp, NumberRange, Optional)
 
-from MMCs.models import UploadFileType, User, Distribution
+from MMCs.models import UploadFileType, User, Task
 
 
 class LoginForm(FlaskForm):
@@ -151,7 +151,7 @@ class AddUploadFileTypeForm(FlaskForm):
 
 class ChangeScoreForm(FlaskForm):
     id = IntegerField(
-        'Distribution ID',
+        'Task ID',
         validators=[DataRequired()]
     )
     score = FloatField(
@@ -160,5 +160,12 @@ class ChangeScoreForm(FlaskForm):
     submit = SubmitField()
 
     def validate_id(self, field):
-        if Distribution.query.get(field.data) is None:
-            raise ValidationError('The distribution is not existed.')
+        if Task.query.get(field.data) is None:
+            raise ValidationError('The task is not existed.')
+
+
+class AdminAddTaskForm(FlaskForm):
+    id = IntegerField(
+        'Task ID',
+        validators=[DataRequired()])
+    submit = SubmitField('Add')

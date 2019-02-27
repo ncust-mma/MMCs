@@ -18,24 +18,38 @@ root_bp = Blueprint('root', __name__)
 @login_required
 @root_required
 def index():
-    return redirect(url_for('.competition_management'))
+    return redirect(url_for('.manage_competition'))
 
 
-@root_bp.route('/competition_management')
+@root_bp.route('/manage-competition')
 @login_required
 @root_required
-def competition_management():
-    return render_template('backstage/root/competition_management.html')
+def manage_competition():
+    return render_template('backstage/root/manage_competition.html')
 
 
-@root_bp.route('/personnel-management/')
+@root_bp.route('/competition/start', methods=['GET', 'POST'])
 @login_required
 @root_required
-def personnel_management():
+def start_competition():
+    return redirect_back()
+
+
+@root_bp.route('/competition/state/switch', methods=['GET', 'POST'])
+@login_required
+@root_required
+def switch_game_state():
+    return redirect_back()
+
+
+@root_bp.route('/manage-personnel/')
+@login_required
+@root_required
+def manage_personnel():
     return redirect(url_for('.personnel_list'))
 
 
-@root_bp.route('/personnel-management/personnel-list')
+@root_bp.route('/manage-personnel/personnel-list')
 @login_required
 @root_required
 def personnel_list():
@@ -46,11 +60,11 @@ def personnel_list():
     users = pagination.items
 
     return render_template(
-        'backstage/root/personnel_management/personnel_list.html',
+        'backstage/root/manage_personnel/personnel_list.html',
         pagination=pagination, users=users, page=page, per_page=per_page)
 
 
-@root_bp.route('/personnel-management/personnel-list/change-password/<int:user_id>', methods=['GET', 'POST'])
+@root_bp.route('/manage-personnel/personnel-list/change-password/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 @root_required
 def personnel_list_change_password(user_id):
@@ -64,10 +78,10 @@ def personnel_list_change_password(user_id):
         return redirect(url_for('.personnel_list'))
 
     return render_template(
-        'backstage/root/personnel_management/personnel_list_edit.html', form=form)
+        'backstage/root/manage_personnel/personnel_list_edit.html', form=form)
 
 
-@root_bp.route('/personnel-management/personnel-list/edit-profile/<int:user_id>', methods=['GET', 'POST'])
+@root_bp.route('/manage-personnel/personnel-list/edit-profile/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 @root_required
 def personnel_list_edit_profile(user_id):
@@ -86,10 +100,10 @@ def personnel_list_edit_profile(user_id):
 
     flash_errors(form)
     return render_template(
-        'backstage/root/personnel_management/personnel_list_edit.html', form=form)
+        'backstage/root/manage_personnel/personnel_list_edit.html', form=form)
 
 
-@root_bp.route('/personnel-management/personnel-list/change-username/<int:user_id>', methods=['GET', 'POST'])
+@root_bp.route('/manage-personnel/personnel-list/change-username/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 @root_required
 def personnel_list_change_username(user_id):
@@ -107,10 +121,10 @@ def personnel_list_change_username(user_id):
 
     flash_errors(form)
     return render_template(
-        'backstage/root/personnel_management/personnel_list_edit.html', form=form)
+        'backstage/root/manage_personnel/personnel_list_edit.html', form=form)
 
 
-@root_bp.route('/personnel-management/register', methods=['GET', 'POST'])
+@root_bp.route('/manage-personnel/register', methods=['GET', 'POST'])
 @login_required
 @root_required
 def register():
@@ -129,7 +143,7 @@ def register():
         return redirect_back()
 
     flash_errors(form)
-    return render_template('backstage/root/personnel_management/register.html', form=form)
+    return render_template('backstage/root/manage_personnel/register.html', form=form)
 
 
 @root_bp.route('/system-settings', methods=['GET', 'POST'])

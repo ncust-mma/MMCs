@@ -42,6 +42,15 @@ class User(db.Model, UserMixin):
     def can(self, permission_name):
         return self.permission == permission_name
 
+    def search_task(self, year):
+        return Task.query.filter(Task.teacher_id == self.id, Task.year == year).all()
+
+    def finished_task(self, year):
+        return Task.query.filter(
+            Task.teacher_id == self.id,
+            Task.year == year,
+            ~Task.score.in_([None, ''])).all()
+
 
 class Solution(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -60,7 +69,7 @@ class Solution(db.Model):
         return self.name
 
 
-class Distribution(db.Model):
+class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     teacher_id = db.Column(
         db.Integer, db.ForeignKey('user.id'))
@@ -73,6 +82,10 @@ class Distribution(db.Model):
     def is_able(self):
         return True if self.times < current_app.config['TEACHER_POINT_TIMES'] else False
 
+    @property
+    def filename(self):
+        return Solution.query.filter_by(uuid=self.solution_uuid).first().name
+
 
 class StartConfirm(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -80,8 +93,8 @@ class StartConfirm(db.Model):
     start_flag = db.Column(db.Boolean, default=False)
 
     @classmethod
-    def is_start(self, current_year):
-        flag = StartConfirm.query.filter_by(year=current_year).first()
+    def is_start(self, year):
+        flag = StartConfirm.query.filter_by(year=year).first()
         return flag.start_flag if flag is not None else False
 
 

@@ -7,7 +7,7 @@ from flask_login import current_user, login_required
 from MMCs.decorators import teacher_required
 from MMCs.extensions import db
 from MMCs.forms import ChangeScoreForm
-from MMCs.models import Distribution, User
+from MMCs.models import Task, User
 from MMCs.utils import flash_errors, redirect_back
 
 teacher_bp = Blueprint('teacher', __name__)
@@ -17,15 +17,15 @@ teacher_bp = Blueprint('teacher', __name__)
 @login_required
 @teacher_required
 def index():
-    solutions_right = Distribution.query.filter(
-        Distribution.year == 2019,
-        Distribution.teacher_id == current_user.id,
-        Distribution.score != None,
-        Distribution.score != '').count()
+    solutions_right = Task.query.filter(
+        Task.year == 2019,
+        Task.teacher_id == current_user.id,
+        Task.score != None,
+        Task.score != '').count()
 
-    solutions_all = Distribution.query.filter(
-        Distribution.year == 2019,
-        Distribution.teacher_id == current_user.id).count()
+    solutions_all = Task.query.filter(
+        Task.year == 2019,
+        Task.teacher_id == current_user.id).count()
 
     progress = False
     if solutions_all:
@@ -34,22 +34,22 @@ def index():
     return render_template('backstage/teacher/overview.html', progress=progress)
 
 
-@teacher_bp.route('/score-management', methods=['GET', 'POST'])
+@teacher_bp.route('/manage-task', methods=['GET', 'POST'])
 @login_required
 @teacher_required
-def score_management():
+def manage_task():
     page = request.args.get('page', 1, type=int)
     per_page = current_app.config['SOLUTION_PER_PAGE']
-    pagination = Distribution.query.filter(
-        Distribution.year == 2019,
-        Distribution.teacher_id == current_user.id
-    ).order_by(Distribution.id.desc()).paginate(page, per_page)
-    distributions = pagination.items
+    pagination = Task.query.filter(
+        Task.year == 2019,
+        Task.teacher_id == current_user.id
+    ).order_by(Task.id.desc()).paginate(page, per_page)
+    tasks = pagination.items
 
     form = ChangeScoreForm()
     if form.validate_on_submit():
-        distribution = Distribution.query.get(form.id.data)
-        distribution.score = form.score.data
+        task = Task.query.get(form.id.data)
+        task.score = form.score.data
         db.session.commit()
 
         flash('Score Updated.', 'info')
@@ -57,6 +57,6 @@ def score_management():
 
     flash_errors(form)
     return render_template(
-        'backstage/teacher/score_management.html',
-        pagination=pagination, distributions=distributions,
+        'backstage/teacher/manage_task.html',
+        pagination=pagination, tasks=tasks,
         page=page, per_page=per_page, form=form)
