@@ -14,6 +14,7 @@
 -   [ ] Task Management -> Solution Management
 -   [ ] Score Management -> Task Management
 -   [ ] Score Management 几个小页面
+-   [ ] 上传文件后清理文件名同时传入数据库
 
 ### db
 

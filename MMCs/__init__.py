@@ -50,7 +50,7 @@ def register_extensions(app):
     csrf.init_app(app)
     ckeditor.init_app(app)
     dropzone.init_app(app)
-    # toolbar.init_app(app)
+    toolbar.init_app(app)
 
 
 def register_blueprints(app):
