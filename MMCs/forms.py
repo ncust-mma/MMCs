@@ -3,12 +3,13 @@
 from flask_ckeditor import CKEditorField
 from flask_login import current_user
 from flask_wtf import FlaskForm
-from wtforms import (BooleanField, FloatField, PasswordField, RadioField, IntegerField,
-                     StringField, SubmitField, ValidationError, SelectMultipleField)
+from wtforms import (BooleanField, FloatField, IntegerField, PasswordField,
+                     RadioField, SelectMultipleField, StringField, SubmitField,
+                     ValidationError)
 from wtforms.validators import (AnyOf, DataRequired, EqualTo, InputRequired,
-                                Length, Regexp, NumberRange, Optional)
+                                Length, NumberRange, Optional, Regexp)
 
-from MMCs.models import UploadFileType, User, Task
+from MMCs.models import Task, UploadFileType, User
 
 
 class LoginForm(FlaskForm):
@@ -154,9 +155,13 @@ class ChangeScoreForm(FlaskForm):
         'Task ID',
         validators=[DataRequired()]
     )
+    SCORE_LOWER_LIMIT = 0
+    SCORE_UPPER_LIMIT = 100
     score = FloatField(
         'Score',
-        validators=[InputRequired(), DataRequired(), NumberRange(0, 100)])
+        validators=[
+            InputRequired()]
+    )
     submit = SubmitField()
 
     def validate_id(self, field):

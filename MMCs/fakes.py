@@ -4,8 +4,8 @@ from faker import Faker
 from sqlalchemy.sql.expression import func
 
 from MMCs import db
-from MMCs.models import (Task, Solution, StartConfirm, UploadFileType,
-                         User)
+from MMCs.models import Solution, StartConfirm, Task, UploadFileType, User
+from MMCs.utils import new_filename
 
 fake = Faker()
 fake_zh = Faker('zh_CN')
@@ -71,9 +71,8 @@ def fake_solution(count=30):
             fake.random_int(min=0, max=999),
             fake.random_element(elements=('A', 'B', 'C', 'D')),
             fake_zh.name(), fake_zh.name(), fake_zh.name())
-        solution = Solution(year=2019, name=name)
-        # name = solution.filter_name(name)
-        solution.set_uuid(name)
+        filename, uuid = new_filename(name)
+        solution = Solution(year=2019, name=filename, uuid=uuid)
 
         db.session.add(solution)
         try:
@@ -88,11 +87,12 @@ def fake_start_confirm():
     db.session.commit()
 
 
-def fake_distribution():
+def fake_task():
     for solution in Solution.query.filter_by(year=2019).all():
         for teacher in User.query.filter_by(permission='Teacher').order_by(func.random()).limit(3).all():
             task = Task(
                 teacher_id=teacher.id,
+                solution_id=solution.id,
                 solution_uuid=solution.uuid,
                 year=solution.year
             )

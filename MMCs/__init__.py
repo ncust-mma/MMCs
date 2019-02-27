@@ -47,6 +47,7 @@ def create_app(config_name=None):
 
 
 def register_logging(app):
+
     class RequestFormatter(logging.Formatter):
 
         def format(self, record):
@@ -78,7 +79,7 @@ def register_extensions(app):
     csrf.init_app(app)
     ckeditor.init_app(app)
     dropzone.init_app(app)
-    # toolbar.init_app(app)
+    toolbar.init_app(app)
 
 
 def register_blueprints(app):
@@ -162,7 +163,6 @@ def register_commands(app):
         """Initialize MMCs."""
         click.echo('Initializing the database...')
         db.create_all()
-
         click.echo('Done.')
 
     @app.cli.command()
@@ -172,7 +172,7 @@ def register_commands(app):
     def forge(teacher, solution, filetype):
         """Generate fake data."""
 
-        from MMCs.fakes import fake_root, fake_admin, fake_teacher, fake_solution, fake_start_confirm, fake_distribution, fake_file_type, fake_default_teacher
+        from MMCs.fakes import fake_root, fake_admin, fake_teacher, fake_solution, fake_start_confirm, fake_task, fake_file_type, fake_default_teacher
 
         db.drop_all()
         db.create_all()
@@ -195,7 +195,7 @@ def register_commands(app):
         fake_start_confirm()
         click.echo('Generating the start confirm...')
 
-        fake_distribution()
+        fake_task()
         click.echo('Generating the task...')
 
         fake_file_type()

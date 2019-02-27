@@ -20,6 +20,7 @@ faker = "*"
 sqlalchemy = "*"
 python-dotenv = "*"
 logging = "*"
+pypinyin = "*"
 
 [requires]
 python_version = "3.6"

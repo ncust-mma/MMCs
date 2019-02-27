@@ -7,6 +7,7 @@
 </h3>
 {% if users %}
 <div>
+    <div class="table-responsive">
     <table class="table table-striped table-hover table-sm">
         <thead>
             <tr>
@@ -78,7 +79,7 @@
         </tr>
         {% endfor %}
     </table>
-
+    </div>
     <div class="page-footer">{{ render_pagination(pagination) }}</div>
 </div>
 {% else %}

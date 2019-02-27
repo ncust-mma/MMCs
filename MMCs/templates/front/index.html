@@ -10,8 +10,8 @@
         </div>
         <div class="col-md-4 align-self-center">
             <h1>MMCs</h1>
-            <p>华北理工大学数学建模校赛管理系统</p>
-            <p><a class="btn btn-primary btn-lg" href="{{ url_for('auth.login') }}">Sign in Now</a></p>
+            <p>North China University of Science and Technology Mathematical Modeling School Competition Management System</p>
+            <p><a class="btn btn-primary btn-lg" href="{{ url_for('auth.login', next=request.full_path) }}">Sign in Now</a></p>
         </div>
     </div>
 </div>

@@ -50,7 +50,7 @@
                                     </a>
 
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ url_for('auth.logout') }}">
+                                    <a class="dropdown-item" href="{{ url_for('auth.logout', next=request.full_path) }}">
                                         <span class="oi oi-account-logout"></span> Logout
                                     </a>
                                 </div>
@@ -84,12 +84,14 @@
                     <p class="float-left">
                         <small> &copy; {{ get_current_year() }}
                             {{ link_field("Zero", "https://github.com/Zeroto521", "Written by Zeroto521") }} /
-                            {{ link_field("华北理工大学数学建模协会", "http://sxjm.ncst.edu.cn", "Organization") }} /
+                            {{ link_field("Organization", "http://sxjm.ncst.edu.cn", "North China University of Science and Technology Mathematical Modeling Association") }} /
                             {{ link_field("MMCs", "https://github.com/Zeroto521/MMCs", "Fork me on GitHub") }}
                         </small>
                     </p>
                     <p class="float-right">
-                        <small>华北理工大学数学建模校赛管理系统</small>
+                        <small>
+                            <a title="North China University of Science and Technology Mathematical Modeling School Competition Management System">Mathematical Modeling School Competition Management System</a>
+                        </small>
                     </p>
                 </footer>
                 {% endblock footer %}

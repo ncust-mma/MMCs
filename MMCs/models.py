@@ -2,11 +2,9 @@
 
 from flask import current_app
 from flask_login import UserMixin
-from werkzeug import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from MMCs.extensions import db
-from MMCs.utils import random_filename
 
 
 class User(db.Model, UserMixin):
@@ -49,7 +47,7 @@ class User(db.Model, UserMixin):
         return Task.query.filter(
             Task.teacher_id == self.id,
             Task.year == year,
-            ~Task.score.in_([None, ''])).all()
+            Task.score!=None).all()
 
 
 class Solution(db.Model):
@@ -57,24 +55,18 @@ class Solution(db.Model):
     name = db.Column(db.String(25), nullable=False)
     uuid = db.Column(db.String, index=True, nullable=False)
     year = db.Column(db.Integer, nullable=False)
-
+    score = db.Column(db.Float)
     # teachers = db.relationship(
     #     'Teacher', cascade='save-update, merge, delete')
-
-    def set_uuid(self, name):
-        self.uuid = random_filename(name)
-
-    def filter_name(self, name):
-        self.name = secure_filename(name)
-        return self.name
 
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     teacher_id = db.Column(
         db.Integer, db.ForeignKey('user.id'))
-    solution_uuid = db.Column(db.Integer, db.ForeignKey('solution.uuid'))
-    score = db.Column(db.Integer)
+    solution_id = db.Column(db.Integer, db.ForeignKey('solution.id'))
+    solution_uuid = db.Column(db.String, db.ForeignKey('solution.uuid'))
+    score = db.Column(db.Float)
     times = db.Column(db.Integer, default=0)
     year = db.Column(db.Integer, nullable=False)
 
@@ -108,3 +100,5 @@ class UploadFileType(db.Model):
 
 class SysSettings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user_per_page = db.Column(db.Integer, default=30)
+    solution_per_page = db.Column(db.Integer, default=30)

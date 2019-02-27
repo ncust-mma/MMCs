@@ -18,7 +18,7 @@ class BaseConfig(object):
     SECRET_KEY = os.getenv('SECRET_KEY', 'secret key')
 
     USER_PER_PAGE = 30
-    SOLUTION_PER_PAGE = 30
+    SOLUTION_PER_PAGE = 20
     FILETYPE_PER_PAGE = 30
 
     DEBUG_TB_INTERCEPT_REDIRECTS = False
@@ -41,9 +41,12 @@ class BaseConfig(object):
     DROPZONE_MAX_FILES = 20
     DROPZONE_ALLOWED_FILE_CUSTOM = True
     DROPZONE_ENABLE_CSRF = True
-    DROPZONE_ALLOWED_FILE_TYPE = '.pdf, .doc, docx'
+    DROPZONE_ALLOWED_FILE_TYPE = '.pdf, .doc, .docx'
 
-    ALLOWED_SOLUTION_EXTENSIONS = ['pdf', 'doc', 'docx']
+    ALLOWED_SOLUTION_EXTENSIONS = set(['pdf', 'doc', 'docx'])
+
+    SCORE_UPPER_LIMIT = 100
+    SCORE_LOWER_LIMIT = 0
 
 
 class DevelopmentConfig(BaseConfig):

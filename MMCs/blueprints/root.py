@@ -2,7 +2,7 @@
 
 from flask import (Blueprint, current_app, flash, redirect, render_template,
                    request, url_for)
-from flask_login import current_user, login_required
+from flask_login import current_user, fresh_login_required, login_required
 
 from MMCs.decorators import root_required
 from MMCs.extensions import db
@@ -21,7 +21,7 @@ def index():
     return redirect(url_for('.manage_competition'))
 
 
-@root_bp.route('/manage-competition')
+@root_bp.route('/manage-competition', methods=['GET', 'POST'])
 @login_required
 @root_required
 def manage_competition():
@@ -65,6 +65,7 @@ def personnel_list():
 
 
 @root_bp.route('/manage-personnel/personnel-list/change-password/<int:user_id>', methods=['GET', 'POST'])
+@fresh_login_required
 @login_required
 @root_required
 def personnel_list_change_password(user_id):
@@ -82,6 +83,7 @@ def personnel_list_change_password(user_id):
 
 
 @root_bp.route('/manage-personnel/personnel-list/edit-profile/<int:user_id>', methods=['GET', 'POST'])
+@fresh_login_required
 @login_required
 @root_required
 def personnel_list_edit_profile(user_id):
@@ -104,6 +106,7 @@ def personnel_list_edit_profile(user_id):
 
 
 @root_bp.route('/manage-personnel/personnel-list/change-username/<int:user_id>', methods=['GET', 'POST'])
+@fresh_login_required
 @login_required
 @root_required
 def personnel_list_change_username(user_id):
@@ -125,6 +128,7 @@ def personnel_list_change_username(user_id):
 
 
 @root_bp.route('/manage-personnel/register', methods=['GET', 'POST'])
+@fresh_login_required
 @login_required
 @root_required
 def register():
@@ -151,6 +155,7 @@ def register():
 @root_required
 def system_settings():
     page = request.args.get('page', 1, type=int)
+    current_app.config['USER_PER_PAGE'] = 10
     per_page = current_app.config['FILETYPE_PER_PAGE']
     pagination = UploadFileType.query.order_by(
         UploadFileType.id.desc()).paginate(page, per_page)

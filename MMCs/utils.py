@@ -5,11 +5,13 @@ try:
 except ImportError:
     from urllib.parse import urlparse, urljoin
 
+import datetime
 import os
 import uuid
-import datetime
 
 from flask import current_app, flash, redirect, request, url_for
+from pypinyin import lazy_pinyin
+from werkzeug.utils import secure_filename
 
 from MMCs.extensions import db
 
@@ -44,8 +46,15 @@ def flash_errors(form):
                   (getattr(form, field).label.text, error), 'dark')
 
 
-def random_filename(filename):
+def gen_uuid(filename):
     ext = os.path.splitext(filename)[1]
-    new_filename = uuid.uuid4().hex + ext
+    name = uuid.uuid1().hex + ext
 
-    return new_filename
+    return name
+
+
+def new_filename(filename):
+    filename = secure_filename(''.join(lazy_pinyin(filename)))
+    uuid = gen_uuid(filename)
+
+    return filename, uuid

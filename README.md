@@ -4,19 +4,29 @@
 
 -   [ ] 访问权限管理, jinja 当前用户判断 和 代码访问权限限制
 
-### root
-
--   [x] Competition Management，两个功能按钮
--   [ ] System Settings 几个小页面
-
-## admin
-
--   [x] Task Management -> Solution Management
--   [x] Score Management -> Task Management
--   [x] Score Management 几个小页面
--   [ ] 上传文件后清理文件名同时传入数据库
-
 ### db
 
 -   [ ] 数据库关系
--   [ ] 测试
+
+## bugs
+
+### admin
+
+-   [ ] 跟教师添加任务页面表格显示有问题
+
+## 待添加功能
+
+### teacher
+
+-   [ ] 修改次数限制
+-   [ ] 表格下载功能
+
+## admin
+
+-   [ ] 表格下载功能
+-   [ ] 总分功能
+-   [ ] 随机分配功能
+
+### root
+
+-   [ ] 系统设置

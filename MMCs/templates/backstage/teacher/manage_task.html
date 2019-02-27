@@ -1,17 +1,20 @@
 {% extends 'backstage/teacher/base.html' %}
 {% from 'bootstrap/pagination.html' import render_pagination %}
-{% from 'bootstrap/form.html' import render_field %}
 
-{% block title %}Score{% endblock %}
+{% block title %}Task{% endblock %}
 
 {% block setting_content %}
 <div class="card w-100 bg-light">
     <h3 class="card-header">
-        Solutions <small class="text-muted">{{ pagination.total }}</small>
+        Solutions
+        {% if is_start(get_current_year()) %}
+            <small class="text-muted">{{ pagination.total }}</small>
+        {% endif %}
     </h3>
     {% if is_start(get_current_year()) %}
         <div class="card-body">
             {% if tasks %}
+            <div class="table-responsive">
             <table class="table table-striped table-hover table-sm">
                 <thead>
                     <tr class="text-center">
@@ -28,7 +31,7 @@
                         {{ form.csrf_token() }}
                         <td hidden>{{ form.id(value=task.id, readonly=True, hidden=True) }}</td>
                         <td scope="row">{{ pagination.total - (per_page*(page-1) + loop.index) + 1 }}</td>
-                        <td><a href="{{ url_for('admin.get_solution', filename=task.solution_uuid) }}" target="_blank">{{ task.solution_uuid }}</a></td>
+                        <td><a href="{{ url_for('backstage.get_solution', filename=task.solution_uuid) }}" target="_blank">{{ task.solution_uuid }}</a></td>
                         <td>
                             {{ form.score(class="form-control form-control-sm text-center", value=task.score) }}
                         </td>
@@ -37,6 +40,7 @@
                 </tr>
                 {% endfor %}
             </table>
+            </div>
             <div class="page-footer">{{ render_pagination(pagination) }}</div>
             {% else %}
                 <div class="tip">

@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from flask import (Blueprint, current_app, flash, redirect, render_template,
-                   request, url_for)
+from flask import (Blueprint, abort, current_app, flash, redirect,
+                   render_template, request, url_for)
 from flask_login import current_user, login_required
 
 from MMCs.decorators import teacher_required
 from MMCs.extensions import db
 from MMCs.forms import ChangeScoreForm
-from MMCs.models import Task, User
-from MMCs.utils import flash_errors, redirect_back
+from MMCs.models import StartConfirm, Task, User
+from MMCs.utils import current_year, flash_errors, redirect_back
 
 teacher_bp = Blueprint('teacher', __name__)
 
@@ -48,11 +48,18 @@ def manage_task():
 
     form = ChangeScoreForm()
     if form.validate_on_submit():
-        task = Task.query.get(form.id.data)
-        task.score = form.score.data
-        db.session.commit()
+        upper = current_app.config['SCORE_UPPER_LIMIT']
+        lower = current_app.config['SCORE_LOWER_LIMIT']
+        if lower <= form.score.data <= upper:
+            task = Task.query.get(form.id.data)
+            task.score = form.score.data
+            db.session.commit()
 
-        flash('Score Updated.', 'info')
+            flash('Score Updated.', 'success')
+        else:
+            flash(
+                'Score out of range from {} to {}.'.format(lower, upper), 'warning')
+
         return redirect_back()
 
     flash_errors(form)

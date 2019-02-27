@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, render_template, flash
+import os
+
+from flask import (Blueprint, abort, current_app, flash, render_template,
+                   send_file)
 from flask_login import current_user, fresh_login_required, login_required
 
 from MMCs.extensions import db
-from MMCs.forms import ChangePasswordForm, EditProfileForm, ChangeUsernameForm
-from MMCs.utils import redirect_back, flash_errors
-
+from MMCs.forms import ChangePasswordForm, ChangeUsernameForm, EditProfileForm
+from MMCs.models import StartConfirm
+from MMCs.utils import current_year, flash_errors, redirect_back
 
 backstage_bp = Blueprint('backstage', __name__)
 
@@ -32,6 +35,7 @@ def edit_profile():
 
 @backstage_bp.route('/settings/change-username', methods=['GET', 'POST'])
 @login_required
+@fresh_login_required
 def change_username():
     form = ChangeUsernameForm()
     if form.validate_on_submit():
@@ -63,3 +67,18 @@ def change_password():
 
     flash_errors(form)
     return render_template('backstage/settings/change_password.html', form=form)
+
+
+@backstage_bp.route('/solution/<path:filename>')
+@login_required
+def get_solution(filename):
+    year = current_year()
+    if StartConfirm.is_start(year):
+        path = os.path.join(
+            current_app.config['SOLUTION_SAVE_PATH'], str(year), filename)
+        if os.path.exists(path):
+            return send_file(path, as_attachment=True)
+        else:
+            abort(404)
+    else:
+        abort(403)
