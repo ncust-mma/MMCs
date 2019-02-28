@@ -2,6 +2,7 @@
 
 from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, url_for)
+from flask_babel import _
 from flask_login import current_user, fresh_login_required, login_required
 
 from MMCs.decorators import root_required
@@ -10,8 +11,8 @@ from MMCs.forms import (AddUploadFileTypeForm, ButtonChangePasswordForm,
                         ButtonChangeUsernameForm, ButtonEditProfileForm,
                         ChangeUsernameForm, EditProfileForm, RegisterForm,
                         RootChangePasswordForm)
-from MMCs.models import UploadFileType, User, StartConfirm, Solution, Task
-from MMCs.utils import redirect_back, current_year
+from MMCs.models import Solution, StartConfirm, Task, UploadFileType, User
+from MMCs.utils import current_year, redirect_back
 
 root_bp = Blueprint('root', __name__)
 
@@ -63,13 +64,13 @@ def start_competition():
         Solution.query.filter_by(year=year).delete()
         Task.query.filter_by(year=year).delete()
         db.session.commit()
-        flash('The year of {} Competition deleted.'.format(year), 'success')
+        flash(_('The year of %(year)s Competition deleted.', year=year), 'success')
 
     else:
         sc = StartConfirm(year=year, start_flag=True)
         db.session.add(sc)
         db.session.commit()
-        flash('The year of {} Competition start now.'.format(year), 'success')
+        flash(_('The year of %(year)s Competition start now.', year=year), 'success')
 
     return redirect_back()
 
@@ -86,10 +87,10 @@ def switch_game_state():
         else:
             sc.start_flag = True
         db.session.commit()
-        flash('Competition state switched.', 'success')
+        flash(_('Competition state switched.'), 'success')
 
     else:
-        flash('Please start current competition before do it.', 'warning')
+        flash(_('Please start current competition before do it.'), 'warning')
 
     return redirect_back()
 
@@ -136,7 +137,7 @@ def personnel_list_change_password(user_id):
             user.set_password(form.password.data)
             db.session.commit()
 
-            flash('Password updated.', 'success')
+            flash(_('Password updated.'), 'success')
             return redirect(url_for('.personnel_list'))
     else:
         abort(404)
@@ -159,7 +160,7 @@ def personnel_list_edit_profile(user_id):
             user.remark = form.remark.data
             db.session.commit()
 
-            flash('Profile updated.', 'success')
+            flash(_('Profile updated.'), 'success')
             return redirect(url_for('.personnel_list'))
 
         form.realname.data = user.realname
@@ -185,7 +186,7 @@ def personnel_list_change_username(user_id):
             user.username = form.username.data
             db.session.commit()
 
-            flash('Account registered.', 'success')
+            flash(_('Username updated.'), 'success')
             return redirect(url_for('.personnel_list'))
 
         form.username.data = user.username
@@ -214,7 +215,7 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Account registered.', 'success')
+        flash(_('Account registered.'), 'success')
         return redirect_back()
 
     return render_template('backstage/root/manage_personnel/register.html', form=form)
@@ -236,7 +237,7 @@ def system_settings():
         ft = UploadFileType(file_type=form.file_type.data)
         db.session.add(ft)
         db.session.commit()
-        flash('Upload file type added.', 'success')
+        flash(_('File type added.'), 'success')
         return redirect_back()
 
     return render_template('backstage/root/system_settings.html', form=form, pagination=pagination, file_types=file_types, page=page, per_page=per_page)
@@ -251,7 +252,7 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
 
-    flash('User deleted.', 'info')
+    flash(_('User deleted.'), 'info')
 
     return redirect_back()
 
@@ -265,6 +266,6 @@ def delete_file_type(file_type_id):
     db.session.delete(file_type)
     db.session.commit()
 
-    flash('File type deleted.', 'info')
+    flash(_('File type deleted.'), 'info')
 
     return redirect_back()

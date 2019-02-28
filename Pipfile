@@ -21,6 +21,8 @@ sqlalchemy = "*"
 python-dotenv = "*"
 logging = "*"
 pypinyin = "*"
+flask-babel = "*"
+dotenv = "*"
 
 [requires]
 python_version = "3.6"

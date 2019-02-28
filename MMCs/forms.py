@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from flask_babel import lazy_gettext as _l
 from flask_ckeditor import CKEditorField
 from flask_login import current_user
 from flask_wtf import FlaskForm
@@ -13,125 +14,129 @@ from MMCs.models import Task, UploadFileType, User
 
 class LoginForm(FlaskForm):
     username = StringField(
-        'Username',
-        validators=[DataRequired(), Length(1, 30), InputRequired()])
+        _l('Username'),
+        validators=[
+            DataRequired(),
+            Length(1, 30),
+            InputRequired()]
+    )
     password = PasswordField(
-        'Password', validators=[DataRequired(), InputRequired()])
-    remember_me = BooleanField('Remember me')
-    submit = SubmitField('Log in')
+        _l('Password'), validators=[DataRequired(), InputRequired()])
+    remember_me = BooleanField(_l('Remember me'))
+    submit = SubmitField(_l('Log in'))
 
     def validate_username(self, field):
         if not User.query.filter_by(username=field.data).first():
-            raise ValidationError('The username is not existed.')
+            raise ValidationError(_l('The username is not existed.'))
 
 
 class RegisterForm(FlaskForm):
     username = StringField(
-        'Username', validators=[
+        _l('Username'), validators=[
             DataRequired(), Length(1, 20), InputRequired(),
-            Regexp('^[a-zA-Z0-9]*$', message='The username should contain only a-z, A-Z and 0-9.')]
+            Regexp('^[a-zA-Z0-9]*$', message=_l('The username should contain only a-z, A-Z and 0-9.'))]
     )
     realname = StringField(
-        'Realname',
+        _l('Realname'),
         validators=[DataRequired(), Length(1, 20), InputRequired()])
     permission = RadioField(
-        'Permission', validators=[
+        _l('Permission'), validators=[
             DataRequired(), InputRequired(), AnyOf(['Teacher', 'Admin', 'Root'])],
-        choices=[('Teacher', 'As teacher user'),
-                 ('Admin', 'As administrator user'),
-                 ('Root', 'As root user')],
+        choices=[('Teacher', _l('As teacher user')),
+                 ('Admin', _l('As administrator user')),
+                 ('Root', _l('As root user'))],
         default='Teacher'
     )
-    remark = CKEditorField('Remark', validators=[Optional()])
+    remark = CKEditorField(_l('Remark'), validators=[Optional()])
     password = PasswordField(
-        'Password',
+        _l('Password'),
         validators=[DataRequired(), Length(8, 128), EqualTo('password2'), InputRequired()])
     password2 = PasswordField(
-        'Confirm password',
+        _l('Confirm password'),
         validators=[DataRequired(), InputRequired()])
     submit = SubmitField()
 
     def validate_username(self, field):
         if User.query.filter_by(username=field.data).first():
-            raise ValidationError('The username is already in use.')
+            raise ValidationError(_l('The username is already in use.'))
 
     def validate_permission(self, field):
         if not field.data or field.data not in ['Teacher', 'Admin', 'Root']:
-            raise ValidationError(
-                'The permission must select from Teacher, Admin and Root.')
+            raise ValidationError(_l(
+                'The permission must select from Teacher, Admin and Root.'))
 
 
 class ChangeUsernameForm(FlaskForm):
     username = StringField(
-        'New Username',
+        _l('New Username'),
         validators=[
             InputRequired(), DataRequired(), Length(1, 30), EqualTo('username2'),
-            Regexp('^[a-zA-Z0-9]*$', message='The username should contain only a-z, A-Z and 0-9.')]
+            Regexp('^[a-zA-Z0-9]*$', message=_l('The username should contain only a-z, A-Z and 0-9.'))]
     )
     username2 = StringField(
-        'Confirm Username',
+        _l('Confirm Username'),
         validators=[DataRequired(), InputRequired()]
     )
     submit = SubmitField()
 
     def validate_username(self, field):
         if field.data != current_user.username and User.query.filter_by(username=field.data).first():
-            raise ValidationError('The username is already in use.')
+            raise ValidationError(_l('The username is already in use.'))
 
 
 class EditProfileForm(FlaskForm):
     realname = StringField(
-        'Realname',
+        _l('Realname'),
         validators=[InputRequired(), DataRequired(), Length(1, 30)]
     )
-    remark = CKEditorField('Remark', validators=[Optional()])
+    remark = CKEditorField(_l('Remark'), validators=[Optional()])
     submit = SubmitField()
 
 
 class ChangePasswordForm(FlaskForm):
     old_password = PasswordField(
-        'Old Password', validators=[DataRequired(), InputRequired()])
+        _l('Old Password'), validators=[DataRequired(), InputRequired()])
     password = PasswordField(
-        'New Password',
+        _l('New Password'),
         validators=[InputRequired(), DataRequired(), Length(8, 128), EqualTo('password2')])
     password2 = PasswordField(
-        'Confirm Password',
+        _l('Confirm Password'),
         validators=[DataRequired(), InputRequired()])
     submit = SubmitField()
 
 
 class RootChangePasswordForm(FlaskForm):
     password = PasswordField(
-        'New Password',
+        _l('New Password'),
         validators=[InputRequired(), DataRequired(), Length(8, 128), EqualTo('password2')])
     password2 = PasswordField(
-        'Confirm Password',
+        _l('Confirm Password'),
         validators=[InputRequired(), DataRequired()])
     submit = SubmitField()
 
 
 class AddUploadFileTypeForm(FlaskForm):
     file_type = StringField(
-        'File type',
+        _l('File type'),
         validators=[
             InputRequired(), DataRequired(), Length(1, 10),
-            Regexp('^[a-z]*$', message='The file type should contain only a-z.')
+            Regexp('^[a-z]*$', message=_l('The file type should contain only a-z.'))
         ])
     submit = SubmitField()
 
     def validate_file_type(self, field):
         if UploadFileType.query.filter_by(file_type=field.data).first():
-            raise ValidationError('The file type is already in use.')
+            raise ValidationError(_l('The file type is already in use.'))
 
 
 class ChangeScoreForm(FlaskForm):
     id = IntegerField(
-        'Task ID',
+        _l('Task ID'),
         validators=[DataRequired()]
     )
 
     score = FloatField(
-        'Score',
+        _l('Score'),
         validators=[
             InputRequired()]
     )
@@ -139,39 +144,39 @@ class ChangeScoreForm(FlaskForm):
 
     def validate_id(self, field):
         if Task.query.get(field.data) is None:
-            raise ValidationError('The task is not existed.')
+            raise ValidationError(_l('The task is not existed.'))
 
 
 class AdminAddTaskForm(FlaskForm):
     id = IntegerField(
-        'Task ID',
+        _l('Task ID'),
         validators=[DataRequired()])
-    submit = SubmitField('Add')
+    submit = SubmitField(_l('Add'))
 
 
 class ButtonAddForm(FlaskForm):
-    submit = SubmitField('Add')
+    submit = SubmitField(_l('Add'))
 
 
 class ButtonCheckForm(FlaskForm):
-    submit = SubmitField('Check')
+    submit = SubmitField(_l('Check'))
 
 
 class ButtonStopForm(FlaskForm):
-    submit = SubmitField('Stop')
+    submit = SubmitField(_l('Stop'))
 
 
 class ButtonContinueForm(FlaskForm):
-    submit = SubmitField('Continue')
+    submit = SubmitField(_l('Continue'))
 
 
 class ButtonEditProfileForm(FlaskForm):
-    submit = SubmitField('Edit Profile')
+    submit = SubmitField(_l('Edit Profile'))
 
 
 class ButtonChangeUsernameForm(FlaskForm):
-    submit = SubmitField('Change Username')
+    submit = SubmitField(_l('Change Username'))
 
 
 class ButtonChangePasswordForm(FlaskForm):
-    submit = SubmitField('Change Password')
+    submit = SubmitField(_l('Change Password'))

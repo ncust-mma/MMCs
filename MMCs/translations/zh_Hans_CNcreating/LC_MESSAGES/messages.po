@@ -1,0 +1,356 @@
+# Chinese (Simplified) translations for PROJECT.
+# Copyright (C) 2019 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2019-02-28 19:54+0800\n"
+"PO-Revision-Date: 2019-02-28 20:24+0800\n"
+"Language: zh\n"
+"Language-Team: zh_Hans <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.6.0\n"
+"Last-Translator: \n"
+"X-Generator: Poedit 2.2.1\n"
+
+#: MMCs/extensions.py:31
+msgid "Please log in to access this page."
+msgstr ""
+
+#: MMCs/extensions.py:34
+msgid "In order to protect your account security, please log in again."
+msgstr ""
+
+#: MMCs/forms.py:17 MMCs/forms.py:35
+msgid "Username"
+msgstr "账户"
+
+#: MMCs/forms.py:24 MMCs/forms.py:52
+msgid "Password"
+msgstr "密码"
+
+#: MMCs/forms.py:25
+msgid "Remember me"
+msgstr "记住我"
+
+#: MMCs/forms.py:26
+msgid "Log in"
+msgstr "登入"
+
+#: MMCs/forms.py:30
+msgid "The username is not existed."
+msgstr "用户名不存在。"
+
+#: MMCs/forms.py:37 MMCs/forms.py:74
+msgid "The username should contain only a-z, A-Z and 0-9."
+msgstr ""
+
+#: MMCs/forms.py:40 MMCs/forms.py:89
+msgid "Realname"
+msgstr "姓名"
+
+#: MMCs/forms.py:43
+msgid "Permission"
+msgstr "权限"
+
+#: MMCs/forms.py:45
+msgid "As teacher user"
+msgstr "教师用户"
+
+#: MMCs/forms.py:46
+msgid "As administrator user"
+msgstr "协管员"
+
+#: MMCs/forms.py:47
+msgid "As root user"
+msgstr "管理员"
+
+#: MMCs/forms.py:50 MMCs/forms.py:92
+msgid "Remark"
+msgstr "备注"
+
+#: MMCs/forms.py:55
+msgid "Confirm password"
+msgstr "密码确认"
+
+#: MMCs/forms.py:61 MMCs/forms.py:84
+msgid "The username is already in use."
+msgstr "用户名已存在。"
+
+#: MMCs/forms.py:65
+msgid "The permission must select from Teacher, Admin and Root."
+msgstr ""
+
+#: MMCs/forms.py:71
+msgid "New Username"
+msgstr "新用户名"
+
+#: MMCs/forms.py:77
+msgid "Confirm Username"
+msgstr "用户名确认"
+
+#: MMCs/forms.py:98
+msgid "Old Password"
+msgstr "旧密码"
+
+#: MMCs/forms.py:100 MMCs/forms.py:110
+msgid "New Password"
+msgstr "新密码"
+
+#: MMCs/forms.py:103 MMCs/forms.py:113
+msgid "Confirm Password"
+msgstr "密码确认"
+
+#: MMCs/forms.py:120
+msgid "File type"
+msgstr "文件类型"
+
+#: MMCs/forms.py:123
+msgid "The file type should contain only a-z."
+msgstr ""
+
+#: MMCs/forms.py:129
+msgid "The file type is already in use."
+msgstr "文件类型已存在。"
+
+#: MMCs/forms.py:134 MMCs/forms.py:152
+msgid "Task ID"
+msgstr "任务号"
+
+#: MMCs/forms.py:139 MMCs/templates/backstage/teacher/manage_task.html:24
+msgid "Score"
+msgstr "分数"
+
+#: MMCs/forms.py:147
+msgid "The task is not existed."
+msgstr "该任务未存在。"
+
+#: MMCs/forms.py:154 MMCs/forms.py:158
+msgid "Add"
+msgstr "添加"
+
+#: MMCs/forms.py:162
+msgid "Check"
+msgstr "确认"
+
+#: MMCs/forms.py:166
+msgid "Stop"
+msgstr "暂停"
+
+#: MMCs/forms.py:170
+msgid "Continue"
+msgstr "继续"
+
+#: MMCs/forms.py:174 MMCs/templates/backstage/settings/base.html:14
+#: MMCs/templates/backstage/settings/edit_profile.html:6
+msgid "Edit Profile"
+msgstr "账户设置"
+
+#: MMCs/forms.py:178 MMCs/templates/backstage/settings/base.html:15
+msgid "Change Username"
+msgstr "更改用户名"
+
+#: MMCs/forms.py:182 MMCs/templates/backstage/settings/base.html:16
+#: MMCs/templates/backstage/settings/change_password.html:7
+msgid "Change Password"
+msgstr "更改密码"
+
+#: MMCs/utils.py:47
+#, python-format
+msgid "Error in the %(name)s field - %(error)s"
+msgstr ""
+
+#: MMCs/blueprints/admin.py:84
+msgid "Competition of current year don't start."
+msgstr "今年校赛尚未开始。"
+
+#: MMCs/blueprints/admin.py:98
+msgid "Solution deleted."
+msgstr "作品已删除。"
+
+#: MMCs/blueprints/admin.py:126
+msgid "Randomly assigned."
+msgstr "任务已随机分配。"
+
+#: MMCs/blueprints/admin.py:179
+msgid "All tasks of User deleted."
+msgstr "该用户所有任务已删除。"
+
+#: MMCs/blueprints/admin.py:190
+msgid "Task deleted."
+msgstr "任务删除。"
+
+#: MMCs/blueprints/admin.py:226
+msgid "Added successed."
+msgstr "添加成功。"
+
+#: MMCs/blueprints/auth.py:25
+msgid "Login success."
+msgstr "登入成功。"
+
+#: MMCs/blueprints/auth.py:28
+msgid "Invalid username or password."
+msgstr "用户名或密码无效。"
+
+#: MMCs/blueprints/auth.py:37
+msgid "Logout success."
+msgstr "注销成功。"
+
+#: MMCs/blueprints/backstage.py:27 MMCs/blueprints/root.py:163
+msgid "Profile updated."
+msgstr "账户已更新。"
+
+#: MMCs/blueprints/backstage.py:45 MMCs/blueprints/root.py:189
+msgid "Username updated."
+msgstr "用户名已更新。"
+
+#: MMCs/blueprints/backstage.py:63 MMCs/blueprints/root.py:140
+msgid "Password updated."
+msgstr "密码已更新。"
+
+#: MMCs/blueprints/backstage.py:66
+msgid "Old password is incorrect."
+msgstr "旧密码不正确。"
+
+#: MMCs/blueprints/front.py:33
+msgid "Invalid locale."
+msgstr ""
+
+#: MMCs/blueprints/front.py:35
+msgid "Setting updated."
+msgstr "设置已更新。"
+
+#: MMCs/blueprints/root.py:67
+#, python-format
+msgid "The year of %(year)s Competition deleted."
+msgstr ""
+
+#: MMCs/blueprints/root.py:73
+#, python-format
+msgid "The year of %(year)s Competition start now."
+msgstr ""
+
+#: MMCs/blueprints/root.py:90
+msgid "Competition state switched."
+msgstr "竞赛状况已更新。"
+
+#: MMCs/blueprints/root.py:93
+msgid "Please start current competition before do it."
+msgstr ""
+
+#: MMCs/blueprints/root.py:218
+msgid "Account registered."
+msgstr "账号已注册。"
+
+#: MMCs/blueprints/root.py:240
+msgid "File type added."
+msgstr "文件类型已添加。"
+
+#: MMCs/blueprints/root.py:255
+msgid "User deleted."
+msgstr "账号已删除。"
+
+#: MMCs/blueprints/root.py:269
+msgid "File type deleted."
+msgstr "文件类型已删除。"
+
+#: MMCs/blueprints/teacher.py:59
+msgid "Score Updated."
+msgstr "分数已更新。"
+
+#: MMCs/blueprints/teacher.py:61
+#, python-format
+msgid "Score out of range from %(lower)s to %(upper)s."
+msgstr ""
+
+#: MMCs/templates/base.html:40
+msgid "Welcome to MMCs"
+msgstr "欢迎登入"
+
+#: MMCs/templates/base.html:78 MMCs/templates/base.html:84
+msgid ""
+"North China University of Science and Technology Mathematical Modeling "
+"Association"
+msgstr "华北理工大学数学建模协会"
+
+#: MMCs/templates/base.html:84
+msgid "Mathematical Modeling School Competition Management System"
+msgstr "数学建模校赛管理系统"
+
+#: MMCs/templates/backstage/_tip.html:3
+msgid "Not started / paused / ended"
+msgstr "为开始/暂停中/已结束"
+
+#: MMCs/templates/backstage/admin/base.html:8
+msgid "Admin"
+msgstr "协管理员，您好"
+
+#: MMCs/templates/backstage/admin/base.html:16
+#: MMCs/templates/backstage/admin/base.html:20
+msgid "Solution Management"
+msgstr "作品管理"
+
+#: MMCs/templates/backstage/admin/base.html:17
+#: MMCs/templates/backstage/admin/base.html:21
+#: MMCs/templates/backstage/teacher/base.html:15
+#: MMCs/templates/backstage/teacher/base.html:17
+msgid "Task Management"
+msgstr "任务管理"
+
+#: MMCs/templates/backstage/admin/base.html:18
+#: MMCs/templates/backstage/admin/base.html:22
+#: MMCs/templates/backstage/admin/manage_score.html:7
+msgid "Score Management"
+msgstr "分数管理"
+
+#: MMCs/templates/backstage/admin/overview.html:14
+msgid "All tasks finished"
+msgstr "所有任务进度"
+
+#: MMCs/templates/backstage/settings/base.html:5
+msgid "Profile"
+msgstr "账户"
+
+#: MMCs/templates/backstage/teacher/base.html:8
+msgid "Teacher"
+msgstr "教师，您好"
+
+#: MMCs/templates/backstage/teacher/manage_task.html:9
+msgid "Solutions"
+msgstr "作品"
+
+#: MMCs/templates/backstage/teacher/manage_task.html:25
+msgid "Actions"
+msgstr "操作"
+
+#: MMCs/templates/backstage/teacher/manage_task.html:50
+msgid "No solutions."
+msgstr "无作品。"
+
+#: MMCs/templates/backstage/teacher/overview.html:25
+msgid "Done"
+msgstr "已完成"
+
+#: MMCs/templates/backstage/teacher/overview.html:28
+msgid "Contiue"
+msgstr "继续"
+
+#: MMCs/templates/backstage/teacher/overview.html:31
+msgid "Start"
+msgstr "开始"
+
+#: MMCs/templates/backstage/teacher/overview.html:38
+msgid "No Tasks."
+msgstr "无任务。"
+
+#: MMCs/templates/front/index.html:13
+msgid ""
+"North China University of Science and Technology Mathematical Modeling "
+"School Competition Management System"
+msgstr "华北理工大学数学建模校赛管理系统"

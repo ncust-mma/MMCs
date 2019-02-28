@@ -1,0 +1,356 @@
+# Chinese (Simplified, China) translations for PROJECT.
+# Copyright (C) 2019 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2019-02-28 22:14+0800\n"
+"PO-Revision-Date: 2019-02-28 22:14+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_Hans_CN\n"
+"Language-Team: zh_Hans_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.6.0\n"
+
+#: MMCs/extensions.py:31
+msgid "Please log in to access this page."
+msgstr ""
+
+#: MMCs/extensions.py:34
+msgid "In order to protect your account security, please log in again."
+msgstr ""
+
+#: MMCs/forms.py:17 MMCs/forms.py:35
+msgid "Username"
+msgstr ""
+
+#: MMCs/forms.py:24 MMCs/forms.py:52
+msgid "Password"
+msgstr ""
+
+#: MMCs/forms.py:25
+msgid "Remember me"
+msgstr ""
+
+#: MMCs/forms.py:26
+msgid "Log in"
+msgstr ""
+
+#: MMCs/forms.py:30
+msgid "The username is not existed."
+msgstr ""
+
+#: MMCs/forms.py:37 MMCs/forms.py:74
+msgid "The username should contain only a-z, A-Z and 0-9."
+msgstr ""
+
+#: MMCs/forms.py:40 MMCs/forms.py:89
+msgid "Realname"
+msgstr ""
+
+#: MMCs/forms.py:43
+msgid "Permission"
+msgstr ""
+
+#: MMCs/forms.py:45
+msgid "As teacher user"
+msgstr ""
+
+#: MMCs/forms.py:46
+msgid "As administrator user"
+msgstr ""
+
+#: MMCs/forms.py:47
+msgid "As root user"
+msgstr ""
+
+#: MMCs/forms.py:50 MMCs/forms.py:92
+msgid "Remark"
+msgstr ""
+
+#: MMCs/forms.py:55
+msgid "Confirm password"
+msgstr ""
+
+#: MMCs/forms.py:61 MMCs/forms.py:84
+msgid "The username is already in use."
+msgstr ""
+
+#: MMCs/forms.py:65
+msgid "The permission must select from Teacher, Admin and Root."
+msgstr ""
+
+#: MMCs/forms.py:71
+msgid "New Username"
+msgstr ""
+
+#: MMCs/forms.py:77
+msgid "Confirm Username"
+msgstr ""
+
+#: MMCs/forms.py:98
+msgid "Old Password"
+msgstr ""
+
+#: MMCs/forms.py:100 MMCs/forms.py:110
+msgid "New Password"
+msgstr ""
+
+#: MMCs/forms.py:103 MMCs/forms.py:113
+msgid "Confirm Password"
+msgstr ""
+
+#: MMCs/forms.py:120
+msgid "File type"
+msgstr ""
+
+#: MMCs/forms.py:123
+msgid "The file type should contain only a-z."
+msgstr ""
+
+#: MMCs/forms.py:129
+msgid "The file type is already in use."
+msgstr ""
+
+#: MMCs/forms.py:134 MMCs/forms.py:152
+msgid "Task ID"
+msgstr ""
+
+#: MMCs/forms.py:139 MMCs/templates/backstage/teacher/manage_task.html:24
+msgid "Score"
+msgstr ""
+
+#: MMCs/forms.py:147
+msgid "The task is not existed."
+msgstr ""
+
+#: MMCs/forms.py:154 MMCs/forms.py:158
+msgid "Add"
+msgstr ""
+
+#: MMCs/forms.py:162
+msgid "Check"
+msgstr ""
+
+#: MMCs/forms.py:166
+msgid "Stop"
+msgstr ""
+
+#: MMCs/forms.py:170
+msgid "Continue"
+msgstr ""
+
+#: MMCs/forms.py:174 MMCs/templates/backstage/settings/base.html:14
+#: MMCs/templates/backstage/settings/edit_profile.html:6
+msgid "Edit Profile"
+msgstr ""
+
+#: MMCs/forms.py:178 MMCs/templates/backstage/settings/base.html:15
+msgid "Change Username"
+msgstr ""
+
+#: MMCs/forms.py:182 MMCs/templates/backstage/settings/base.html:16
+#: MMCs/templates/backstage/settings/change_password.html:7
+msgid "Change Password"
+msgstr ""
+
+#: MMCs/utils.py:47
+#, python-format
+msgid "Error in the %(name)s field - %(error)s"
+msgstr ""
+
+#: MMCs/blueprints/admin.py:84
+msgid "Competition of current year don't start."
+msgstr ""
+
+#: MMCs/blueprints/admin.py:98
+msgid "Solution deleted."
+msgstr ""
+
+#: MMCs/blueprints/admin.py:126
+msgid "Randomly assigned."
+msgstr ""
+
+#: MMCs/blueprints/admin.py:179
+msgid "All tasks of User deleted."
+msgstr ""
+
+#: MMCs/blueprints/admin.py:190
+msgid "Task deleted."
+msgstr ""
+
+#: MMCs/blueprints/admin.py:226
+msgid "Added successed."
+msgstr ""
+
+#: MMCs/blueprints/auth.py:25
+msgid "Login success."
+msgstr ""
+
+#: MMCs/blueprints/auth.py:28
+msgid "Invalid username or password."
+msgstr ""
+
+#: MMCs/blueprints/auth.py:37
+msgid "Logout success."
+msgstr ""
+
+#: MMCs/blueprints/backstage.py:27 MMCs/blueprints/root.py:163
+msgid "Profile updated."
+msgstr ""
+
+#: MMCs/blueprints/backstage.py:45 MMCs/blueprints/root.py:189
+msgid "Username updated."
+msgstr ""
+
+#: MMCs/blueprints/backstage.py:63 MMCs/blueprints/root.py:140
+msgid "Password updated."
+msgstr ""
+
+#: MMCs/blueprints/backstage.py:66
+msgid "Old password is incorrect."
+msgstr ""
+
+#: MMCs/blueprints/front.py:43
+msgid "Setting updated."
+msgstr ""
+
+#: MMCs/blueprints/root.py:67
+#, python-format
+msgid "The year of %(year)s Competition deleted."
+msgstr ""
+
+#: MMCs/blueprints/root.py:73
+#, python-format
+msgid "The year of %(year)s Competition start now."
+msgstr ""
+
+#: MMCs/blueprints/root.py:90
+msgid "Competition state switched."
+msgstr ""
+
+#: MMCs/blueprints/root.py:93
+msgid "Please start current competition before do it."
+msgstr ""
+
+#: MMCs/blueprints/root.py:218
+msgid "Account registered."
+msgstr ""
+
+#: MMCs/blueprints/root.py:240
+msgid "File type added."
+msgstr ""
+
+#: MMCs/blueprints/root.py:255
+msgid "User deleted."
+msgstr ""
+
+#: MMCs/blueprints/root.py:269
+msgid "File type deleted."
+msgstr ""
+
+#: MMCs/blueprints/teacher.py:61
+msgid "Score Updated."
+msgstr ""
+
+#: MMCs/blueprints/teacher.py:63
+#, python-format
+msgid "Score out of range from %(lower)s to %(upper)s."
+msgstr ""
+
+#: MMCs/templates/base.html:40
+msgid "Welcome to MMCs"
+msgstr ""
+
+#: MMCs/templates/base.html:78 MMCs/templates/base.html:84
+msgid ""
+"North China University of Science and Technology Mathematical Modeling "
+"Association"
+msgstr ""
+
+#: MMCs/templates/base.html:84
+msgid "Mathematical Modeling School Competition Management System"
+msgstr ""
+
+#: MMCs/templates/backstage/_tip.html:3
+msgid "Not started / paused / ended"
+msgstr ""
+
+#: MMCs/templates/backstage/admin/base.html:8
+msgid "Admin"
+msgstr ""
+
+#: MMCs/templates/backstage/admin/base.html:16
+#: MMCs/templates/backstage/admin/base.html:20
+msgid "Solution Management"
+msgstr ""
+
+#: MMCs/templates/backstage/admin/base.html:17
+#: MMCs/templates/backstage/admin/base.html:21
+#: MMCs/templates/backstage/teacher/base.html:15
+#: MMCs/templates/backstage/teacher/base.html:17
+msgid "Task Management"
+msgstr ""
+
+#: MMCs/templates/backstage/admin/base.html:18
+#: MMCs/templates/backstage/admin/base.html:22
+#: MMCs/templates/backstage/admin/manage_score.html:7
+msgid "Score Management"
+msgstr ""
+
+#: MMCs/templates/backstage/admin/overview.html:16
+msgid "All tasks finished"
+msgstr ""
+
+#: MMCs/templates/backstage/settings/base.html:5
+msgid "Profile"
+msgstr ""
+
+#: MMCs/templates/backstage/teacher/base.html:8
+msgid "Teacher"
+msgstr ""
+
+#: MMCs/templates/backstage/teacher/manage_task.html:9
+msgid "Solutions"
+msgstr ""
+
+#: MMCs/templates/backstage/teacher/manage_task.html:25
+msgid "Actions"
+msgstr ""
+
+#: MMCs/templates/backstage/teacher/manage_task.html:50
+msgid "No solutions."
+msgstr ""
+
+#: MMCs/templates/backstage/teacher/overview.html:17
+msgid "Finished"
+msgstr ""
+
+#: MMCs/templates/backstage/teacher/overview.html:25
+msgid "Done"
+msgstr ""
+
+#: MMCs/templates/backstage/teacher/overview.html:28
+msgid "Contiue"
+msgstr ""
+
+#: MMCs/templates/backstage/teacher/overview.html:31
+msgid "Start"
+msgstr ""
+
+#: MMCs/templates/backstage/teacher/overview.html:38
+msgid "No Tasks."
+msgstr ""
+
+#: MMCs/templates/front/index.html:13
+msgid ""
+"North China University of Science and Technology Mathematical Modeling "
+"School Competition Management System"
+msgstr ""
+

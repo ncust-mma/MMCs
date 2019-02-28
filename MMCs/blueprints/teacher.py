@@ -2,6 +2,7 @@
 
 from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, url_for)
+from flask_babel import _
 from flask_login import current_user, login_required
 
 from MMCs.decorators import teacher_required
@@ -17,14 +18,15 @@ teacher_bp = Blueprint('teacher', __name__)
 @login_required
 @teacher_required
 def index():
+    year = current_year()
     solutions_right = Task.query.filter(
-        Task.year == 2019,
+        Task.year == year,
         Task.teacher_id == current_user.id,
         Task.score != None,
         Task.score != '').count()
 
     solutions_all = Task.query.filter(
-        Task.year == 2019,
+        Task.year == year,
         Task.teacher_id == current_user.id).count()
 
     progress = False
@@ -38,10 +40,11 @@ def index():
 @login_required
 @teacher_required
 def manage_task():
+    year = current_year()
     page = request.args.get('page', 1, type=int)
     per_page = current_app.config['SOLUTION_PER_PAGE']
     pagination = Task.query.filter(
-        Task.year == 2019,
+        Task.year == year,
         Task.teacher_id == current_user.id
     ).order_by(Task.id.desc()).paginate(page, per_page)
     tasks = pagination.items
@@ -55,10 +58,10 @@ def manage_task():
             task.score = form.score.data
             db.session.commit()
 
-            flash('Score Updated.', 'success')
+            flash(_('Score Updated.'), 'success')
         else:
-            flash(
-                'Score out of range from {} to {}.'.format(lower, upper), 'warning')
+            flash(_(
+                'Score out of range from %(lower)s to %(upper)s.', lower=lower, upper=upper), 'warning')
 
         return redirect_back()
 

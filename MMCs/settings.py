@@ -2,7 +2,7 @@
 
 import os
 import sys
-import uuid
+import secrets
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -48,6 +48,9 @@ class BaseConfig(object):
     SCORE_UPPER_LIMIT = 100
     SCORE_LOWER_LIMIT = 0
 
+    MMCS_LOCALES = ['en_US', 'zh_Hans_CN']
+    BABEL_DEFAULT_LOCALE = MMCS_LOCALES[0]
+
 
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = prefix + os.path.join(basedir, 'data-dev.db')
@@ -61,7 +64,8 @@ class TestingConfig(BaseConfig):
 
 
 class ProductionConfig(BaseConfig):
-    SECRET_KEY = os.getenv('SECRET_KEY', uuid.uuid4().hex)
+    SECRET_KEY = os.getenv('SECRET_KEY', secrets.token_urlsafe(16))
+    SQLALCHEMY_POOL_RECYCLE = 280
     SQLALCHEMY_DATABASE_URI = os.getenv(
         'DATABASE_URL', prefix + os.path.join(basedir, 'data.db'))
 

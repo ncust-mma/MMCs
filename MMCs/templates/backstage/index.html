@@ -24,7 +24,8 @@
                 <div class="navbar-nav ml-auto">
                     <div class="dropdown nav-item">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            Manage<span class="caret"></span>
+                            <span class="oi oi-wrench"></span> Manage
+                            <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" role="menu">
                             {% if current_user.is_root %}
@@ -44,7 +45,17 @@
                         </div>
                     </div>
                     <div class="dropdown nav-item">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <span class="oi oi-text"></span>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" role="menu">
+                            <a class="dropdown-item" href="{{ url_for('front.set_locale', locale='zh_Hans_CN') }}">简体中文</a>
+                            <a class="dropdown-item" href="{{ url_for('front.set_locale', locale='en_US') }}">English</a>
+                        </div>
+                    </div>
+                    <div class="dropdown nav-item">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             <span class="oi oi-person"></span>
                             <span class="caret"></span>
                         </a>
@@ -52,13 +63,10 @@
                             <h6 class="dropdown-header">Logged in as {{ current_user.realname }}</h6>
 
                             <a class="dropdown-item" href="{{ url_for('backstage.edit_profile') }}">
-                                <span class="oi oi-cog"></span> Settings
-                            </a>
-
+                                <span class="oi oi-cog"></span> Settings</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url_for('auth.logout', next=request.full_path) }}">
-                                <span class="oi oi-account-logout"></span> Logout
-                            </a>
+                                <span class="oi oi-account-logout"></span> Logout</a>
                         </div>
                     </div>
                 </div>

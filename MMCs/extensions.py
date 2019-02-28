@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 
+from flask import current_app, request
+from flask_babel import Babel
+from flask_babel import lazy_gettext as _l
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_dropzone import Dropzone
-from flask_login import LoginManager, AnonymousUserMixin
+from flask_login import AnonymousUserMixin, LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 
@@ -15,21 +18,23 @@ csrf = CSRFProtect()
 ckeditor = CKEditor()
 dropzone = Dropzone()
 toolbar = DebugToolbarExtension()
+babel = Babel()
 
 
 @login_manager.user_loader
 def load_user(user_id):
     from MMCs.models import User
-    user = User.query.get(int(user_id))
-    return user
+    return User.query.get(int(user_id))
 
 
 login_manager.login_view = 'auth.login'
-login_manager.login_message = 'Please log in to access this page.'
+login_manager.login_message = _l('Please log in to access this page.')
 login_manager.login_message_category = 'warning'
 login_manager.refresh_view = 'auth.re_authenticate'
-login_manager.needs_refresh_message = 'In order to protect your account security, please log in again.'
+login_manager.needs_refresh_message = _l(
+    'In order to protect your account security, please log in again.')
 login_manager.needs_refresh_message_category = 'warning'
+
 
 class Guest(AnonymousUserMixin):
 
@@ -42,3 +47,14 @@ class Guest(AnonymousUserMixin):
 
 
 login_manager.anonymous_user = Guest
+
+
+@babel.localeselector
+def get_locale():
+    if current_user.is_authenticated and current_user.locale is not None:
+        return current_user.locale
+
+    locale = request.cookies.get('locale')
+    if locale is not None:
+        return locale
+    return request.accept_languages.best_match(current_app.config['MMCS_LOCALES'])

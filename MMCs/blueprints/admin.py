@@ -4,6 +4,7 @@ import os
 
 from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, send_file, url_for)
+from flask_babel import _
 from flask_login import login_required
 
 from MMCs.decorators import admin_required
@@ -80,7 +81,7 @@ def upload():
                 ext = current_app.config['ALLOWED_SOLUTION_EXTENSIONS']
                 return '{} only!'.format(', '.join(ext)), 400
         else:
-            return "Competition of current year don't start.", 403
+            return _("Competition of current year don't start."), 403
 
     return render_template('backstage/admin/manage_solution/upload.html')
 
@@ -94,7 +95,7 @@ def delete_solution_task(solution_id):
     db.session.delete(solution)
     db.session.commit()
 
-    flash('Solution deleted.', 'info')
+    flash(_('Solution deleted.', 'info'))
     return redirect_back()
 
 
@@ -122,7 +123,7 @@ def method_random():
 
     # TODO: 随机分配方案
 
-    flash('Randomly assigned.', 'success')
+    flash(_('Randomly assigned.'), 'success')
     return redirect_back()
 
 
@@ -170,14 +171,12 @@ def check_user(user_id):
 @login_required
 @admin_required
 def delete_user_task(user_id):
-    for task in Task.query.filter(Task.teacher_id == user_id, Task.year == current_year()):
-        db.session.delete(task)
-        try:
-            db.session.commit()
-        except:
-            db.session.rollback()
+    Task.query.filter(
+        Task.teacher_id == user_id,
+        Task.year == current_year()).delete()
+    db.session.commit()
 
-    flash("All tasks of User deleted.", 'success')
+    flash(_("All tasks of User deleted."), 'success')
     return redirect_back()
 
 
@@ -188,7 +187,7 @@ def method_delete_task(task_id):
     task = Task.query.get_or_404(task_id)
     db.session.delete(task)
     db.session.commit()
-    flash('Task deleted.', 'success')
+    flash(_('Task deleted.'), 'success')
 
     return redirect_back()
 
@@ -224,7 +223,7 @@ def user_solution_add_page(user_id):
             db.session.add(task)
             db.session.commit()
 
-            flash('Added successed.', 'success')
+            flash(_('Added successed.'), 'success')
             return redirect_back()
     else:
         abort(404)

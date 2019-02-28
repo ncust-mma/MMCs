@@ -6,7 +6,7 @@
 {% block setting_content %}
 <div class="card w-100 bg-light">
     <h3 class="card-header">
-        Solutions
+        {{ _('Solutions') }}
         {% if is_start(get_current_year()) %}
             <small class="text-muted">{{ pagination.total }}</small>
         {% endif %}
@@ -21,8 +21,8 @@
                         <th hidden>ID</th>
                         <th scope="col">#</th>
                         <th scope="col">UUID</th>
-                        <th scope="col">Score</th>
-                        <th scope="col">Actions</th>
+                        <th scope="col">{{ _('Score') }}</th>
+                        <th scope="col">{{ _('Actions') }}</th>
                     </tr>
                 </thead>
                 {% for task in tasks %}
@@ -31,7 +31,10 @@
                         {{ form.csrf_token() }}
                         <td hidden>{{ form.id(value=task.id, readonly=True, hidden=True) }}</td>
                         <td scope="row">{{ pagination.total - (per_page*(page-1) + loop.index) + 1 }}</td>
-                        <td><a href="{{ url_for('backstage.get_solution', filename=task.solution_uuid) }}" target="_blank">{{ task.solution_uuid }}</a></td>
+                        <td>
+                            <a href="{{ url_for('backstage.get_solution', filename=task.solution_uuid) }}" target="_blank">
+                            {{ task.solution_uuid }}</a>
+                        </td>
                         <td>
                             {{ form.score(class="form-control form-control-sm text-center", value=task.score) }}
                         </td>
@@ -44,8 +47,7 @@
             <div class="page-footer">{{ render_pagination(pagination) }}</div>
             {% else %}
                 <div class="tip">
-                    <span class="oi oi-ban"></span>
-                    No solutions.
+                    <span class="oi oi-ban"></span> {{ _('No solutions.') }}
                 </div>
             {% endif %}
         </div>

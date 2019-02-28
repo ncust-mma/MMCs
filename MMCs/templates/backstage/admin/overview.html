@@ -8,8 +8,12 @@
     {% if is_start(get_current_year()) %}
     <div class="card-body">
         <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ progress|default(0) }}%">
-                All tasks: {{'%0.2f'| format(progress|float)}}%
+            <div 
+                class="progress-bar progress-bar-striped progress-bar-animated"
+                role="progressbar"
+                style="width: {{ progress|default(0) }}%"
+            >
+                {{ _('All tasks finished') }}: {{'%0.2f'| format(progress|float)}}%
             </div>
         </div>
     </div>

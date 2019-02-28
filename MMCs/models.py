@@ -15,6 +15,7 @@ class User(db.Model, UserMixin):
     permission = db.Column(db.String(10), nullable=False, default='Teacher')
     remark = db.Column(db.Text)
     password_hash = db.Column(db.String(128), nullable=False)
+    locale = db.Column(db.String(20), default='en_US')
 
     tasks = db.relationship(
         'Task', cascade='save-update, merge, delete')

@@ -14,7 +14,7 @@
                 role="progressbar"
                 style="width: {{ progress|default(0) }}%"
             >
-                Finished: {{'%0.2f'| format(progress|float)}}%
+                {{ _('Finished') }}: {{ '%0.2f'| format(progress|float) }}%
             </div>
         </div>
     </div>
@@ -22,23 +22,20 @@
         <div class="float-right">
             {% if progress == 100 %}
                 <a class="btn btn-success" href="{{ url_for('teacher.manage_task') }}">
-                    Done
-                </a>
+                    {{ _('Done') }}</a>
             {% elif 0 < progress < 100 %}
                 <a class="btn btn-primary" href="{{ url_for('teacher.manage_task') }}">
-                    Contiue
-                </a>
+                    {{ _('Contiue') }}</a>
             {% else %}
                 <a class="btn btn-info" href="{{ url_for('teacher.manage_task') }}">
-                    Start
-                </a>
+                    {{ _('Start') }}</a>
             {% endif %}
         </div>
     </div>
     {% else %}
     <div class="tip">
         <span class="oi oi-ban"></span>
-        No Tasks.
+        {{ _('No Tasks.') }}
     </div>
     {% endif %}
 

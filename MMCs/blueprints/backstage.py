@@ -4,12 +4,13 @@ import os
 
 from flask import (Blueprint, abort, current_app, flash, render_template,
                    send_file)
+from flask_babel import _
 from flask_login import current_user, fresh_login_required, login_required
 
 from MMCs.extensions import db
 from MMCs.forms import ChangePasswordForm, ChangeUsernameForm, EditProfileForm
 from MMCs.models import StartConfirm
-from MMCs.utils import current_year, flash_errors, redirect_back
+from MMCs.utils import current_year, redirect_back
 
 backstage_bp = Blueprint('backstage', __name__)
 
@@ -23,13 +24,12 @@ def edit_profile():
         current_user.remark = form.remark.data
         db.session.commit()
 
-        flash('Profile updated.', 'success')
+        flash(_('Profile updated.'), 'success')
         return redirect_back()
 
     form.realname.data = current_user.realname
     form.remark.data = current_user.remark
 
-    flash_errors(form)
     return render_template('backstage/settings/edit_profile.html', form=form)
 
 
@@ -42,7 +42,7 @@ def change_username():
         current_user.username = form.username.data
         db.session.commit()
 
-        flash('Username updated.', 'success')
+        flash(_('Username updated.'), 'success')
         return redirect_back()
 
     form.username.data = current_user.username
@@ -60,12 +60,11 @@ def change_password():
             current_user.set_password(form.password.data)
             db.session.commit()
 
-            flash('Password updated.', 'success')
+            flash(_('Password updated.'), 'success')
             return redirect_back()
         else:
-            flash('Old password is incorrect.', 'warning')
+            flash(_('Old password is incorrect.'), 'warning')
 
-    flash_errors(form)
     return render_template('backstage/settings/change_password.html', form=form)
 
 

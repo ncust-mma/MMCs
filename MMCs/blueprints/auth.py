@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template, flash, redirect, url_for, Blueprint
-from flask_login import login_user, logout_user, login_required, current_user, login_fresh, confirm_login
+from flask import Blueprint, flash, redirect, render_template, url_for
+from flask_babel import _
+from flask_login import (confirm_login, current_user, login_fresh,
+                         login_required, login_user, logout_user)
 
 from MMCs.forms import LoginForm
 from MMCs.models import User
@@ -20,10 +22,10 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user is not None and user.validate_password(form.password.data):
             if login_user(user, form.remember_me.data):
-                flash('Login success.', 'info')
+                flash(_('Login success.'), 'info')
                 return redirect_back()
         else:
-            flash('Invalid username or password.', 'warning')
+            flash(_('Invalid username or password.'), 'warning')
 
     return render_template('auth/login.html', form=form)
 
@@ -32,7 +34,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash('Logout success.', 'info')
+    flash(_('Logout success.'), 'info')
 
     return redirect(url_for('front.index'))
 

@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>Admin</h1>
+    <h1>{{ _('Admin') }}</h1>
 </div>
 
 <div class="row">
@@ -13,13 +13,13 @@
         <div class="nav nav-pills flex-column" role="tablist" aria-orientation="vertical">
             {{ render_nav_item("admin.index", "Overview") }}
             {% if is_start(get_current_year()) %}
-                {{ render_nav_item("admin.manage_solution", "Solution Management") }}
-                {{ render_nav_item("admin.manage_task", "Task Management") }}
-                {{ render_nav_item("admin.manage_score", "Score Management") }}
+                {{ render_nav_item("admin.manage_solution", _("Solution Management")) }}
+                {{ render_nav_item("admin.manage_task", _("Task Management")) }}
+                {{ render_nav_item("admin.manage_score", _("Score Management")) }}
             {% else %}
-                {{ render_nav_item('admin.manage_solution', 'Solution Management', disable=True) }}
-                {{ render_nav_item('admin.manage_task', 'Task Management', disable=True) }}
-                {{ render_nav_item("admin.manage_score", "Score Management", disable=True) }}
+                {{ render_nav_item('admin.manage_solution', _('Solution Management'), disable=True) }}
+                {{ render_nav_item('admin.manage_task', _('Task Management'), disable=True) }}
+                {{ render_nav_item("admin.manage_score", _("Score Management"), disable=True) }}
             {% endif %}
         </div>
     </div>

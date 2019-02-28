@@ -10,6 +10,7 @@ import os
 import uuid
 
 from flask import current_app, flash, redirect, request, url_for
+from flask_babel import _
 from pypinyin import lazy_pinyin
 from werkzeug.utils import secure_filename
 
@@ -42,8 +43,9 @@ def current_year():
 def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
-            flash("Error in the %s field - %s" %
-                  (getattr(form, field).label.text, error), 'dark')
+            name = getattr(form, field).label.text
+            flash(_(
+                "Error in the %(name)s field - %(error)s", name=name, error=error), 'dark')
 
 
 def gen_uuid(filename):
