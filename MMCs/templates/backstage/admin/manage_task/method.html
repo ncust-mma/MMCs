@@ -4,9 +4,10 @@
 {% if is_start(get_current_year()) %}
 <div class="btn-group btn-group-vertical btn-block" role="group" aria-label="Button group with nested dropdown">
     <button class="btn btn-danger text-white" data-toggle="modal" data-target="#confirm-random" data-href="{{ url_for('admin.method_random') }}">
-        Random
+        <span class="oi oi-random"></span> Random
     </button>
-    <a class="btn btn-primary" type="button" class="btn btn-secondary" href="{{ url_for('admin.method_manual') }}">Manual</a>
+    <a class="btn btn-primary" type="button" class="btn btn-secondary" href="{{ url_for('admin.method_manual') }}">
+        <span class="oi oi-pencil"></span> Manual</a>
 </div>
 {% else %}
     {% include "backstage/_tip.html" %}
@@ -20,7 +21,7 @@
                     Random Confirm
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span class="oi oi-delete"></span>
                 </button>
             </div>
             <div class="modal-body">

@@ -6,12 +6,18 @@
 <div class="card w-100 bg-light">
     <h3 class="card-header">Competition Management</h3>
     <div class="card-body">
-        <div class="btn-group btn-group-vertical btn-block" role="group" aria-label="Button group with nested dropdown">
-            <button class="btn btn-danger text-white" data-toggle="modal" data-target="#confirm" data-href="{{ url_for('root.start_competition') }}">
-                Start up a new competition
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <button class="btn btn-danger btn-lg" type="button" data-toggle="modal" data-target="#confirm" data-href="{{ url_for('root.start_competition') }}">
+                Start up new competition
             </button>
-                <a class="btn btn-primary" type="button" class="btn btn-secondary" href="{{ url_for('root.switch_game_state') }}">Stop</a>
-                <a class="btn btn-primary" type="button" class="btn btn-secondary" href="{{ url_for('root.switch_game_state') }}">Continue</a>
+            <form method="post" action="{{ url_for('root.switch_game_state') }}">
+                {{ stop_form.csrf_token }}
+                {{ stop_form.submit(class="btn btn-primary btn-lg btn-block") }}
+            </form>
+            <form method="post" action="{{ url_for('root.switch_game_state') }}">
+                {{ continue_form.csrf_token }}
+                {{ continue_form.submit(class="btn btn-primary btn-lg btn-block") }}
+            </form>
         </div>
     </div>
 </div>
@@ -24,7 +30,7 @@
                     Random Confirm
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span class="oi oi-delete"></span>
                 </button>
             </div>
             <div class="modal-body">

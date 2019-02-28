@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from flask import (Blueprint, current_app, flash, redirect, render_template,
-                   request, url_for)
+from flask import (Blueprint, abort, current_app, flash, redirect,
+                   render_template, request, url_for)
 from flask_login import current_user, fresh_login_required, login_required
 
 from MMCs.decorators import root_required
 from MMCs.extensions import db
-from MMCs.forms import (AddUploadFileTypeForm, ChangeUsernameForm,
-                        EditProfileForm, RegisterForm, RootChangePasswordForm)
+from MMCs.forms import (AddUploadFileTypeForm, ButtonChangePasswordForm,
+                        ButtonChangeUsernameForm, ButtonContinueForm,
+                        ButtonEditProfileForm, ButtonStopForm,
+                        ChangeUsernameForm, EditProfileForm, RegisterForm,
+                        RootChangePasswordForm)
 from MMCs.models import UploadFileType, User
-from MMCs.utils import flash_errors, redirect_back
+from MMCs.utils import redirect_back
 
 root_bp = Blueprint('root', __name__)
 
@@ -25,17 +28,21 @@ def index():
 @login_required
 @root_required
 def manage_competition():
-    return render_template('backstage/root/manage_competition.html')
+    stop_form = ButtonStopForm()
+    continue_form = ButtonContinueForm()
+    return render_template(
+        'backstage/root/manage_competition.html',
+        stop_form=stop_form, continue_form=continue_form)
 
 
-@root_bp.route('/competition/start', methods=['GET', 'POST'])
+@root_bp.route('/competition/start', methods=['POST'])
 @login_required
 @root_required
 def start_competition():
     return redirect_back()
 
 
-@root_bp.route('/competition/state/switch', methods=['GET', 'POST'])
+@root_bp.route('/competition/state/switch', methods=['POST'])
 @login_required
 @root_required
 def switch_game_state():
@@ -59,70 +66,89 @@ def personnel_list():
         User.id.desc()).paginate(page, per_page)
     users = pagination.items
 
+    edit_profile_form = ButtonEditProfileForm()
+    change_username_form = ButtonChangeUsernameForm()
+    change_password_form = ButtonChangePasswordForm()
+
     return render_template(
         'backstage/root/manage_personnel/personnel_list.html',
-        pagination=pagination, users=users, page=page, per_page=per_page)
+        pagination=pagination, users=users, page=page, per_page=per_page,
+        edit_profile_form=edit_profile_form,
+        change_username_form=change_username_form,
+        change_password_form=change_password_form)
 
 
-@root_bp.route('/manage-personnel/personnel-list/change-password/<int:user_id>', methods=['GET', 'POST'])
+@root_bp.route('/manage-personnel/personnel-list/change-password/<int:user_id>', methods=['POST'])
 @fresh_login_required
 @login_required
 @root_required
 def personnel_list_change_password(user_id):
-    form = RootChangePasswordForm()
-    if form.validate_on_submit():
-        user = User.query.get(user_id)
-        user.set_password(form.password.data)
-        db.session.commit()
+    change_password_form = ButtonChangePasswordForm()
+    if change_password_form.validate_on_submit():
+        form = RootChangePasswordForm()
+        if form.validate_on_submit():
+            user = User.query.get_or_404(user_id)
+            user.set_password(form.password.data)
+            db.session.commit()
 
-        flash('Password updated.', 'success')
-        return redirect(url_for('.personnel_list'))
+            flash('Password updated.', 'success')
+            return redirect(url_for('.personnel_list'))
+    else:
+        abort(404)
 
     return render_template(
         'backstage/root/manage_personnel/personnel_list_edit.html', form=form)
 
 
-@root_bp.route('/manage-personnel/personnel-list/edit-profile/<int:user_id>', methods=['GET', 'POST'])
+@root_bp.route('/manage-personnel/personnel-list/edit-profile/<int:user_id>', methods=['POST'])
 @fresh_login_required
 @login_required
 @root_required
 def personnel_list_edit_profile(user_id):
-    user = User.query.get(user_id)
-    form = EditProfileForm()
-    if form.validate_on_submit():
-        user.realname = form.realname.data
-        user.remark = form.remark.data
-        db.session.commit()
+    edit_profile_form = ButtonEditProfileForm()
+    if edit_profile_form.validate_on_submit():
+        user = User.query.get_or_404(user_id)
+        form = EditProfileForm()
+        if form.validate_on_submit():
+            user.realname = form.realname.data
+            user.remark = form.remark.data
+            db.session.commit()
 
-        flash('Profile updated.', 'success')
-        return redirect(url_for('.personnel_list'))
+            flash('Profile updated.', 'success')
+            return redirect(url_for('.personnel_list'))
 
-    form.realname.data = user.realname
-    form.remark.data = user.remark
+        form.realname.data = user.realname
+        form.remark.data = user.remark
 
-    flash_errors(form)
+    else:
+        abort(404)
+
     return render_template(
         'backstage/root/manage_personnel/personnel_list_edit.html', form=form)
 
 
-@root_bp.route('/manage-personnel/personnel-list/change-username/<int:user_id>', methods=['GET', 'POST'])
+@root_bp.route('/manage-personnel/personnel-list/change-username/<int:user_id>', methods=['POST'])
 @fresh_login_required
 @login_required
 @root_required
 def personnel_list_change_username(user_id):
-    user = User.query.get(user_id)
-    form = ChangeUsernameForm()
-    if form.validate_on_submit():
-        user.username = form.username.data
-        db.session.commit()
+    change_username_form = ButtonChangeUsernameForm()
+    if change_username_form.validate_on_submit():
+        user = User.query.get_or_404(user_id)
+        form = ChangeUsernameForm()
+        if form.validate_on_submit():
+            user.username = form.username.data
+            db.session.commit()
 
-        flash('Account registered.', 'success')
-        return redirect(url_for('.personnel_list'))
+            flash('Account registered.', 'success')
+            return redirect(url_for('.personnel_list'))
 
-    form.username.data = user.username
-    form.username2.data = user.username
+        form.username.data = user.username
+        form.username2.data = user.username
 
-    flash_errors(form)
+    else:
+        abort(404)
+
     return render_template(
         'backstage/root/manage_personnel/personnel_list_edit.html', form=form)
 
@@ -146,7 +172,6 @@ def register():
         flash('Account registered.', 'success')
         return redirect_back()
 
-    flash_errors(form)
     return render_template('backstage/root/manage_personnel/register.html', form=form)
 
 
@@ -169,7 +194,6 @@ def system_settings():
         flash('Upload file type added.', 'success')
         return redirect_back()
 
-    flash_errors(form)
     return render_template('backstage/root/system_settings.html', form=form, pagination=pagination, file_types=file_types, page=page, per_page=per_page)
 
 

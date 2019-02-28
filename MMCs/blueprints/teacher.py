@@ -51,7 +51,7 @@ def manage_task():
         upper = current_app.config['SCORE_UPPER_LIMIT']
         lower = current_app.config['SCORE_LOWER_LIMIT']
         if lower <= form.score.data <= upper:
-            task = Task.query.get(form.id.data)
+            task = Task.query.get_or_404(form.id.data)
             task.score = form.score.data
             db.session.commit()
 

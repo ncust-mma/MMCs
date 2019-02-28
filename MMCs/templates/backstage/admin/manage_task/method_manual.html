@@ -32,8 +32,14 @@
                         Edit
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="{{ url_for('admin.check_user', user_id=user.id) }}">Check</a>
-                        <a class="dropdown-item" href="{{ url_for('admin.user_solution_add_page', user_id=user.id) }}"><span class="oi oi-plus"></span> Add</a>
+                        <form method="post" action="{{ url_for('admin.check_user', user_id=user.id) }}">
+                            {{ check_form.csrf_token }}
+                            {{ check_form.submit(class="dropdown-item") }}
+                        </form>
+                        <form method="post" action="{{ url_for('admin.user_solution_add_page', user_id=user.id) }}">
+                            {{ add_form.csrf_token }}
+                            {{ add_form.submit(class="dropdown-item") }}
+                        </form>
 
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item badge-danger" data-toggle="modal" data-target="#confirm-delete" data-href="{{ url_for('admin.delete_user_task', user_id=user.id) }}">
@@ -61,7 +67,7 @@
                     Delete Confirm
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span class="oi oi-delete"></span>
                 </button>
             </div>
             <div class="modal-body">

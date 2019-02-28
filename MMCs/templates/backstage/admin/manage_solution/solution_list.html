@@ -33,14 +33,14 @@ solution_setting_content %} {% if is_start(get_current_year()) %}
                 </a>
             </td>
             <td>
-                <a
+                <button
                     class="btn btn-danger btn-sm text-white"
                     data-toggle="modal"
                     data-target="#confirm-delete"
                     data-href="{{ url_for('admin.delete_solution_task', solution_id=solution.id) }}"
                 >
                     <span class="oi oi-trash"></span> Delete
-                </a>
+                </button>
             </td>
         </tr>
         {% endfor %}
@@ -76,7 +76,7 @@ solution_setting_content %} {% if is_start(get_current_year()) %}
                     data-dismiss="modal"
                     aria-label="Close"
                 >
-                    <span aria-hidden="true">&times;</span>
+                    <span class="oi oi-delete"></span>
                 </button>
             </div>
             <div class="modal-body">
@@ -97,7 +97,7 @@ solution_setting_content %} {% if is_start(get_current_year()) %}
                         Cancel
                     </button>
                     <button class="btn btn-danger btn-confirm" type="submit">
-                        Delete
+                        <span class="oi oi-trash"></span> Delete
                     </button>
                 </form>
             </div>

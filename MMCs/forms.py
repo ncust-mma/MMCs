@@ -4,8 +4,7 @@ from flask_ckeditor import CKEditorField
 from flask_login import current_user
 from flask_wtf import FlaskForm
 from wtforms import (BooleanField, FloatField, IntegerField, PasswordField,
-                     RadioField, SelectMultipleField, StringField, SubmitField,
-                     ValidationError)
+                     RadioField, StringField, SubmitField, ValidationError)
 from wtforms.validators import (AnyOf, DataRequired, EqualTo, InputRequired,
                                 Length, NumberRange, Optional, Regexp)
 
@@ -89,31 +88,6 @@ class EditProfileForm(FlaskForm):
     submit = SubmitField()
 
 
-class RootEditProfileForm(FlaskForm):
-    username = StringField(
-        'New Username',
-        validators=[
-            InputRequired(), DataRequired(), Length(1, 30), EqualTo('username2'),
-            Regexp('^[a-zA-Z0-9]*$', message='The username should contain only a-z, A-Z and 0-9.')]
-    )
-    username2 = StringField(
-        'Confirm Username',
-        validators=[DataRequired(), InputRequired()]
-    )
-
-    realname = StringField(
-        'Realname',
-        validators=[InputRequired(), DataRequired(), Length(1, 30)]
-    )
-
-    remark = CKEditorField('Remark')
-    submit = SubmitField()
-
-    def validate_username(self, field):
-        if field.data != current_user.username and User.query.filter_by(username=field.data).first():
-            raise ValidationError('The username is already in use.')
-
-
 class ChangePasswordForm(FlaskForm):
     old_password = PasswordField(
         'Old Password', validators=[DataRequired(), InputRequired()])
@@ -155,8 +129,7 @@ class ChangeScoreForm(FlaskForm):
         'Task ID',
         validators=[DataRequired()]
     )
-    SCORE_LOWER_LIMIT = 0
-    SCORE_UPPER_LIMIT = 100
+
     score = FloatField(
         'Score',
         validators=[
@@ -174,3 +147,31 @@ class AdminAddTaskForm(FlaskForm):
         'Task ID',
         validators=[DataRequired()])
     submit = SubmitField('Add')
+
+
+class ButtonAddForm(FlaskForm):
+    submit = SubmitField('Add')
+
+
+class ButtonCheckForm(FlaskForm):
+    submit = SubmitField('Check')
+
+
+class ButtonStopForm(FlaskForm):
+    submit = SubmitField('Stop')
+
+
+class ButtonContinueForm(FlaskForm):
+    submit = SubmitField('Continue')
+
+
+class ButtonEditProfileForm(FlaskForm):
+    submit = SubmitField('Edit Profile')
+
+
+class ButtonChangeUsernameForm(FlaskForm):
+    submit = SubmitField('Change Username')
+
+
+class ButtonChangePasswordForm(FlaskForm):
+    submit = SubmitField('Change Password')
