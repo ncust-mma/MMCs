@@ -4,9 +4,9 @@
 {% if is_start(get_current_year()) %}
 <div class="btn-group btn-group-vertical btn-block" role="group" aria-label="Button group with nested dropdown">
     <a class="btn btn-danger text-white" data-toggle="modal" data-target="#confirm-random" data-href="{{ url_for('admin.method_random') }}">
-        <span class="oi oi-random"></span> Random</a>
+        <span class="oi oi-random"></span> {{ _('Random') }}</a>
     <a class="btn btn-primary text-white" href="{{ url_for('admin.method_manual') }}">
-        <span class="oi oi-pencil"></span> Manual</a>
+        <span class="oi oi-pencil"></span> {{ _('Manual') }}</a>
 </div>
 
 {% else %}
@@ -18,22 +18,22 @@
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmModalLabel">Random Confirm</h5>
+                <h5 class="modal-title" id="confirmModalLabel">{{ _('Random Confirm') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span class="oi oi-delete"></span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to randomly assign?</p>
-                <p>If there were assigned, data will be deleted.</p>
+                <p>{{ _('Are you sure you want to randomly assign?') }}</p>
+                <p>{{ _('If there were assigned, data will be deleted.') }}</p>
             </div>
             <div class="modal-footer">
                 <form class="random-form" action="" method="post">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <span class="oi oi-action-undo"></span> Cancel</button>
+                        <span class="oi oi-action-undo"></span> {{ _('Cancel') }}</button>
                     <button class="btn btn-danger btn-confirm" type="submit">
-                        <span class="oi oi-check"></span> Confirm</button>
+                        <span class="oi oi-check"></span> {{ _('Confirm') }}</button>
                 </form>
             </div>
         </div>

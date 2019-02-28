@@ -12,10 +12,10 @@
         <thead>
             <tr>
                 <th class="text-center">#</th>
-                <th class="text-center">Username</th>
-                <th class="text-center">Realname</th>
-                <th class="text-center">Permission</th>
-                <th class="text-center">Actions</th>
+                <th class="text-center">{{ _('Username') }}</th>
+                <th class="text-center">{{ _(Realname) }}</th>
+                <th class="text-center">{{ _('Permission') }}</th>
+                <th class="text-center">{{ _('Actions') }}</th>
             </tr>
         </thead>
         {% for user in users %}
@@ -29,8 +29,7 @@
             <td class="text-center">{{ user.realname }}</td>
             <td class="text-center">{{ user.permission }}</td>
             <td class="text-center">
-                {% if not user.is_root %}
-
+            {% if not user.is_root %}
                 <div class="dropdown">
                     <button
                         class="btn btn-sm btn-info dropdown-toggle"
@@ -40,7 +39,7 @@
                         aria-haspopup="true"
                         aria-expanded="false"
                     >
-                        Edit
+                        {{ _('Edit') }}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <form method="post" action="{{ url_for('root.personnel_list_edit_profile', user_id=user.id) }}">
@@ -63,12 +62,11 @@
                             data-target="#confirm-delete"
                             data-href="{{ url_for('root.delete_user', user_id=user.id) }}"
                         >
-                            <span class="oi oi-trash" aria-hidden="true"></span> Delete
+                            <span class="oi oi-trash" aria-hidden="true"></span> {{ _('Delete') }}
                         </button>
                     </div>
                 </div>
-
-                {% endif %}
+            {% endif %}
             </td>
         </tr>
         {% endfor %}
@@ -79,10 +77,11 @@
 {% else %}
 <div class="tip">
     <span class="oi oi-ban"></span>
-    No solutions
+    {{ _('No solutions') }}
 </div>
 {% endif %}
 
+<!-- delete modal -->
 <div
     class="modal fade"
     id="confirm-delete"
@@ -95,7 +94,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="confirmModalLabel">
-                    Delete Confirm
+                    {{ _('Delete Confirm') }}
                 </h5>
                 <button
                     type="button"
@@ -107,7 +106,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete this item?</p>
+                <p>{{ _('Are you sure you want to delete this item?') }}</p>
             </div>
             <div class="modal-footer">
                 <form class="delete-form" action="" method="post">
@@ -121,20 +120,22 @@
                         class="btn btn-default"
                         data-dismiss="modal"
                     >
-                        <span class="oi oi-action-undo"></span> Cancel
+                        <span class="oi oi-action-undo"></span> {{ _('Cancel') }}
                     </button>
                     <button class="btn btn-danger btn-confirm" type="submit">
-                        <span class="oi oi-trash"></span> Delete
+                        <span class="oi oi-trash"></span> {{ _('Delete') }}
                     </button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-{% endblock %} {% block scripts %}
-{{ super() }}
-<script
-    type="text/javascript"
-    src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"
-></script>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script
+        type="text/javascript"
+        src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"
+    ></script>
 {% endblock %}

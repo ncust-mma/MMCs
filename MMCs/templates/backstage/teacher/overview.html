@@ -4,7 +4,7 @@
 
 {% block setting_content %}
 <div class="card w-100 bg-light">
-    <h3 class="card-header">Progress</h3>
+    <h3 class="card-header">{{ _('Progress') }}</h3>
     {% if is_start(get_current_year()) %} 
     {% if progress == 0 or progress %}
     <div class="card-body">

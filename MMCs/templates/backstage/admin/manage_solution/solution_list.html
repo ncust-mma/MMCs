@@ -1,61 +1,63 @@
-{% extends 'backstage/admin/manage_solution/base.html' %} {% from
-'bootstrap/pagination.html' import render_pagination %} {% block
-solution_setting_content %} {% if is_start(get_current_year()) %}
+{% extends 'backstage/admin/manage_solution/base.html' %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
+
+{% block solution_setting_content %}
+
+{% if is_start(get_current_year()) %}
 <h3>
-    Solutions
+    {{ _('Solutions') }}
     <small class="text-muted">{{ pagination.total }}</small>
 </h3>
 <div>
     {% if solutions %}
     <div class="table-responsive">
-    <table class="table table-striped table-hover table-sm">
-        <thead>
+        <table class="table table-striped table-hover table-sm">
+            <thead>
+                <tr class="text-center">
+                    <th>#</th>
+                    <th>{{ _('File Name') }}</th>
+                    <th>{{ _('UUID') }}</th>
+                    <th>{{ _(Actions) }}</th>
+                </tr>
+            </thead>
+            {% for solution in solutions %}
             <tr class="text-center">
-                <th>#</th>
-                <th>File Name</th>
-                <th>UUID</th>
-                <th>Actions</th>
+                <td>{{ pagination.total - (per_page * (page - 1) + loop.index) + 1}}</td>
+                <td>{{ solution.name }}</td>
+                <td>
+                    <a
+                        href="{{ url_for('backstage.get_solution', filename=solution.uuid) }}"
+                        target="_blank"
+                        >{{ solution.uuid }}
+                    </a>
+                </td>
+                <td>
+                    <button
+                        class="btn btn-danger btn-sm text-white"
+                        data-toggle="modal"
+                        data-target="#confirm-delete"
+                        data-href="{{ url_for('admin.delete_solution_task', solution_id=solution.id) }}"
+                    >
+                        <span class="oi oi-trash"></span> {{ _('Delete') }}
+                    </button>
+                </td>
             </tr>
-        </thead>
-        {% for solution in solutions %}
-        <tr class="text-center">
-            <td>
-                {{
-                    pagination.total - (per_page * (page - 1) + loop.index) + 1
-                }}
-            </td>
-            <td>{{ solution.name }}</td>
-            <td>
-                <a
-                    href="{{ url_for('backstage.get_solution', filename=solution.uuid) }}"
-                    target="_blank"
-                    >{{ solution.uuid }}
-                </a>
-            </td>
-            <td>
-                <button
-                    class="btn btn-danger btn-sm text-white"
-                    data-toggle="modal"
-                    data-target="#confirm-delete"
-                    data-href="{{ url_for('admin.delete_solution_task', solution_id=solution.id) }}"
-                >
-                    <span class="oi oi-trash"></span> Delete
-                </button>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+            {% endfor %}
+        </table>
     </div>
     <div class="page-footer">{{ render_pagination(pagination) }}</div>
     {% else %}
     <div class="tip">
         <span class="oi oi-ban"></span>
-        No solutions
+        {{ _('No solutions') }}
     </div>
     {% endif %}
 </div>
-{% else %} {% include "backstage/_tip.html" %} {% endif %}
+{% else %}
+    {% include "backstage/_tip.html" %}
+{% endif %}
 
+<!-- delete modal -->
 <div
     class="modal fade"
     id="confirm-delete"
@@ -68,7 +70,7 @@ solution_setting_content %} {% if is_start(get_current_year()) %}
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="confirmModalLabel">
-                    Delete Confirm
+                    {{ _('Delete Confirm') }}
                 </h5>
                 <button
                     type="button"
@@ -80,7 +82,7 @@ solution_setting_content %} {% if is_start(get_current_year()) %}
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete this item?</p>
+                <p>{{ _('Are you sure you want to delete this item?') }}</p>
             </div>
             <div class="modal-footer">
                 <form class="delete-form" action="" method="post">
@@ -94,10 +96,10 @@ solution_setting_content %} {% if is_start(get_current_year()) %}
                         class="btn btn-default"
                         data-dismiss="modal"
                     >
-                        <span class="oi oi-action-undo"></span> Cancel
+                        <span class="oi oi-action-undo"></span> {{ _('Cancel') }}
                     </button>
                     <button class="btn btn-danger btn-confirm" type="submit">
-                        <span class="oi oi-trash"></span> Delete
+                        <span class="oi oi-trash"></span> {{ _('Delete') }}
                     </button>
                 </form>
             </div>

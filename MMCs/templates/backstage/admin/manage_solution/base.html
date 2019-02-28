@@ -6,12 +6,13 @@
 <div class="card">
     <div class="card-header">
         <div class="nav nav-tabs card-header-tabs" role="tablist">
-            {{ render_nav_item("admin.solution_list", "Solution List") }}
-            {{ render_nav_item("admin.upload", "Upload") }}
+            {{ render_nav_item("admin.solution_list", _("Solution List")) }}
+            {{ render_nav_item("admin.upload", _("Upload")) }}
         </div>
     </div>
     <div class="card-body">
-        {% block solution_setting_content %} {% endblock %}
+        {% block solution_setting_content %} 
+        {% endblock %}
     </div>
 </div>
 {% endblock %}

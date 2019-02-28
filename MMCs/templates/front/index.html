@@ -11,7 +11,9 @@
         <div class="col-md-4 align-self-center">
             <h1>MMCs</h1>
             <p>{{ _('North China University of Science and Technology Mathematical Modeling School Competition Management System') }}</p>
-            <p><a class="btn btn-primary btn-lg" href="{{ url_for('auth.login', next=request.full_path) }}">Sign in Now</a></p>
+            <p><a class="btn btn-primary btn-lg" href="{{ url_for('auth.login', next=request.full_path) }}">
+                {{_('Sign in Now')}}</a>
+            </p>
         </div>
     </div>
 </div>

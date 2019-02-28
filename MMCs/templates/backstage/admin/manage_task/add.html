@@ -3,16 +3,16 @@
 
 {% block task_setting_content %}
 {% if is_start(get_current_year()) %}
-    <div>
-        <div class="table-responsive">
+<div>
+    <div class="table-responsive">
         <table class="table table-striped table-hover table-sm">
             <thead>
                 <tr>
                     <th hidden>ID</th>
                     <th class="text-center">#</th>
-                    <th class="text-center">Name</th>
-                    <th class="text-center">UUID</th>
-                    <th class="text-center">Actions</th>
+                    <th class="text-center">{{ _('Name') }}</th>
+                    <th class="text-center">{{ _('UUID') }}</th>
+                    <th class="text-center">{{ _(Actions) }}</th>
                 </tr>
             </thead>
             {% for solution in solutions %}
@@ -28,9 +28,11 @@
             </tr>
             {% endfor %}
         </table>
-        </div>
-        <div class="page-footer">{{ render_pagination(pagination) }}</div>
     </div>
+    <div class="page-footer">
+        {{ render_pagination(pagination) }}
+    </div>
+</div>
 {% else %}
     {% include "backstage/_tip.html" %}
 {% endif %}

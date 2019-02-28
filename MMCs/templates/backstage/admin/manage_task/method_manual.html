@@ -9,11 +9,11 @@
         <thead>
             <tr>
                 <th class="text-center">#</th>
-                <th class="text-center">Username</th>
-                <th class="text-center">Realname</th>
-                <th class="text-center">Tasks</th>
-                <th class="text-center">Finished</th>
-                <th class="text-center">Actions</th>
+                <th class="text-center">{{ _('Username') }}</th>
+                <th class="text-center">{{ _('Realname') }}</th>
+                <th class="text-center">{{ _('Tasks') }}</th>
+                <th class="text-center">{{ _('Finished') }}</th>
+                <th class="text-center">{{ _('Actions') }}</th>
             </tr>
         </thead>
         {% for user in users %}
@@ -29,7 +29,7 @@
                 <div class="dropdown">
                     <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Edit
+                        {{ _('Edit') }}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <form method="post" action="{{ url_for('admin.check_user', user_id=user.id) }}">
@@ -43,11 +43,10 @@
 
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item badge-danger" data-toggle="modal" data-target="#confirm-delete" data-href="{{ url_for('admin.delete_user_task', user_id=user.id) }}">
-                            <span class="oi oi-trash" aria-hidden="true"></span> Delete
+                            <span class="oi oi-trash" aria-hidden="true"></span> {{ _('Delete') }}
                         </a>
                     </div>
                 </div>
-
                 {% endif %}
             </td>
         </tr>
@@ -56,7 +55,7 @@
     <div class="page-footer">{{ render_pagination(pagination) }}</div>
 </div>
 {% else %}
-{% include "backstage/_tip.html" %}
+    {% include "backstage/_tip.html" %}
 {% endif %}
 
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
@@ -64,23 +63,23 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="confirmModalLabel">
-                    Delete Confirm
+                    {{ _('Delete Confirm') }}
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span class="oi oi-delete"></span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete this item?</p>
+                <p>{{ _('Are you sure you want to delete this item?') }}</p>
             </div>
             <div class="modal-footer">
                 <form class="delete-form" action="" method="post">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <span class="oi oi-action-undo"></span> Cancel
+                        <span class="oi oi-action-undo"></span> {{ _('Cancel') }}
                     </button>
                     <button class="btn btn-danger btn-confirm" type="submit">
-                        <span class="oi oi-trash"></span> Delete
+                        <span class="oi oi-trash"></span> {{ _('Delete') }}
                     </button>
                 </form>
             </div>

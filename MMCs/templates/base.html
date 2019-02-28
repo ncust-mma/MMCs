@@ -33,12 +33,14 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="navbar-nav mr-auto">
-                        {{ render_nav_item('front.index', 'Home', "oi oi-home") }}
-                        {{ render_nav_item('front.about', 'About', "oi oi-bookmark") }}
+                        {{ render_nav_item('front.index', _('Home'), "oi oi-home") }}
+                        {{ render_nav_item('front.about', _('About'), "oi oi-bookmark") }}
                     </div>
-                    <div class="navbar-nav ml-auto">
-                        <a class="btn btn-outline-primary" href="{{ url_for('auth.login') }}">{{ _('Welcome to MMCs') }}</a>
-                    </div>
+                    {% if not current_user.is_authenticated %}
+                        <div class="navbar-nav ml-auto">
+                            <a class="btn btn-outline-primary" href="{{ url_for('auth.login') }}">{{ _('Welcome to MMCs') }}</a>
+                        </div>
+                    {% endif %}
                     <div class="dropdown nav-item">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             <span class="oi oi-text"></span>

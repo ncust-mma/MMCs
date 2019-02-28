@@ -7,7 +7,7 @@ from flask_wtf import FlaskForm
 from wtforms import (BooleanField, FloatField, IntegerField, PasswordField,
                      RadioField, StringField, SubmitField, ValidationError)
 from wtforms.validators import (AnyOf, DataRequired, EqualTo, InputRequired,
-                                Length, NumberRange, Optional, Regexp)
+                                Length, Optional, Regexp)
 
 from MMCs.models import Task, UploadFileType, User
 
@@ -54,7 +54,7 @@ class RegisterForm(FlaskForm):
     password2 = PasswordField(
         _l('Confirm password'),
         validators=[DataRequired(), InputRequired()])
-    submit = SubmitField()
+    submit = SubmitField(_l('Register'))
 
     def validate_username(self, field):
         if User.query.filter_by(username=field.data).first():
@@ -77,7 +77,7 @@ class ChangeUsernameForm(FlaskForm):
         _l('Confirm Username'),
         validators=[DataRequired(), InputRequired()]
     )
-    submit = SubmitField()
+    submit = SubmitField(_l('Change'))
 
     def validate_username(self, field):
         if field.data != current_user.username and User.query.filter_by(username=field.data).first():
@@ -90,7 +90,7 @@ class EditProfileForm(FlaskForm):
         validators=[InputRequired(), DataRequired(), Length(1, 30)]
     )
     remark = CKEditorField(_l('Remark'), validators=[Optional()])
-    submit = SubmitField()
+    submit = SubmitField(_l('Edit'))
 
 
 class ChangePasswordForm(FlaskForm):
@@ -102,7 +102,7 @@ class ChangePasswordForm(FlaskForm):
     password2 = PasswordField(
         _l('Confirm Password'),
         validators=[DataRequired(), InputRequired()])
-    submit = SubmitField()
+    submit = SubmitField(_l('Change'))
 
 
 class RootChangePasswordForm(FlaskForm):
@@ -112,7 +112,7 @@ class RootChangePasswordForm(FlaskForm):
     password2 = PasswordField(
         _l('Confirm Password'),
         validators=[InputRequired(), DataRequired()])
-    submit = SubmitField()
+    submit = SubmitField(_l('Change'))
 
 
 class AddUploadFileTypeForm(FlaskForm):
@@ -122,7 +122,7 @@ class AddUploadFileTypeForm(FlaskForm):
             InputRequired(), DataRequired(), Length(1, 10),
             Regexp('^[a-z]*$', message=_l('The file type should contain only a-z.'))
         ])
-    submit = SubmitField()
+    submit = SubmitField(_l('Add'))
 
     def validate_file_type(self, field):
         if UploadFileType.query.filter_by(file_type=field.data).first():
@@ -140,7 +140,7 @@ class ChangeScoreForm(FlaskForm):
         validators=[
             InputRequired()]
     )
-    submit = SubmitField()
+    submit = SubmitField(_l('Change'))
 
     def validate_id(self, field):
         if Task.query.get(field.data) is None:

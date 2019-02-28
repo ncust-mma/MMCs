@@ -4,25 +4,21 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-autopep8 = "*"
+faker = "*"
 flask-debugtoolbar = "*"
-pylint = "*"
 
 [packages]
 flask = "*"
+sqlalchemy = "*"
+flask-sqlalchemy = "*"
+bootstrap-flask = "*"
+flask-wtf = "*"
 flask-login = "*"
 flask-ckeditor = "*"
-bootstrap-flask = "*"
 flask-dropzone = "*"
-flask-sqlalchemy = "*"
-flask-wtf = "*"
-faker = "*"
-sqlalchemy = "*"
-python-dotenv = "*"
-logging = "*"
 pypinyin = "*"
+python-dotenv = "*"
 flask-babel = "*"
-dotenv = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.7"

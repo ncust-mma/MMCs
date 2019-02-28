@@ -11,7 +11,7 @@
 <div class="row">
     <div class="col-md-3">
         <div class="nav nav-pills flex-column" role="tablist" aria-orientation="vertical">
-            {{ render_nav_item("admin.index", "Overview") }}
+            {{ render_nav_item("admin.index", _("Overview")) }}
             {% if is_start(get_current_year()) %}
                 {{ render_nav_item("admin.manage_solution", _("Solution Management")) }}
                 {{ render_nav_item("admin.manage_task", _("Task Management")) }}

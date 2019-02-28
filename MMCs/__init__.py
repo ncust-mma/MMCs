@@ -6,6 +6,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 import click
 from flask import Flask, render_template, request
+from flask_babel import _
 from flask_login import current_user
 from flask_sqlalchemy import get_debug_queries
 from flask_wtf.csrf import CSRFError
@@ -71,7 +72,7 @@ def register_extensions(app):
     ckeditor.init_app(app)
     dropzone.init_app(app)
     babel.init_app(app)
-    # toolbar.init_app(app)
+    toolbar.init_app(app)
 
 
 def register_blueprints(app):
@@ -86,31 +87,38 @@ def register_blueprints(app):
 def register_errors(app):
     @app.errorhandler(400)
     def bad_request(e):
-        return render_template('errors/400.html', description=e.description), 400
+        code = 400
+        return render_template('errors.html', code=code, info=_('Bad Request')), code
 
     @app.errorhandler(401)
-    def bad_request(e):
-        return render_template('errors/401.html', description=e.description), 401
+    def unauthorized(e):
+        code = 401
+        return render_template('errors.html', code=code, info=_('Unauthorized')), code
 
     @app.errorhandler(403)
     def forbidden(e):
-        return render_template('errors/403.html', description=e.description), 403
+        code = 403
+        return render_template('errors.html', code=code, info=_('Forbidden')), code
 
     @app.errorhandler(404)
     def page_not_found(e):
-        return render_template('errors/404.html', description=e.description), 404
+        code = 404
+        return render_template('errors.html', code=code, info=_('Page Not Found')), code
 
     @app.errorhandler(405)
-    def page_not_found(e):
-        return render_template('errors/405.html', description=e.description), 405
+    def method_not_allowed(e):
+        code = 405
+        return render_template('errors.html', code=code, info=_('Method not allowed')), code
 
     @app.errorhandler(500)
     def internal_server_error(e):
-        return render_template('errors/500.html', description=e.description), 500
+        code = 500
+        return render_template('errors.html', code=code, info=_('Internal Server Error Explained')), code
 
     @app.errorhandler(CSRFError)
     def handle_csrf_error(e):
-        return render_template('errors/400.html', description=e.description), 400
+        code = 400
+        return render_template('errors.html', code=code, info=_('Handle CSRF Error')), 400
 
 
 def register_shell_context(app):

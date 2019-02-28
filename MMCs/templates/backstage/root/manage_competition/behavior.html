@@ -4,18 +4,18 @@
 <div class="btn-group btn-group-vertical btn-block" role="group" aria-label="Button group with nested dropdown">
     <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-start" data-href="{{ url_for('root.start_competition') }}">
         {% if start_flag %}
-            <span class="oi oi-media-stop"></span> Delete
+            <span class="oi oi-media-stop"></span> {{ _('Delete') }}
             {% if state_flag %}
                 <button class="btn btn-secondary" data-toggle="modal" data-target="#confirm-stop" data-href="{{ url_for('root.switch_game_state') }}">
-                    <span class="oi oi-media-pause"></span> Stop
+                    <span class="oi oi-media-pause"></span> {{ _('Stop') }}
                 </button>
             {% else %}
                 <button class="btn btn-primary" data-toggle="modal" data-target="#confirm-continue" data-href="{{ url_for('root.switch_game_state') }}">
-                    <span class="oi oi-media-play"></span> Continue
+                    <span class="oi oi-media-play"></span> {{ _('Continue') }}
                 </button>
             {% endif %}
         {% else %}
-            <span class="oi oi-play-circle"></span> Start
+            <span class="oi oi-play-circle"></span> {{ _('Start') }}
         {% endif %}
     </button>
 </div>
@@ -27,9 +27,9 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="confirmStartModalLabel">
                     {% if start_flag %}
-                        Delete Confirm
+                        {{ _('Delete Confirm') }}
                     {% else %}
-                        Start Confirm
+                        {{ _('Start Confirm') }}
                     {% endif %}
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -38,20 +38,20 @@
             </div>
             <div class="modal-body">
                 {% if start_flag %}
-                    <p>Are you sure you want to delete the current competition?</p>
-                    <p>It will delete all data of {{ get_current_year() }}.</p>
+                    <p>{{ _('Are you sure you want to delete the current competition?') }}</p>
+                    <p>{{ _('It will delete all data of %(year)s', year=get_current_year()) }}.</p>
                 {% else %}
-                    <p>Are you sure you want to start up a new competition?</p>
+                    <p>{{ _('Are you sure you want to start up a new competition?') }}</p>
                 {% endif %}
             </div>
             <div class="modal-footer">
                 <form class="start-form" action="" method="post">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <span class="oi oi-action-undo"></span> Cancel
+                        <span class="oi oi-action-undo"></span> {{ _('Cancel') }}
                     </button>
                     <button class="btn btn-danger btn-confirm" type="submit">
-                        <span class="oi oi-check"></span> Confirm
+                        <span class="oi oi-check"></span> {{ _('Confirm') }}
                     </button>
                 </form>
             </div>
@@ -65,23 +65,23 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="confirmStopModalLabel">
-                    Stop Confirm
+                   {{ _('Stop Confirm') }}
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span class="oi oi-delete"></span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to stop this competition?</p>
+                <p>{{ _('Are you sure you want to stop this competition?') }}</p>
             </div>
             <div class="modal-footer">
                 <form class="stop-form" action="" method="post">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <span class="oi oi-action-undo"></span> Cancel
+                        <span class="oi oi-action-undo"></span> {{ _('Cancel') }}
                     </button>
                     <button class="btn btn-danger btn-confirm" type="submit">
-                        <span class="oi oi-check"></span> Confirm
+                        <span class="oi oi-check"></span> {{ _('Confirm') }}
                     </button>
                 </form>
             </div>
@@ -95,23 +95,23 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="confirmContinueModalLabel">
-                    Continue Confirm
+                    {{ _('Continue Confirm') }}
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span class="oi oi-delete"></span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to continue this competition?</p>
+                <p>{{ _('Are you sure you want to continue this competition?') }}</p>
             </div>
             <div class="modal-footer">
                 <form class="continue-form" action="" method="post">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <span class="oi oi-action-undo"></span>  Cancel
+                        <span class="oi oi-action-undo"></span>  {{ _('Cancel') }}
                     </button>
                     <button class="btn btn-danger btn-confirm" type="submit">
-                        <span class="oi oi-check"></span> Confirm
+                        <span class="oi oi-check"></span> {{ _('Confirm') }}
                     </button>
                 </form>
             </div>

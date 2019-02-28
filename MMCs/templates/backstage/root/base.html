@@ -1,7 +1,7 @@
 {% extends 'backstage/index.html' %} {% from 'macros.html' import
 render_nav_item %} {% block title %}Home{% endblock title %} {% block content %}
 <div class="page-header">
-    <h1>Root</h1>
+    <h1>{{ _('Root') }}</h1>
 </div>
 <div class="row">
     <div class="col-md-3">
@@ -13,13 +13,13 @@ render_nav_item %} {% block title %}Home{% endblock title %} {% block content %}
             {{
                 render_nav_item(
                     "root.manage_competition",
-                    "Competition Management"
+                    _("Competition Management")
                 )
             }}
             {{
-                render_nav_item("root.manage_personnel", "Personnel Management")
+                render_nav_item("root.manage_personnel", _("Personnel Management"))
             }}
-            {#{ render_nav_item("root.system_settings", "System Settings") }#}
+            {#{ render_nav_item("root.system_settings", _("System Settings")) }#}
         </div>
     </div>
     <div class="col-md-9">
