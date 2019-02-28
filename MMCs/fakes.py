@@ -93,7 +93,6 @@ def fake_task():
             task = Task(
                 teacher_id=teacher.id,
                 solution_id=solution.id,
-                solution_uuid=solution.uuid,
                 year=solution.year
             )
 

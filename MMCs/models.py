@@ -16,8 +16,8 @@ class User(db.Model, UserMixin):
     remark = db.Column(db.Text)
     password_hash = db.Column(db.String(128), nullable=False)
 
-    # solutions = db.relationship(
-    #     'Solution', cascade='save-update, merge, delete')
+    tasks = db.relationship(
+        'Task', cascade='save-update, merge, delete')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -47,17 +47,18 @@ class User(db.Model, UserMixin):
         return Task.query.filter(
             Task.teacher_id == self.id,
             Task.year == year,
-            Task.score!=None).all()
+            Task.score != None).all()
 
 
 class Solution(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(25), nullable=False)
+    name = db.Column(db.String, nullable=False)
     uuid = db.Column(db.String, index=True, nullable=False)
     year = db.Column(db.Integer, nullable=False)
     score = db.Column(db.Float)
-    # teachers = db.relationship(
-    #     'Teacher', cascade='save-update, merge, delete')
+
+    tasks = db.relationship(
+        'Task', cascade='save-update, merge, delete')
 
 
 class Task(db.Model):
@@ -65,10 +66,13 @@ class Task(db.Model):
     teacher_id = db.Column(
         db.Integer, db.ForeignKey('user.id'))
     solution_id = db.Column(db.Integer, db.ForeignKey('solution.id'))
-    solution_uuid = db.Column(db.String, db.ForeignKey('solution.uuid'))
     score = db.Column(db.Float)
     times = db.Column(db.Integer, default=0)
     year = db.Column(db.Integer, nullable=False)
+
+    @property
+    def solution_uuid(self):
+        return Solution.query.get(self.id).uuid
 
     @property
     def is_able(self):
@@ -89,6 +93,11 @@ class StartConfirm(db.Model):
         flag = StartConfirm.query.filter_by(year=year).first()
         return flag.start_flag if flag is not None else False
 
+    @classmethod
+    def is_existed(self, year):
+        flag = StartConfirm.query.filter_by(year=year).first()
+        return True if flag is not None else False
+
 
 class UploadFileType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -96,9 +105,3 @@ class UploadFileType(db.Model):
         db.String(10), index=True,
         unique=True, nullable=False
     )
-
-
-class SysSettings(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_per_page = db.Column(db.Integer, default=30)
-    solution_per_page = db.Column(db.Integer, default=30)

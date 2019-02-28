@@ -7,12 +7,11 @@ from flask_login import current_user, fresh_login_required, login_required
 from MMCs.decorators import root_required
 from MMCs.extensions import db
 from MMCs.forms import (AddUploadFileTypeForm, ButtonChangePasswordForm,
-                        ButtonChangeUsernameForm, ButtonContinueForm,
-                        ButtonEditProfileForm, ButtonStopForm,
+                        ButtonChangeUsernameForm, ButtonEditProfileForm,
                         ChangeUsernameForm, EditProfileForm, RegisterForm,
                         RootChangePasswordForm)
-from MMCs.models import UploadFileType, User
-from MMCs.utils import redirect_back
+from MMCs.models import UploadFileType, User, StartConfirm, Solution, Task
+from MMCs.utils import redirect_back, current_year
 
 root_bp = Blueprint('root', __name__)
 
@@ -24,28 +23,74 @@ def index():
     return redirect(url_for('.manage_competition'))
 
 
-@root_bp.route('/manage-competition', methods=['GET', 'POST'])
+@root_bp.route('/manage-competition')
 @login_required
 @root_required
 def manage_competition():
-    stop_form = ButtonStopForm()
-    continue_form = ButtonContinueForm()
+    return redirect(url_for('root.behavior'))
+
+
+@root_bp.route('/manage-competition/behavior', methods=['GET', 'POST'])
+@login_required
+@root_required
+def behavior():
+    year = current_year()
+    start_flag = StartConfirm.is_existed(year)
+    state_flag = StartConfirm.is_start(year)
     return render_template(
-        'backstage/root/manage_competition.html',
-        stop_form=stop_form, continue_form=continue_form)
+        'backstage/root/manage_competition/behavior.html',
+        start_flag=start_flag, state_flag=state_flag)
 
 
-@root_bp.route('/competition/start', methods=['POST'])
+@root_bp.route('/manage-competition/history', methods=['GET', 'POST'])
+@login_required
+@root_required
+def history():
+    return render_template(
+        'backstage/root/manage_competition/history.html')
+
+
+@root_bp.route('/manage-competition/behavior/start', methods=['POST'])
 @login_required
 @root_required
 def start_competition():
+    year = current_year()
+    if StartConfirm.is_existed(year):
+        sc = StartConfirm.query.filter_by(year=year).first()
+        if sc:
+            db.session.delete(sc)
+
+        Solution.query.filter_by(year=year).delete()
+        Task.query.filter_by(year=year).delete()
+        db.session.commit()
+        flash('The year of {} Competition deleted.'.format(year), 'success')
+
+    else:
+        sc = StartConfirm(year=year, start_flag=True)
+        db.session.add(sc)
+        db.session.commit()
+        flash('The year of {} Competition start now.'.format(year), 'success')
+
     return redirect_back()
 
 
-@root_bp.route('/competition/state/switch', methods=['POST'])
+@root_bp.route('/manage-competition/behavior/switch', methods=['POST'])
 @login_required
 @root_required
 def switch_game_state():
+    year = current_year()
+    if StartConfirm.is_existed(year):
+        sc = StartConfirm.query.filter_by(year=year).first()
+        if StartConfirm.is_start(year):
+            sc.start_flag = False
+        else:
+            sc.start_flag = True
+        db.session.commit()
+        flash('Competition state switched.', 'success')
+
+    else:
+        flash('Please start current competition before do it.', 'warning')
+
     return redirect_back()
 
 
@@ -175,7 +220,7 @@ def register():
     return render_template('backstage/root/manage_personnel/register.html', form=form)
 
 
-@root_bp.route('/system-settings', methods=['GET', 'POST'])
+# @root_bp.route('/system-settings', methods=['GET', 'POST'])
 @login_required
 @root_required
 def system_settings():
@@ -197,7 +242,7 @@ def system_settings():
     return render_template('backstage/root/system_settings.html', form=form, pagination=pagination, file_types=file_types, page=page, per_page=per_page)
 
 
-@root_bp.route('/delete/user/<int:user_id>', methods=['GET', 'POST'])
+@root_bp.route('/delete/user/<int:user_id>', methods=['POST'])
 @login_required
 @root_required
 def delete_user(user_id):
@@ -211,7 +256,7 @@ def delete_user(user_id):
     return redirect_back()
 
 
-@root_bp.route('/delete/file-type/<int:file_type_id>', methods=['GET', 'POST'])
+@root_bp.route('/delete/file-type/<int:file_type_id>', methods=['POST'])
 @login_required
 @root_required
 def delete_file_type(file_type_id):

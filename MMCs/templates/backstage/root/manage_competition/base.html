@@ -1,0 +1,19 @@
+{% extends 'backstage/root/base.html' %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
+
+{% block title %}Competition{% endblock %}
+
+{% block setting_content %}
+<div class="card">
+    <div class="card-header">
+        <div class="nav nav-tabs card-header-tabs" role="tablist">
+            {{ render_nav_item('root.behavior', 'Competition') }}
+            {{ render_nav_item('root.history', 'History') }}
+        </div>
+    </div>
+    <div class="card-body">
+        {% block competition_setting_content %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

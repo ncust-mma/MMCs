@@ -19,16 +19,18 @@ admin_bp = Blueprint('admin', __name__)
 @login_required
 @admin_required
 def index():
+    progress = 0
     year = current_year()
-    tasks = Task.query.filter(Task.year == year).all()
-    teacher_ids = set(i.teacher_id for i in tasks)
+    if StartConfirm.is_existed(year):
+        tasks = Task.query.filter(Task.year == year).all()
+        teacher_ids = set(i.teacher_id for i in tasks)
 
-    finished_count = 0
-    for teacher_id in teacher_ids:
-        user = User.query.get_or_404(teacher_id)
-        finished_count += len(user.finished_task(year))
+        finished_count = 0
+        for teacher_id in teacher_ids:
+            user = User.query.get_or_404(teacher_id)
+            finished_count += len(user.finished_task(year))
 
-    progress = finished_count/len(tasks)*100
+        progress = finished_count/len(tasks)*100
 
     return render_template('backstage/admin/overview.html', progress=progress)
 
@@ -107,8 +109,6 @@ def manage_task():
 @login_required
 @admin_required
 def method():
-    # TODO: 随机分配
-
     return render_template('backstage/admin/manage_task/method.html')
 
 
@@ -116,7 +116,6 @@ def method():
 @login_required
 @admin_required
 def method_random():
-
     flash('Randomly assigned.', 'success')
     return redirect_back()
 

@@ -31,7 +31,7 @@
                                 <a class="dropdown-item" href="{{ url_for('root.index') }}">Overview</a>
                                 <a class="dropdown-item" href="{{ url_for('root.manage_competition') }}">Competition Management</a>
                                 <a class="dropdown-item" href="{{ url_for('root.manage_personnel') }}">Personnel Management</a>
-                                <!-- <a class="dropdown-item" href="{{ url_for('root.system_settings') }}">System Settings</a> -->
+                                <!-- <a class="dropdown-item" href="{#{ url_for('root.system_settings') }#}">System Settings</a> -->
                             {% elif current_user.is_admin %}
                                 <a class="dropdown-item" href="{{ url_for('admin.index') }}">Overview</a>
                                 <a class="dropdown-item" href="{{ url_for('admin.manage_solution') }}">Solution Management</a>

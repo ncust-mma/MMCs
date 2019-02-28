@@ -57,14 +57,14 @@
                         </form>
 
                         <div class="dropdown-divider"></div>
-                        <a
+                        <button
                             class="dropdown-item badge-danger"
                             data-toggle="modal"
                             data-target="#confirm-delete"
                             data-href="{{ url_for('root.delete_user', user_id=user.id) }}"
                         >
                             <span class="oi oi-trash" aria-hidden="true"></span> Delete
-                        </a>
+                        </button>
                     </div>
                 </div>
 
@@ -121,10 +121,10 @@
                         class="btn btn-default"
                         data-dismiss="modal"
                     >
-                        Cancel
+                        <span class="oi oi-action-undo"></span> Cancel
                     </button>
                     <button class="btn btn-danger btn-confirm" type="submit">
-                        Delete
+                        <span class="oi oi-trash"></span> Delete
                     </button>
                 </form>
             </div>

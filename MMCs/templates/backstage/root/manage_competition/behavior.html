@@ -1,0 +1,121 @@
+{% extends 'backstage/root/manage_competition/base.html' %}
+
+{% block competition_setting_content %}
+<div class="btn-group btn-group-vertical btn-block" role="group" aria-label="Button group with nested dropdown">
+    <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-start" data-href="{{ url_for('root.start_competition') }}">
+        {% if start_flag %}
+            <span class="oi oi-media-stop"></span> Delete
+            {% if state_flag %}
+                <button class="btn btn-secondary" data-toggle="modal" data-target="#confirm-stop" data-href="{{ url_for('root.switch_game_state') }}">
+                    <span class="oi oi-media-pause"></span> Stop
+                </button>
+            {% else %}
+                <button class="btn btn-primary" data-toggle="modal" data-target="#confirm-continue" data-href="{{ url_for('root.switch_game_state') }}">
+                    <span class="oi oi-media-play"></span> Continue
+                </button>
+            {% endif %}
+        {% else %}
+            <span class="oi oi-play-circle"></span> Start
+        {% endif %}
+    </button>
+</div>
+<!-- start model -->
+<div class="modal fade" id="confirm-start" tabindex="-1" role="dialog" aria-labelledby="confirmStartModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmStartModalLabel">
+                    {% if start_flag %}
+                        Delete Confirm
+                    {% else %}
+                        Start Confirm
+                    {% endif %}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="oi oi-delete"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% if start_flag %}
+                    <p>Are you sure you want to delete the current competition?</p>
+                    <p>It will delete all data of {{ get_current_year() }}.</p>
+                {% else %}
+                    <p>Are you sure you want to start up a new competition?</p>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <form class="start-form" action="" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <span class="oi oi-action-undo"></span> Cancel
+                    </button>
+                    <button class="btn btn-danger btn-confirm" type="submit">
+                        <span class="oi oi-check"></span> Confirm
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- stop model -->
+<div class="modal fade" id="confirm-stop" tabindex="-1" role="dialog" aria-labelledby="confirmStopModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmStopModalLabel">
+                    Stop Confirm
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="oi oi-delete"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to stop this competition?</p>
+            </div>
+            <div class="modal-footer">
+                <form class="stop-form" action="" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <span class="oi oi-action-undo"></span> Cancel
+                    </button>
+                    <button class="btn btn-danger btn-confirm" type="submit">
+                        <span class="oi oi-check"></span> Confirm
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- continue model -->
+<div class="modal fade" id="confirm-continue" tabindex="-1" role="dialog" aria-labelledby="confirmContinueModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmContinueModalLabel">
+                    Continue Confirm
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="oi oi-delete"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to continue this competition?</p>
+            </div>
+            <div class="modal-footer">
+                <form class="continue-form" action="" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <span class="oi oi-action-undo"></span>  Cancel
+                    </button>
+                    <button class="btn btn-danger btn-confirm" type="submit">
+                        <span class="oi oi-check"></span> Confirm
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
