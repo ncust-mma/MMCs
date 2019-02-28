@@ -72,7 +72,7 @@ class Task(db.Model):
 
     @property
     def solution_uuid(self):
-        return Solution.query.get(self.id).uuid
+        return Solution.query.get(self.solution_id).uuid
 
     @property
     def is_able(self):
@@ -80,7 +80,7 @@ class Task(db.Model):
 
     @property
     def filename(self):
-        return Solution.query.filter_by(uuid=self.solution_uuid).first().name
+        return Solution.query.get(self.solution_id).name
 
 
 class StartConfirm(db.Model):

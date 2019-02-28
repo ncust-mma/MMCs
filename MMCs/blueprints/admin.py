@@ -116,6 +116,8 @@ def method():
 @login_required
 @admin_required
 def method_random():
+    year = current_year()
+    Task.query.filter_by(year=year).delete()
     flash('Randomly assigned.', 'success')
     return redirect_back()
 
