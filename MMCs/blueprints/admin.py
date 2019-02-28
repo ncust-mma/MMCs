@@ -118,6 +118,10 @@ def method():
 def method_random():
     year = current_year()
     Task.query.filter_by(year=year).delete()
+    db.session.commit()
+
+    # TODO: 随机分配方案
+
     flash('Randomly assigned.', 'success')
     return redirect_back()
 

@@ -60,6 +60,11 @@ class Solution(db.Model):
     tasks = db.relationship(
         'Task', cascade='save-update, merge, delete')
 
+    @property
+    def problem(self):
+
+        return self.name.split('_')[2]
+
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
