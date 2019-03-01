@@ -19,19 +19,19 @@ teacher_bp = Blueprint('teacher', __name__)
 @teacher_required
 def index():
     year = current_year()
-    solutions_right = Task.query.filter(
+    task_right = Task.query.filter(
         Task.year == year,
         Task.teacher_id == current_user.id,
         Task.score != None,
         Task.score != '').count()
 
-    solutions_all = Task.query.filter(
+    tasks = Task.query.filter(
         Task.year == year,
         Task.teacher_id == current_user.id).count()
 
-    progress = False
-    if solutions_all:
-        progress = solutions_right/solutions_all*100
+    progress = 0
+    if tasks:
+        progress = task_right/tasks*100
 
     return render_template('backstage/teacher/overview.html', progress=progress)
 

@@ -6,41 +6,45 @@
 <div class="card w-100 bg-light">
     <h3 class="card-header">{{ _('Progress') }}</h3>
     {% if is_start(get_current_year()) %} 
-    {% if progress == 0 or progress %}
-    <div class="card-body">
-        <div class="progress">
-            <div
-                class="progress-bar progress-bar-striped progress-bar-animated"
-                role="progressbar"
-                style="width: {{ progress|default(0) }}%"
-            >
-                {{ _('Finished') }}: {{ '%0.2f'| format(progress|float) }}%
-            </div>
-        </div>
-    </div>
-    <div class="card-footer">
-        <div class="float-right">
-            {% if progress == 100 %}
-                <a class="btn btn-success" href="{{ url_for('teacher.manage_task') }}">
-                    {{ _('Done') }}</a>
-            {% elif 0 < progress < 100 %}
-                <a class="btn btn-primary" href="{{ url_for('teacher.manage_task') }}">
-                    {{ _('Contiue') }}</a>
+        {% if tasks %}
+            {% if progress >= 0 %}
+                <div class="card-body">
+                    <div class="progress">
+                        <div
+                            class="progress-bar progress-bar-striped progress-bar-animated"
+                            role="progressbar"
+                            style="width: {{ progress|default(0) }}%"
+                        >
+                            {{ _('Finished') }}: {{ '%0.2f'| format(progress|float) }}%
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="float-right">
+                        {% if progress == 100 %}
+                            <a class="btn btn-success" href="{{ url_for('teacher.manage_task') }}">
+                                {{ _('Done') }}</a>
+                        {% elif 0 < progress < 100 %}
+                            <a class="btn btn-primary" href="{{ url_for('teacher.manage_task') }}">
+                                {{ _('Contiue') }}</a>
+                        {% else %}
+                            <a class="btn btn-info" href="{{ url_for('teacher.manage_task') }}">
+                                {{ _('Start') }}</a>
+                        {% endif %}
+                    </div>
+                </div>
             {% else %}
-                <a class="btn btn-info" href="{{ url_for('teacher.manage_task') }}">
-                    {{ _('Start') }}</a>
+                <div class="tip text-center">
+                    <span class="oi oi-ban"></span>
+                    {{ _('No Tasks.') }}
+                </div>
             {% endif %}
-        </div>
-    </div>
+        
+        {% else %}
+            {% include "backstage/tips/no_solution.html" %}
+        {% endif %}
     {% else %}
-    <div class="tip">
-        <span class="oi oi-ban"></span>
-        {{ _('No Tasks.') }}
-    </div>
-    {% endif %}
-
-    {% else %}
-        {% include "backstage/_tip.html" %}
+        {% include "backstage/tips/no_start.html" %}
     {% endif %}
 </div>
 {% endblock %}

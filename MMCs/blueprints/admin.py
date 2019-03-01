@@ -22,19 +22,19 @@ admin_bp = Blueprint('admin', __name__)
 def index():
     progress = 0
     year = current_year()
-    if StartConfirm.is_existed(year):
-        tasks = Task.query.filter(Task.year == year).all()
-        if tasks:
-            teacher_ids = set(i.teacher_id for i in tasks)
 
-            finished_count = 0
-            for teacher_id in teacher_ids:
-                user = User.query.get_or_404(teacher_id)
-                finished_count += len(user.finished_task(year))
+    tasks = Task.query.filter(Task.year == year).all()
+    if tasks:
+        teacher_ids = set(i.teacher_id for i in tasks)
 
-            progress = finished_count/len(tasks)*100
+        finished_count = 0
+        for teacher_id in teacher_ids:
+            user = User.query.get_or_404(teacher_id)
+            finished_count += len(user.finished_task(year))
 
-    return render_template('backstage/admin/overview.html', progress=progress)
+        progress = finished_count/len(tasks)*100
+
+    return render_template('backstage/admin/overview.html', progress=progress, tasks=len(tasks))
 
 
 @admin_bp.route('/manage-solution/')
@@ -67,17 +67,21 @@ def solution_list():
 def upload():
     if request.method == 'POST' and 'file' in request.files:
         year = current_year()
+        path = os.path.join(
+            current_app.config['SOLUTION_SAVE_PATH'],
+            str(year))
+        if not os.path.exists(path):
+            os.mkdir(path)
+
         if StartConfirm.is_start(year):
             file = request.files.get('file')
             filename, uuid = new_filename(file.filename)
             if allowed_file(filename):
-                path = os.path.join(
-                    current_app.config['SOLUTION_SAVE_PATH'],
-                    str(year), uuid)
+                filepath = os.path.join(path, filename)
                 solution = Solution(name=filename, uuid=uuid, year=year)
                 db.session.add(solution)
                 db.session.commit()
-                file.save(path)
+                file.save(filepath)
             else:
                 ext = current_app.config['ALLOWED_SOLUTION_EXTENSIONS']
                 return '{} only!'.format(', '.join(ext)), 400
