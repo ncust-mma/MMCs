@@ -33,7 +33,7 @@ def index():
     if tasks:
         progress = task_right/tasks*100
 
-    return render_template('backstage/teacher/overview.html', progress=progress)
+    return render_template('backstage/teacher/overview.html', progress=progress, tasks=tasks)
 
 
 @teacher_bp.route('/manage-task', methods=['GET', 'POST'])

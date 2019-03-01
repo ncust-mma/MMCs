@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-03-01 20:00+0800\n"
+"POT-Creation-Date: 2019-03-01 20:16+0800\n"
 "PO-Revision-Date: 2019-03-01 13:47+0800\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
@@ -453,6 +453,7 @@ msgstr "文件名"
 #: MMCs/templates/backstage/admin/manage_solution/solution_list.html:19
 #: MMCs/templates/backstage/admin/manage_task/add.html:14
 #: MMCs/templates/backstage/admin/manage_task/check.html:13
+#: MMCs/templates/backstage/teacher/manage_task.html:23
 msgid "UUID"
 msgstr "唯一编码"
 

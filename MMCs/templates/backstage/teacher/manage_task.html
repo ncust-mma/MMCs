@@ -20,7 +20,7 @@
                     <tr class="text-center">
                         <th hidden>ID</th>
                         <th scope="col">#</th>
-                        <th scope="col">UUID</th>
+                        <th scope="col">{{ _('UUID') }}</th>
                         <th scope="col">{{ _('Score') }}</th>
                         <th scope="col">{{ _('Actions') }}</th>
                     </tr>
@@ -36,7 +36,11 @@
                             {{ task.solution_uuid }}</a>
                         </td>
                         <td>
-                            {{ form.score(class="form-control form-control-sm text-center", value=task.score) }}
+                            {% if task.score %}
+                                {{ form.score(class="form-control form-control-sm text-center", value=task.score) }}
+                            {% else %}
+                                {{ form.score(class="form-control form-control-sm text-center") }}
+                            {% endif %}
                         </td>
                         <td>{{ form.submit(class="btn btn-info btn-sm") }}</td>
                     </form>

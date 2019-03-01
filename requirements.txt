@@ -1,0 +1,12 @@
+flask
+python-dotenv
+bootstrap-flask
+sqlalchemy
+flask-sqlalchemy
+flask-wtf
+flask-login
+flask-ckeditor
+flask-dropzone
+flask-babel
+pypinyin
+faker

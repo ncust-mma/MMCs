@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import random
 
 from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, send_file, url_for)
@@ -125,10 +126,31 @@ def method_random():
     year = current_year()
     Task.query.filter_by(year=year).delete()
     db.session.commit()
-
+    samples = current_app.config['MAX_TEACHER_TASK_NUMBER']
     # TODO: 随机分配方案
+    solutions = Solution.query.filter_by(year=year).all()
+    if solutions:
+        teachers = User.query.filter_by(permission='Teacher').all()
+        if teachers:
+            for solution in solutions:
+                for teacher in random.sample(teachers, samples):
+                    task = Task(
+                        teacher_id=teacher.id,
+                        solution_id=solution.id,
+                        year=year
+                    )
+                    db.session.add(task)
+                    try:
+                        db.session.commit()
+                    except:
+                        db.session.rollback()
 
-    flash(_('Randomly assigned.'), 'success')
+            flash(_('Randomly assigned.'), 'success')
+        else:
+            flash(_('Please add teacher to assign task.'), 'warning')
+    else:
+        flash(_('No solutions.'), 'warning')
+
     return redirect_back()
 
 
@@ -206,24 +228,24 @@ def user_solution_add_page(user_id):
         page = request.args.get('page', 1, type=int)
         per_page = current_app.config['SOLUTION_PER_PAGE']
 
+        year = current_year()
         user = User.query.get_or_404(user_id)
-        task_existed = user.search_task(current_year())
+        task_existed = user.search_task(year)
         solution_existed_ids = set(task.solution_id for task in task_existed)
         pagination = Solution.query.filter(
             ~Solution.id.in_(map(str, solution_existed_ids)),
-            Solution.year == current_year()
+            Solution.year == year
         ).order_by(Solution.id.desc()).paginate(page, per_page)
         solutions = pagination.items
 
         form = AdminAddTaskForm()
         if form.validate_on_submit():
-            user = User.query.get_or_404(user_id)
             solution = Solution.query.get_or_404(form.id.data)
             task = Task(
                 teacher_id=user.id,
                 solution_id=solution.id,
                 solution_uuid=solution.uuid,
-                year=current_year()  # BUG: bugs? 不能设置属性? AttributeError: can't set attribute
+                year=year  # BUG: bugs? 不能设置属性? AttributeError: can't set attribute
             )
             db.session.add(task)
             db.session.commit()

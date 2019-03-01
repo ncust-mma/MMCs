@@ -51,8 +51,11 @@ class BaseConfig(object):
     MMCS_LOCALES = ['en_US', 'zh_Hans_CN']
     BABEL_DEFAULT_LOCALE = MMCS_LOCALES[0]
 
+    MAX_TEACHER_TASK_NUMBER = 3
+
 
 class DevelopmentConfig(BaseConfig):
+    FLASK_ENV = 'development'
     SQLALCHEMY_DATABASE_URI = prefix + os.path.join(basedir, 'data-dev.db')
     REDIS_URL = "redis://localhost"
 
@@ -64,6 +67,7 @@ class TestingConfig(BaseConfig):
 
 
 class ProductionConfig(BaseConfig):
+    FLASK_ENV = 'production'
     SECRET_KEY = os.getenv('SECRET_KEY', secrets.token_urlsafe(16))
     SQLALCHEMY_POOL_RECYCLE = 280
     SQLALCHEMY_DATABASE_URI = os.getenv(
