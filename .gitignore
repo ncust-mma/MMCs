@@ -111,6 +111,5 @@ venv.bak/
 .history
 .vscode
 
-# env files
-logs
-uploads
+# personel files
+solutions
