@@ -39,7 +39,7 @@
             <div class="modal-body">
                 {% if start_flag %}
                     <p>{{ _('Are you sure you want to delete the current competition?') }}</p>
-                    <p>{{ _('It will delete all data of %(year)s', year=get_current_year()) }}.</p>
+                    <p>{{ _('It will delete all data of %(year)s.', year=get_current_year()) }}</p>
                 {% else %}
                     <p>{{ _('Are you sure you want to start up a new competition?') }}</p>
                 {% endif %}

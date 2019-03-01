@@ -96,7 +96,7 @@ def delete_solution_task(solution_id):
     db.session.delete(solution)
     db.session.commit()
 
-    flash(_('Solution deleted.', 'info'))
+    flash(_('Solution deleted.'), 'info')
     return redirect_back()
 
 
@@ -219,7 +219,7 @@ def user_solution_add_page(user_id):
                 teacher_id=user.id,
                 solution_id=solution.id,
                 solution_uuid=solution.uuid,
-                year=current_year()
+                year=current_year()  # BUG: bugs? 不能设置属性? AttributeError: can't set attribute
             )
             db.session.add(task)
             db.session.commit()

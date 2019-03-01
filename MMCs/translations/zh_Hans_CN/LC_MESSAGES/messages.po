@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-03-01 03:33+0800\n"
-"PO-Revision-Date: 2019-03-01 03:33+0800\n"
+"POT-Creation-Date: 2019-03-01 13:46+0800\n"
+"PO-Revision-Date: 2019-03-01 13:47+0800\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: zh_Hans_CN <LL@li.org>\n"
@@ -19,31 +19,31 @@ msgstr ""
 "Generated-By: Babel 2.6.0\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: MMCs/__init__.py:91
+#: MMCs/__init__.py:89
 msgid "Bad Request"
 msgstr "请求无效"
 
-#: MMCs/__init__.py:96
+#: MMCs/__init__.py:94
 msgid "Unauthorized"
 msgstr "未授权"
 
-#: MMCs/__init__.py:101
+#: MMCs/__init__.py:99
 msgid "Forbidden"
 msgstr "禁止访问"
 
-#: MMCs/__init__.py:106
+#: MMCs/__init__.py:104
 msgid "Page Not Found"
 msgstr "页面未找到"
 
-#: MMCs/__init__.py:111
+#: MMCs/__init__.py:109
 msgid "Method not allowed"
 msgstr "方法不允许"
 
-#: MMCs/__init__.py:116
+#: MMCs/__init__.py:114
 msgid "Internal Server Error Explained"
 msgstr "服务器出错"
 
-#: MMCs/__init__.py:121
+#: MMCs/__init__.py:119
 msgid "Handle CSRF Error"
 msgstr "CSRF验证错误"
 
@@ -220,8 +220,8 @@ msgstr "更改密码"
 
 #: MMCs/utils.py:47
 #, python-format
-msgid "Error in the %(name)s field - %(error)s"
-msgstr ""
+msgid "Error in the %(name)s field - %(error)s."
+msgstr "%(name)s字段中的错误-%(error)s。"
 
 #: MMCs/blueprints/admin.py:85
 msgid "Competition of current year don't start."
@@ -282,12 +282,12 @@ msgstr "设置已更新。"
 #: MMCs/blueprints/root.py:67
 #, python-format
 msgid "The year of %(year)s Competition deleted."
-msgstr ""
+msgstr "它将删除%(year)s的所有数据。"
 
 #: MMCs/blueprints/root.py:73
 #, python-format
 msgid "The year of %(year)s Competition start now."
-msgstr ""
+msgstr "%(year)s竞赛现在开始。"
 
 #: MMCs/blueprints/root.py:90
 msgid "Competition state switched."
@@ -320,7 +320,7 @@ msgstr "分数已更新。"
 #: MMCs/blueprints/teacher.py:63
 #, python-format
 msgid "Score out of range from %(lower)s to %(upper)s."
-msgstr ""
+msgstr "分数超出%(lower)s-%(upper)s范围。"
 
 #: MMCs/templates/base.html:36
 msgid "Home"
@@ -333,6 +333,10 @@ msgstr "关于"
 #: MMCs/templates/base.html:41
 msgid "Welcome to MMCs"
 msgstr "欢迎登入"
+
+#: MMCs/templates/base.html:80
+msgid "Organization"
+msgstr "组织"
 
 #: MMCs/templates/base.html:80 MMCs/templates/base.html:86
 msgid ""
@@ -585,8 +589,8 @@ msgstr "你确定要删除当前竞赛吗？"
 
 #: MMCs/templates/backstage/root/manage_competition/behavior.html:42
 #, python-format
-msgid "It will delete all data of %(year)s"
-msgstr ""
+msgid "It will delete all data of %(year)s."
+msgstr "它将删除%(year)s的所有数据。"
 
 #: MMCs/templates/backstage/root/manage_competition/behavior.html:44
 msgid "Are you sure you want to start up a new competition?"
@@ -645,3 +649,6 @@ msgstr "华北理工大学数学建模校赛管理系统"
 #: MMCs/templates/front/index.html:15
 msgid "Sign in Now"
 msgstr "现在登入"
+
+#~ msgid "Error in the %(name)s field - %(error)s"
+#~ msgstr "%(name)s字段中的错误-%(error)s"

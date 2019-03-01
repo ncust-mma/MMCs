@@ -42,13 +42,12 @@ def create_app(config_name=None):
     register_global_func(app)
     register_commands(app)
     register_shell_context(app)
-    register_logger(app)
+    register_logging(app)
 
     return app
 
 
-def register_logger(app):
-    app.logger.setLevel(logging.INFO)
+def register_logging(app):
 
     formatter = logging.Formatter(
         '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -56,7 +55,6 @@ def register_logger(app):
     file_handler = RotatingFileHandler(
         os.path.join(basedir, 'logs/MMCs.log'),
         maxBytes=10 * 1024 * 1024, backupCount=10)
-
     file_handler.setFormatter(formatter)
     file_handler.setLevel(logging.INFO)
 

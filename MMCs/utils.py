@@ -45,7 +45,7 @@ def flash_errors(form):
         for error in errors:
             name = getattr(form, field).label.text
             flash(_(
-                "Error in the %(name)s field - %(error)s", name=name, error=error), 'dark')
+                "Error in the %(name)s field - %(error)s.", name=name, error=error), 'dark')
 
 
 def gen_uuid(filename):
