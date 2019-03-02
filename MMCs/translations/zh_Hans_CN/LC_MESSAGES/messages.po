@@ -7,17 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-03-01 22:12+0800\n"
+"POT-Creation-Date: 2019-03-02 17:50+0800\n"
 "PO-Revision-Date: 2019-03-01 22:13+0800\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: zh_Hans_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.6.0\n"
-"X-Generator: Poedit 2.2.1\n"
 
 #: MMCs/__init__.py:93
 msgid "Bad Request"
@@ -190,7 +189,7 @@ msgstr "检查"
 #: MMCs/forms.py:166
 #: MMCs/templates/backstage/root/manage_competition/behavior.html:10
 msgid "Stop"
-msgstr "暂停"
+msgstr "暂停/结束"
 
 #: MMCs/forms.py:170
 #: MMCs/templates/backstage/root/manage_competition/behavior.html:14
@@ -343,6 +342,10 @@ msgstr "关于"
 msgid "Welcome to MMCs"
 msgstr "欢迎登入"
 
+#: MMCs/templates/base.html:46
+msgid "Language"
+msgstr "语言"
+
 #: MMCs/templates/base.html:80
 msgid "Organization"
 msgstr "组织"
@@ -389,7 +392,7 @@ msgstr "竞赛管理"
 #: MMCs/templates/backstage/index.html:34
 #: MMCs/templates/backstage/root/base.html:20
 msgid "Personnel Management"
-msgstr "人事管理"
+msgstr "用户管理"
 
 #: MMCs/templates/backstage/admin/base.html:16
 #: MMCs/templates/backstage/admin/base.html:20
@@ -591,7 +594,7 @@ msgstr "你确定要删除当前竞赛吗？"
 #: MMCs/templates/backstage/root/manage_competition/behavior.html:42
 #, python-format
 msgid "It will delete all data of %(year)s."
-msgstr "它将删除%(year)s的所有数据。"
+msgstr "它将删除%(year)s年的所有数据。"
 
 #: MMCs/templates/backstage/root/manage_competition/behavior.html:44
 msgid "Are you sure you want to start up a new competition?"
@@ -656,3 +659,4 @@ msgstr "现在登入"
 
 #~ msgid "No solutions"
 #~ msgstr "无作品"
+

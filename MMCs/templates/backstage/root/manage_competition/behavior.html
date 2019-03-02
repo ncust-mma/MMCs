@@ -5,6 +5,7 @@
     <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-start" data-href="{{ url_for('root.start_competition') }}">
         {% if start_flag %}
             <span class="oi oi-media-stop"></span> {{ _('Delete') }}
+            <!-- 这里需要进行更改下逻辑，当`Stop`后将`Delete`换成`Start`按钮 -->
             {% if state_flag %}
                 <button class="btn btn-secondary" data-toggle="modal" data-target="#confirm-stop" data-href="{{ url_for('root.switch_game_state') }}">
                     <span class="oi oi-media-pause"></span> {{ _('Stop') }}
