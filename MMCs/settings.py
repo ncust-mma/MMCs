@@ -2,7 +2,7 @@
 
 import os
 import sys
-import secrets
+import uuid
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -68,7 +68,7 @@ class TestingConfig(BaseConfig):
 
 class ProductionConfig(BaseConfig):
     FLASK_ENV = 'production'
-    SECRET_KEY = os.getenv('SECRET_KEY', secrets.token_urlsafe(16))
+    SECRET_KEY = os.getenv('SECRET_KEY', uuid.uuid4().hex)
     SQLALCHEMY_POOL_RECYCLE = 280
     SQLALCHEMY_DATABASE_URI = os.getenv(
         'DATABASE_URL', prefix + os.path.join(basedir, 'data.db'))
