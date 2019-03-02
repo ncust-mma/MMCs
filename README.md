@@ -1,5 +1,5 @@
 <p align="center"><img src="assets/logo.png" alt="MMCs"></p>	
-<p align="center"><i>NCUST Mathematical Modeling Competition System.</i></p>
+<p align="center"><i>NCUST <b>M</b>athematical <b>M</b>odeling <b>C</b>ompetition <b>s</b>ystem</i></p>
 
 ## Installation
 
