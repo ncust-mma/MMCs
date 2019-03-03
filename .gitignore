@@ -113,6 +113,9 @@ venv.bak/
 
 # personel files
 solutions
+*.self
+*.xlsx
+*.xls
 
 # xmind
 *.xmind

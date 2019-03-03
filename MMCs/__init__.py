@@ -21,9 +21,7 @@ from MMCs.extensions import bootstrap, db, login_manager, csrf, ckeditor, dropzo
 from MMCs.settings import config
 from MMCs.models import User, Solution, Task, StartConfirm
 from MMCs.utils import current_year, redirect_back
-
-
-basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+from MMCs.settings import basedir
 
 
 def create_app(config_name=None):

@@ -14,8 +14,6 @@ from flask_babel import _
 from pypinyin import lazy_pinyin
 from werkzeug.utils import secure_filename
 
-from MMCs.extensions import db
-
 
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)
