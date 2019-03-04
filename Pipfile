@@ -18,6 +18,3 @@ flask-dropzone = "*"
 flask-babel = "*"
 pypinyin = "*"
 faker = "*"
-
-[requires]
-python_version = "3.6"

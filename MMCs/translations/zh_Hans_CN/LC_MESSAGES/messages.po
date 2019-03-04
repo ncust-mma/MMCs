@@ -7,42 +7,43 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-03-02 17:50+0800\n"
-"PO-Revision-Date: 2019-03-01 22:13+0800\n"
+"POT-Creation-Date: 2019-03-04 17:57+0800\n"
+"PO-Revision-Date: 2019-03-04 17:57+0800\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: zh_Hans_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.6.0\n"
+"X-Generator: Poedit 2.2.1\n"
 
-#: MMCs/__init__.py:93
+#: MMCs/__init__.py:91
 msgid "Bad Request"
 msgstr "请求无效"
 
-#: MMCs/__init__.py:98
+#: MMCs/__init__.py:96
 msgid "Unauthorized"
 msgstr "未授权"
 
-#: MMCs/__init__.py:103
+#: MMCs/__init__.py:101
 msgid "Forbidden"
 msgstr "禁止访问"
 
-#: MMCs/__init__.py:108
+#: MMCs/__init__.py:106
 msgid "Page Not Found"
 msgstr "页面未找到"
 
-#: MMCs/__init__.py:113
+#: MMCs/__init__.py:111
 msgid "Method not allowed"
 msgstr "方法不允许"
 
-#: MMCs/__init__.py:118
+#: MMCs/__init__.py:116
 msgid "Internal Server Error Explained"
 msgstr "服务器出错"
 
-#: MMCs/__init__.py:123
+#: MMCs/__init__.py:121
 msgid "Handle CSRF Error"
 msgstr "CSRF验证错误"
 
@@ -187,12 +188,12 @@ msgid "Check"
 msgstr "检查"
 
 #: MMCs/forms.py:166
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:10
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:11
 msgid "Stop"
 msgstr "暂停/结束"
 
 #: MMCs/forms.py:170
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:14
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:15
 msgid "Continue"
 msgstr "继续"
 
@@ -217,7 +218,7 @@ msgstr "更改用户名"
 msgid "Change Password"
 msgstr "更改密码"
 
-#: MMCs/utils.py:47
+#: MMCs/utils.py:45
 #, python-format
 msgid "Error in the %(name)s field - %(error)s."
 msgstr "%(name)s字段中的错误-%(error)s。"
@@ -342,7 +343,7 @@ msgstr "关于"
 msgid "Welcome to MMCs"
 msgstr "欢迎登入"
 
-#: MMCs/templates/base.html:46
+#: MMCs/templates/backstage/index.html:49 MMCs/templates/base.html:46
 msgid "Language"
 msgstr "语言"
 
@@ -350,15 +351,19 @@ msgstr "语言"
 msgid "Organization"
 msgstr "组织"
 
-#: MMCs/templates/base.html:80 MMCs/templates/base.html:86
+#: MMCs/templates/base.html:80
 msgid ""
 "North China University of Science and Technology Mathematical Modeling "
 "Association"
 msgstr "华北理工大学数学建模协会"
 
-#: MMCs/templates/base.html:86
-msgid "Mathematical Modeling School Competition Management System"
-msgstr "数学建模校赛管理系统"
+#: MMCs/templates/base.html:85
+msgid "Mathematical Modeling Competition Management System"
+msgstr "数学建模竞赛管理系统"
+
+#: MMCs/templates/base.html:85
+msgid "Fork me on GitHub"
+msgstr "在Github上拷贝项目"
 
 #: MMCs/templates/errors.html:15 MMCs/templates/front/about.html:15
 msgid "Back Home"
@@ -487,7 +492,7 @@ msgstr "删除"
 #: MMCs/templates/backstage/admin/manage_solution/solution_list.html:70
 #: MMCs/templates/backstage/admin/manage_task/check.html:46
 #: MMCs/templates/backstage/admin/manage_task/method_manual.html:66
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:30
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:31
 #: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:94
 #: MMCs/templates/backstage/root/system_settings.html:60
 msgid "Delete Confirm"
@@ -505,9 +510,9 @@ msgstr "你确定要删除当前任务吗？"
 #: MMCs/templates/backstage/admin/manage_task/check.html:59
 #: MMCs/templates/backstage/admin/manage_task/method.html:34
 #: MMCs/templates/backstage/admin/manage_task/method_manual.html:79
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:51
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:81
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:111
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:52
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:82
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:112
 #: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:120
 #: MMCs/templates/backstage/root/system_settings.html:72
 msgid "Cancel"
@@ -551,9 +556,9 @@ msgid "If there were assigned, data will be deleted."
 msgstr "随机分配后将删除之前的数据。"
 
 #: MMCs/templates/backstage/admin/manage_task/method.html:36
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:54
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:84
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:114
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:55
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:85
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:115
 msgid "Confirm"
 msgstr "确认"
 
@@ -578,41 +583,41 @@ msgstr "竞赛"
 msgid "History"
 msgstr "历史信息"
 
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:18
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:19
 #: MMCs/templates/backstage/teacher/overview.html:32
 msgid "Start"
 msgstr "开始"
 
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:32
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:33
 msgid "Start Confirm"
 msgstr "开始确认"
 
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:41
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:42
 msgid "Are you sure you want to delete the current competition?"
 msgstr "你确定要删除当前竞赛吗？"
 
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:42
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:43
 #, python-format
 msgid "It will delete all data of %(year)s."
 msgstr "它将删除%(year)s年的所有数据。"
 
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:44
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:45
 msgid "Are you sure you want to start up a new competition?"
 msgstr "你确定要开始新的竞赛吗？"
 
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:68
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:69
 msgid "Stop Confirm"
 msgstr "暂停确认"
 
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:75
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:76
 msgid "Are you sure you want to stop this competition?"
 msgstr "你确定要暂停当前竞赛吗？"
 
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:98
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:99
 msgid "Continue Confirm"
 msgstr "继续验证"
 
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:105
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:106
 msgid "Are you sure you want to continue this competition?"
 msgstr "你确定要继续当前竞赛吗？"
 
@@ -647,8 +652,8 @@ msgstr "为开始/暂停中/已结束"
 #: MMCs/templates/front/index.html:13
 msgid ""
 "North China University of Science and Technology Mathematical Modeling "
-"School Competition Management System"
-msgstr "华北理工大学数学建模校赛管理系统"
+"Competition Management System"
+msgstr "华北理工大学数学建模竞赛管理系统"
 
 #: MMCs/templates/front/index.html:15
 msgid "Sign in Now"
@@ -660,3 +665,10 @@ msgstr "现在登入"
 #~ msgid "No solutions"
 #~ msgstr "无作品"
 
+#~ msgid "Mathematical Modeling School Competition Management System"
+#~ msgstr "数学建模校赛管理系统"
+
+#~ msgid ""
+#~ "North China University of Science and Technology Mathematical Modeling "
+#~ "School Competition Management System"
+#~ msgstr "华北理工大学数学建模校赛管理系统"
