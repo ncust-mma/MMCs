@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import os
-
 import logging
+import os
 from logging.handlers import RotatingFileHandler
+
 import click
 from flask import Flask, render_template, request
 from flask_babel import _
@@ -11,17 +11,18 @@ from flask_login import current_user
 from flask_sqlalchemy import get_debug_queries
 from flask_wtf.csrf import CSRFError
 
-from MMCs.blueprints.auth import auth_bp
-from MMCs.blueprints.root import root_bp
-from MMCs.blueprints.teacher import teacher_bp
 from MMCs.blueprints.admin import admin_bp
+from MMCs.blueprints.auth import auth_bp
 from MMCs.blueprints.backstage import backstage_bp
 from MMCs.blueprints.front import front_bp
-from MMCs.extensions import bootstrap, db, login_manager, csrf, ckeditor, dropzone, toolbar, babel
-from MMCs.settings import config
-from MMCs.models import User, Solution, Task, StartConfirm
+from MMCs.blueprints.root import root_bp
+from MMCs.blueprints.teacher import teacher_bp
+from MMCs.extensions import (babel, bootstrap, ckeditor, csrf, db, dropzone,
+                             login_manager, toolbar)
+from MMCs.models import Solution, StartConfirm, Task, User
+from MMCs.settings import basedir, config
 from MMCs.utils import current_year, redirect_back
-from MMCs.settings import basedir
+
 
 
 def create_app(config_name=None):
@@ -56,7 +57,7 @@ def register_logging(app):
             maxBytes=10 * 1024 * 1024, backupCount=10)
     else:
         file_handler = RotatingFileHandler(
-            os.path.join(basedir, 'logs/MMCs-debug.log'),
+            os.path.join(basedir, 'logs/MMCs-dev.log'),
             maxBytes=10 * 1024 * 1024, backupCount=10)
 
     file_handler.setFormatter(formatter)
