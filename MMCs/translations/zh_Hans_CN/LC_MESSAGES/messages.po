@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-03-04 17:57+0800\n"
-"PO-Revision-Date: 2019-03-04 17:57+0800\n"
+"POT-Creation-Date: 2019-03-10 14:21+0800\n"
+"PO-Revision-Date: 2019-03-10 14:24+0800\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: zh_Hans_CN <LL@li.org>\n"
@@ -19,31 +19,31 @@ msgstr ""
 "Generated-By: Babel 2.6.0\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: MMCs/__init__.py:91
+#: MMCs/__init__.py:109
 msgid "Bad Request"
 msgstr "请求无效"
 
-#: MMCs/__init__.py:96
+#: MMCs/__init__.py:114
 msgid "Unauthorized"
 msgstr "未授权"
 
-#: MMCs/__init__.py:101
+#: MMCs/__init__.py:119
 msgid "Forbidden"
 msgstr "禁止访问"
 
-#: MMCs/__init__.py:106
+#: MMCs/__init__.py:124
 msgid "Page Not Found"
 msgstr "页面未找到"
 
-#: MMCs/__init__.py:111
+#: MMCs/__init__.py:129
 msgid "Method not allowed"
 msgstr "方法不允许"
 
-#: MMCs/__init__.py:116
+#: MMCs/__init__.py:134
 msgid "Internal Server Error Explained"
 msgstr "服务器出错"
 
-#: MMCs/__init__.py:121
+#: MMCs/__init__.py:139
 msgid "Handle CSRF Error"
 msgstr "CSRF验证错误"
 
@@ -83,6 +83,7 @@ msgstr "用户名应仅包含a-z，A-Z和0-9。"
 
 #: MMCs/forms.py:40 MMCs/forms.py:89
 #: MMCs/templates/backstage/admin/manage_task/method_manual.html:13
+#: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:16
 msgid "Realname"
 msgstr "姓名"
 
@@ -121,7 +122,7 @@ msgstr "用户名已存在。"
 
 #: MMCs/forms.py:65
 msgid "The permission must select from Teacher, Admin and Root."
-msgstr "权限必须从Teacher，Admin和Root中选择。"
+msgstr "权限必须从\"Teacher\", \"Admin\"和\"Root\"中选择。"
 
 #: MMCs/forms.py:71
 msgid "New Username"
@@ -131,7 +132,7 @@ msgstr "新用户名"
 msgid "Confirm Username"
 msgstr "用户名确认"
 
-#: MMCs/forms.py:80 MMCs/forms.py:105 MMCs/forms.py:115 MMCs/forms.py:143
+#: MMCs/forms.py:80 MMCs/forms.py:105 MMCs/forms.py:115 MMCs/forms.py:129
 msgid "Change"
 msgstr "更新"
 
@@ -153,106 +154,94 @@ msgstr "新密码"
 msgid "Confirm Password"
 msgstr "密码确认"
 
-#: MMCs/forms.py:120
-msgid "File type"
-msgstr "文件类型"
-
-#: MMCs/forms.py:123
-msgid "The file type should contain only a-z."
-msgstr "文件类型应仅包含a-z。"
-
-#: MMCs/forms.py:125 MMCs/forms.py:154 MMCs/forms.py:158
-#: MMCs/templates/backstage/admin/manage_task/base.html:16
-msgid "Add"
-msgstr "添加"
-
-#: MMCs/forms.py:129
-msgid "The file type is already in use."
-msgstr "文件类型已存在。"
-
-#: MMCs/forms.py:134 MMCs/forms.py:152
+#: MMCs/forms.py:120 MMCs/forms.py:138
 msgid "Task ID"
 msgstr "任务号"
 
-#: MMCs/forms.py:139 MMCs/templates/backstage/admin/manage_task/check.html:14
+#: MMCs/forms.py:125 MMCs/templates/backstage/admin/manage_task/check.html:14
 #: MMCs/templates/backstage/teacher/manage_task.html:24
 msgid "Score"
 msgstr "分数"
 
-#: MMCs/forms.py:147
+#: MMCs/forms.py:133
 msgid "The task is not existed."
 msgstr "该任务未存在。"
 
-#: MMCs/forms.py:162 MMCs/templates/backstage/admin/manage_task/base.html:13
+#: MMCs/forms.py:140 MMCs/forms.py:144
+#: MMCs/templates/backstage/admin/manage_task/base.html:16
+msgid "Add"
+msgstr "添加"
+
+#: MMCs/forms.py:148 MMCs/templates/backstage/admin/manage_task/base.html:13
 msgid "Check"
 msgstr "检查"
 
-#: MMCs/forms.py:166
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:11
+#: MMCs/forms.py:152
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:10
 msgid "Stop"
 msgstr "暂停/结束"
 
-#: MMCs/forms.py:170
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:15
+#: MMCs/forms.py:156
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:14
 msgid "Continue"
 msgstr "继续"
 
-#: MMCs/forms.py:174
+#: MMCs/forms.py:160
 #: MMCs/templates/backstage/root/manage_personnel/base.html:15
 #: MMCs/templates/backstage/settings/base.html:14
 #: MMCs/templates/backstage/settings/edit_profile.html:6
 msgid "Edit Profile"
 msgstr "账户设置"
 
-#: MMCs/forms.py:178
+#: MMCs/forms.py:164
 #: MMCs/templates/backstage/root/manage_personnel/base.html:18
 #: MMCs/templates/backstage/settings/base.html:15
 #: MMCs/templates/backstage/settings/change_username.html:7
 msgid "Change Username"
 msgstr "更改用户名"
 
-#: MMCs/forms.py:182
+#: MMCs/forms.py:168
 #: MMCs/templates/backstage/root/manage_personnel/base.html:21
 #: MMCs/templates/backstage/settings/base.html:16
 #: MMCs/templates/backstage/settings/change_password.html:7
 msgid "Change Password"
 msgstr "更改密码"
 
-#: MMCs/utils.py:45
+#: MMCs/utils.py:40
 #, python-format
 msgid "Error in the %(name)s field - %(error)s."
 msgstr "%(name)s字段中的错误-%(error)s。"
 
-#: MMCs/blueprints/admin.py:90
+#: MMCs/blueprints/admin.py:84
 msgid "Competition of current year don't start."
 msgstr "今年校赛尚未开始。"
 
-#: MMCs/blueprints/admin.py:104
+#: MMCs/blueprints/admin.py:98
 msgid "Solution deleted."
 msgstr "作品已删除。"
 
-#: MMCs/blueprints/admin.py:148
+#: MMCs/blueprints/admin.py:143
 msgid "Randomly assigned."
 msgstr "任务已随机分配。"
 
-#: MMCs/blueprints/admin.py:150
+#: MMCs/blueprints/admin.py:145
 msgid "Please add teacher to assign task."
 msgstr "请先添加教师再来分配任务。"
 
-#: MMCs/blueprints/admin.py:152
+#: MMCs/blueprints/admin.py:147
 #: MMCs/templates/backstage/tips/no_solution.html:4
 msgid "No solutions."
 msgstr "无作品。"
 
-#: MMCs/blueprints/admin.py:206
+#: MMCs/blueprints/admin.py:203
 msgid "All tasks of User deleted."
 msgstr "该用户所有任务已删除。"
 
-#: MMCs/blueprints/admin.py:217
+#: MMCs/blueprints/admin.py:214
 msgid "Task deleted."
 msgstr "任务删除。"
 
-#: MMCs/blueprints/admin.py:253
+#: MMCs/blueprints/admin.py:249
 msgid "Added successed."
 msgstr "添加成功。"
 
@@ -268,15 +257,15 @@ msgstr "用户名或密码无效。"
 msgid "Logout success."
 msgstr "注销成功。"
 
-#: MMCs/blueprints/backstage.py:27 MMCs/blueprints/root.py:163
+#: MMCs/blueprints/backstage.py:27 MMCs/blueprints/root.py:145
 msgid "Profile updated."
 msgstr "账户已更新。"
 
-#: MMCs/blueprints/backstage.py:45 MMCs/blueprints/root.py:189
+#: MMCs/blueprints/backstage.py:45 MMCs/blueprints/root.py:171
 msgid "Username updated."
 msgstr "用户名已更新。"
 
-#: MMCs/blueprints/backstage.py:63 MMCs/blueprints/root.py:140
+#: MMCs/blueprints/backstage.py:63 MMCs/blueprints/root.py:122
 msgid "Password updated."
 msgstr "密码已更新。"
 
@@ -288,80 +277,83 @@ msgstr "旧密码不正确。"
 msgid "Setting updated."
 msgstr "设置已更新。"
 
-#: MMCs/blueprints/root.py:67
-#, python-format
-msgid "The year of %(year)s Competition deleted."
-msgstr "它将删除%(year)s的所有数据。"
+#: MMCs/blueprints/root.py:56
+msgid "A new competition start now."
+msgstr "一场新的比赛现在开始了。"
 
-#: MMCs/blueprints/root.py:73
-#, python-format
-msgid "The year of %(year)s Competition start now."
-msgstr "%(year)s竞赛现在开始。"
+#: MMCs/blueprints/root.py:69
+msgid "Competition stopped."
+msgstr "比赛暂停。"
 
-#: MMCs/blueprints/root.py:90
-msgid "Competition state switched."
-msgstr "竞赛状况已更新。"
+#: MMCs/blueprints/root.py:72
+msgid "Competition continued."
+msgstr "比赛继续。"
 
-#: MMCs/blueprints/root.py:93
+#: MMCs/blueprints/root.py:75
 msgid "Please start current competition before do it."
 msgstr "请在开始竞赛后进行该项操。"
 
-#: MMCs/blueprints/root.py:218
+#: MMCs/blueprints/root.py:200
 msgid "Account registered."
 msgstr "账号已注册。"
 
-#: MMCs/blueprints/root.py:240
-msgid "File type added."
-msgstr "文件类型已添加。"
-
-#: MMCs/blueprints/root.py:255
+#: MMCs/blueprints/root.py:215
 msgid "User deleted."
 msgstr "账号已删除。"
 
-#: MMCs/blueprints/root.py:269
-msgid "File type deleted."
-msgstr "文件类型已删除。"
-
-#: MMCs/blueprints/teacher.py:61
+#: MMCs/blueprints/teacher.py:62
 msgid "Score Updated."
 msgstr "分数已更新。"
 
-#: MMCs/blueprints/teacher.py:63
+#: MMCs/blueprints/teacher.py:64
 #, python-format
 msgid "Score out of range from %(lower)s to %(upper)s."
 msgstr "分数超出%(lower)s-%(upper)s范围。"
 
-#: MMCs/templates/base.html:36
+#: MMCs/templates/base.html:37
 msgid "Home"
 msgstr "主页"
 
-#: MMCs/templates/backstage/index.html:21 MMCs/templates/base.html:37
+#: MMCs/templates/backstage/base.html:21 MMCs/templates/base.html:38
 msgid "About"
 msgstr "关于"
 
-#: MMCs/templates/base.html:41
+#: MMCs/templates/base.html:43
 msgid "Welcome to MMCs"
 msgstr "欢迎登入"
 
-#: MMCs/templates/backstage/index.html:49 MMCs/templates/base.html:46
+#: MMCs/templates/backstage/base.html:48 MMCs/templates/base.html:49
 msgid "Language"
 msgstr "语言"
 
-#: MMCs/templates/base.html:80
-msgid "Organization"
-msgstr "组织"
+#: MMCs/templates/backstage/base.html:62 MMCs/templates/base.html:64
+msgid "Logged in as"
+msgstr "登录为"
 
-#: MMCs/templates/base.html:80
+#: MMCs/templates/backstage/base.html:64
+#: MMCs/templates/backstage/settings/base.html:9 MMCs/templates/base.html:66
+msgid "Settings"
+msgstr "设置"
+
+#: MMCs/templates/backstage/base.html:67 MMCs/templates/base.html:69
+msgid "Logout"
+msgstr "注销"
+
+#: MMCs/templates/base.html:97
+msgid "Mathematical Modeling Association"
+msgstr "数学建模协会"
+
+#: MMCs/templates/base.html:97
 msgid ""
 "North China University of Science and Technology Mathematical Modeling "
 "Association"
 msgstr "华北理工大学数学建模协会"
 
-#: MMCs/templates/base.html:85
+#: MMCs/templates/base.html:102
 msgid "Mathematical Modeling Competition Management System"
 msgstr "数学建模竞赛管理系统"
 
-#: MMCs/templates/base.html:85
+#: MMCs/templates/base.html:102
 msgid "Fork me on GitHub"
 msgstr "在Github上拷贝项目"
 
@@ -373,68 +365,49 @@ msgstr "返回主页"
 msgid "Sign into MMCs"
 msgstr "现在登入MMCs"
 
-#: MMCs/templates/backstage/index.html:19
+#: MMCs/templates/backstage/base.html:19
 msgid "Dashboard"
 msgstr "仪表板"
 
-#: MMCs/templates/backstage/index.html:27
+#: MMCs/templates/backstage/base.html:27
 msgid "Manage"
 msgstr "管理"
 
 #: MMCs/templates/backstage/admin/base.html:14
-#: MMCs/templates/backstage/index.html:32
-#: MMCs/templates/backstage/index.html:37
-#: MMCs/templates/backstage/index.html:42
+#: MMCs/templates/backstage/base.html:32 MMCs/templates/backstage/base.html:36
+#: MMCs/templates/backstage/base.html:41
 #: MMCs/templates/backstage/teacher/base.html:13
 msgid "Overview"
 msgstr "预览"
 
-#: MMCs/templates/backstage/index.html:33
-#: MMCs/templates/backstage/root/base.html:16
+#: MMCs/templates/backstage/base.html:33
+#: MMCs/templates/backstage/root/base.html:17
 msgid "Competition Management"
 msgstr "竞赛管理"
 
-#: MMCs/templates/backstage/index.html:34
-#: MMCs/templates/backstage/root/base.html:20
+#: MMCs/templates/backstage/base.html:34
+#: MMCs/templates/backstage/root/base.html:18
 msgid "Personnel Management"
 msgstr "用户管理"
 
-#: MMCs/templates/backstage/admin/base.html:16
-#: MMCs/templates/backstage/admin/base.html:20
-#: MMCs/templates/backstage/index.html:38
+#: MMCs/templates/backstage/admin/base.html:15
+#: MMCs/templates/backstage/base.html:37
 msgid "Solution Management"
 msgstr "作品管理"
 
-#: MMCs/templates/backstage/admin/base.html:17
-#: MMCs/templates/backstage/admin/base.html:21
-#: MMCs/templates/backstage/index.html:39
-#: MMCs/templates/backstage/index.html:43
-#: MMCs/templates/backstage/teacher/base.html:15
-#: MMCs/templates/backstage/teacher/base.html:17
+#: MMCs/templates/backstage/admin/base.html:16
+#: MMCs/templates/backstage/base.html:38 MMCs/templates/backstage/base.html:42
+#: MMCs/templates/backstage/teacher/base.html:14
 msgid "Task Management"
 msgstr "任务管理"
 
-#: MMCs/templates/backstage/admin/base.html:18
-#: MMCs/templates/backstage/admin/base.html:22
+#: MMCs/templates/backstage/admin/base.html:17
 #: MMCs/templates/backstage/admin/manage_score.html:7
-#: MMCs/templates/backstage/index.html:40
+#: MMCs/templates/backstage/base.html:39
 msgid "Score Management"
 msgstr "分数管理"
 
-#: MMCs/templates/backstage/index.html:63
-msgid "Logged in as"
-msgstr "登录为"
-
-#: MMCs/templates/backstage/index.html:66
-#: MMCs/templates/backstage/settings/base.html:9
-msgid "Settings"
-msgstr "设置"
-
-#: MMCs/templates/backstage/index.html:69
-msgid "Logout"
-msgstr "注销"
-
-#: MMCs/templates/backstage/index.html:93
+#: MMCs/templates/backstage/base.html:91
 msgid "Close"
 msgstr "关闭"
 
@@ -460,7 +433,6 @@ msgid "Upload"
 msgstr "上传"
 
 #: MMCs/templates/backstage/admin/manage_solution/solution_list.html:8
-#: MMCs/templates/backstage/teacher/manage_task.html:9
 msgid "Solutions"
 msgstr "作品"
 
@@ -481,20 +453,15 @@ msgstr "唯一编码"
 #: MMCs/templates/backstage/admin/manage_task/check.html:62
 #: MMCs/templates/backstage/admin/manage_task/method_manual.html:46
 #: MMCs/templates/backstage/admin/manage_task/method_manual.html:82
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:7
 #: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:65
 #: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:123
-#: MMCs/templates/backstage/root/system_settings.html:39
-#: MMCs/templates/backstage/root/system_settings.html:75
 msgid "Delete"
 msgstr "删除"
 
 #: MMCs/templates/backstage/admin/manage_solution/solution_list.html:70
 #: MMCs/templates/backstage/admin/manage_task/check.html:46
 #: MMCs/templates/backstage/admin/manage_task/method_manual.html:66
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:31
 #: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:94
-#: MMCs/templates/backstage/root/system_settings.html:60
 msgid "Delete Confirm"
 msgstr "删除确认"
 
@@ -502,7 +469,6 @@ msgstr "删除确认"
 #: MMCs/templates/backstage/admin/manage_task/check.html:53
 #: MMCs/templates/backstage/admin/manage_task/method_manual.html:73
 #: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:106
-#: MMCs/templates/backstage/root/system_settings.html:66
 msgid "Are you sure you want to delete this item?"
 msgstr "你确定要删除当前任务吗？"
 
@@ -510,11 +476,10 @@ msgstr "你确定要删除当前任务吗？"
 #: MMCs/templates/backstage/admin/manage_task/check.html:59
 #: MMCs/templates/backstage/admin/manage_task/method.html:34
 #: MMCs/templates/backstage/admin/manage_task/method_manual.html:79
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:52
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:82
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:112
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:38
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:68
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:98
 #: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:120
-#: MMCs/templates/backstage/root/system_settings.html:72
 msgid "Cancel"
 msgstr "取消"
 
@@ -556,9 +521,9 @@ msgid "If there were assigned, data will be deleted."
 msgstr "随机分配后将删除之前的数据。"
 
 #: MMCs/templates/backstage/admin/manage_task/method.html:36
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:55
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:85
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:115
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:41
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:71
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:101
 msgid "Confirm"
 msgstr "确认"
 
@@ -571,7 +536,7 @@ msgstr "任务"
 msgid "Finished"
 msgstr "完成"
 
-#: MMCs/templates/backstage/root/base.html:4
+#: MMCs/templates/backstage/root/base.html:8
 msgid "Root"
 msgstr "管理员，您好"
 
@@ -583,41 +548,32 @@ msgstr "竞赛"
 msgid "History"
 msgstr "历史信息"
 
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:19
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:6
 #: MMCs/templates/backstage/teacher/overview.html:32
 msgid "Start"
 msgstr "开始"
 
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:33
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:25
 msgid "Start Confirm"
 msgstr "开始确认"
 
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:42
-msgid "Are you sure you want to delete the current competition?"
-msgstr "你确定要删除当前竞赛吗？"
-
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:43
-#, python-format
-msgid "It will delete all data of %(year)s."
-msgstr "它将删除%(year)s年的所有数据。"
-
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:45
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:32
 msgid "Are you sure you want to start up a new competition?"
 msgstr "你确定要开始新的竞赛吗？"
 
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:69
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:55
 msgid "Stop Confirm"
 msgstr "暂停确认"
 
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:76
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:62
 msgid "Are you sure you want to stop this competition?"
 msgstr "你确定要暂停当前竞赛吗？"
 
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:99
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:85
 msgid "Continue Confirm"
 msgstr "继续验证"
 
-#: MMCs/templates/backstage/root/manage_competition/behavior.html:106
+#: MMCs/templates/backstage/root/manage_competition/behavior.html:92
 msgid "Are you sure you want to continue this competition?"
 msgstr "你确定要继续当前竞赛吗？"
 
@@ -632,6 +588,10 @@ msgstr "账户"
 #: MMCs/templates/backstage/teacher/base.html:8
 msgid "Teacher"
 msgstr "教师，您好"
+
+#: MMCs/templates/backstage/teacher/manage_task.html:9
+msgid "Tasks Management"
+msgstr "任务管理"
 
 #: MMCs/templates/backstage/teacher/overview.html:26
 msgid "Done"
@@ -672,3 +632,36 @@ msgstr "现在登入"
 #~ "North China University of Science and Technology Mathematical Modeling "
 #~ "School Competition Management System"
 #~ msgstr "华北理工大学数学建模校赛管理系统"
+
+#~ msgid "File type"
+#~ msgstr "文件类型"
+
+#~ msgid "The file type should contain only a-z."
+#~ msgstr "文件类型应仅包含a-z。"
+
+#~ msgid "The file type is already in use."
+#~ msgstr "文件类型已存在。"
+
+#~ msgid "The year of %(year)s Competition deleted."
+#~ msgstr "它将删除%(year)s的所有数据。"
+
+#~ msgid "The year of %(year)s Competition start now."
+#~ msgstr "%(year)s竞赛现在开始。"
+
+#~ msgid "Competition state switched."
+#~ msgstr "竞赛状况已更新。"
+
+#~ msgid "File type added."
+#~ msgstr "文件类型已添加。"
+
+#~ msgid "File type deleted."
+#~ msgstr "文件类型已删除。"
+
+#~ msgid "Organization"
+#~ msgstr "组织"
+
+#~ msgid "Are you sure you want to delete the current competition?"
+#~ msgstr "你确定要删除当前竞赛吗？"
+
+#~ msgid "It will delete all data of %(year)s."
+#~ msgstr "它将删除%(year)s年的所有数据。"
