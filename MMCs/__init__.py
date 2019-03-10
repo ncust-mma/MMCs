@@ -232,7 +232,14 @@ def register_commands(app):
         click.echo('Generating the administrator...')
         click.echo('Done.')
 
-    app.cli.group()
+    @app.cli.command()
+    def gen_teacher():
+        """Generate teacher user."""
+        from MMCs.fakes import fake_default_teacher
+
+        fake_default_teacher()
+        click.echo('Generating the teacher...')
+        click.echo('Done.')
 
     @app.cli.group()
     def translate():

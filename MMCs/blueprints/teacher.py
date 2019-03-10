@@ -43,21 +43,24 @@ def index():
 @teacher_required
 def manage_task():
     com = Competition.current_competition()
-    page = request.args.get('page', 1, type=int)
-    per_page = current_app.config['SOLUTION_PER_PAGE']
-
-    form = ChangeScoreForm()
     if com:
-        pagination = Task.query.filter(
-            Task.competition_id == com.id,
-            Task.teacher_id == current_user.id
-        ).order_by(Task.id.desc()).paginate(page, per_page)
-        tasks = pagination.items
+        page = request.args.get('page', 1, type=int)
+        per_page = current_app.config['SOLUTION_PER_PAGE']
 
-    return render_template(
-        'backstage/teacher/manage_task.html',
-        pagination=pagination, tasks=tasks,
-        page=page, per_page=per_page, form=form)
+        form = ChangeScoreForm()
+        if com:
+            pagination = Task.query.filter(
+                Task.competition_id == com.id,
+                Task.teacher_id == current_user.id
+            ).order_by(Task.id.desc()).paginate(page, per_page)
+            tasks = pagination.items
+
+        return render_template(
+            'backstage/teacher/manage_task.html',
+            pagination=pagination, tasks=tasks,
+            page=page, per_page=per_page, form=form)
+
+    return render_template('backstage/teacher/manage_task.html')
 
 
 @teacher_bp.route('/manage-task/change/<int:task_id>', methods=['POST'])

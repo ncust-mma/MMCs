@@ -51,15 +51,18 @@ def solution_list():
     page = request.args.get('page', 1, type=int)
     per_page = current_app.config['SOLUTION_PER_PAGE']
     com = Competition.current_competition()
-    pagination = Solution.query.filter_by(competition_id=com.id).order_by(
-        Solution.id.desc()).paginate(page, per_page)
-    solutions = pagination.items
-    form = ButtonAddForm()
+    if com:
+        pagination = Solution.query.filter_by(competition_id=com.id).order_by(
+            Solution.id.desc()).paginate(page, per_page)
+        solutions = pagination.items
+        form = ButtonAddForm()
 
-    return render_template(
-        'backstage/admin/manage_solution/solution_list.html',
-        pagination=pagination, solutions=solutions,
-        page=page, per_page=per_page, form=form)
+        return render_template(
+            'backstage/admin/manage_solution/solution_list.html',
+            pagination=pagination, solutions=solutions,
+            page=page, per_page=per_page, form=form)
+
+    return render_template('backstage/admin/manage_solution/solution_list.html')
 
 
 @admin_bp.route('/manage-solution/upload', methods=['GET', 'POST'])
@@ -130,9 +133,8 @@ def method_random():
     Task.query.filter_by(competition_id=com.id).delete()
     db.session.commit()
 
-    # TODO: 随机分配方案
     samples = current_app.config['MAX_TEACHER_TASK_NUMBER']
-    solutions = Solution.query.filter_by(competition_id=com.id).all()
+    solutions = com.solutions
     if solutions:
         teachers = User.query.filter_by(permission='Teacher').all()
         if teachers:
