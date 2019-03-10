@@ -11,7 +11,7 @@
 {% endblock styles %}
 
 {% block solution_setting_content %}
-{% if is_start(get_current_year()) %}
+{% if is_start() %}
 <div class="col-md-12">
     {{ dropzone.create(action='admin.upload') }}
     <a

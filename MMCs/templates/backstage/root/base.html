@@ -1,5 +1,9 @@
-{% extends 'backstage/index.html' %} {% from 'macros.html' import
-render_nav_item %} {% block title %}Home{% endblock title %} {% block content %}
+{% extends 'backstage/base.html' %}
+{% from 'macros.html' import render_nav_item %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
 <div class="page-header">
     <h1>{{ _('Root') }}</h1>
 </div>
@@ -10,16 +14,8 @@ render_nav_item %} {% block title %}Home{% endblock title %} {% block content %}
             role="tablist"
             aria-orientation="vertical"
         >
-            {{
-                render_nav_item(
-                    "root.manage_competition",
-                    _("Competition Management")
-                )
-            }}
-            {{
-                render_nav_item("root.manage_personnel", _("Personnel Management"))
-            }}
-            {#{ render_nav_item("root.system_settings", _("System Settings")) }#}
+            {{ render_nav_item("root.manage_competition", _("Competition Management")) }}
+            {{ render_nav_item("root.manage_personnel", _("Personnel Management")) }}
         </div>
     </div>
     <div class="col-md-9">

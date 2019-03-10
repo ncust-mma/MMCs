@@ -4,7 +4,7 @@ from faker import Faker
 from sqlalchemy.sql.expression import func
 
 from MMCs import db
-from MMCs.models import Solution, StartConfirm, Task, UploadFileType, User
+from MMCs.models import Solution, Competition, Task, User
 from MMCs.utils import new_filename
 
 fake = Faker()
@@ -72,7 +72,7 @@ def fake_solution(count=30):
             fake.random_element(elements=('A', 'B', 'C', 'D')),
             fake_zh.name(), fake_zh.name(), fake_zh.name())
         filename, uuid = new_filename(name)
-        solution = Solution(year=2019, name=filename, uuid=uuid)
+        solution = Solution(name=filename, uuid=uuid, competition_id=1)
 
         db.session.add(solution)
         try:
@@ -81,19 +81,19 @@ def fake_solution(count=30):
             db.session.rollback()
 
 
-def fake_start_confirm():
-    sc = StartConfirm(year=2019, start_flag=True)
-    db.session.add(sc)
+def fake_competition():
+    com = Competition()
+    db.session.add(com)
     db.session.commit()
 
 
 def fake_task():
-    for solution in Solution.query.filter_by(year=2019).all():
+    for solution in Solution.query.filter_by(competition_id=1).all():
         for teacher in User.query.filter_by(permission='Teacher').order_by(func.random()).limit(3).all():
             task = Task(
                 teacher_id=teacher.id,
                 solution_id=solution.id,
-                year=solution.year
+                competition_id=1
             )
 
             db.session.add(task)
@@ -101,16 +101,3 @@ def fake_task():
                 db.session.commit()
             except:
                 db.session.rollback()
-
-
-def fake_file_type(count=5):
-    for _ in range(count):
-        upload_file_type = UploadFileType(
-            file_type=fake.file_extension()
-        )
-        db.session.add(upload_file_type)
-
-        try:
-            db.session.commit()
-        except:
-            db.session.rollback()

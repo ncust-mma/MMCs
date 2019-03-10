@@ -5,12 +5,12 @@
 {% block setting_content %}
 <div class="card w-100 bg-light">
     <h3 class="card-header">{{ _('Score Management') }}</h3>
-    {% if is_start(get_current_year()) %}
+    {% if is_start() %}
     <div class="card-body">
         {{ lipsum(1) }}
     </div>
     {% else %}
-        {% include "backstage/tips/.html" %}
+        {% include "backstage/tips/no_start.html" %}
     {% endif %}
 </div>
 {% endblock %}

@@ -11,8 +11,8 @@ from flask_login import login_required
 from MMCs.decorators import admin_required
 from MMCs.extensions import db
 from MMCs.forms import AdminAddTaskForm, ButtonAddForm, ButtonCheckForm
-from MMCs.models import Solution, StartConfirm, Task, User
-from MMCs.utils import allowed_file, current_year, new_filename, redirect_back
+from MMCs.models import Competition, Solution, Task, User
+from MMCs.utils import allowed_file, new_filename, redirect_back
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -21,21 +21,16 @@ admin_bp = Blueprint('admin', __name__)
 @login_required
 @admin_required
 def index():
-    progress = 0
-    year = current_year()
+    progress = False
+    task_number = False
+    if Competition.is_start():
+        com = Competition.current_competition()
+        tasks = com.tasks
+        finished = [task for task in tasks if task.score]
+        progress = len(finished)/len(tasks)*100
+        task_number = len(tasks)
 
-    tasks = Task.query.filter(Task.year == year).all()
-    if tasks:
-        teacher_ids = set(i.teacher_id for i in tasks)
-
-        finished_count = 0
-        for teacher_id in teacher_ids:
-            user = User.query.get_or_404(teacher_id)
-            finished_count += len(user.finished_task(year))
-
-        progress = finished_count/len(tasks)*100
-
-    return render_template('backstage/admin/overview.html', progress=progress, tasks=len(tasks))
+    return render_template('backstage/admin/overview.html', progress=progress, task_number=task_number)
 
 
 @admin_bp.route('/manage-solution/')
@@ -67,19 +62,18 @@ def solution_list():
 @admin_required
 def upload():
     if request.method == 'POST' and 'file' in request.files:
-        year = current_year()
-        path = os.path.join(
-            current_app.config['SOLUTION_SAVE_PATH'],
-            str(year))
+        path = current_app.config['SOLUTION_SAVE_PATH']
         if not os.path.exists(path):
             os.mkdir(path)
 
-        if StartConfirm.is_start(year):
+        if Competition.is_start():
             file = request.files.get('file')
             filename, uuid = new_filename(file.filename)
             if allowed_file(filename):
+                com = Competition.current_competition()
                 filepath = os.path.join(path, filename)
-                solution = Solution(name=filename, uuid=uuid, year=year)
+                solution = Solution(
+                    name=filename, uuid=uuid, competition_id=com.id)
                 db.session.add(solution)
                 db.session.commit()
                 file.save(filepath)
@@ -123,12 +117,13 @@ def method():
 @login_required
 @admin_required
 def method_random():
-    year = current_year()
-    Task.query.filter_by(year=year).delete()
+    com = Competition.current_competition()
+    Task.query.filter_by(competition_id=com.id).delete()
     db.session.commit()
-    samples = current_app.config['MAX_TEACHER_TASK_NUMBER']
+
     # TODO: 随机分配方案
-    solutions = Solution.query.filter_by(year=year).all()
+    samples = current_app.config['MAX_TEACHER_TASK_NUMBER']
+    solutions = Solution.query.filter_by(competition_id=com.id).all()
     if solutions:
         teachers = User.query.filter_by(permission='Teacher').all()
         if teachers:
@@ -137,7 +132,7 @@ def method_random():
                     task = Task(
                         teacher_id=teacher.id,
                         solution_id=solution.id,
-                        year=year
+                        competition_id=com.id
                     )
                     db.session.add(task)
                     try:
@@ -178,11 +173,12 @@ def method_manual():
 def check_user(user_id):
     form = ButtonAddForm()
     if form.validate_on_submit():
+        com = Competition.current_competition()
         page = request.args.get('page', 1, type=int)
         per_page = current_app.config['SOLUTION_PER_PAGE']
         pagination = Task.query.filter(
             Task.teacher_id == user_id,
-            Task.year == current_year()
+            Task.competition_id == com.id
         ).order_by(Task.id.desc()).paginate(page, per_page)
         tasks = pagination.items
     else:
@@ -198,9 +194,10 @@ def check_user(user_id):
 @login_required
 @admin_required
 def delete_user_task(user_id):
+    com = Competition.current_competition()
     Task.query.filter(
         Task.teacher_id == user_id,
-        Task.year == current_year()).delete()
+        Task.competition_id == com.id).delete()
     db.session.commit()
 
     flash(_("All tasks of User deleted."), 'success')
@@ -228,13 +225,13 @@ def user_solution_add_page(user_id):
         page = request.args.get('page', 1, type=int)
         per_page = current_app.config['SOLUTION_PER_PAGE']
 
-        year = current_year()
+        com = Competition.current_competition()
         user = User.query.get_or_404(user_id)
-        task_existed = user.search_task(year)
+        task_existed = user.search_task(com.id)
         solution_existed_ids = set(task.solution_id for task in task_existed)
         pagination = Solution.query.filter(
             ~Solution.id.in_(map(str, solution_existed_ids)),
-            Solution.year == year
+            Solution.competition_id == com.id
         ).order_by(Solution.id.desc()).paginate(page, per_page)
         solutions = pagination.items
 
@@ -245,7 +242,6 @@ def user_solution_add_page(user_id):
                 teacher_id=user.id,
                 solution_id=solution.id,
                 solution_uuid=solution.uuid,
-                year=year  # BUG: bugs? 不能设置属性? AttributeError: can't set attribute
             )
             db.session.add(task)
             db.session.commit()

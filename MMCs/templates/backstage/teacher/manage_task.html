@@ -6,12 +6,12 @@
 {% block setting_content %}
 <div class="card w-100 bg-light">
     <h3 class="card-header">
-        {{ _('Solutions') }}
-        {% if is_start(get_current_year()) %}
-            <small class="text-muted">{{ pagination.total }}</small>
+        {{ _('Tasks Management') }}
+        {% if is_start() %}
+            <small class="text-muted">{{ pagination.total|default(0) }}</small>
         {% endif %}
     </h3>
-    {% if is_start(get_current_year()) %}
+    {% if is_start() %}
         <div class="card-body">
             {% if tasks %}
             <div class="table-responsive">

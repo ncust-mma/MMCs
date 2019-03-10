@@ -647,7 +647,7 @@ msgstr "无任务。"
 
 #: MMCs/templates/backstage/tips/no_start.html:4
 msgid "Not started / paused / ended"
-msgstr "为开始/暂停中/已结束"
+msgstr "未开始/暂停中/已结束"
 
 #: MMCs/templates/front/index.html:13
 msgid ""

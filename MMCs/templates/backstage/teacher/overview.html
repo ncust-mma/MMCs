@@ -5,8 +5,8 @@
 {% block setting_content %}
 <div class="card w-100 bg-light">
     <h3 class="card-header">{{ _('Progress') }}</h3>
-    {% if is_start(get_current_year()) %} 
-        {% if tasks %}
+    {% if is_start() %} 
+        {% if task_number %}
             {% if progress >= 0 %}
                 <div class="card-body">
                     <div class="progress">
@@ -39,7 +39,6 @@
                     {{ _('No Tasks.') }}
                 </div>
             {% endif %}
-        
         {% else %}
             {% include "backstage/tips/no_solution.html" %}
         {% endif %}

@@ -23,7 +23,7 @@
 
                 <div class="navbar-nav ml-auto">
                     <div class="dropdown nav-item">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                             <span class="oi oi-wrench"></span> {{ _('Manage') }}
                             <span class="caret"></span>
                         </a>
@@ -32,7 +32,6 @@
                                 <a class="dropdown-item" href="{{ url_for('root.index') }}">{{ _('Overview') }}</a>
                                 <a class="dropdown-item" href="{{ url_for('root.manage_competition') }}">{{ _('Competition Management') }}</a>
                                 <a class="dropdown-item" href="{{ url_for('root.manage_personnel') }}">{{ _('Personnel Management') }}</a>
-                                <!-- <a class="dropdown-item" href="{#{ url_for('root.system_settings') }#}">System Settings</a> -->
                             {% elif current_user.is_admin %}
                                 <a class="dropdown-item" href="{{ url_for('admin.index') }}">{{ _('Overview') }}</a>
                                 <a class="dropdown-item" href="{{ url_for('admin.manage_solution') }}">{{ _('Solution Management') }}</a>
@@ -45,7 +44,7 @@
                         </div>
                     </div>
                     <div class="dropdown nav-item">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">
                             <span class="oi oi-text"></span> {{ _('Language') }}
                             <span class="caret"></span>
                         </a>
@@ -55,13 +54,12 @@
                         </div>
                     </div>
                     <div class="dropdown nav-item">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">
                             <span class="oi oi-person"></span>
                             <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" role="menu">
                             <h6 class="dropdown-header">{{ _('Logged in as') }} {{ current_user.realname }}</h6>
-
                             <a class="dropdown-item" href="{{ url_for('backstage.edit_profile') }}">
                                 <span class="oi oi-cog"></span> {{ _('Settings') }}</a>
                             <div class="dropdown-divider"></div>

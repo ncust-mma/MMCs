@@ -43,3 +43,8 @@ def set_locale(locale):
     flash(_('Setting updated.'), 'success')
 
     return response
+
+
+@front_bp.route('/404')
+def test():
+    pass

@@ -9,8 +9,8 @@ from flask_login import current_user, fresh_login_required, login_required
 
 from MMCs.extensions import db
 from MMCs.forms import ChangePasswordForm, ChangeUsernameForm, EditProfileForm
-from MMCs.models import StartConfirm
-from MMCs.utils import current_year, redirect_back
+from MMCs.models import Competition
+from MMCs.utils import redirect_back
 
 backstage_bp = Blueprint('backstage', __name__)
 
@@ -71,10 +71,9 @@ def change_password():
 @backstage_bp.route('/solution/<path:filename>')
 @login_required
 def get_solution(filename):
-    year = current_year()
-    if StartConfirm.is_start(year):
+    if Competition.is_start():
         path = os.path.join(
-            current_app.config['SOLUTION_SAVE_PATH'], str(year), filename)
+            current_app.config['SOLUTION_SAVE_PATH'], filename)
         if os.path.exists(path):
             return send_file(path, as_attachment=True)
         else:

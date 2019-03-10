@@ -5,7 +5,6 @@ try:
 except ImportError:
     from urllib.parse import urlparse, urljoin
 
-import datetime
 import os
 import uuid
 
@@ -34,10 +33,6 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_SOLUTION_EXTENSIONS']
 
 
-def current_year():
-    return datetime.datetime.now().year
-
-
 def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
@@ -58,3 +53,8 @@ def new_filename(filename):
     uuid = gen_uuid(filename)
 
     return filename, uuid
+
+
+def read_file(file):
+
+    pass

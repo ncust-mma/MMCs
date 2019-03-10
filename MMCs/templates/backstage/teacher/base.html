@@ -1,4 +1,4 @@
-{% extends 'backstage/index.html' %} 
+{% extends 'backstage/base.html' %} 
 {% from 'macros.html' import render_nav_item %}
 
 {% block title %}Home{% endblock title %}
@@ -11,11 +11,7 @@
     <div class="col-md-3">
         <div class="nav nav-pills flex-column" role="tablist" aria-orientation="vertical">
             {{ render_nav_item("teacher.index", _("Overview")) }}
-            {% if is_start(get_current_year()) %}
-                {{ render_nav_item("teacher.manage_task", _('Task Management')) }}
-            {% else %}
-                {{ render_nav_item('teacher.manage_task', _('Task Management'), disable=True) }}
-            {% endif %}
+            {{ render_nav_item("teacher.manage_task", _('Task Management')) }}
         </div>
     </div>
     <div class="col-md-9">

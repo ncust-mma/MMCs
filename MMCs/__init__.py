@@ -2,7 +2,7 @@
 
 import logging
 import os
-from logging.handlers import RotatingFileHandler
+from logging.handlers import RotatingFileHandler, SMTPHandler
 
 import click
 from flask import Flask, render_template, request
@@ -19,10 +19,9 @@ from MMCs.blueprints.root import root_bp
 from MMCs.blueprints.teacher import teacher_bp
 from MMCs.extensions import (babel, bootstrap, ckeditor, csrf, db, dropzone,
                              login_manager, toolbar)
-from MMCs.models import Solution, StartConfirm, Task, User
+from MMCs.models import Competition, Solution, Task, User
 from MMCs.settings import basedir, config
-from MMCs.utils import current_year, redirect_back
-
+from MMCs.utils import redirect_back
 
 
 def create_app(config_name=None):
@@ -47,9 +46,17 @@ def create_app(config_name=None):
 
 
 def register_logging(app):
+    class RequestFormatter(logging.Formatter):
 
-    formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        def format(self, record):
+            record.url = request.url
+            record.remote_addr = request.remote_addr
+            return super(RequestFormatter, self).format(record)
+
+    request_formatter = RequestFormatter(
+        '[%(asctime)s] - %(name)s - %(remote_addr)s requested %(url)s\n'
+        '%(levelname)s in %(module)s: %(message)s'
+    )
 
     if not app.debug:
         file_handler = RotatingFileHandler(
@@ -60,9 +67,19 @@ def register_logging(app):
             os.path.join(basedir, 'logs/MMCs-dev.log'),
             maxBytes=10 * 1024 * 1024, backupCount=10)
 
-    file_handler.setFormatter(formatter)
+    file_handler.setFormatter(request_formatter)
     file_handler.setLevel(logging.INFO)
     app.logger.addHandler(file_handler)
+
+    mail_handler = SMTPHandler(
+        mailhost=app.config['MAIL_SERVER'],
+        fromaddr=app.config['MAIL_USERNAME'],
+        toaddrs=app.config['ADMIN_EMAIL'],
+        subject='MMCs Application Error',
+        credentials=('apikey', app.config['MAIL_PASSWORD']))
+    mail_handler.setLevel(logging.INFO)
+    mail_handler.setFormatter(request_formatter)
+    app.logger.addHandler(mail_handler)
 
 
 def register_extensions(app):
@@ -125,23 +142,20 @@ def register_errors(app):
 def register_shell_context(app):
     @app.shell_context_processor
     def make_shell_context():
-        return dict(db=db, User=User, StartConfirm=StartConfirm,
+        return dict(db=db, User=User, Competition=Competition,
                     Solution=Solution, Task=Task)
 
 
 def register_global_func(app):
 
     @app.template_global()
-    def get_current_year():
-        return current_year()
+    def current_year():
+        from datetime import datetime
+        return datetime.now().year
 
     @app.template_global()
-    def is_start(year):
-        return StartConfirm.is_start(year)
-
-    @app.template_global()
-    def redirect2back():
-        return redirect_back()
+    def is_start():
+        return Competition.is_start()
 
 
 def register_commands(app):
@@ -169,11 +183,10 @@ def register_commands(app):
     @app.cli.command()
     @click.option('--teacher', default=10, help='Quantity of teacher, default is 10.')
     @click.option('--solution', default=30, help='Quantity of solution, default is 30.')
-    @click.option('--filetype', default=5, help='Quantity of filetype, default is 5.')
-    def forge(teacher, solution, filetype):
+    def forge(teacher, solution):
         """Generate fake data."""
 
-        from MMCs.fakes import fake_root, fake_admin, fake_teacher, fake_solution, fake_start_confirm, fake_task, fake_file_type, fake_default_teacher
+        from MMCs.fakes import fake_root, fake_admin, fake_teacher, fake_solution, fake_competition, fake_task, fake_default_teacher
 
         db.drop_all()
         db.create_all()
@@ -190,17 +203,14 @@ def register_commands(app):
         fake_teacher(teacher)
         click.echo('Generating %d teacher...' % teacher)
 
+        fake_competition()
+        click.echo('Generating the competition...')
+
         fake_solution(solution)
         click.echo('Generating %d solution...' % solution)
 
-        fake_start_confirm()
-        click.echo('Generating the start confirm...')
-
         fake_task()
         click.echo('Generating the task...')
-
-        fake_file_type()
-        click.echo('Generating %d filetype...' % filetype)
 
         click.echo('Done.')
 

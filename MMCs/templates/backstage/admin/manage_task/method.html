@@ -1,7 +1,7 @@
 {% extends 'backstage/admin/manage_task/base.html' %}
 
 {% block task_setting_content %}
-{% if is_start(get_current_year()) %}
+{% if is_start() %}
 <div class="btn-group btn-group-vertical btn-block" role="group" aria-label="Button group with nested dropdown">
     <a class="btn btn-danger text-white" data-toggle="modal" data-target="#confirm-random" data-href="{{ url_for('admin.method_random') }}">
         <span class="oi oi-random"></span> {{ _('Random') }}</a>

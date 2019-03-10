@@ -9,7 +9,7 @@ from wtforms import (BooleanField, FloatField, IntegerField, PasswordField,
 from wtforms.validators import (AnyOf, DataRequired, EqualTo, InputRequired,
                                 Length, Optional, Regexp)
 
-from MMCs.models import Task, UploadFileType, User
+from MMCs.models import Task, User
 
 
 class LoginForm(FlaskForm):
@@ -113,20 +113,6 @@ class RootChangePasswordForm(FlaskForm):
         _l('Confirm Password'),
         validators=[InputRequired(), DataRequired()])
     submit = SubmitField(_l('Change'))
-
-
-class AddUploadFileTypeForm(FlaskForm):
-    file_type = StringField(
-        _l('File type'),
-        validators=[
-            InputRequired(), DataRequired(), Length(1, 10),
-            Regexp('^[a-z]*$', message=_l('The file type should contain only a-z.'))
-        ])
-    submit = SubmitField(_l('Add'))
-
-    def validate_file_type(self, field):
-        if UploadFileType.query.filter_by(file_type=field.data).first():
-            raise ValidationError(_l('The file type is already in use.'))
 
 
 class ChangeScoreForm(FlaskForm):

@@ -53,6 +53,17 @@ class BaseConfig(object):
 
     MAX_TEACHER_TASK_NUMBER = 3
 
+    MAIL_USE_SSL = True
+    MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.sendgrid.net')
+    MAIL_PORT = os.getenv('MAIL_PORT', 587)
+    MAIL_USERNAME = os.getenv('MAIL_USERNAME')
+    MAIL_PASSWORD = os.getenv('SENDGRID_API_KEY')
+    MAIL_DEFAULT_SENDER = MAIL_USERNAME
+    ADMIN_EMAIL = os.getenv('ADMIN_EMAIL')
+
+    SENDGRID_DEFAULT_FROM = MAIL_USERNAME
+    SENDGRID_API_KEY = MAIL_PASSWORD
+
 
 class DevelopmentConfig(BaseConfig):
     FLASK_ENV = 'development'

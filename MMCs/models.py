@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from datetime import date
+
 from flask import current_app
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -41,13 +43,15 @@ class User(db.Model, UserMixin):
     def can(self, permission_name):
         return self.permission == permission_name
 
-    def search_task(self, year):
-        return Task.query.filter(Task.teacher_id == self.id, Task.year == year).all()
+    def search_task(self):
+        com = Competition.current_competition()
+        return Task.query.filter(Task.teacher_id == self.id, Task.competition_id == com.id).all()
 
-    def finished_task(self, year):
+    def finished_task(self):
+        com = Competition.current_competition()
         return Task.query.filter(
             Task.teacher_id == self.id,
-            Task.year == year,
+            Task.competition_id == com.id,
             Task.score != None).all()
 
 
@@ -55,7 +59,7 @@ class Solution(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     uuid = db.Column(db.String, index=True, nullable=False)
-    year = db.Column(db.Integer, nullable=False)
+    competition_id = db.Column(db.Integer, db.ForeignKey('competition.id'))
     score = db.Column(db.Float)
 
     tasks = db.relationship(
@@ -63,18 +67,20 @@ class Solution(db.Model):
 
     @property
     def problem(self):
-
         return self.name.split('_')[2]
+
+    @property
+    def date(self):
+        return Competition.query.get(self.competition_id).date
 
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    teacher_id = db.Column(
-        db.Integer, db.ForeignKey('user.id'))
+    teacher_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     solution_id = db.Column(db.Integer, db.ForeignKey('solution.id'))
+    competition_id = db.Column(db.Integer, db.ForeignKey('competition.id'))
     score = db.Column(db.Float)
-    times = db.Column(db.Integer, default=0)
-    year = db.Column(db.Integer, nullable=False)
+    remark = db.Column(db.Text)
 
     @property
     def solution_uuid(self):
@@ -88,26 +94,32 @@ class Task(db.Model):
     def filename(self):
         return Solution.query.get(self.solution_id).name
 
+    @property
+    def date(self):
+        return Solution.query.get(self.solution_id).date
 
-class StartConfirm(db.Model):
+
+class Competition(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    year = db.Column(db.Integer, unique=True, index=True, nullable=False)
-    start_flag = db.Column(db.Boolean, default=False)
+    date = db.Column(db.Date, index=True, nullable=False, default=date.today)
+    flag = db.Column(db.Boolean, default=False)
+
+    tasks = db.relationship(
+        'Task', cascade='save-update, merge, delete')
+
+    solutions = db.relationship(
+        'Solution', cascade='save-update, merge, delete')
 
     @classmethod
-    def is_start(self, year):
-        flag = StartConfirm.query.filter_by(year=year).first()
-        return flag.start_flag if flag is not None else False
+    def current_competition(self):
+        return Competition.query.order_by(Competition.id.desc()).first()
 
     @classmethod
-    def is_existed(self, year):
-        flag = StartConfirm.query.filter_by(year=year).first()
+    def is_start(self):
+        com = Competition.query.order_by(Competition.id.desc()).first()
+        return com.flag if com is not None else False
+
+    @classmethod
+    def is_existed(self, id):
+        flag = Competition.query.filter_by(id=id).first()
         return True if flag is not None else False
-
-
-class UploadFileType(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    file_type = db.Column(
-        db.String(10), index=True,
-        unique=True, nullable=False
-    )
