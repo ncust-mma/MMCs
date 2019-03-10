@@ -65,7 +65,7 @@ def check_filename(filename):
             if number.isdigit():
                 flag = True
             else:
-                info = _('Team number is not right')
+                info = _('Team number is not right.')
         else:
             info = _('Problem is not right.')
 
