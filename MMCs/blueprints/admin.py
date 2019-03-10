@@ -227,7 +227,7 @@ def user_solution_add_page(user_id):
 
         com = Competition.current_competition()
         user = User.query.get_or_404(user_id)
-        task_existed = user.search_task(com.id)
+        task_existed = user.search_task()
         solution_existed_ids = set(task.solution_id for task in task_existed)
         pagination = Solution.query.filter(
             ~Solution.id.in_(map(str, solution_existed_ids)),
@@ -262,3 +262,19 @@ def user_solution_add_page(user_id):
 @admin_required
 def manage_score():
     return render_template('backstage/admin/manage_score.html')
+
+
+@admin_bp.route('/manage-score/download/teacher', methods=['POST'])
+@login_required
+@admin_required
+def download_teacher():
+    # TODO: 文件下载
+    return redirect_back()
+
+
+@admin_bp.route('/manage-score/download/result', methods=['POST'])
+@login_required
+@admin_required
+def download_result():
+    # TODO: 文件下载
+    return redirect_back()

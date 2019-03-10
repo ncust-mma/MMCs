@@ -5,7 +5,8 @@ from flask_ckeditor import CKEditorField
 from flask_login import current_user
 from flask_wtf import FlaskForm
 from wtforms import (BooleanField, FloatField, IntegerField, PasswordField,
-                     RadioField, StringField, SubmitField, ValidationError)
+                     RadioField, StringField, SubmitField, TextField,
+                     ValidationError)
 from wtforms.validators import (AnyOf, DataRequired, EqualTo, InputRequired,
                                 Length, Optional, Regexp)
 
@@ -40,8 +41,10 @@ class RegisterForm(FlaskForm):
         _l('Realname'),
         validators=[DataRequired(), Length(1, 20), InputRequired()])
     permission = RadioField(
-        _l('Permission'), validators=[
-            DataRequired(), InputRequired(), AnyOf(['Teacher', 'Admin', 'Root'])],
+        _l('Permission'),
+        validators=[DataRequired(),
+                    InputRequired(),
+                    AnyOf(['Teacher', 'Admin', 'Root'])],
         choices=[('Teacher', _l('As teacher user')),
                  ('Admin', _l('As administrator user')),
                  ('Root', _l('As root user'))],
@@ -123,9 +126,13 @@ class ChangeScoreForm(FlaskForm):
 
     score = FloatField(
         _l('Score'),
-        validators=[
-            InputRequired()]
+        validators=[DataRequired(), InputRequired()],
+        render_kw={'placeholder': '0-100'}
     )
+
+    remark = TextField(
+        _l('Remark'), validators=[Optional()])
+
     submit = SubmitField(_l('Change'))
 
     def validate_id(self, field):
@@ -136,7 +143,7 @@ class ChangeScoreForm(FlaskForm):
 class AdminAddTaskForm(FlaskForm):
     id = IntegerField(
         _l('Task ID'),
-        validators=[DataRequired()])
+        validators=[DataRequired(), InputRequired()])
     submit = SubmitField(_l('Add'))
 
 

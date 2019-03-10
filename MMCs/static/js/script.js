@@ -67,6 +67,10 @@ $(function () {
     $('#confirm-continue').on('show.bs.modal', function (e) {
         $('.continue-form').attr('action', $(e.relatedTarget).data('href'));
     });
+    // download confirm modal
+    $('#confirm-download').on('show.bs.modal', function (e) {
+        $('.download-form').attr('action', $(e.relatedTarget).data('href'));
+    });
 
     if (is_authenticated) {
         setInterval(update_notifications_count, 30000);

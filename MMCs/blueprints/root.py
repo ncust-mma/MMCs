@@ -38,12 +38,19 @@ def behavior():
         'backstage/root/manage_competition/behavior.html')
 
 
-@root_bp.route('/manage-competition/history', methods=['GET', 'POST'])
+@root_bp.route('/manage-competition/history')
 @login_required
 @root_required
 def history():
+    page = request.args.get('page', 1, type=int)
+    per_page = current_app.config['COMPETITION_PER_PAGE']
+    pagination = Competition.query.order_by(
+        Competition.id.desc()).paginate(page, per_page)
+    coms = pagination.items
+
     return render_template(
-        'backstage/root/manage_competition/history.html')
+        'backstage/root/manage_competition/history.html',
+        coms=coms, per_page=per_page, pagination=pagination, page=page)
 
 
 @root_bp.route('/manage-competition/behavior/start', methods=['POST'])

@@ -18,7 +18,7 @@
                 <div class="navbar-nav mr-auto">
                     {{ render_nav_item('front.index', _('Dashboard'), "oi oi-dashboard") }}
                     <a class="nav-item nav-link" data-toggle="modal" data-target="#aboutModal">
-                        <span class="oi oi-bookmark"></span> {{ _('About') }}
+                        <span class="oi oi-bookmark"></span> {{ _('Notice') }}
                     </a>
 
                 <div class="navbar-nav ml-auto">
@@ -74,12 +74,12 @@
 </nav>
 
 
-<!-- about modal -->
+<!-- notice modal -->
 <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="aboutModalTitle">About</h5>
+                <h5 class="modal-title" id="aboutModalTitle">Notice</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     <span class="oi oi-delete"></span>
                 </button>
