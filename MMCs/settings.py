@@ -36,7 +36,7 @@ class BaseConfig(object):
     UPLOAD_PATH = os.path.join(basedir, 'uploads')
     # file size exceed to 17 Mb will return a 413 error response.
     MAX_CONTENT_LENGTH = 17 * 1024 * 1024
-    SOLUTION_SAVE_PATH = os.path.join(UPLOAD_PATH, 'solutions')
+    SOLUTION_SAVE_PATH = UPLOAD_PATH
 
     DROPZONE_MAX_FILE_SIZE = MAX_CONTENT_LENGTH
     DROPZONE_MAX_FILES = 20

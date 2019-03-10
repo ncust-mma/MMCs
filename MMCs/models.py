@@ -66,8 +66,20 @@ class Solution(db.Model):
         'Task', cascade='save-update, merge, delete')
 
     @property
+    def index(self):
+        return self.name.split('_')[0]
+
+    @property
     def problem(self):
+        return self.name.split('_')[1]
+
+    @property
+    def team_number(self):
         return self.name.split('_')[2]
+
+    @property
+    def team_player(self):
+        return self.name.split('_')[3:]
 
     @property
     def date(self):
@@ -97,6 +109,14 @@ class Task(db.Model):
     @property
     def date(self):
         return Solution.query.get(self.solution_id).date
+
+    @property
+    def problem(self):
+        return Solution.query.get(self.solution_id).problem
+
+    @property
+    def team_number(self):
+        return Solution.query.get(self.solution_id).team_number
 
 
 class Competition(db.Model):

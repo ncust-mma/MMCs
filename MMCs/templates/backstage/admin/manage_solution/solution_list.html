@@ -15,7 +15,8 @@
             <thead>
                 <tr class="text-center">
                     <th>#</th>
-                    <th>{{ _('File Name') }}</th>
+                    <th>{{ _('Team number') }}</th>
+                    <th>{{ _('Problem') }}</th>
                     <th>{{ _('UUID') }}</th>
                     <th>{{ _(Actions) }}</th>
                 </tr>
@@ -23,7 +24,8 @@
             {% for solution in solutions %}
             <tr class="text-center">
                 <td>{{ pagination.total - (per_page * (page - 1) + loop.index) + 1}}</td>
-                <td>{{ solution.name }}</td>
+                <td>{{ solution.team_number }}</td>
+                <td>{{ solution.problem }}</td>
                 <td>
                     <a
                         href="{{ url_for('backstage.get_solution', filename=solution.uuid) }}"

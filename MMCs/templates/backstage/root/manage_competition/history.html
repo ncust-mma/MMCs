@@ -23,10 +23,26 @@
                 </td>
                 <td class="text-center">{{ com.date }}</td>
                 <td class="text-center">
-                    <form method="post" action="#">
-                        {#{ edit_profile_form.csrf_token }#}
-                        {#{ edit_profile_form.submit(class="dropdown-item") }#}
-                    </form>
+                    <div class="btn-group dropleft">
+                        <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ _('Edit') }}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <form role="form" action="{{ url_for('root.download_teacher', competition_id=com.id) }}" method="post">
+                                <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}" />
+                                <button class="dropdown-item">
+                                    <span class="oi oi-data-transfer-download"></span> {{ _("Download all teachers result") }}
+                                </button>
+                            </form>
+                            <form role="form" action="{{ url_for('root.download_teacher', competition_id=com.id) }}" method="post">
+                                <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}" />
+                                <button class="dropdown-item">
+                                    <span class="oi oi-data-transfer-download"></span> {{ _("Download the final result") }}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </td>
             </tr>
             {% endfor %}

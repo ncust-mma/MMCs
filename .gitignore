@@ -111,11 +111,11 @@ venv.bak/
 .history
 .vscode
 
-# personel files
-solutions
+# doc
 *.self
 *.xlsx
 *.xls
-
-# xmind
+*.pdf
+*.doc
+*.docx
 *.xmind

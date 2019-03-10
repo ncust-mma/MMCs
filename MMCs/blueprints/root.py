@@ -1,16 +1,21 @@
 # -*- coding: utf-8 -*-
 
+import os
+from uuid import uuid4
+
 from flask import (Blueprint, abort, current_app, flash, redirect,
-                   render_template, request, url_for)
+                   render_template, request, send_file, url_for)
 from flask_babel import _
 from flask_login import current_user, fresh_login_required, login_required
 
+import pandas as pd
 from MMCs.decorators import root_required
 from MMCs.extensions import db
 from MMCs.forms import (ButtonChangePasswordForm, ButtonChangeUsernameForm,
                         ButtonEditProfileForm, ChangeUsernameForm,
                         EditProfileForm, RegisterForm, RootChangePasswordForm)
 from MMCs.models import Competition, Solution, Task, User
+from MMCs.settings import basedir
 from MMCs.utils import redirect_back
 
 root_bp = Blueprint('root', __name__)
@@ -222,3 +227,89 @@ def delete_user(user_id):
     flash(_('User deleted.'), 'info')
 
     return redirect_back()
+
+
+@root_bp.route('/manage-score/download/teacher/<int:competition_id>', methods=['POST'])
+@login_required
+@root_required
+def download_teacher(competition_id):
+    path = os.path.join(basedir, 'cache')
+    if not os.path.exists(path):
+        os.mkdir(path)
+
+    com = Competition.query.get(competition_id)
+    if com.tasks:
+        teachers = User.query.filter_by(permission='Teacher').all()
+        teacher_dic = dict((teacher.id, (teacher.username, teacher.realname))
+                           for teacher in teachers)
+        solutions = Solution.query.filter_by(competition_id=com.id).all()
+        solution_dic = dict((solution.id, (solution.name, solution.index,
+                                           solution.problem, solution.team_number,
+                                           solution.team_player))
+                            for solution in solutions)
+        df = pd.read_sql_query(
+            Task.query.filter_by(competition_id=com.id).statement, db.engine)
+        df['username'] = df['teacher_id'].apply(
+            lambda x: teacher_dic.get(x)[0])
+        df['realname'] = df['teacher_id'].apply(
+            lambda x: teacher_dic.get(x)[1])
+        df['filename'] = df['solution_id'].apply(
+            lambda x: solution_dic.get(x)[0])
+        df['index'] = df['solution_id'].apply(lambda x: solution_dic.get(x)[1])
+        df['problem'] = df['solution_id'].apply(
+            lambda x: solution_dic.get(x)[2])
+        df['team_number'] = df['solution_id'].apply(
+            lambda x: solution_dic.get(x)[3])
+        df['team_player'] = df['solution_id'].apply(
+            lambda x: '_'.join(solution_dic.get(x)[4]))
+
+        del df['teacher_id']
+        del df['solution_id']
+        del df['competition_id']
+
+        file = os.path.join(path, uuid4().hex+'.xlsx')
+        df.to_excel(file, index=False)
+
+        return send_file(file, as_attachment=True)
+    else:
+        flash('No task.', 'warning')
+        return redirect_back()
+
+
+@root_bp.route('/manage-score/download/result/<int:competition_id>', methods=['POST'])
+@login_required
+@root_required
+def download_result(competition_id):
+    path = os.path.join(basedir, 'cache')
+    if not os.path.exists(path):
+        os.mkdir(path)
+
+    com = Competition.query.get(competition_id)
+    if com.solutions:
+        solutions = com.solutions
+        for solution in solutions:
+            tasks = solution.tasks
+            solution.score = sum(
+                [task.score for task in tasks if task.score]) / len(tasks)
+            try:
+                db.session.commit()
+            except:
+                db.session.rollback()
+
+        df = pd.read_sql_query(
+            Solution.query.filter_by(competition_id=com.id).statement, db.engine)
+        df['index'] = df['name'].apply(lambda x: x.split('_')[0])
+        df['problem'] = df['name'].apply(lambda x: x.split('_')[1])
+        df['team_number'] = df['name'].apply(lambda x: x.split('_')[2])
+        df['team_player'] = df['name'].apply(
+            lambda x: '_'.join(x.split('_')[3:]))
+
+        del df['competition_id']
+
+        file = os.path.join(path, uuid4().hex+'.xlsx')
+        df.to_excel(file, index=False)
+
+        return send_file(file, as_attachment=True)
+    else:
+        flash('No solution.', 'warning')
+        return redirect_back()

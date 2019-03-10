@@ -9,7 +9,8 @@
             <thead>
                 <tr class="text-center">
                     <th>#</th>
-                    <th>{{ _('Name') }}</th>
+                    <th>{{ _('Team number') }}</th>
+                    <th>{{ _('Problem') }}</th>
                     <th>{{ _('Score') }}</th>
                     <th>{{ _('Remark') }}</th>
                     <th>{{ _('Actions') }}</th>
@@ -18,7 +19,8 @@
             {% for task in tasks %}
             <tr>
                 <td class="text-center">{{ pagination.total - (per_page*(page-1) + loop.index) + 1 }}</td>
-                <td class="text-center">{{ task.filename }}</td>
+                <td class="text-center">{{ task.team_number }}</td>
+                <td class="text-center">{{ task.problem }}</td>
                 <td class="text-center">{{ task.score }}</td>
                 <td class="text-center">{{ task.remark }}</td>
                 <td class="text-center">

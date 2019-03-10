@@ -67,9 +67,9 @@ def fake_teacher(count=10):
 
 def fake_solution(count=30):
     for _ in range(count):
-        name = 'NCUST_SXJM{}TEAM_{}_{}_{}_{}.pdf'.format(
-            fake.random_int(min=0, max=999),
+        name = '2019_{}_{}_{}_{}_{}.pdf'.format(
             fake.random_element(elements=('A', 'B', 'C', 'D')),
+            fake.random_int(min=0, max=999),
             fake_zh.name(), fake_zh.name(), fake_zh.name())
         filename, uuid = new_filename(name)
         solution = Solution(name=filename, uuid=uuid, competition_id=1)

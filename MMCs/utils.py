@@ -55,6 +55,23 @@ def new_filename(filename):
     return filename, uuid
 
 
+def check_filename(filename):
+    flag = False
+    info = _('Invalid filename.')
+    if 5 >= filename.count('_') >= 2:
+        problem = filename.split('_')[1]
+        if problem.isalpha() and len(problem) == 1 and problem.isupper():
+            number = filename.split('_')[2]
+            if number.isdigit():
+                flag = True
+            else:
+                info = _('Team number is not right')
+        else:
+            info = _('Problem is not right.')
+
+    return flag, info
+
+
 def read_file(file):
 
     pass

@@ -1,5 +1,5 @@
 [[source]]
-url = "https://pypi.python.org/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
 verify_ssl = true
 
 [dev-packages]
@@ -18,3 +18,5 @@ flask-dropzone = "*"
 flask-babel = "*"
 pypinyin = "*"
 faker = "*"
+pandas = "*"
+openpyxl = "*"

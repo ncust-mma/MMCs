@@ -2,17 +2,21 @@
 
 import os
 import random
+from uuid import uuid4
 
 from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, send_file, url_for)
 from flask_babel import _
 from flask_login import login_required
 
+import pandas as pd
 from MMCs.decorators import admin_required
 from MMCs.extensions import db
 from MMCs.forms import AdminAddTaskForm, ButtonAddForm, ButtonCheckForm
 from MMCs.models import Competition, Solution, Task, User
-from MMCs.utils import allowed_file, new_filename, redirect_back
+from MMCs.settings import basedir
+from MMCs.utils import (allowed_file, check_filename, new_filename,
+                        redirect_back)
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -21,14 +25,14 @@ admin_bp = Blueprint('admin', __name__)
 @login_required
 @admin_required
 def index():
-    progress = False
-    task_number = False
+    progress = task_number = 0
     if Competition.is_start():
         com = Competition.current_competition()
         tasks = com.tasks
-        finished = [task for task in tasks if task.score]
-        progress = len(finished)/len(tasks)*100
-        task_number = len(tasks)
+        if tasks:
+            finished = [task for task in tasks if task.score]
+            progress = len(finished)/len(tasks)*100
+            task_number = len(tasks)
 
     return render_template('backstage/admin/overview.html', progress=progress, task_number=task_number)
 
@@ -46,7 +50,8 @@ def manage_solution():
 def solution_list():
     page = request.args.get('page', 1, type=int)
     per_page = current_app.config['SOLUTION_PER_PAGE']
-    pagination = Solution.query.order_by(
+    com = Competition.current_competition()
+    pagination = Solution.query.filter_by(competition_id=com.id).order_by(
         Solution.id.desc()).paginate(page, per_page)
     solutions = pagination.items
     form = ButtonAddForm()
@@ -70,13 +75,17 @@ def upload():
             file = request.files.get('file')
             filename, uuid = new_filename(file.filename)
             if allowed_file(filename):
-                com = Competition.current_competition()
-                filepath = os.path.join(path, filename)
-                solution = Solution(
-                    name=filename, uuid=uuid, competition_id=com.id)
-                db.session.add(solution)
-                db.session.commit()
-                file.save(filepath)
+                flag, info = check_filename(filename)
+                if flag:
+                    com = Competition.current_competition()
+                    filepath = os.path.join(path, filename)
+                    solution = Solution(
+                        name=filename, uuid=uuid, competition_id=com.id)
+                    db.session.add(solution)
+                    db.session.commit()
+                    file.save(filepath)
+                else:
+                    return info, 400
             else:
                 ext = current_app.config['ALLOWED_SOLUTION_EXTENSIONS']
                 return '{} only!'.format(', '.join(ext)), 400
@@ -167,23 +176,18 @@ def method_manual():
         per_page=per_page, check_form=check_form, add_form=add_form)
 
 
-@admin_bp.route('/manage-task/method/manual/check/user/task/<int:user_id>', methods=['POST'])
+@admin_bp.route('/manage-task/method/manual/check/user/task/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def check_user(user_id):
-    form = ButtonAddForm()
-    if form.validate_on_submit():
-        com = Competition.current_competition()
-        page = request.args.get('page', 1, type=int)
-        per_page = current_app.config['SOLUTION_PER_PAGE']
-        pagination = Task.query.filter(
-            Task.teacher_id == user_id,
-            Task.competition_id == com.id
-        ).order_by(Task.id.desc()).paginate(page, per_page)
-        tasks = pagination.items
-    else:
-        abort(404)
-
+    com = Competition.current_competition()
+    page = request.args.get('page', 1, type=int)
+    per_page = current_app.config['SOLUTION_PER_PAGE']
+    pagination = Task.query.filter(
+        Task.teacher_id == user_id,
+        Task.competition_id == com.id
+    ).order_by(Task.id.desc()).paginate(page, per_page)
+    tasks = pagination.items
     return render_template(
         'backstage/admin/manage_task/check.html',
         pagination=pagination, tasks=tasks,
@@ -216,45 +220,44 @@ def method_delete_task(task_id):
     return redirect_back()
 
 
-@admin_bp.route('/manage-task/method/manual/check/user/solution/<int:user_id>', methods=['POST'])
+@admin_bp.route('/manage-task/method/manual/check/user/solution/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def user_solution_add_page(user_id):
-    add_form = ButtonAddForm()
-    if add_form.validate_on_submit():
-        page = request.args.get('page', 1, type=int)
-        per_page = current_app.config['SOLUTION_PER_PAGE']
+    page = request.args.get('page', 1, type=int)
+    per_page = current_app.config['SOLUTION_PER_PAGE']
 
-        com = Competition.current_competition()
-        user = User.query.get_or_404(user_id)
-        task_existed = user.search_task()
-        solution_existed_ids = set(task.solution_id for task in task_existed)
-        pagination = Solution.query.filter(
-            ~Solution.id.in_(map(str, solution_existed_ids)),
-            Solution.competition_id == com.id
-        ).order_by(Solution.id.desc()).paginate(page, per_page)
-        solutions = pagination.items
-
-        form = AdminAddTaskForm()
-        if form.validate_on_submit():
-            solution = Solution.query.get_or_404(form.id.data)
-            task = Task(
-                teacher_id=user.id,
-                solution_id=solution.id,
-                solution_uuid=solution.uuid,
-            )
-            db.session.add(task)
-            db.session.commit()
-
-            flash(_('Added successed.'), 'success')
-            return redirect_back()
-    else:
-        abort(404)
+    com = Competition.current_competition()
+    user = User.query.get_or_404(user_id)
+    task_existed = user.search_task()
+    solution_existed_ids = set(task.solution_id for task in task_existed)
+    pagination = Solution.query.filter(
+        ~Solution.id.in_(map(str, solution_existed_ids)),
+        Solution.competition_id == com.id
+    ).order_by(Solution.id.desc()).paginate(page, per_page)
+    solutions = pagination.items
 
     return render_template(
         'backstage/admin/manage_task/add.html',
         pagination=pagination, solutions=solutions,
-        page=page, per_page=per_page, form=form)
+        page=page, per_page=per_page, user_id=user.id)
+
+
+@admin_bp.route('/manage-task/method/manual/check/user/solution/add/<int:user_id>&<int:solution_id>', methods=['POST'])
+@login_required
+@admin_required
+def user_solution_add(user_id, solution_id):
+    com = Competition.current_competition()
+    task = Task(
+        teacher_id=user_id,
+        solution_id=solution_id,
+        competition_id=com.id
+    )
+    db.session.add(task)
+    db.session.commit()
+
+    flash(_('Added successed.'), 'success')
+    return redirect_back()
 
 
 @admin_bp.route('/manage-score')
@@ -268,13 +271,83 @@ def manage_score():
 @login_required
 @admin_required
 def download_teacher():
-    # TODO: 文件下载
-    return redirect_back()
+    path = os.path.join(basedir, 'cache')
+    if not os.path.exists(path):
+        os.mkdir(path)
+
+    com = Competition.current_competition()
+    if com.tasks:
+        teachers = User.query.filter_by(permission='Teacher').all()
+        teacher_dic = dict((teacher.id, (teacher.username, teacher.realname))
+                           for teacher in teachers)
+        solutions = Solution.query.filter_by(competition_id=com.id).all()
+        solution_dic = dict((solution.id, (solution.name, solution.index,
+                                           solution.problem, solution.team_number,
+                                           solution.team_player))
+                            for solution in solutions)
+        df = pd.read_sql_query(
+            Task.query.filter_by(competition_id=com.id).statement, db.engine)
+        df['username'] = df['teacher_id'].apply(
+            lambda x: teacher_dic.get(x)[0])
+        df['realname'] = df['teacher_id'].apply(
+            lambda x: teacher_dic.get(x)[1])
+        df['filename'] = df['solution_id'].apply(
+            lambda x: solution_dic.get(x)[0])
+        df['index'] = df['solution_id'].apply(lambda x: solution_dic.get(x)[1])
+        df['problem'] = df['solution_id'].apply(
+            lambda x: solution_dic.get(x)[2])
+        df['team_number'] = df['solution_id'].apply(
+            lambda x: solution_dic.get(x)[3])
+        df['team_player'] = df['solution_id'].apply(
+            lambda x: '_'.join(solution_dic.get(x)[4]))
+
+        del df['teacher_id']
+        del df['solution_id']
+        del df['competition_id']
+
+        file = os.path.join(path, uuid4().hex+'.xlsx')
+        df.to_excel(file, index=False)
+
+        return send_file(file, as_attachment=True)
+    else:
+        flash('No task.', 'warning')
+        return redirect_back()
 
 
 @admin_bp.route('/manage-score/download/result', methods=['POST'])
 @login_required
 @admin_required
 def download_result():
-    # TODO: 文件下载
-    return redirect_back()
+    path = os.path.join(basedir, 'cache')
+    if not os.path.exists(path):
+        os.mkdir(path)
+
+    com = Competition.current_competition()
+    if com.solutions:
+        solutions = com.solutions
+        for solution in solutions:
+            tasks = solution.tasks
+            solution.score = sum(
+                [task.score for task in tasks if task.score]) / len(tasks)
+            try:
+                db.session.commit()
+            except:
+                db.session.rollback()
+
+        df = pd.read_sql_query(
+            Solution.query.filter_by(competition_id=com.id).statement, db.engine)
+        df['index'] = df['name'].apply(lambda x: x.split('_')[0])
+        df['problem'] = df['name'].apply(lambda x: x.split('_')[1])
+        df['team_number'] = df['name'].apply(lambda x: x.split('_')[2])
+        df['team_player'] = df['name'].apply(
+            lambda x: '_'.join(x.split('_')[3:]))
+
+        del df['competition_id']
+
+        file = os.path.join(path, uuid4().hex+'.xlsx')
+        df.to_excel(file, index=False)
+
+        return send_file(file, as_attachment=True)
+    else:
+        flash('No solution.', 'warning')
+        return redirect_back()
