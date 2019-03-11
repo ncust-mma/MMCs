@@ -85,11 +85,13 @@ def competition_settings():
         current_app.config['USER_PER_PAGE'] = form.user_per_page.data
         current_app.config['SOLUTION_PER_PAGE'] = form.solution_per_page.data
         current_app.config['COMPETITION_PER_PAGE'] = form.competition_per_page.data
+        current_app.config['DROPZONE_MAX_FILES'] = form.dropzone_max_files.data
 
     form.solution_task_number.data = current_app.config['SOLUTION_TASK_NUMBER']
     form.user_per_page.data = current_app.config['USER_PER_PAGE']
     form.solution_per_page.data = current_app.config['SOLUTION_PER_PAGE']
     form.competition_per_page.data = current_app.config['COMPETITION_PER_PAGE']
+    form.dropzone_max_files.data = current_app.config['DROPZONE_MAX_FILES']
 
     return render_template(
         'backstage/root/manage_competition/notice.html', form=form)

@@ -181,5 +181,7 @@ class CompetitionSettingForm(FlaskForm):
         _l('SOLUTION PER PAGE'), validators=[Optional()])
     competition_per_page = IntegerField(
         _l('COMPETITION PER PAGE'), validators=[Optional()])
+    dropzone_max_files = IntegerField(
+        _l('DROPZONE MAX FILES'), validators=[Optional()])
 
     submit = SubmitField(_l('Submit'))

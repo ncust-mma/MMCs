@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-03-11 16:59+0800\n"
-"PO-Revision-Date: 2019-03-11 17:00+0800\n"
+"POT-Creation-Date: 2019-03-11 23:03+0800\n"
+"PO-Revision-Date: 2019-03-11 23:03+0800\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: zh_Hans_CN <LL@li.org>\n"
@@ -223,6 +223,10 @@ msgid "COMPETITION PER PAGE"
 msgstr "每页展示竞赛数"
 
 #: MMCs/forms.py:185
+msgid "DROPZONE MAX FILES"
+msgstr "最大上传数量"
+
+#: MMCs/forms.py:187
 msgid "Submit"
 msgstr "提交"
 
@@ -292,15 +296,15 @@ msgstr "用户名或密码无效。"
 msgid "Logout success."
 msgstr "注销成功。"
 
-#: MMCs/blueprints/backstage.py:27 MMCs/blueprints/root.py:194
+#: MMCs/blueprints/backstage.py:27 MMCs/blueprints/root.py:196
 msgid "Profile updated."
 msgstr "账户已更新。"
 
-#: MMCs/blueprints/backstage.py:45 MMCs/blueprints/root.py:220
+#: MMCs/blueprints/backstage.py:45 MMCs/blueprints/root.py:222
 msgid "Username updated."
 msgstr "用户名已更新。"
 
-#: MMCs/blueprints/backstage.py:63 MMCs/blueprints/root.py:171
+#: MMCs/blueprints/backstage.py:63 MMCs/blueprints/root.py:173
 msgid "Password updated."
 msgstr "密码已更新。"
 
@@ -312,27 +316,27 @@ msgstr "旧密码不正确。"
 msgid "Setting updated."
 msgstr "设置已更新。"
 
-#: MMCs/blueprints/root.py:105
+#: MMCs/blueprints/root.py:107
 msgid "A new competition start now."
 msgstr "新的比赛现在开始。"
 
-#: MMCs/blueprints/root.py:118
+#: MMCs/blueprints/root.py:120
 msgid "Competition stopped."
 msgstr "比赛暂停。"
 
-#: MMCs/blueprints/root.py:121
+#: MMCs/blueprints/root.py:123
 msgid "Competition continued."
 msgstr "比赛继续。"
 
-#: MMCs/blueprints/root.py:124
+#: MMCs/blueprints/root.py:126
 msgid "Please start current competition before do it."
 msgstr "请在开始竞赛后进行该项操。"
 
-#: MMCs/blueprints/root.py:249
+#: MMCs/blueprints/root.py:251
 msgid "Account registered."
 msgstr "账号已注册。"
 
-#: MMCs/blueprints/root.py:264
+#: MMCs/blueprints/root.py:266
 msgid "User deleted."
 msgstr "账号已删除。"
 
