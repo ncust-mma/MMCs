@@ -6,6 +6,7 @@ except ImportError:
     from urllib.parse import urlparse, urljoin
 
 import os
+import random
 import uuid
 
 from flask import current_app, flash, redirect, request, url_for
@@ -72,6 +73,27 @@ def check_filename(filename):
     return flag, info
 
 
-def read_file(file):
+def random_sample(teacher_task_number, this_problem, teachers_view):
+    teacher_ids = []
+    is_empty = sum(teacher_problem[this_problem]
+                   for teacher_problem in teachers_view.values())
+    if is_empty == 0:
+        teacher_ids = random.sample(
+            list(teachers_view), current_app.config['SOLUTION_TASK_NUMBER'])
+    else:
+        for teacher_id, teacher_problem in teachers_view.items():
+            if teacher_problem[this_problem] and teacher_problem[this_problem] < teacher_task_number:
+                teacher_ids.append(teacher_id)
 
-    pass
+            if len(teacher_ids) == current_app.config['SOLUTION_TASK_NUMBER']:
+                break
+
+    for teacher_id in teacher_ids:
+        teachers_view[teacher_id][this_problem] += 1
+
+    for teacher_id in list(teachers_view.keys()):
+        teacher_problem = teachers_view[teacher_id]
+        if sum(teacher_problem.values()) >= teacher_task_number:
+            teachers_view.pop(teacher_id)
+
+    return teacher_ids, teachers_view

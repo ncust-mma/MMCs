@@ -1,0 +1,14 @@
+{% extends 'backstage/root/manage_competition/base.html' %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block competition_setting_content %}
+    {{ render_form(form) }}
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script
+        type="text/javascript"
+        src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"
+    ></script>
+{% endblock %}

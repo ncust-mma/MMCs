@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-import random
+from math import ceil
 from uuid import uuid4
 
 from flask import (Blueprint, abort, current_app, flash, redirect,
@@ -16,7 +16,7 @@ from MMCs.forms import AdminAddTaskForm, ButtonAddForm, ButtonCheckForm
 from MMCs.models import Competition, Solution, Task, User
 from MMCs.settings import basedir
 from MMCs.utils import (allowed_file, check_filename, new_filename,
-                        redirect_back)
+                        random_sample, redirect_back)
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -81,12 +81,11 @@ def upload():
                 flag, info = check_filename(filename)
                 if flag:
                     com = Competition.current_competition()
-                    filepath = os.path.join(path, filename)
                     solution = Solution(
                         name=filename, uuid=uuid, competition_id=com.id)
                     db.session.add(solution)
                     db.session.commit()
-                    file.save(filepath)
+                    file.save(os.path.join(path, uuid))
                 else:
                     return info, 400
             else:
@@ -132,16 +131,21 @@ def method_random():
     com = Competition.current_competition()
     Task.query.filter_by(competition_id=com.id).delete()
     db.session.commit()
-
-    samples = current_app.config['MAX_TEACHER_TASK_NUMBER']
     solutions = com.solutions
     if solutions:
-        teachers = User.query.filter_by(permission='Teacher').all()
+        teachers = User.teachers()
         if teachers:
+            teacher_task_number = ceil(
+                len(solutions) * current_app.config['SOLUTION_TASK_NUMBER'] / len(teachers))
+            teachers_view = dict((teacher.id, dict((problem, 0) for problem in com.problems))
+                                 for teacher in teachers)
+            solutions = sorted(solutions, key=lambda x: x.problem)
             for solution in solutions:
-                for teacher in random.sample(teachers, samples):
+                teacher_ids, teachers_view = random_sample(
+                    teacher_task_number, solution.problem, teachers_view)
+                for teacher_id in teacher_ids:
                     task = Task(
-                        teacher_id=teacher.id,
+                        teacher_id=teacher_id,
                         solution_id=solution.id,
                         competition_id=com.id
                     )
@@ -279,7 +283,7 @@ def download_teacher():
 
     com = Competition.current_competition()
     if com.tasks:
-        teachers = User.query.filter_by(permission='Teacher').all()
+        teachers = User.teachers()
         teacher_dic = dict((teacher.id, (teacher.username, teacher.realname))
                            for teacher in teachers)
         solutions = Solution.query.filter_by(competition_id=com.id).all()

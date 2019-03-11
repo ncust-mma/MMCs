@@ -17,7 +17,7 @@ class User(db.Model, UserMixin):
     permission = db.Column(db.String(10), nullable=False, default='Teacher')
     remark = db.Column(db.Text)
     password_hash = db.Column(db.String(128), nullable=False)
-    locale = db.Column(db.String(20), default='en_US')
+    locale = db.Column(db.String(20), default='zh_Hans_CN')
 
     tasks = db.relationship(
         'Task', cascade='save-update, merge, delete')
@@ -27,6 +27,10 @@ class User(db.Model, UserMixin):
 
     def validate_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    @classmethod
+    def teachers(self):
+        return User.query.filter_by(permission='Teacher').all()
 
     @property
     def is_teacher(self):
@@ -140,6 +144,10 @@ class Competition(db.Model):
         return com.flag if com is not None else False
 
     @classmethod
-    def is_existed(self, id):
-        flag = Competition.query.filter_by(id=id).first()
-        return True if flag is not None else False
+    def is_existed(self, sid):
+        return True if Competition.query.get(sid) is not None else False
+
+    @property
+    def problems(self):
+        solutions = self.solutions
+        return set(solution.problem for solution in solutions)

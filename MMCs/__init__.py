@@ -90,7 +90,7 @@ def register_extensions(app):
     ckeditor.init_app(app)
     dropzone.init_app(app)
     babel.init_app(app)
-    toolbar.init_app(app)
+    # toolbar.init_app(app)
 
 
 def register_blueprints(app):

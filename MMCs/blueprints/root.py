@@ -13,7 +13,8 @@ from MMCs.decorators import root_required
 from MMCs.extensions import db
 from MMCs.forms import (ButtonChangePasswordForm, ButtonChangeUsernameForm,
                         ButtonEditProfileForm, ChangeUsernameForm,
-                        EditProfileForm, RegisterForm, RootChangePasswordForm)
+                        CompetitionSettingForm, EditProfileForm,
+                        NoticeEditForm, RegisterForm, RootChangePasswordForm)
 from MMCs.models import Competition, Solution, Task, User
 from MMCs.settings import basedir
 from MMCs.utils import redirect_back
@@ -56,6 +57,42 @@ def history():
     return render_template(
         'backstage/root/manage_competition/history.html',
         coms=coms, per_page=per_page, pagination=pagination, page=page)
+
+
+@root_bp.route('/manage-competition/notice', methods=['GET', 'POST'])
+@login_required
+@root_required
+def notice():
+    form = NoticeEditForm()
+    if form.validate_on_submit():
+        path = os.path.join(
+            basedir, current_app.name, 'templates', 'backstage/notice.html')
+        with open(path, 'w', encoding='utf-8') as f:
+            f.write(form.notice.data)
+
+    form.notice.data = render_template('backstage/notice.html')
+    return render_template(
+        'backstage/root/manage_competition/notice.html', form=form)
+
+
+@root_bp.route('/manage-competition/settings', methods=['GET', 'POST'])
+@login_required
+@root_required
+def competition_settings():
+    form = CompetitionSettingForm()
+    if form.validate_on_submit():
+        current_app.config['SOLUTION_TASK_NUMBER'] = form.solution_task_number.data
+        current_app.config['USER_PER_PAGE'] = form.user_per_page.data
+        current_app.config['SOLUTION_PER_PAGE'] = form.solution_per_page.data
+        current_app.config['COMPETITION_PER_PAGE'] = form.competition_per_page.data
+
+    form.solution_task_number.data = current_app.config['SOLUTION_TASK_NUMBER']
+    form.user_per_page.data = current_app.config['USER_PER_PAGE']
+    form.solution_per_page.data = current_app.config['SOLUTION_PER_PAGE']
+    form.competition_per_page.data = current_app.config['COMPETITION_PER_PAGE']
+
+    return render_template(
+        'backstage/root/manage_competition/notice.html', form=form)
 
 
 @root_bp.route('/manage-competition/behavior/start', methods=['POST'])
@@ -239,7 +276,7 @@ def download_teacher(competition_id):
 
     com = Competition.query.get(competition_id)
     if com.tasks:
-        teachers = User.query.filter_by(permission='Teacher').all()
+        teachers = User.teachers()
         teacher_dic = dict((teacher.id, (teacher.username, teacher.realname))
                            for teacher in teachers)
         solutions = Solution.query.filter_by(competition_id=com.id).all()

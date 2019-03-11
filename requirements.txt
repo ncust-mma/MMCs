@@ -15,3 +15,5 @@ pypinyin
 python-dotenv
 SQLAlchemy
 WTForms
+pandas
+openpyxl

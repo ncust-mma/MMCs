@@ -4,6 +4,8 @@ import os
 import sys
 import uuid
 
+from flask_babel import lazy_gettext as _l
+
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 # SQLite URI compatible
@@ -19,7 +21,6 @@ class BaseConfig(object):
 
     USER_PER_PAGE = 30
     SOLUTION_PER_PAGE = 20
-    FILETYPE_PER_PAGE = 30
     COMPETITION_PER_PAGE = 10
 
     DEBUG_TB_INTERCEPT_REDIRECTS = False
@@ -28,8 +29,6 @@ class BaseConfig(object):
     SQLALCHEMY_RECORD_QUERIES = True
 
     CKEDITOR_ENABLE_CSRF = True
-
-    TEACHER_EDIT_TIMES = 1
 
     BOOTSTRAP_SERVE_LOCAL = True
 
@@ -43,6 +42,7 @@ class BaseConfig(object):
     DROPZONE_ALLOWED_FILE_CUSTOM = True
     DROPZONE_ENABLE_CSRF = True
     DROPZONE_ALLOWED_FILE_TYPE = '.pdf, .doc, .docx'
+    DROPZONE_DEFAULT_MESSAGE = _l('Drop files here or click to upload.')
 
     ALLOWED_SOLUTION_EXTENSIONS = set(['pdf', 'doc', 'docx'])
 
@@ -52,7 +52,7 @@ class BaseConfig(object):
     MMCS_LOCALES = ['en_US', 'zh_Hans_CN']
     BABEL_DEFAULT_LOCALE = MMCS_LOCALES[0]
 
-    MAX_TEACHER_TASK_NUMBER = 3
+    SOLUTION_TASK_NUMBER = 3
 
     MAIL_USE_SSL = True
     MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.sendgrid.net')

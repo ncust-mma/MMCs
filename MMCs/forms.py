@@ -126,8 +126,8 @@ class ChangeScoreForm(FlaskForm):
 
     score = FloatField(
         _l('Score'),
-        validators=[DataRequired(), InputRequired()],
-        render_kw={'placeholder': '0-100'}
+        validators=[DataRequired(), InputRequired()]
+        # render_kw={'placeholder': '0-100'}
     )
 
     remark = TextField(
@@ -138,6 +138,11 @@ class ChangeScoreForm(FlaskForm):
     def validate_id(self, field):
         if Task.query.get(field.data) is None:
             raise ValidationError(_l('The task is not existed.'))
+
+
+class NoticeEditForm(FlaskForm):
+    notice = CKEditorField(_l('Notice'), validators=[Optional()])
+    edit = SubmitField(_l('Edit'))
 
 
 class AdminAddTaskForm(FlaskForm):
@@ -155,14 +160,6 @@ class ButtonCheckForm(FlaskForm):
     submit = SubmitField(_l('Check'))
 
 
-class ButtonStopForm(FlaskForm):
-    submit = SubmitField(_l('Stop'))
-
-
-class ButtonContinueForm(FlaskForm):
-    submit = SubmitField(_l('Continue'))
-
-
 class ButtonEditProfileForm(FlaskForm):
     submit = SubmitField(_l('Edit Profile'))
 
@@ -173,3 +170,16 @@ class ButtonChangeUsernameForm(FlaskForm):
 
 class ButtonChangePasswordForm(FlaskForm):
     submit = SubmitField(_l('Change Password'))
+
+
+class CompetitionSettingForm(FlaskForm):
+    solution_task_number = IntegerField(
+        _l('SOLUTION TASK NUMBER'), validators=[Optional()])
+    user_per_page = IntegerField(
+        _l('USER PER PAGE'), validators=[Optional()])
+    solution_per_page = IntegerField(
+        _l('SOLUTION PER PAGE'), validators=[Optional()])
+    competition_per_page = IntegerField(
+        _l('COMPETITION PER PAGE'), validators=[Optional()])
+
+    submit = SubmitField(_l('Submit'))
