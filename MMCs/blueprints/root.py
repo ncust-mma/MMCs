@@ -29,14 +29,14 @@ def index():
     return redirect(url_for('.manage_competition'))
 
 
-@root_bp.route('/manage-competition')
+@root_bp.route('/competition')
 @login_required
 @root_required
 def manage_competition():
     return redirect(url_for('root.behavior'))
 
 
-@root_bp.route('/manage-competition/behavior')
+@root_bp.route('/competition/behavior')
 @login_required
 @root_required
 def behavior():
@@ -44,7 +44,7 @@ def behavior():
         'backstage/root/manage_competition/behavior.html')
 
 
-@root_bp.route('/manage-competition/history')
+@root_bp.route('/competition/history')
 @login_required
 @root_required
 def history():
@@ -59,7 +59,7 @@ def history():
         coms=coms, per_page=per_page, pagination=pagination, page=page)
 
 
-@root_bp.route('/manage-competition/notice', methods=['GET', 'POST'])
+@root_bp.route('/competition/notice', methods=['GET', 'POST'])
 @login_required
 @root_required
 def notice():
@@ -75,7 +75,7 @@ def notice():
         'backstage/root/manage_competition/notice.html', form=form)
 
 
-@root_bp.route('/manage-competition/settings', methods=['GET', 'POST'])
+@root_bp.route('/competition/settings', methods=['GET', 'POST'])
 @login_required
 @root_required
 def competition_settings():
@@ -97,7 +97,7 @@ def competition_settings():
         'backstage/root/manage_competition/notice.html', form=form)
 
 
-@root_bp.route('/manage-competition/behavior/start', methods=['POST'])
+@root_bp.route('/competition/behavior/start', methods=['POST'])
 @login_required
 @root_required
 def start_competition():
@@ -109,10 +109,10 @@ def start_competition():
     return redirect_back()
 
 
-@root_bp.route('/manage-competition/behavior/switch', methods=['POST'])
+@root_bp.route('/competition/behavior/switch', methods=['POST'])
 @login_required
 @root_required
-def switch_game_state():
+def switch_state():
     com = Competition.current_competition()
     if com:
         if Competition.is_start():
@@ -128,14 +128,14 @@ def switch_game_state():
     return redirect_back()
 
 
-@root_bp.route('/manage-personnel/')
+@root_bp.route('/personnel')
 @login_required
 @root_required
 def manage_personnel():
     return redirect(url_for('.personnel_list'))
 
 
-@root_bp.route('/manage-personnel/personnel-list')
+@root_bp.route('/personnel/list')
 @login_required
 @root_required
 def personnel_list():
@@ -157,11 +157,11 @@ def personnel_list():
         change_password_form=change_password_form)
 
 
-@root_bp.route('/manage-personnel/personnel-list/change-password/<int:user_id>', methods=['POST'])
+@root_bp.route('/personnel/list/change-password/<int:user_id>', methods=['POST'])
 @fresh_login_required
 @login_required
 @root_required
-def personnel_list_change_password(user_id):
+def change_password(user_id):
     change_password_form = ButtonChangePasswordForm()
     if change_password_form.validate_on_submit():
         form = RootChangePasswordForm()
@@ -179,11 +179,11 @@ def personnel_list_change_password(user_id):
         'backstage/root/manage_personnel/personnel_list_edit.html', form=form)
 
 
-@root_bp.route('/manage-personnel/personnel-list/edit-profile/<int:user_id>', methods=['POST'])
+@root_bp.route('/personnel/list/edit-profile/<int:user_id>', methods=['POST'])
 @fresh_login_required
 @login_required
 @root_required
-def personnel_list_edit_profile(user_id):
+def edit_profile(user_id):
     edit_profile_form = ButtonEditProfileForm()
     if edit_profile_form.validate_on_submit():
         user = User.query.get_or_404(user_id)
@@ -206,11 +206,11 @@ def personnel_list_edit_profile(user_id):
         'backstage/root/manage_personnel/personnel_list_edit.html', form=form)
 
 
-@root_bp.route('/manage-personnel/personnel-list/change-username/<int:user_id>', methods=['POST'])
+@root_bp.route('/personnel/list/change-username/<int:user_id>', methods=['POST'])
 @fresh_login_required
 @login_required
 @root_required
-def personnel_list_change_username(user_id):
+def change_username(user_id):
     change_username_form = ButtonChangeUsernameForm()
     if change_username_form.validate_on_submit():
         user = User.query.get_or_404(user_id)
@@ -232,7 +232,7 @@ def personnel_list_change_username(user_id):
         'backstage/root/manage_personnel/personnel_list_edit.html', form=form)
 
 
-@root_bp.route('/manage-personnel/register', methods=['GET', 'POST'])
+@root_bp.route('/personnel/register', methods=['GET', 'POST'])
 @fresh_login_required
 @login_required
 @root_required
@@ -268,7 +268,7 @@ def delete_user(user_id):
     return redirect_back()
 
 
-@root_bp.route('/manage-score/download/teacher/<int:competition_id>', methods=['POST'])
+@root_bp.route('/score/download/<int:competition_id>/teacher', methods=['POST'])
 @login_required
 @root_required
 def download_teacher(competition_id):
@@ -315,7 +315,7 @@ def download_teacher(competition_id):
         return redirect_back()
 
 
-@root_bp.route('/manage-score/download/result/<int:competition_id>', methods=['POST'])
+@root_bp.route('/score/download/<int:competition_id>/result', methods=['POST'])
 @login_required
 @root_required
 def download_result(competition_id):

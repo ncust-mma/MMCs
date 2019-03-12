@@ -37,14 +37,14 @@ def index():
     return render_template('backstage/admin/overview.html', progress=progress, task_number=task_number)
 
 
-@admin_bp.route('/manage-solution/')
+@admin_bp.route('/solution')
 @login_required
 @admin_required
 def manage_solution():
     return redirect(url_for('admin.solution_list'))
 
 
-@admin_bp.route('/manage-solution/solution-list')
+@admin_bp.route('/solution/list')
 @login_required
 @admin_required
 def solution_list():
@@ -65,7 +65,7 @@ def solution_list():
     return render_template('backstage/admin/manage_solution/solution_list.html')
 
 
-@admin_bp.route('/manage-solution/upload', methods=['GET', 'POST'])
+@admin_bp.route('/solution/upload', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def upload():
@@ -97,7 +97,7 @@ def upload():
     return render_template('backstage/admin/manage_solution/upload.html')
 
 
-@admin_bp.route('/manage-solution/solution/delete/<int:solution_id>', methods=['POST'])
+@admin_bp.route('/solution/delete/<int:solution_id>', methods=['POST'])
 @login_required
 @admin_required
 def delete_solution_task(solution_id):
@@ -110,21 +110,21 @@ def delete_solution_task(solution_id):
     return redirect_back()
 
 
-@admin_bp.route('/manage-task')
+@admin_bp.route('/task')
 @login_required
 @admin_required
 def manage_task():
     return redirect(url_for('admin.method_manual'))
 
 
-@admin_bp.route('/manage-task/method', methods=['GET', 'POST'])
+@admin_bp.route('/task/method', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def method():
     return render_template('backstage/admin/manage_task/method.html')
 
 
-@admin_bp.route('/manage-task/method/random', methods=['POST'])
+@admin_bp.route('/task/method/random', methods=['POST'])
 @login_required
 @admin_required
 def method_random():
@@ -164,7 +164,7 @@ def method_random():
     return redirect_back()
 
 
-@admin_bp.route('/manage-task/method/manual')
+@admin_bp.route('/task/method/manual')
 @login_required
 @admin_required
 def method_manual():
@@ -183,7 +183,7 @@ def method_manual():
         per_page=per_page, check_form=check_form, add_form=add_form)
 
 
-@admin_bp.route('/manage-task/method/manual/check/user/task/<int:user_id>', methods=['GET', 'POST'])
+@admin_bp.route('/task/method/manual/check/<int:user_id>/tasks', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def check_user(user_id):
@@ -201,7 +201,7 @@ def check_user(user_id):
         page=page, per_page=per_page)
 
 
-@admin_bp.route('/manage-task/method/manual/delete/<int:user_id>', methods=['POST'])
+@admin_bp.route('/task/method/manual/delete/<int:user_id>', methods=['POST'])
 @login_required
 @admin_required
 def delete_user_task(user_id):
@@ -215,7 +215,7 @@ def delete_user_task(user_id):
     return redirect_back()
 
 
-@admin_bp.route('/manage-task/method/manual/check/delete/<int:task_id>', methods=['POST'])
+@admin_bp.route('/task/method/manual/check/delete/<int:task_id>', methods=['POST'])
 @login_required
 @admin_required
 def method_delete_task(task_id):
@@ -227,7 +227,7 @@ def method_delete_task(task_id):
     return redirect_back()
 
 
-@admin_bp.route('/manage-task/method/manual/check/user/solution/<int:user_id>', methods=['GET', 'POST'])
+@admin_bp.route('/task/method/manual/check/<int:user_id>/add', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def user_solution_add_page(user_id):
@@ -250,7 +250,7 @@ def user_solution_add_page(user_id):
         page=page, per_page=per_page, user_id=user.id)
 
 
-@admin_bp.route('/manage-task/method/manual/check/user/solution/add/<int:user_id>&<int:solution_id>', methods=['POST'])
+@admin_bp.route('/task/method/manual/check/<int:user_id>/add/<int:solution_id>', methods=['POST'])
 @login_required
 @admin_required
 def user_solution_add(user_id, solution_id):
@@ -267,14 +267,14 @@ def user_solution_add(user_id, solution_id):
     return redirect_back()
 
 
-@admin_bp.route('/manage-score')
+@admin_bp.route('/score')
 @login_required
 @admin_required
 def manage_score():
     return render_template('backstage/admin/manage_score.html')
 
 
-@admin_bp.route('/manage-score/download/teacher', methods=['POST'])
+@admin_bp.route('/score/download/teacher', methods=['POST'])
 @login_required
 @admin_required
 def download_teacher():
@@ -322,7 +322,7 @@ def download_teacher():
         return redirect_back()
 
 
-@admin_bp.route('/manage-score/download/result', methods=['POST'])
+@admin_bp.route('/score/download/result', methods=['POST'])
 @login_required
 @admin_required
 def download_result():

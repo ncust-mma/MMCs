@@ -127,11 +127,13 @@ class ChangeScoreForm(FlaskForm):
     score = FloatField(
         _l('Score'),
         validators=[DataRequired(), InputRequired()]
-        # render_kw={'placeholder': '0-100'}
     )
 
     remark = TextField(
-        _l('Remark'), validators=[Optional()])
+        _l('Remark'),
+        validators=[Optional()],
+        render_kw={'placeholder': _l('Leave your ideas.')}
+    )
 
     submit = SubmitField(_l('Change'))
 

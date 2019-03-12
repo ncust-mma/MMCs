@@ -38,7 +38,7 @@ def index():
     return render_template('backstage/teacher/overview.html', progress=progress, task_number=task_number)
 
 
-@teacher_bp.route('/manage-task', methods=['GET'])
+@teacher_bp.route('/task')
 @login_required
 @teacher_required
 def manage_task():
@@ -63,7 +63,7 @@ def manage_task():
     return render_template('backstage/teacher/manage_task.html')
 
 
-@teacher_bp.route('/manage-task/change/<int:task_id>', methods=['POST'])
+@teacher_bp.route('/task/change/<int:task_id>', methods=['POST'])
 @login_required
 @teacher_required
 def change(task_id):

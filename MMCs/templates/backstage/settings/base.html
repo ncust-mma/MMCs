@@ -1,22 +1,21 @@
 {% extends 'backstage/base.html' %}
-{% from 'bootstrap/form.html' import render_form %}
 {% from 'bootstrap/nav.html' import render_nav_item %}
 
-{% block title %}{{ _('Profile') }}{% endblock %}
+{% block title %}{{ _("Profile") }}{% endblock %}
 
 {% block content %}
 <div class="page-header">
-    <h1>{{ _('Settings') }}</h1>
+    <h1>{{ _("Settings") }}</h1>
 </div>
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-3">
         <div class="nav nav-pills flex-column" role="tablist" aria-orientation="vertical">
-            {{ render_nav_item('backstage.edit_profile', _('Edit Profile')) }}
-            {{ render_nav_item('backstage.change_username', _('Change Username')) }}
-            {{ render_nav_item('backstage.change_password', _('Change Password')) }}
+            {{ render_nav_item("backstage.edit_profile", _("Edit Profile")) }}
+            {{ render_nav_item("backstage.change_username", _("Change Username")) }}
+            {{ render_nav_item("backstage.change_password", _("Change Password")) }}
         </div>
     </div>
-    <div class="col-md-9">
+    <div class="col-9">
         {% block setting_content %}
         {% endblock %}
     </div>
