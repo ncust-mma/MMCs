@@ -102,7 +102,7 @@ def random_sample(teacher_task_number, this_problem, teachers_view):
     return teacher_ids
 
 
-@scheduler.task('interval', id='clear_cache', weeks=4)
+@scheduler.task('interval', id='clear_cache', weeks=3)
 def clear_cache():
     with scheduler.app.app_context():
         for root, _, files in os.walk(current_app.config['FILE_CACHE_PATH']):
