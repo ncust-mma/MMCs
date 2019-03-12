@@ -5,6 +5,7 @@ name = "pypi"
 
 [dev-packages]
 flask-debugtoolbar = "*"
+autopep8 = "*"
 
 [packages]
 flask = "*"
