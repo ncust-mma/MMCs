@@ -2,6 +2,7 @@
 
 import logging
 import os
+from datetime import datetime
 from logging.handlers import RotatingFileHandler, SMTPHandler
 
 import click
@@ -17,8 +18,8 @@ from MMCs.blueprints.backstage import backstage_bp
 from MMCs.blueprints.front import front_bp
 from MMCs.blueprints.root import root_bp
 from MMCs.blueprints.teacher import teacher_bp
-from MMCs.extensions import (babel, bootstrap, cache, ckeditor, csrf, db, dropzone,
-                             login_manager, toolbar)
+from MMCs.extensions import (babel, bootstrap, cache, ckeditor, csrf, db,
+                             dropzone, login_manager, scheduler, toolbar)
 from MMCs.models import Competition, Solution, Task, User
 from MMCs.settings import basedir, config
 from MMCs.utils import redirect_back
@@ -92,6 +93,8 @@ def register_extensions(app):
     babel.init_app(app)
     cache.init_app(app)
     toolbar.init_app(app)
+    scheduler.init_app(app)
+    scheduler.start()
 
 
 def register_blueprints(app):
@@ -151,7 +154,6 @@ def register_global_func(app):
 
     @app.template_global()
     def current_year():
-        from datetime import datetime
         return datetime.now().year
 
     @app.template_global()

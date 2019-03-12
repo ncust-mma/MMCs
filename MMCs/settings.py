@@ -67,6 +67,8 @@ class BaseConfig(object):
 
     CACHE_TYPE = 'simple'
 
+    FILE_CACHE_PATH = os.path.join(basedir, 'cache')
+
 
 class DevelopmentConfig(BaseConfig):
     FLASK_ENV = 'development'

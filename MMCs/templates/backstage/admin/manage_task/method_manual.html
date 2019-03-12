@@ -29,7 +29,7 @@
                 <div class="dropdown">
                     <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ _('Edit') }}
+                        <span class="oi oi-cog"></span> {{ _("Edit") }}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <form method="post" action="{{ url_for('admin.check_user', user_id=user.id) }}">

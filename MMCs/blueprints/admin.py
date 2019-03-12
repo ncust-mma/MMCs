@@ -8,7 +8,7 @@ import pandas as pd
 from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, send_file, url_for)
 from flask_babel import _
-from flask_login import login_required
+from flask_login import fresh_login_required, login_required
 
 from MMCs.decorators import admin_required
 from MMCs.extensions import db
@@ -66,6 +66,7 @@ def solution_list():
 
 
 @admin_bp.route('/solution/upload', methods=['GET', 'POST'])
+@fresh_login_required
 @login_required
 @admin_required
 def upload():
@@ -98,11 +99,11 @@ def upload():
 
 
 @admin_bp.route('/solution/delete/<int:solution_id>', methods=['POST'])
+@fresh_login_required
 @login_required
 @admin_required
 def delete_solution_task(solution_id):
     solution = Solution.query.get_or_404(solution_id)
-
     db.session.delete(solution)
     db.session.commit()
 
@@ -125,6 +126,7 @@ def method():
 
 
 @admin_bp.route('/task/method/random', methods=['POST'])
+@fresh_login_required
 @login_required
 @admin_required
 def method_random():
@@ -137,11 +139,11 @@ def method_random():
         if teachers:
             teacher_task_number = ceil(
                 len(solutions) * current_app.config['SOLUTION_TASK_NUMBER'] / len(teachers))
-            teachers_view = dict((teacher.id, dict((problem, 0) for problem in com.problems))
-                                 for teacher in teachers)
+            teachers_view = {teacher.id: {problem: 0 for problem in com.problems}
+                             for teacher in teachers}
             solutions = sorted(solutions, key=lambda x: x.problem)
             for solution in solutions:
-                teacher_ids, teachers_view = random_sample(
+                teacher_ids = random_sample(
                     teacher_task_number, solution.problem, teachers_view)
                 for teacher_id in teacher_ids:
                     task = Task(
@@ -190,11 +192,14 @@ def check_user(user_id):
     com = Competition.current_competition()
     page = request.args.get('page', 1, type=int)
     per_page = current_app.config['SOLUTION_PER_PAGE']
+
     pagination = Task.query.filter(
         Task.teacher_id == user_id,
         Task.competition_id == com.id
     ).order_by(Task.id.desc()).paginate(page, per_page)
+
     tasks = pagination.items
+
     return render_template(
         'backstage/admin/manage_task/check.html',
         pagination=pagination, tasks=tasks,
@@ -202,6 +207,7 @@ def check_user(user_id):
 
 
 @admin_bp.route('/task/method/manual/delete/<int:user_id>', methods=['POST'])
+@fresh_login_required
 @login_required
 @admin_required
 def delete_user_task(user_id):
@@ -216,6 +222,7 @@ def delete_user_task(user_id):
 
 
 @admin_bp.route('/task/method/manual/check/delete/<int:task_id>', methods=['POST'])
+@fresh_login_required
 @login_required
 @admin_required
 def method_delete_task(task_id):
@@ -233,15 +240,16 @@ def method_delete_task(task_id):
 def user_solution_add_page(user_id):
     page = request.args.get('page', 1, type=int)
     per_page = current_app.config['SOLUTION_PER_PAGE']
-
     com = Competition.current_competition()
     user = User.query.get_or_404(user_id)
     task_existed = user.search_task()
     solution_existed_ids = set(task.solution_id for task in task_existed)
+
     pagination = Solution.query.filter(
         ~Solution.id.in_(map(str, solution_existed_ids)),
         Solution.competition_id == com.id
     ).order_by(Solution.id.desc()).paginate(page, per_page)
+
     solutions = pagination.items
 
     return render_template(
@@ -251,6 +259,7 @@ def user_solution_add_page(user_id):
 
 
 @admin_bp.route('/task/method/manual/check/<int:user_id>/add/<int:solution_id>', methods=['POST'])
+@fresh_login_required
 @login_required
 @admin_required
 def user_solution_add(user_id, solution_id):
@@ -275,44 +284,46 @@ def manage_score():
 
 
 @admin_bp.route('/score/download/teacher', methods=['POST'])
+@fresh_login_required
 @login_required
 @admin_required
 def download_teacher():
-    path = os.path.join(basedir, 'cache')
-    if not os.path.exists(path):
-        os.mkdir(path)
-
     com = Competition.current_competition()
     if com.tasks:
-        teachers = User.teachers()
-        teacher_dic = dict((teacher.id, (teacher.username, teacher.realname))
-                           for teacher in teachers)
+        teacher_dic = {teacher.id: (teacher.username, teacher.realname)
+                       for teacher in User.teachers()}
         solutions = Solution.query.filter_by(competition_id=com.id).all()
-        solution_dic = dict((solution.id, (solution.name, solution.index,
-                                           solution.problem, solution.team_number,
-                                           solution.team_player))
-                            for solution in solutions)
+        solution_dic = {solution.id: (solution.name,
+                                      solution.index,
+                                      solution.problem,
+                                      solution.team_number,
+                                      solution.team_player)
+                        for solution in solutions}
         df = pd.read_sql_query(
             Task.query.filter_by(competition_id=com.id).statement, db.engine)
-        df['username'] = df['teacher_id'].apply(
-            lambda x: teacher_dic.get(x)[0])
-        df['realname'] = df['teacher_id'].apply(
-            lambda x: teacher_dic.get(x)[1])
-        df['filename'] = df['solution_id'].apply(
-            lambda x: solution_dic.get(x)[0])
-        df['index'] = df['solution_id'].apply(lambda x: solution_dic.get(x)[1])
-        df['problem'] = df['solution_id'].apply(
-            lambda x: solution_dic.get(x)[2])
-        df['team_number'] = df['solution_id'].apply(
-            lambda x: solution_dic.get(x)[3])
-        df['team_player'] = df['solution_id'].apply(
-            lambda x: '_'.join(solution_dic.get(x)[4]))
+
+        df['username'] = (
+            df['teacher_id'].apply(lambda x: teacher_dic.get(x)[0]))
+        df['realname'] = (
+            df['teacher_id'].apply(lambda x: teacher_dic.get(x)[1]))
+
+        df['filename'] = (
+            df['solution_id'].apply(lambda x: solution_dic.get(x)[0]))
+        df['index'] = (
+            df['solution_id'].apply(lambda x: solution_dic.get(x)[1]))
+        df['problem'] = (
+            df['solution_id'].apply(lambda x: solution_dic.get(x)[2]))
+        df['team_number'] = (
+            df['solution_id'].apply(lambda x: solution_dic.get(x)[3]))
+        df['team_player'] = (
+            df['solution_id'].apply(lambda x: '_'.join(solution_dic.get(x)[4])))
 
         del df['teacher_id']
         del df['solution_id']
         del df['competition_id']
 
-        file = os.path.join(path, uuid4().hex+'.xlsx')
+        file = os.path.join(
+            current_app.config['FILE_CACHE_PATH'], uuid4().hex+'.xlsx')
         df.to_excel(file, index=False)
 
         flash(_('The result file is downloading.'), 'success')
@@ -323,20 +334,17 @@ def download_teacher():
 
 
 @admin_bp.route('/score/download/result', methods=['POST'])
+@fresh_login_required
 @login_required
 @admin_required
 def download_result():
-    path = os.path.join(basedir, 'cache')
-    if not os.path.exists(path):
-        os.mkdir(path)
-
     com = Competition.current_competition()
-    if com.solutions:
-        solutions = com.solutions
+    solutions = com.solutions
+    if solutions:
         for solution in solutions:
             tasks = solution.tasks
-            solution.score = sum(
-                [task.score for task in tasks if task.score]) / len(tasks)
+            solution.score = (
+                sum([task.score for task in tasks if task.score]) / len(tasks))
             try:
                 db.session.commit()
             except:
@@ -347,12 +355,12 @@ def download_result():
         df['index'] = df['name'].apply(lambda x: x.split('_')[0])
         df['problem'] = df['name'].apply(lambda x: x.split('_')[1])
         df['team_number'] = df['name'].apply(lambda x: x.split('_')[2])
-        df['team_player'] = df['name'].apply(
-            lambda x: '_'.join(x.split('_')[3:]))
-
+        df['team_player'] = (
+            df['name'].apply(lambda x: '_'.join(x.split('_')[3:])))
         del df['competition_id']
 
-        file = os.path.join(path, uuid4().hex+'.xlsx')
+        file = os.path.join(
+            current_app.config['FILE_CACHE_PATH'], uuid4().hex+'.xlsx')
         df.to_excel(file, index=False)
 
         flash(_('The result file is downloading.'), 'success')
