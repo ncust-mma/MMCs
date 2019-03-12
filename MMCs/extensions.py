@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import current_app, request
+from flask_apscheduler import APScheduler
 from flask_babel import Babel
 from flask_babel import lazy_gettext as _l
 from flask_bootstrap import Bootstrap
@@ -21,6 +22,7 @@ dropzone = Dropzone()
 toolbar = DebugToolbarExtension()
 babel = Babel()
 cache = Cache()
+scheduler = APScheduler()
 
 
 @login_manager.user_loader

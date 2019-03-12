@@ -14,6 +14,8 @@ from flask_babel import _
 from pypinyin import lazy_pinyin
 from werkzeug.utils import secure_filename
 
+from MMCs.extensions import scheduler
+
 
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)
@@ -74,18 +76,19 @@ def check_filename(filename):
 
 
 def random_sample(teacher_task_number, this_problem, teachers_view):
-    teacher_ids = []
     is_empty = sum(teacher_problem[this_problem]
                    for teacher_problem in teachers_view.values())
+    solution_task_number = current_app.config['SOLUTION_TASK_NUMBER']
     if is_empty == 0:
         teacher_ids = random.sample(
-            list(teachers_view), current_app.config['SOLUTION_TASK_NUMBER'])
+            list(teachers_view), solution_task_number)
     else:
+        teacher_ids = []
         for teacher_id, teacher_problem in teachers_view.items():
             if teacher_problem[this_problem] and teacher_problem[this_problem] < teacher_task_number:
                 teacher_ids.append(teacher_id)
 
-            if len(teacher_ids) == current_app.config['SOLUTION_TASK_NUMBER']:
+            if len(teacher_ids) >= solution_task_number:
                 break
 
     for teacher_id in teacher_ids:
@@ -96,4 +99,14 @@ def random_sample(teacher_task_number, this_problem, teachers_view):
         if sum(teacher_problem.values()) >= teacher_task_number:
             teachers_view.pop(teacher_id)
 
-    return teacher_ids, teachers_view
+    return teacher_ids
+
+
+@scheduler.task('interval', id='clear_cache', weeks=4)
+def clear_cache():
+    with scheduler.app.app_context():
+        for root, _, files in os.walk(current_app.config['FILE_CACHE_PATH']):
+            for file in files:
+                if file != '.gitkeep':
+                    path = os.path.join(root, file)
+                    os.remove(path)
