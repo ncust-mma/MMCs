@@ -3,12 +3,12 @@
 import os
 from uuid import uuid4
 
+import pandas as pd
 from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, send_file, url_for)
 from flask_babel import _
 from flask_login import current_user, fresh_login_required, login_required
 
-import pandas as pd
 from MMCs.decorators import root_required
 from MMCs.extensions import db
 from MMCs.forms import (ButtonChangePasswordForm, ButtonChangeUsernameForm,
@@ -36,7 +36,7 @@ def manage_competition():
     return redirect(url_for('root.behavior'))
 
 
-@root_bp.route('/manage-competition/behavior', methods=['GET', 'POST'])
+@root_bp.route('/manage-competition/behavior')
 @login_required
 @root_required
 def behavior():

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from flask import (Blueprint, abort, current_app, flash, jsonify,
+from flask import (Blueprint, abort, current_app, flash,
                    make_response, redirect, render_template, url_for)
 from flask_babel import _
 from flask_login import current_user
 
-from MMCs.extensions import db
+from MMCs.extensions import cache, db
 from MMCs.utils import redirect_back
 
 front_bp = Blueprint('front', __name__)
@@ -24,6 +24,7 @@ def index():
 
 
 @front_bp.route('/about')
+@cache.cached(timeout=10*60)
 def about():
     return render_template('front/about.html')
 
@@ -43,8 +44,3 @@ def set_locale(locale):
     flash(_('Setting updated.'), 'success')
 
     return response
-
-
-@front_bp.route('/404')
-def test():
-    pass

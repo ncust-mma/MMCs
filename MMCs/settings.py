@@ -65,6 +65,8 @@ class BaseConfig(object):
     SENDGRID_DEFAULT_FROM = MAIL_USERNAME
     SENDGRID_API_KEY = MAIL_PASSWORD
 
+    CACHE_TYPE = 'simple'
+
 
 class DevelopmentConfig(BaseConfig):
     FLASK_ENV = 'development'

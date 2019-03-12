@@ -17,7 +17,7 @@ from MMCs.blueprints.backstage import backstage_bp
 from MMCs.blueprints.front import front_bp
 from MMCs.blueprints.root import root_bp
 from MMCs.blueprints.teacher import teacher_bp
-from MMCs.extensions import (babel, bootstrap, ckeditor, csrf, db, dropzone,
+from MMCs.extensions import (babel, bootstrap, cache, ckeditor, csrf, db, dropzone,
                              login_manager, toolbar)
 from MMCs.models import Competition, Solution, Task, User
 from MMCs.settings import basedir, config
@@ -90,7 +90,8 @@ def register_extensions(app):
     ckeditor.init_app(app)
     dropzone.init_app(app)
     babel.init_app(app)
-    # toolbar.init_app(app)
+    cache.init_app(app)
+    toolbar.init_app(app)
 
 
 def register_blueprints(app):

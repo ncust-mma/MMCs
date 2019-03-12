@@ -4,7 +4,7 @@ from faker import Faker
 from sqlalchemy.sql.expression import func
 
 from MMCs import db
-from MMCs.models import Solution, Competition, Task, User
+from MMCs.models import Competition, Solution, Task, User
 from MMCs.utils import new_filename
 
 fake = Faker()

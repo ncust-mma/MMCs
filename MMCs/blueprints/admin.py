@@ -4,12 +4,12 @@ import os
 from math import ceil
 from uuid import uuid4
 
+import pandas as pd
 from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, send_file, url_for)
 from flask_babel import _
 from flask_login import login_required
 
-import pandas as pd
 from MMCs.decorators import admin_required
 from MMCs.extensions import db
 from MMCs.forms import AdminAddTaskForm, ButtonAddForm, ButtonCheckForm
@@ -173,6 +173,7 @@ def method_manual():
     pagination = User.query.filter(User.permission == 'Teacher').order_by(
         User.id.desc()).paginate(page, per_page)
     users = pagination.items
+
     check_form = ButtonCheckForm()
     add_form = ButtonAddForm()
 
@@ -314,6 +315,7 @@ def download_teacher():
         file = os.path.join(path, uuid4().hex+'.xlsx')
         df.to_excel(file, index=False)
 
+        flash(_('The result file is downloading.'), 'success')
         return send_file(file, as_attachment=True)
     else:
         flash('No task.', 'warning')
@@ -353,6 +355,7 @@ def download_result():
         file = os.path.join(path, uuid4().hex+'.xlsx')
         df.to_excel(file, index=False)
 
+        flash(_('The result file is downloading.'), 'success')
         return send_file(file, as_attachment=True)
     else:
         flash('No solution.', 'warning')

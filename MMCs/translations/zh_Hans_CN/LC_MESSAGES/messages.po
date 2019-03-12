@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-03-11 23:03+0800\n"
-"PO-Revision-Date: 2019-03-11 23:03+0800\n"
+"POT-Creation-Date: 2019-03-12 00:08+0800\n"
+"PO-Revision-Date: 2019-03-12 00:10+0800\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: zh_Hans_CN <LL@li.org>\n"
@@ -19,39 +19,39 @@ msgstr ""
 "Generated-By: Babel 2.6.0\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: MMCs/__init__.py:109
+#: MMCs/__init__.py:110
 msgid "Bad Request"
 msgstr "请求无效"
 
-#: MMCs/__init__.py:114
+#: MMCs/__init__.py:115
 msgid "Unauthorized"
 msgstr "未授权"
 
-#: MMCs/__init__.py:119
+#: MMCs/__init__.py:120
 msgid "Forbidden"
 msgstr "禁止访问"
 
-#: MMCs/__init__.py:124
+#: MMCs/__init__.py:125
 msgid "Page Not Found"
 msgstr "页面未找到"
 
-#: MMCs/__init__.py:129
+#: MMCs/__init__.py:130
 msgid "Method not allowed"
 msgstr "方法不允许"
 
-#: MMCs/__init__.py:134
+#: MMCs/__init__.py:135
 msgid "Internal Server Error Explained"
 msgstr "服务器出错"
 
-#: MMCs/__init__.py:139
+#: MMCs/__init__.py:140
 msgid "Handle CSRF Error"
 msgstr "CSRF验证错误"
 
-#: MMCs/extensions.py:31
+#: MMCs/extensions.py:33
 msgid "Please log in to access this page."
 msgstr "请登录后访问这个页面。"
 
-#: MMCs/extensions.py:34
+#: MMCs/extensions.py:36
 msgid "In order to protect your account security, please log in again."
 msgstr "为了保护您的帐户安全, 请重新登录。"
 
@@ -272,17 +272,21 @@ msgstr "请先添加教师再来分配任务。"
 msgid "No solutions."
 msgstr "无作品。"
 
-#: MMCs/blueprints/admin.py:213
+#: MMCs/blueprints/admin.py:214
 msgid "All tasks of User deleted."
 msgstr "该用户所有任务已删除。"
 
-#: MMCs/blueprints/admin.py:224
+#: MMCs/blueprints/admin.py:225
 msgid "Task deleted."
 msgstr "任务删除。"
 
-#: MMCs/blueprints/admin.py:265
+#: MMCs/blueprints/admin.py:266
 msgid "Added successed."
 msgstr "添加成功。"
+
+#: MMCs/blueprints/admin.py:318 MMCs/blueprints/admin.py:358
+msgid "The result file is downloading."
+msgstr "文件下载中。"
 
 #: MMCs/blueprints/auth.py:25
 msgid "Login success."
@@ -312,7 +316,7 @@ msgstr "密码已更新。"
 msgid "Old password is incorrect."
 msgstr "旧密码不正确。"
 
-#: MMCs/blueprints/front.py:43
+#: MMCs/blueprints/front.py:44
 msgid "Setting updated."
 msgstr "设置已更新。"
 
@@ -634,7 +638,7 @@ msgstr "暂停确认"
 
 #: MMCs/templates/backstage/root/manage_competition/behavior.html:62
 msgid "Are you sure you want to stop this competition?"
-msgstr "你确定要暂停当前竞赛吗？"
+msgstr "你确定要暂停或结束当前竞赛吗？"
 
 #: MMCs/templates/backstage/root/manage_competition/behavior.html:85
 msgid "Continue Confirm"

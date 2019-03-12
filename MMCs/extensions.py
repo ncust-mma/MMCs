@@ -4,6 +4,7 @@ from flask import current_app, request
 from flask_babel import Babel
 from flask_babel import lazy_gettext as _l
 from flask_bootstrap import Bootstrap
+from flask_caching import Cache
 from flask_ckeditor import CKEditor
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_dropzone import Dropzone
@@ -19,6 +20,7 @@ ckeditor = CKEditor()
 dropzone = Dropzone()
 toolbar = DebugToolbarExtension()
 babel = Babel()
+cache = Cache()
 
 
 @login_manager.user_loader
