@@ -180,7 +180,7 @@ def method_manual():
     add_form = ButtonAddForm()
 
     return render_template(
-        'backstage/admin/manage_task/method_manual.html',
+        'backstage/admin/manage_task/manual.html',
         pagination=pagination, users=users, page=page,
         per_page=per_page, check_form=check_form, add_form=add_form)
 

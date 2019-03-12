@@ -1,6 +1,6 @@
 {% extends 'backstage/admin/manage_task/base.html' %}
 
-{% block task_setting_content %}
+{% block task_content %}
 {% if is_start() %}
 <div class="btn-group btn-group-vertical btn-block" role="group" aria-label="Button group with nested dropdown">
     <a class="btn btn-danger text-white" data-toggle="modal" data-target="#confirm-random" data-href="{{ url_for('admin.method_random') }}">

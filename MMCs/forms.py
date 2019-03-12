@@ -132,7 +132,7 @@ class ChangeScoreForm(FlaskForm):
     remark = TextField(
         _l('Remark'),
         validators=[Optional()],
-        render_kw={'placeholder': _l('Leave your ideas.')}
+        render_kw={'placeholder': _l('Leave your ideas')}
     )
 
     submit = SubmitField(_l('Change'))

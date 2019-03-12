@@ -1,29 +1,22 @@
-{% extends 'base.html' %} {% block title %}Index{% endblock title %} {% block
-content %}
+{% extends 'base.html' %}
+
+{% block title %}Index{% endblock title %}
+
+{% block content %}
 <div class="jumbotron">
     <div class="row">
-        <div class="col-8">
-            <img
-                src="{{ url_for('static', filename='images/index.jpg') }}"
-                class="rounded img-fluid"
-            />
+        <div class="col-md-8">
+            <img src="{{ url_for('static', filename='images/index.jpg') }}" class="rounded img-fluid" />
         </div>
-        <div class="col-4 align-self-center">
+        <div class="col-md-4 align-self-center">
             <h1>MMCs</h1>
             <p>
-                {{
-                    _(
-                        "North China University of Science and Technology Mathematical Modeling Competition Management System"
-                    )
-                }}
+                {{ _("North China University of Science and Technology Mathematical Modeling Competition Management System") }}
             </p>
             <p>
-                <a
-                    class="btn btn-primary btn-lg"
-                    href="{{ url_for('auth.login', next=request.full_path) }}"
-                >
-                    {{ _("Sign in Now") }}</a
-                >
+                <a class="btn btn-primary btn-lg" href="{{ url_for('auth.login', next=request.full_path) }}">
+                    {{ _("Sign in Now") }}
+                </a>
             </p>
         </div>
     </div>

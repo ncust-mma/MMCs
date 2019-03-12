@@ -1,8 +1,7 @@
 {% extends 'backstage/admin/manage_solution/base.html' %}
 {% from 'bootstrap/pagination.html' import render_pagination %}
 
-{% block solution_setting_content %}
-
+{% block solution_content %}
 {% if is_start() %}
 <h3>
     {{ _('Solutions') }}
@@ -27,19 +26,13 @@
                 <td>{{ solution.team_number }}</td>
                 <td>{{ solution.problem }}</td>
                 <td>
-                    <a
-                        href="{{ url_for('backstage.get_solution', filename=solution.uuid) }}"
-                        target="_blank"
-                        >{{ solution.uuid }}
+                    <a href="{{ url_for('backstage.get_solution', filename=solution.uuid) }}" target="_blank">
+                        {{ solution.uuid }}
                     </a>
                 </td>
                 <td>
-                    <button
-                        class="btn btn-danger btn-sm text-white"
-                        data-toggle="modal"
-                        data-target="#confirm-delete"
-                        data-href="{{ url_for('admin.delete_solution_task', solution_id=solution.id) }}"
-                    >
+                    <button class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#confirm-delete"
+                        data-href="{{ url_for('admin.delete_solution_task', solution_id=solution.id) }}">
                         <span class="oi oi-trash"></span> {{ _('Delete') }}
                     </button>
                 </td>
@@ -47,36 +40,25 @@
             {% endfor %}
         </table>
     </div>
-    <div class="page-footer">{{ render_pagination(pagination) }}</div>
+    <div class="page-footer">
+        {{ render_pagination(pagination) }}
+    </div>
     {% else %}
-
     {% endif %}
 </div>
 {% else %}
-    {% include "backstage/tips/no_start.html" %}
+{% include "backstage/tips/no_start.html" %}
 {% endif %}
 
 <!-- delete modal -->
-<div
-    class="modal fade"
-    id="confirm-delete"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="confirmModalLabel"
-    aria-hidden="true"
->
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="confirmModalLabel">
                     {{ _('Delete Confirm') }}
                 </h5>
-                <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                >
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span class="oi oi-delete"></span>
                 </button>
             </div>
@@ -85,16 +67,8 @@
             </div>
             <div class="modal-footer">
                 <form class="delete-form" action="" method="post">
-                    <input
-                        type="hidden"
-                        name="csrf_token"
-                        value="{{ csrf_token() }}"
-                    />
-                    <button
-                        type="button"
-                        class="btn btn-default"
-                        data-dismiss="modal"
-                    >
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
                         <span class="oi oi-action-undo"></span> {{ _('Cancel') }}
                     </button>
                     <button class="btn btn-danger btn-confirm" type="submit">

@@ -85,4 +85,5 @@ def change(task_id):
         else:
             flash(_('Invalid score.'), 'warning')
 
+    flash_errors(form)
     return redirect_back()

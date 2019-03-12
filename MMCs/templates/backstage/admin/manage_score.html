@@ -8,15 +8,15 @@
     {% if is_start() %}
         <div class="card-body">
             <div class="btn-group btn-group-vertical btn-block" role="group" aria-label="Button group with nested dropdown">
-                <form class="btn" role="form" action="{{ url_for('admin.download_teacher') }}" method="post">
+                <form class="btn" action="{{ url_for('admin.download_teacher') }}" method="post">
                     <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}" />
-                    <button class="btn btn-info">
+                    <button class="btn btn-info" type="button">
                         <span class="oi oi-data-transfer-download"></span> {{ _("Download all teachers result") }}
                     </button>
                 </form>
-                <form class="btn" role="form"  action="{{ url_for('admin.download_result') }}" method="post">
+                <form class="btn" action="{{ url_for('admin.download_result') }}" method="post">
                     <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}" />
-                    <button class="btn btn-info">
+                    <button class="btn btn-info" type="button">
                         <span class="oi oi-data-transfer-download"></span> {{ _("Download the final result") }}
                     </button>
                 </form>

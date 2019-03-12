@@ -9,13 +9,13 @@
 </div>
 
 <div class="row">
-    <div class="col-2">
+    <div class="col-md-2">
         <div class="nav nav-pills flex-column" role="tablist" aria-orientation="vertical">
             {{ render_nav_item("teacher.index", _("Overview")) }}
             {{ render_nav_item("teacher.manage_task", _("Task Management")) }}
         </div>
     </div>
-    <div class="col-10">
+    <div class="col-md-10">
         {% block setting_content %} {% endblock %}
     </div>
 </div>

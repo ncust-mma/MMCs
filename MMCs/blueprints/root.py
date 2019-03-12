@@ -71,7 +71,11 @@ def notice():
         with open(path, 'w', encoding='utf-8') as f:
             f.write(form.notice.data)
 
+        flash(_('Setting updated.'), 'success')
+        return redirect_back()
+
     form.notice.data = render_template('backstage/notice.html')
+
     return render_template(
         'backstage/root/manage_competition/notice.html', form=form)
 

@@ -1,4 +1,4 @@
-<!-- 
+<!--
     __  _____  _________    
    /  |/  /  |/  / ____/____
   / /|_/ / /|_/ / /   / ___/
@@ -102,14 +102,16 @@
                             <div class="col">
                                 <p class="float-left">
                                     <small> &copy; {{ current_year() }}
-                                        {{ link_field("NCUST-MMA", "http://sxjm.ncst.edu.cn", _("North China University of Science and Technology Mathematical Modeling Association")) }} /
+                                        <a title="{{_('North China University of Science and Technology Mathematical Modeling Association') }}" data-toggle="tooltip">
+                                            NCUST-MMA /
+                                        </a>
                                         {{ link_field("Zero", "https://github.com/Zeroto521", "Written by Zeroto521") }}
                                     </small>
                                 </p>
                             </div>
                             <div class="col">
                                 <P class="text-center">
-                                    <a href="{{ url_for('front.index') }}" title="{{_('North China University of Science and Technology Mathematical Modeling Association') }}" data-toggle="tooltip">
+                                    <a href="http://sxjm.ncst.edu.cn" title="{{_('North China University of Science and Technology Mathematical Modeling Association') }}" data-toggle="tooltip">
                                         <img src="{{ url_for('static', filename='NCUST-MMA.png') }}" alt="NCUST-MMA" width="50">
                                     </a>
                                 </P>
