@@ -18,9 +18,9 @@
         <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
         {% block styles %}
-            {{ bootstrap.load_css() }}
-            <link rel="stylesheet" href="{{ url_for('static', filename='open-iconic/font/css/open-iconic-bootstrap.css') }}">
-            <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        {{ bootstrap.load_css() }}
+        <link rel="stylesheet" href="{{ url_for('static', filename='open-iconic/font/css/open-iconic-bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
         {% endblock styles %}
 
         {% endblock head %}
@@ -52,7 +52,7 @@
                     {% endif %}
                     <div class="dropdown nav-item navbar-nav">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                            <span class="oi oi-text"></span> {{ _('Language') }}
+                            <span class="oi oi-globe"></span> {{ _('Language') }}
                             <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu" role="menu">
@@ -133,21 +133,21 @@
         <div id="toast"></div>
 
         {% block scripts %}
-            {{ bootstrap.load_js() }}
-            <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-            <script type="text/javascript">
-                var csrf_token = "{{ csrf_token() }}";
-                {% if current_user.is_authenticated %}
-                    var is_authenticated = true;
-                {% else %}
-                    var is_authenticated = false;
-                {% endif %}
-            </script>
-            <script type="text/javascript">
-                $(function () {
-                    $("[data-toggle='tooltip']").tooltip();
-                });
-            </script>
+        {{ bootstrap.load_js() }}
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+        <script type="text/javascript">
+            var csrf_token = "{{ csrf_token() }}";
+            {% if current_user.is_authenticated %}
+            var is_authenticated = true; 
+            {% else %}
+            var is_authenticated = false;
+            {% endif %}
+        </script>
+        <script type="text/javascript">
+            $(function () {
+                $("[data-toggle='tooltip']").tooltip();
+            });
+        </script>
         {% endblock scripts %}
     </body>
 
