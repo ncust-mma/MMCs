@@ -17,3 +17,6 @@ SQLAlchemy
 WTForms
 pandas
 openpyxl
+gunicorn
+psycopg2
+flask-caching
