@@ -99,24 +99,27 @@
                 <footer>
                     <div class="container">
                         <div class="row">
-                            <div class="col">
+                            <div class="col-4">
                                 <p class="float-left">
                                     <small> &copy; {{ current_year() }}
-                                        <a title="{{_('North China University of Science and Technology Mathematical Modeling Association') }}" data-toggle="tooltip">
+                                        <a title="{{_('North China University of Science and Technology Mathematical Modeling Association') }}"
+                                            data-toggle="tooltip">
                                             NCUST-MMA /
                                         </a>
                                         {{ link_field("Zero", "https://github.com/Zeroto521", "Written by Zeroto521") }}
                                     </small>
                                 </p>
                             </div>
-                            <div class="col">
+                            <div class="col-4">
                                 <P class="text-center">
-                                    <a href="http://sxjm.ncst.edu.cn" title="{{_('North China University of Science and Technology Mathematical Modeling Association') }}" data-toggle="tooltip">
-                                        <img src="{{ url_for('static', filename='NCUST-MMA.png') }}" alt="NCUST-MMA" width="50">
+                                    <a href="http://sxjm.ncst.edu.cn" title="{{_('North China University of Science and Technology Mathematical Modeling Association') }}"
+                                        data-toggle="tooltip">
+                                        <img src="{{ url_for('static', filename='NCUST-MMA.png') }}" alt="NCUST-MMA"
+                                            width="50">
                                     </a>
                                 </P>
                             </div>
-                            <div class="col">
+                            <div class="col-4">
                                 <p class="float-right">
                                     <small>
                                         {{ link_field(_("Mathematical Modeling Competition system"), "https://github.com/Zeroto521/MMCs", _("Fork me on GitHub")) }}
@@ -130,24 +133,15 @@
             </div>
         </main>
 
-        <div id="toast"></div>
-
         {% block scripts %}
         {{ bootstrap.load_js() }}
-        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-        <script type="text/javascript">
-            var csrf_token = "{{ csrf_token() }}";
-            {% if current_user.is_authenticated %}
-            var is_authenticated = true; 
-            {% else %}
-            var is_authenticated = false;
-            {% endif %}
-        </script>
         <script type="text/javascript">
             $(function () {
                 $("[data-toggle='tooltip']").tooltip();
             });
+
         </script>
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
         {% endblock scripts %}
     </body>
 
