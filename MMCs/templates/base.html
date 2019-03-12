@@ -1,6 +1,12 @@
+<!-- 
+    __  _____  _________    
+   /  |/  /  |/  / ____/____
+  / /|_/ / /|_/ / /   / ___/
+ / /  / / /  / / /___(__  ) 
+/_/  /_/_/  /_/\____/____/  
+-->
 {% from 'macros.html' import render_nav_item %}
 {% from 'macros.html' import link_field %}
-
 <!DOCTYPE html>
 <html lang="zh">
 
@@ -8,7 +14,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         {% block head %}
-        <title>{% block title %}{% endblock title %} · MMCs</title>
+        <title>{% block title %}{% endblock %} · MMCs</title>
         <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
         {% block styles %}
