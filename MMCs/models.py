@@ -19,8 +19,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(128), nullable=False)
     locale = db.Column(db.String(20), default='zh_Hans_CN')
 
-    tasks = db.relationship(
-        'Task', cascade='save-update, merge, delete')
+    tasks = db.relationship('Task', cascade='all, delete-orphan')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -66,8 +65,7 @@ class Solution(db.Model):
     competition_id = db.Column(db.Integer, db.ForeignKey('competition.id'))
     score = db.Column(db.Float)
 
-    tasks = db.relationship(
-        'Task', cascade='save-update, merge, delete')
+    tasks = db.relationship('Task', cascade='all, delete-orphan')
 
     @property
     def index(self):
@@ -128,11 +126,8 @@ class Competition(db.Model):
     date = db.Column(db.Date, index=True, nullable=False, default=date.today)
     flag = db.Column(db.Boolean, default=False)
 
-    tasks = db.relationship(
-        'Task', cascade='save-update, merge, delete')
-
-    solutions = db.relationship(
-        'Solution', cascade='save-update, merge, delete')
+    tasks = db.relationship('Task', cascade='all, delete-orphan')
+    solutions = db.relationship('Solution', cascade='all, delete-orphan')
 
     @classmethod
     def current_competition(self):
