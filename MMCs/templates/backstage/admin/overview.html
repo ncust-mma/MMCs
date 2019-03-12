@@ -4,25 +4,28 @@
 
 {% block setting_content %}
 <div class="card w-100 bg-light">
-    <h3 class="card-header">{{ _('Progress') }}</h3>
-    {% if is_start() %}
-        {% if task_number >= 0 %}
-            <div class="card-body">
-                <div class="progress">
-                    <div 
-                        class="progress-bar progress-bar-striped progress-bar-animated"
-                        role="progressbar"
-                        style="width: {{ progress|default(0) }}%"
-                    >
-                        {{ _('All tasks finished') }}: {{'%0.2f'| format(progress|float)}}%
-                    </div>
-                </div>
-            </div>
-        {% else %}
-            {% include "backstage/tips/no_solution.html" %}
+    <h3 class="card-header">
+        {{ _('Progress') }}
+        {% if is_start() and task_number >= 0 %}
+        <small>
+            {{ '%d'|format(progress * task_number) }} / {{ task_number }}
+        </small>
         {% endif %}
+    </h3>
+    {% if is_start() %}
+    {% if task_number >= 0 %}
+    <div class="card-body">
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ progress|default(0) }}%">
+                {{ _('All tasks finished') }}: {{'%0.2f'| format(progress|float)}}%
+            </div>
+        </div>
+    </div>
     {% else %}
-        {% include "backstage/tips/no_start.html" %}
+    {% include "backstage/tips/no_solution.html" %}
+    {% endif %}
+    {% else %}
+    {% include "backstage/tips/no_start.html" %}
     {% endif %}
 </div>
 {% endblock %}

@@ -4,7 +4,14 @@
 
 {% block setting_content %}
 <div class="card w-100 bg-light">
-    <h3 class="card-header">{{ _('Progress') }}</h3>
+    <h3 class="card-header">
+        {{ _('Progress') }}
+        {% if is_start() and task_number and progress >= 0 %}
+        <small>
+            {{ '%d'|format(progress * task_number) }} / {{ task_number }}
+        </small>
+        {% endif %}
+    </h3>
     {% if is_start() %}
     {% if task_number %}
     {% if progress >= 0 %}
