@@ -55,10 +55,10 @@ login_manager.anonymous_user = Guest
 
 @babel.localeselector
 def get_locale():
-    if current_user.is_authenticated and current_user.locale is not None:
+    if current_user.is_authenticated and current_user.locale:
         return current_user.locale
 
     locale = request.cookies.get('locale')
-    if locale is not None:
+    if locale:
         return locale
     return request.accept_languages.best_match(current_app.config['MMCS_LOCALES'])

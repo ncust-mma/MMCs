@@ -7,45 +7,50 @@
     {{ _('Solutions') }}
     <small class="text-muted">{{ pagination.total|default(0) }}</small>
 </h3>
-<div>
-    {% if solutions %}
-    <div class="table-responsive">
-        <table class="table table-striped table-hover table-sm">
-            <thead>
-                <tr class="text-center">
-                    <th>#</th>
-                    <th>{{ _('Team number') }}</th>
-                    <th>{{ _('Problem') }}</th>
-                    <th>{{ _('UUID') }}</th>
-                    <th>{{ _(Actions) }}</th>
-                </tr>
-            </thead>
-            {% for solution in solutions %}
+{% if pagination.items %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-sm">
+        <thead>
             <tr class="text-center">
-                <td>{{ pagination.total - (per_page * (page - 1) + loop.index) + 1}}</td>
-                <td>{{ solution.team_number }}</td>
-                <td>{{ solution.problem }}</td>
-                <td>
-                    <a href="{{ url_for('backstage.get_solution', filename=solution.uuid) }}" target="_blank">
-                        {{ solution.uuid }}
-                    </a>
-                </td>
-                <td>
-                    <button class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#confirm-delete"
-                        data-href="{{ url_for('admin.delete_solution_task', solution_id=solution.id) }}">
-                        <span class="oi oi-trash"></span> {{ _('Delete') }}
-                    </button>
-                </td>
+                <th>#</th>
+                <th>{{ _('Team number') }}</th>
+                <th>{{ _('Problem') }}</th>
+                <th>{{ _('UUID') }}</th>
+                <th>{{ _(Actions) }}</th>
             </tr>
-            {% endfor %}
-        </table>
-    </div>
-    <div class="page-footer">
-        {{ render_pagination(pagination) }}
-    </div>
-    {% else %}
-    {% endif %}
+        </thead>
+        {% for solution in pagination.items %}
+        <tr class="text-center">
+            <td>{{ pagination.total - (config['SOLUTION_PER_PAGE'] * (page - 1) + loop.index) + 1}}</td>
+            <td>
+                <span class="badge badge-pill badge-info">
+                    {{ solution.team_number }}
+                </span>
+            </td>
+            <td>
+                <span class="badge badge-pill badge-primary">
+                    {{ solution.problem }}
+                </span>
+            </td>
+            <td>
+                <a href="{{ url_for('backstage.get_solution', filename=solution.uuid) }}" target="_blank">
+                    {{ solution.uuid }}
+                </a>
+            </td>
+            <td>
+                <button class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#confirm-delete"
+                    data-href="{{ url_for('admin.delete_solution_task', solution_id=solution.id) }}">
+                    <span class="oi oi-trash"></span> {{ _('Delete') }}
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 </div>
+<div class="page-footer">
+    {{ render_pagination(pagination) }}
+</div>
+{% endif %}
 {% else %}
 {% include "backstage/tips/no_start.html" %}
 {% endif %}

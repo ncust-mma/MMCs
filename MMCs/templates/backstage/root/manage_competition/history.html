@@ -16,10 +16,10 @@
                     <th>{{ _("Actions") }}</th>
                 </tr>
             </thead>
-            {% for com in coms %}
+            {% for com in pagination.items %}
             <tr>
                 <td class="text-center">
-                    {{ pagination.total - (per_page * (page - 1) + loop.index) + 1 }}
+                    {{ pagination.total - (config['COMPETITION_PER_PAGE'] * (page - 1) + loop.index) + 1 }}
                 </td>
                 <td class="text-center">{{ com.date }}</td>
                 <td class="text-center">

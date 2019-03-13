@@ -49,14 +49,12 @@ def behavior():
 @root_required
 def history():
     page = request.args.get('page', 1, type=int)
-    per_page = current_app.config['COMPETITION_PER_PAGE']
     pagination = Competition.query.order_by(
-        Competition.id.desc()).paginate(page, per_page)
-    coms = pagination.items
+        Competition.id.desc()).paginate(page, current_app.config['COMPETITION_PER_PAGE'])
 
     return render_template(
         'backstage/root/manage_competition/history.html',
-        coms=coms, per_page=per_page, pagination=pagination, page=page)
+        pagination=pagination, page=page)
 
 
 @root_bp.route('/competition/notice', methods=['GET', 'POST'])
@@ -123,7 +121,7 @@ def start_competition():
 def switch_state():
     com = Competition.current_competition()
     if com:
-        if Competition.is_start():
+        if com.is_start():
             com.flag = False
             flash(_('Competition stopped.'), 'success')
         else:
@@ -131,7 +129,7 @@ def switch_state():
             flash(_('Competition continued.'), 'success')
         db.session.commit()
     else:
-        flash(_('Please start current competition before do it.'), 'warning')
+        flash(_('Please start new competition before do it.'), 'warning')
 
     return redirect_back()
 
@@ -148,9 +146,8 @@ def manage_personnel():
 @root_required
 def personnel_list():
     page = request.args.get('page', 1, type=int)
-    per_page = current_app.config['USER_PER_PAGE']
     pagination = User.query.order_by(
-        User.id.desc()).paginate(page, per_page)
+        User.id.desc()).paginate(page, current_app.config['USER_PER_PAGE'])
     users = pagination.items
 
     edit_profile_form = ButtonEditProfileForm()
@@ -159,7 +156,7 @@ def personnel_list():
 
     return render_template(
         'backstage/root/manage_personnel/personnel_list.html',
-        pagination=pagination, users=users, page=page, per_page=per_page,
+        pagination=pagination, page=page,
         edit_profile_form=edit_profile_form,
         change_username_form=change_username_form,
         change_password_form=change_password_form)

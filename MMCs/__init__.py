@@ -223,7 +223,7 @@ def register_commands(app):
         from MMCs.fakes import fake_root
 
         fake_root()
-        click.echo('Generating the root administrator...')
+        click.echo('Generating the default root administrator...')
         click.echo('Done.')
 
     @app.cli.command()
@@ -232,7 +232,7 @@ def register_commands(app):
         from MMCs.fakes import fake_admin
 
         fake_admin()
-        click.echo('Generating the administrator...')
+        click.echo('Generating the default administrator...')
         click.echo('Done.')
 
     @app.cli.command()
@@ -241,7 +241,7 @@ def register_commands(app):
         from MMCs.fakes import fake_default_teacher
 
         fake_default_teacher()
-        click.echo('Generating the teacher...')
+        click.echo('Generating the default teacher...')
         click.echo('Done.')
 
     @app.cli.group()

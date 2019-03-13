@@ -24,7 +24,7 @@ def index():
 
 
 @front_bp.route('/about')
-@cache.cached(timeout=10*60)
+@cache.cached(timeout=30)
 def about():
     return render_template('front/about.html')
 

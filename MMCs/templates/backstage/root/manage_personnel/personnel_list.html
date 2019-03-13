@@ -7,65 +7,76 @@
     Users
     <small class="text-muted">{{ pagination.total|default(0) }}</small>
 </h3>
-
-<div>
-    <div class="table-responsive">
-        <table class="table table-striped table-hover table-sm">
-            <thead>
-                <tr>
-                    <th class="text-center">#</th>
-                    <th class="text-center">{{ _("Username") }}</th>
-                    <th class="text-center">{{ _("Realname") }}</th>
-                    <th class="text-center">{{ _("Permission") }}</th>
-                    <th class="text-center">{{ _("Actions") }}</th>
-                </tr>
-            </thead>
-            {% for user in users %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-sm">
+        <thead>
             <tr>
-                <td class="text-center">
-                    {{ pagination.total - (per_page * (page - 1) + loop.index) + 1 }}
-                </td>
-                <td class="text-center">{{ user.username }}</td>
-                <td class="text-center">{{ user.realname }}</td>
-                <td class="text-center">{{ user.permission }}</td>
-                <td class="text-center">
-                    {% if not user.is_root %}
-                    <div class="dropdown">
-                        <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="oi oi-cog"></span> {{ _("Edit") }}
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <form method="post" action="{{ url_for('root.edit_profile', user_id=user.id) }}">
-                                {{ edit_profile_form.csrf_token }}
-                                {{ edit_profile_form.submit(class="dropdown-item") }}
-                            </form>
-                            <form method="post" action="{{ url_for('root.change_username', user_id=user.id) }}">
-                                {{ change_username_form.csrf_token }}
-                                {{ change_username_form.submit(class="dropdown-item") }}
-                            </form>
-                            <form method="post" action="{{ url_for('root.change_password', user_id=user.id) }}">
-                                {{ change_password_form.csrf_token }}
-                                {{ change_password_form.submit(class="dropdown-item") }}
-                            </form>
-
-                            <div class="dropdown-divider"></div>
-                            <button class="dropdown-item badge-danger" data-toggle="modal" data-target="#confirm-delete"
-                                data-href="{{ url_for('root.delete_user', user_id=user.id) }}">
-                                <span class="oi oi-trash" aria-hidden="true"></span>
-                                {{ _("Delete") }}
-                            </button>
-                        </div>
-                    </div>
-                    {% endif %}
-                </td>
+                <th class="text-center">#</th>
+                <th class="text-center">{{ _("Username") }}</th>
+                <th class="text-center">{{ _("Realname") }}</th>
+                <th class="text-center">{{ _("Permission") }}</th>
+                <th class="text-center">{{ _("Actions") }}</th>
             </tr>
-            {% endfor %}
-        </table>
-    </div>
-    <div class="page-footer">
-        {{ render_pagination(pagination) }}
-    </div>
+        </thead>
+        {% for user in pagination.items %}
+        <tr>
+            <td class="text-center">
+                {{ pagination.total - (config['USER_PER_PAGE'] * (page - 1) + loop.index) + 1 }}
+            </td>
+            <td class="text-center">{{ user.username }}</td>
+            <td class="text-center">{{ user.realname }}</td>
+            <td class="text-center">
+                {% if user.permission == 'Root' %}
+                <span class="badge badge-danger">
+                    {{ user.permission }}
+                </span>
+                {% elif user.permission == 'Admin' %}
+                <span class="badge badge-warning">
+                    {{ user.permission }}
+                </span>
+                {% else %}
+                <span class="badge badge-secondary">
+                    {{ user.permission }}
+                </span>
+                {% endif %}
+            </td>
+            <td class="text-center">
+                {% if not user.is_root %}
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="oi oi-cog"></span> {{ _("Edit") }}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <form method="post" action="{{ url_for('root.edit_profile', user_id=user.id) }}">
+                            {{ edit_profile_form.csrf_token }}
+                            {{ edit_profile_form.submit(class="dropdown-item") }}
+                        </form>
+                        <form method="post" action="{{ url_for('root.change_username', user_id=user.id) }}">
+                            {{ change_username_form.csrf_token }}
+                            {{ change_username_form.submit(class="dropdown-item") }}
+                        </form>
+                        <form method="post" action="{{ url_for('root.change_password', user_id=user.id) }}">
+                            {{ change_password_form.csrf_token }}
+                            {{ change_password_form.submit(class="dropdown-item") }}
+                        </form>
+
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item badge-danger" data-toggle="modal" data-target="#confirm-delete"
+                            data-href="{{ url_for('root.delete_user', user_id=user.id) }}">
+                            <span class="oi oi-trash" aria-hidden="true"></span>
+                            {{ _("Delete") }}
+                        </button>
+                    </div>
+                </div>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<div class="page-footer">
+    {{ render_pagination(pagination) }}
 </div>
 
 <!-- delete modal -->

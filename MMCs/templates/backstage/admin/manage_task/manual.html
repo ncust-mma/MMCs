@@ -16,13 +16,20 @@
                 <th class="text-center">{{ _('Actions') }}</th>
             </tr>
         </thead>
-        {% for user in users %}
+        {% for user in pagination.items %}
         <tr>
-            <td class="text-center">{{ pagination.total - (per_page*(page-1) + loop.index) + 1 }}</td>
+            <td class="text-center">{{ pagination.total - (config['USER_PER_PAGE']*(page-1) + loop.index) + 1 }}</td>
             <td class="text-center">{{ user.username }}</td>
             <td class="text-center">{{ user.realname }}</td>
-            <td class="text-center">{{ user.search_task()|length }}</td>
-            <td class="text-center">{{ user.finished_task()|length }}</td>
+            <td class="text-center">
+                <span class="badge badge-pill badge-secondary">
+                    {{ user.search_task()|length }}</td>
+                </span>
+            <td class="text-center">
+                <span class="badge badge-pill badge-success">
+                    {{ user.finished_task()|length }}
+                </span>
+            </td>
             <td class="text-center">
                 {% if not user.is_root %}
                 <div class="dropdown">
@@ -41,7 +48,8 @@
                         </form>
 
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item badge-danger" data-toggle="modal" data-target="#confirm-delete" data-href="{{ url_for('admin.delete_user_task', user_id=user.id) }}">
+                        <a class="dropdown-item badge-danger" data-toggle="modal" data-target="#confirm-delete"
+                            data-href="{{ url_for('admin.delete_user_task', user_id=user.id) }}">
                             <span class="oi oi-trash" aria-hidden="true"></span> {{ _('Delete') }}
                         </a>
                     </div>
@@ -54,7 +62,7 @@
     <div class="page-footer">{{ render_pagination(pagination) }}</div>
 </div>
 {% else %}
-    {% include "backstage/tips/no_start.html" %}
+{% include "backstage/tips/no_start.html" %}
 {% endif %}
 
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">

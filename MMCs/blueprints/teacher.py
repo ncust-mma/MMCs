@@ -20,8 +20,9 @@ teacher_bp = Blueprint('teacher', __name__)
 @teacher_required
 def index():
     com = Competition.current_competition()
-    progress = task_number = 0
-    if com:
+    if com and com.is_start():
+        progress = task_number = 0
+
         finished = Task.query.filter(
             Task.competition_id == com.id,
             Task.teacher_id == current_user.id,
@@ -35,7 +36,9 @@ def index():
         if task_number:
             progress = finished/task_number*100
 
-    return render_template('backstage/teacher/overview.html', progress=progress, task_number=task_number)
+        return render_template('backstage/teacher/overview.html', progress=progress, task_number=task_number)
+
+    return render_template('backstage/teacher/overview.html')
 
 
 @teacher_bp.route('/task')
@@ -45,20 +48,16 @@ def manage_task():
     com = Competition.current_competition()
     if com:
         page = request.args.get('page', 1, type=int)
-        per_page = current_app.config['SOLUTION_PER_PAGE']
-
         form = ChangeScoreForm()
-        if com:
-            pagination = Task.query.filter(
-                Task.competition_id == com.id,
-                Task.teacher_id == current_user.id
-            ).order_by(Task.id.desc()).paginate(page, per_page)
-            tasks = pagination.items
+
+        pagination = Task.query.filter(
+            Task.competition_id == com.id,
+            Task.teacher_id == current_user.id
+        ).order_by(Task.id.desc()).paginate(page, current_app.config['SOLUTION_PER_PAGE'])
 
         return render_template(
             'backstage/teacher/manage_task.html',
-            pagination=pagination, tasks=tasks,
-            page=page, per_page=per_page, form=form)
+            pagination=pagination, page=page, form=form)
 
     return render_template('backstage/teacher/manage_task.html')
 

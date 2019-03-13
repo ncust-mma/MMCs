@@ -13,7 +13,7 @@
     </h3>
     {% if is_start() %}
     <div class="card-body">
-        {% if tasks %}
+        {% if pagination.items %}
         <div class="table-responsive">
             <table class="table table-striped table-hover table-sm">
                 <thead>
@@ -26,10 +26,14 @@
                         <th>{{ _('Actions') }}</th>
                     </tr>
                 </thead>
-                {% for task in tasks %}
+                {% for task in pagination.items %}
                 <tr class="text-center">
-                    <td scope="row">{{ pagination.total - (per_page*(page-1) + loop.index) + 1 }}</td>
-                    <td>{{ task.problem }}</td>
+                    <td scope="row">{{ pagination.total - (config['SOLUTION_PER_PAGE']*(page-1) + loop.index) + 1 }}</td>
+                    <td>
+                        <span class="badge badge-pill badge-primary">
+                            {{ task.problem }}
+                        </span>
+                    </td>
                     <td>
                         <a href="{{ url_for('backstage.get_solution', filename=task.solution_uuid) }}" target="_blank">
                             {{ task.solution_uuid }}
@@ -38,7 +42,7 @@
                     <form role="form" action="{{ url_for('teacher.change', task_id=task.id) }}" method="post">
                         {{ form.csrf_token() }}
                         <td>
-                            {% if task.score %}
+                            {% if task.score is not none %}
                             {{ form.score(class="form-control form-control-sm text-center", value=task.score) }}
                             {% else %}
                             {{ form.score(class="form-control form-control-sm text-center") }}
@@ -61,7 +65,9 @@
                 {% endfor %}
             </table>
         </div>
-        <div class="page-footer">{{ render_pagination(pagination) }}</div>
+        <div class="page-footer">
+            {{ render_pagination(pagination) }}
+        </div>
         {% else %}
         {% include "backstage/tips/no_solution.html" %}
         {% endif %}

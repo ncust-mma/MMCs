@@ -136,11 +136,11 @@ class Competition(db.Model):
     @classmethod
     def is_start(self):
         com = Competition.query.order_by(Competition.id.desc()).first()
-        return com.flag if com is not None else False
+        return com.flag if com else False
 
     @classmethod
     def is_existed(self, sid):
-        return True if Competition.query.get(sid) is not None else False
+        return True if Competition.query.get(sid) else False
 
     @property
     def problems(self):

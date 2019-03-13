@@ -20,7 +20,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user is not None and user.validate_password(form.password.data):
+        if user and user.validate_password(form.password.data):
             if login_user(user, form.remember_me.data):
                 flash(_('Login success.'), 'info')
                 return redirect_back()

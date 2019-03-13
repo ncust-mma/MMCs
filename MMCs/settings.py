@@ -50,7 +50,7 @@ class BaseConfig(object):
     SCORE_LOWER_LIMIT = 0
 
     MMCS_LOCALES = ['en_US', 'zh_Hans_CN']
-    BABEL_DEFAULT_LOCALE = MMCS_LOCALES[0]
+    BABEL_DEFAULT_LOCALE = MMCS_LOCALES[1]
 
     SOLUTION_TASK_NUMBER = 3
 
