@@ -4,46 +4,42 @@ from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, url_for)
 from flask_babel import _
 from flask_login import current_user, login_required
-from sqlalchemy import desc
 
 from MMCs.decorators import teacher_required
 from MMCs.extensions import db
 from MMCs.forms import ChangeScoreForm
-from MMCs.models import Competition, Task, User
+from MMCs.models import Competition, Task
 from MMCs.utils import flash_errors, redirect_back
 
 teacher_bp = Blueprint('teacher', __name__)
 
 
 @teacher_bp.route('/')
-@login_required
 @teacher_required
+@login_required
 def index():
     com = Competition.current_competition()
     if com and com.is_start():
-        progress = task_number = 0
-
-        finished = Task.query.filter(
-            Task.competition_id == com.id,
-            Task.teacher_id == current_user.id,
-            Task.score != None,
-            Task.score != '').count()
-
-        task_number = Task.query.filter(
+        task_all = Task.query.filter(
             Task.competition_id == com.id,
             Task.teacher_id == current_user.id).count()
 
-        if task_number:
-            progress = finished/task_number*100
+        task_finished = 0
+        if task_all:
+            task_finished = Task.query.filter(
+                Task.competition_id == com.id,
+                Task.teacher_id == current_user.id,
+                Task.score != None).count()
 
-        return render_template('backstage/teacher/overview.html', progress=progress, task_number=task_number)
+        return render_template(
+            'backstage/teacher/overview.html', task_finished=task_finished, task_all=task_all)
 
     return render_template('backstage/teacher/overview.html')
 
 
 @teacher_bp.route('/task')
-@login_required
 @teacher_required
+@login_required
 def manage_task():
     com = Competition.current_competition()
     if com:
@@ -63,8 +59,8 @@ def manage_task():
 
 
 @teacher_bp.route('/task/change/<int:task_id>', methods=['POST'])
-@login_required
 @teacher_required
+@login_required
 def change(task_id):
     form = ChangeScoreForm()
     upper = current_app.config['SCORE_UPPER_LIMIT']

@@ -23,11 +23,11 @@
             <td class="text-center">{{ user.realname }}</td>
             <td class="text-center">
                 <span class="badge badge-pill badge-secondary">
-                    {{ user.search_task()|length }}</td>
+                    {{ user.current_all_tasks|length }}</td>
                 </span>
             <td class="text-center">
                 <span class="badge badge-pill badge-success">
-                    {{ user.finished_task()|length }}
+                    {{ user.current_finished_task|length }}
                 </span>
             </td>
             <td class="text-center">
@@ -42,7 +42,7 @@
                             {{ check_form.csrf_token }}
                             {{ check_form.submit(class="dropdown-item") }}
                         </form>
-                        <form method="post" action="{{ url_for('admin.user_solution_add_page', user_id=user.id) }}">
+                        <form method="post" action="{{ url_for('admin.task_add_list', user_id=user.id) }}">
                             {{ add_form.csrf_token }}
                             {{ add_form.submit(class="dropdown-item") }}
                         </form>

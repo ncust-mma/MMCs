@@ -12,6 +12,9 @@ fake_zh = Faker('zh_CN')
 
 
 def fake_root():
+    """Generate default root administrator
+    """
+
     user = User(
         username='root',
         realname=fake_zh.name(),
@@ -24,6 +27,9 @@ def fake_root():
 
 
 def fake_admin():
+    """Generate default administrator
+    """
+
     user = User(
         username='admin',
         realname=fake_zh.name(),
@@ -36,6 +42,9 @@ def fake_admin():
 
 
 def fake_default_teacher():
+    """Generate default teacher
+    """
+
     user = User(
         username='teacher',
         realname=fake_zh.name(),
@@ -49,6 +58,9 @@ def fake_default_teacher():
 
 
 def fake_teacher(count=10):
+    """Generate random teacher
+    """
+
     for _ in range(count):
         user = User(
             username=fake_zh.user_name(),
@@ -66,6 +78,9 @@ def fake_teacher(count=10):
 
 
 def fake_solution(count=30):
+    """Generate random solutions
+    """
+
     for _ in range(count):
         name = '2019_{}_{}_{}_{}_{}.pdf'.format(
             fake.random_element(elements=('A', 'B', 'C', 'D')),
@@ -82,12 +97,18 @@ def fake_solution(count=30):
 
 
 def fake_competition():
+    """Generate defautl competition
+    """
+
     com = Competition()
     db.session.add(com)
     db.session.commit()
 
 
 def fake_task():
+    """Generate random tasks
+    """
+
     for solution in Solution.query.filter_by(competition_id=1).all():
         for teacher in User.query.filter_by(permission='Teacher').order_by(func.random()).limit(3).all():
             task = Task(

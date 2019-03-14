@@ -61,4 +61,5 @@ def get_locale():
     locale = request.cookies.get('locale')
     if locale:
         return locale
+
     return request.accept_languages.best_match(current_app.config['MMCS_LOCALES'])

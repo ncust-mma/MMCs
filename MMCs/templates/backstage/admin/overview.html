@@ -6,16 +6,17 @@
 <div class="card w-100 bg-light">
     <h3 class="card-header">
         {{ _('Progress') }}
-        {% if is_start() and task_number is number %}
+        {% if is_start() and task_all %}
         <small>
-            {{ '%d'|format(progress * task_number) }} / {{ task_number }}
+            {{ task_finished }} / {{ task_all }}
         </small>
         {% endif %}
     </h3>
     {% if is_start() %}
-    {% if task_number is number %}
+    {% if task_all %}
     <div class="card-body">
         <div class="progress">
+            {% set progress = task_finished / task_all %}
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ progress|default(0) }}%">
                 {{ _('All tasks finished') }}: {{'%0.2f'|format(progress|float)|default(0)}}%
             </div>

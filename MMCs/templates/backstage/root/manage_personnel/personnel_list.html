@@ -1,5 +1,5 @@
 {% extends 'backstage/root/manage_personnel/base.html' %}
-
+{% from 'bootstrap/pagination.html' import render_pagination %}
 {% from 'bootstrap/form.html' import render_form %}
 
 {% block personnel_content %}
@@ -50,15 +50,15 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <form method="post" action="{{ url_for('root.edit_profile', user_id=user.id) }}">
                             {{ edit_profile_form.csrf_token }}
-                            {{ edit_profile_form.submit(class="dropdown-item") }}
+                            {{ edit_profile_form.edit(class="dropdown-item") }}
                         </form>
                         <form method="post" action="{{ url_for('root.change_username', user_id=user.id) }}">
                             {{ change_username_form.csrf_token }}
-                            {{ change_username_form.submit(class="dropdown-item") }}
+                            {{ change_username_form.change_username(class="dropdown-item") }}
                         </form>
                         <form method="post" action="{{ url_for('root.change_password', user_id=user.id) }}">
                             {{ change_password_form.csrf_token }}
-                            {{ change_password_form.submit(class="dropdown-item") }}
+                            {{ change_password_form.change_pwd(class="dropdown-item") }}
                         </form>
 
                         <div class="dropdown-divider"></div>
@@ -110,5 +110,5 @@
 
 {% block scripts %}
 {{ super() }}
-<script type="text/javascript" src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"></script>
+{{ ckeditor.load() }}
 {% endblock %}

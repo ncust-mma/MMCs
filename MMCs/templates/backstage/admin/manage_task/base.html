@@ -3,7 +3,7 @@
 {% block title %}Task{% endblock %}
 
 {% block setting_content %}
-<div class="card">
+<div class="card w-100 bg-light">
     <div class="card-header">
         <div class="nav nav-tabs card-header-tabs" role="tablist">
             {{ render_nav_item("admin.method", _("Method")) }}
@@ -11,7 +11,7 @@
             {% set endpoint = "admin.check_user" %}
             <a class="nav-link {% if request.endpoint and request.endpoint == endpoint %}active{% endif %}">
                 {{ _('Check') }}</a>
-            {% set endpoint = "admin.user_solution_add_page" %}
+            {% set endpoint = "admin.task_add_list" %}
             <a class="nav-link {% if request.endpoint and request.endpoint == endpoint %}active{% endif %}">
                 {{ _('Add') }}</a>
         </div>

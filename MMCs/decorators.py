@@ -18,12 +18,15 @@ def permission_required(permission_name):
 
 
 def admin_required(func):
+
     return permission_required('Admin')(func)
 
 
 def root_required(func):
+    
     return permission_required('Root')(func)
 
 
 def teacher_required(func):
+    
     return permission_required('Teacher')(func)

@@ -4,6 +4,7 @@ from flask_babel import lazy_gettext as _l
 from flask_ckeditor import CKEditorField
 from flask_login import current_user
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileAllowed, FileField, FileRequired
 from wtforms import (BooleanField, FloatField, IntegerField, PasswordField,
                      RadioField, StringField, SubmitField, TextField,
                      ValidationError)
@@ -147,11 +148,9 @@ class NoticeEditForm(FlaskForm):
     edit = SubmitField(_l('Edit'))
 
 
-class AdminAddTaskForm(FlaskForm):
-    id = IntegerField(
-        _l('Task ID'),
-        validators=[DataRequired(), InputRequired()])
-    submit = SubmitField(_l('Add'))
+class AboutEditForm(FlaskForm):
+    about = CKEditorField(_l('About'), validators=[Optional()])
+    edit = SubmitField(_l('Edit'))
 
 
 class ButtonAddForm(FlaskForm):
@@ -163,15 +162,15 @@ class ButtonCheckForm(FlaskForm):
 
 
 class ButtonEditProfileForm(FlaskForm):
-    submit = SubmitField(_l('Edit Profile'))
+    edit = SubmitField(_l('Edit Profile'))
 
 
 class ButtonChangeUsernameForm(FlaskForm):
-    submit = SubmitField(_l('Change Username'))
+    change_username = SubmitField(_l('Change Username'))
 
 
 class ButtonChangePasswordForm(FlaskForm):
-    submit = SubmitField(_l('Change Password'))
+    change_pwd = SubmitField(_l('Change Password'))
 
 
 class CompetitionSettingForm(FlaskForm):
@@ -187,3 +186,39 @@ class CompetitionSettingForm(FlaskForm):
         _l('DROPZONE MAX FILES'), validators=[Optional()])
 
     submit = SubmitField(_l('Submit'))
+
+
+class AboutImageUploadForm(FlaskForm):
+    file = FileField(
+        _l("About Image"),
+        validators=[
+            FileRequired(),
+            FileAllowed(['jpg', 'jpeg', 'png'], 'jpg, jpeg or png only!')
+        ]
+    )
+
+    about_upload = SubmitField(_l('Upload'))
+
+
+class ErrorImageUploadForm(FlaskForm):
+    file = FileField(
+        _l("Error Image"),
+        validators=[
+            FileRequired(),
+            FileAllowed(['jpg', 'jpeg', 'png'], 'jpg, jpeg or png only!')
+        ]
+    )
+
+    error_upload = SubmitField(_l('Upload'))
+
+
+class IndexImageUploadForm(FlaskForm):
+    file = FileField(
+        _l("Index Image"),
+        validators=[
+            FileRequired(),
+            FileAllowed(['jpg', 'jpeg', 'png'], 'jpg, jpeg or png only!')
+        ]
+    )
+
+    index_upload = SubmitField(_l('Upload'))

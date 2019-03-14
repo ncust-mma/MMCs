@@ -1,0 +1,12 @@
+{% extends 'backstage/root/manage_settings/base.html' %}
+
+{% block settings_content %}
+<div class="card-body">
+    <form class="btn btn-block" action="{{ url_for('root.logs_download') }}" method="post">
+        <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}" />
+        <button class="btn btn-info btn-block" type="submit">
+            <span class="oi oi-data-transfer-download"></span> {{ _("Download logs") }}
+        </button>
+    </form>
+</div>
+{% endblock %}

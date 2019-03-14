@@ -10,9 +10,13 @@ from MMCs.extensions import db
 
 
 class User(db.Model, UserMixin):
+    """User table
+    """
+
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True,
-                         index=True, nullable=False)
+    username = db.Column(
+        db.String(20), unique=True,
+        index=True, nullable=False)
     realname = db.Column(db.String(20), nullable=False)
     permission = db.Column(db.String(10), nullable=False, default='Teacher')
     remark = db.Column(db.Text)
@@ -22,43 +26,88 @@ class User(db.Model, UserMixin):
     tasks = db.relationship('Task', cascade='all, delete-orphan')
 
     def set_password(self, password):
+        """Set pwd for current user
+        """
+
         self.password_hash = generate_password_hash(password)
 
     def validate_password(self, password):
+        """Validate current user's pwd
+        """
+
         return check_password_hash(self.password_hash, password)
 
     @classmethod
     def teachers(self):
+        """Return all teachers
+        """
+
         return User.query.filter_by(permission='Teacher').all()
 
     @property
     def is_teacher(self):
+        """Check current user is teacher or not
+        """
+
         return self.permission == 'Teacher'
 
     @property
     def is_admin(self):
+        """Check current user is admin or not
+        """
+
         return self.permission == 'Admin'
 
     @property
     def is_root(self):
+        """Check current user is root or not
+        """
+
         return self.permission == 'Root'
 
     def can(self, permission_name):
         return self.permission == permission_name
 
-    def search_task(self):
-        com = Competition.current_competition()
-        return Task.query.filter(Task.teacher_id == self.id, Task.competition_id == com.id).all()
+    @property
+    def current_all_tasks(self):
+        """Return current competition all tasks
+        """
 
-    def finished_task(self):
         com = Competition.current_competition()
-        return Task.query.filter(
-            Task.teacher_id == self.id,
-            Task.competition_id == com.id,
-            Task.score != None).all()
+        return [task for task in self.tasks if task.competition_id == com.id]
+
+    @property
+    def current_finished_task(self):
+        """Return current competition all tasks which have socre
+        """
+
+        com = Competition.current_competition()
+        return [task for task in self.tasks
+                if task.score is not None and task.competition_id == com.id]
+
+    @property
+    def current_task_problems(self):
+        """Return current competition all problem number
+        """
+
+        com = Competition.current_competition()
+        current_tasks = self.current_all_tasks
+
+        task_problem_dic = {}
+        for task in current_tasks:
+            task_problem_dic[task.problem] = (
+                task_problem_dic.get(task.problem, 0) + 1)
+
+        for problem in com.problems:
+            task_problem_dic[problem] = task_problem_dic.get(problem, 0)
+
+        return task_problem_dic
 
 
 class Solution(db.Model):
+    """Solution table
+    """
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     uuid = db.Column(db.String, index=True, nullable=False)
@@ -69,26 +118,44 @@ class Solution(db.Model):
 
     @property
     def index(self):
+        """return index number
+        """
+
         return self.name.split('_')[0]
 
     @property
     def problem(self):
+        """return problem number
+        """
+
         return self.name.split('_')[1]
 
     @property
     def team_number(self):
+        """return team number
+        """
+
         return self.name.split('_')[2]
 
     @property
     def team_player(self):
+        """return team player name
+        """
+
         return self.name.split('_')[3:]
 
     @property
     def date(self):
+        """return competition date
+        """
+
         return Competition.query.get(self.competition_id).date
 
 
 class Task(db.Model):
+    """Task table
+    """
+
     id = db.Column(db.Integer, primary_key=True)
     teacher_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     solution_id = db.Column(db.Integer, db.ForeignKey('solution.id'))
@@ -98,30 +165,44 @@ class Task(db.Model):
 
     @property
     def solution_uuid(self):
+        """Return uuid
+        """
+
         return Solution.query.get(self.solution_id).uuid
 
     @property
-    def is_able(self):
-        return True if self.times < current_app.config['TEACHER_POINT_TIMES'] else False
-
-    @property
     def filename(self):
+        """Return solution filename
+        """
+
         return Solution.query.get(self.solution_id).name
 
     @property
     def date(self):
+        """Return competition date
+        """
+
         return Solution.query.get(self.solution_id).date
 
     @property
     def problem(self):
+        """Return solution problem number
+        """
+
         return Solution.query.get(self.solution_id).problem
 
     @property
     def team_number(self):
+        """Return solution team number
+        """
+
         return Solution.query.get(self.solution_id).team_number
 
 
 class Competition(db.Model):
+    """Competition table
+    """
+
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date, index=True, nullable=False, default=date.today)
     flag = db.Column(db.Boolean, default=False)
@@ -131,18 +212,22 @@ class Competition(db.Model):
 
     @classmethod
     def current_competition(self):
+        """Return current competition
+        """
+
         return Competition.query.order_by(Competition.id.desc()).first()
 
     @classmethod
     def is_start(self):
+        """Check current competition is start or not
+        """
+
         com = Competition.query.order_by(Competition.id.desc()).first()
         return com.flag if com else False
 
-    @classmethod
-    def is_existed(self, sid):
-        return True if Competition.query.get(sid) else False
-
     @property
     def problems(self):
-        solutions = self.solutions
-        return set(solution.problem for solution in solutions)
+        """Return current competition problems
+        """
+
+        return set(solution.problem for solution in self.solutions)

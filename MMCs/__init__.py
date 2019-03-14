@@ -26,6 +26,9 @@ from MMCs.utils import redirect_back
 
 
 def create_app(config_name=None):
+    """Using flask factory method to create flask app
+    """
+
     if config_name is None:
         config_name = os.getenv('FLASK_CONFIG', 'development')
 
@@ -47,6 +50,9 @@ def create_app(config_name=None):
 
 
 def register_logging(app):
+    """register log for flask
+    """
+
     class RequestFormatter(logging.Formatter):
 
         def format(self, record):
@@ -84,6 +90,9 @@ def register_logging(app):
 
 
 def register_extensions(app):
+    """register all extensions for flask
+    """
+
     bootstrap.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
@@ -98,6 +107,9 @@ def register_extensions(app):
 
 
 def register_blueprints(app):
+    """register all views for flask
+    """
+
     app.register_blueprint(front_bp)
     app.register_blueprint(backstage_bp)
     app.register_blueprint(auth_bp, url_prefix='/auth')
@@ -107,6 +119,9 @@ def register_blueprints(app):
 
 
 def register_errors(app):
+    """register all errors for flask
+    """
+
     @app.errorhandler(400)
     def bad_request(e):
         code = 400
@@ -144,6 +159,9 @@ def register_errors(app):
 
 
 def register_shell_context(app):
+    """register shell context for flask
+    """
+
     @app.shell_context_processor
     def make_shell_context():
         return dict(db=db, User=User, Competition=Competition,
@@ -151,6 +169,8 @@ def register_shell_context(app):
 
 
 def register_global_func(app):
+    """register function for jinja
+    """
 
     @app.template_global()
     def current_year():
@@ -162,6 +182,8 @@ def register_global_func(app):
 
 
 def register_commands(app):
+    """register command for flask
+    """
 
     @app.cli.command()
     @click.option('--drop', is_flag=True, help='Create after drop.')
@@ -177,10 +199,27 @@ def register_commands(app):
         click.echo('Initialized database.')
 
     @app.cli.command()
-    def init():
+    @click.option('--drop', is_flag=True, help='Create after drop.')
+    def init(drop):
         """Initialize MMCs."""
+
+        from MMCs.fakes import fake_root
+
+        if drop:
+            click.confirm(
+                'This operation will delete the database, do you want to continue?', abort=True)
+            db.drop_all()
+            click.echo('Drop tables.')
+
         click.echo('Initializing the database...')
         db.create_all()
+
+        fake_root()
+        click.echo('Generating the default root administrator...')
+
+        if os.system('pybabel compile -d MMCs/translations'):
+            raise RuntimeError('compile command failed')
+
         click.echo('Done.')
 
     @app.cli.command()
@@ -189,7 +228,8 @@ def register_commands(app):
     def forge(teacher, solution):
         """Generate fake data."""
 
-        from MMCs.fakes import fake_root, fake_admin, fake_teacher, fake_solution, fake_competition, fake_task, fake_default_teacher
+        from MMCs.fakes import fake_root, fake_admin, fake_teacher, fake_solution, fake_competition, fake_task, \
+            fake_default_teacher
 
         db.drop_all()
         db.create_all()
@@ -253,6 +293,7 @@ def register_commands(app):
     @click.argument('locale')
     def init(locale):
         """Initialize a new language."""
+
         if os.system('pybabel extract -F babel.cfg -k _l -o messages.pot .'):
             raise RuntimeError('extract command failed')
         if os.system(

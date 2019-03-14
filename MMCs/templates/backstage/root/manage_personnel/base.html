@@ -1,10 +1,9 @@
 {% extends 'backstage/root/base.html' %}
-{% from 'bootstrap/pagination.html' import render_pagination %}
 
 {% block title %}Personnel{% endblock %}
 
 {% block setting_content %}
-<div class="card">
+<div class="card w-100 bg-light">
     <div class="card-header">
         <div class="nav nav-tabs card-header-tabs" role="tablist">
             {{ render_nav_item("root.personnel_list", _("Personnel List")) }}

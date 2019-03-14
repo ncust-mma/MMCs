@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from flask import (Blueprint, abort, current_app, flash,
-                   make_response, redirect, render_template, url_for)
+from flask import (Blueprint, abort, current_app, flash, make_response,
+                   redirect, render_template, url_for)
 from flask_babel import _
 from flask_login import current_user
 
@@ -24,7 +24,7 @@ def index():
 
 
 @front_bp.route('/about')
-@cache.cached(timeout=30)
+@cache.cached(timeout=10)
 def about():
     return render_template('front/about.html')
 

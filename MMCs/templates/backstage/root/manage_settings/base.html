@@ -1,0 +1,19 @@
+{% extends 'backstage/root/base.html' %}
+
+{% block title %}Settings{% endblock %}
+
+{% block setting_content %}
+<div class="card w-100 bg-light">
+    <div class="card-header">
+        <div class="nav nav-tabs card-header-tabs" role="tablist">
+            {{ render_nav_item("root.logs", _("Log")) }}
+            {{ render_nav_item("root.about", _("About")) }}
+            {{ render_nav_item("root.images", _("Image")) }}
+        </div>
+    </div>
+    <div class="card-body">
+        {% block settings_content %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

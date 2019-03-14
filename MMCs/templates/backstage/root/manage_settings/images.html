@@ -1,0 +1,10 @@
+{% extends 'backstage/root/manage_settings/base.html' %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block settings_content %}
+<div class="card-body">
+    {{ render_form(index_form) }}
+    {{ render_form(about_form) }}
+    {{ render_form(error_form) }}
+</div>
+{% endblock %}
