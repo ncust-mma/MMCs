@@ -1,13 +1,5 @@
 /* global */
 
-.inline {
-    display: inline;
-}
-
-.hide {
-    display: none;
-}
-
 .page-header {
     padding-top: 20px;
     padding-bottom: 20px;
