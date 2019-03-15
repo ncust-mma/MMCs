@@ -7,9 +7,9 @@ except ImportError:
 
 import os
 import random
-from uuid import uuid4
 import zipfile
 from math import ceil
+from uuid import uuid1, uuid4
 
 import numba as nb
 import pandas as pd
@@ -85,7 +85,7 @@ def gen_uuid(filename):
     """
 
     ext = os.path.splitext(filename)[1]
-    name = uuid.uuid1().hex + ext
+    name = uuid1().hex + ext
 
     return name
 
