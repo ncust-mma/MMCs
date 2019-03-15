@@ -20,3 +20,5 @@ openpyxl
 gunicorn
 psycopg2
 flask-caching
+flask-apscheduler
+numba

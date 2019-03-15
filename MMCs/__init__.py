@@ -8,8 +8,6 @@ from logging.handlers import RotatingFileHandler, SMTPHandler
 import click
 from flask import Flask, render_template, request
 from flask_babel import _
-from flask_login import current_user
-from flask_sqlalchemy import get_debug_queries
 from flask_wtf.csrf import CSRFError
 
 from MMCs.blueprints.admin import admin_bp
