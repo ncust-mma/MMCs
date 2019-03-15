@@ -39,7 +39,7 @@
                             {{ task.solution_uuid }}
                         </a>
                     </td>
-                    <form role="form" action="{{ url_for('teacher.change', task_id=task.id) }}" method="post">
+                    <form action="{{ url_for('teacher.change', task_id=task.id) }}" method="post" role="form">
                         {{ form.csrf_token() }}
                         <td>
                             {% if task.score is not none %}

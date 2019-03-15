@@ -8,7 +8,6 @@ from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, send_file, url_for)
 from flask_babel import _
 from flask_login import fresh_login_required, login_required
-from werkzeug import secure_filename
 
 from MMCs.decorators import root_required
 from MMCs.extensions import db
@@ -250,7 +249,7 @@ def register():
             username=form.username.data,
             realname=form.realname.data,
             permission=form.permission.data,
-            remark=form.remark.data,
+            remark=form.remark.data
         )
         user.set_password(form.password.data)
         db.session.add(user)

@@ -19,7 +19,7 @@ def fake_root():
         username='root',
         realname=fake_zh.name(),
         permission="Root",
-        remark=fake_zh.text(),
+        remark=fake_zh.text()
     )
     user.set_password('mmcs4sxjm')
     db.session.add(user)
