@@ -3,8 +3,7 @@
 import os
 from uuid import uuid4
 
-import pandas as pd
-from flask import (Blueprint, abort, current_app, flash, redirect,
+from flask import (Blueprint, current_app, flash, redirect,
                    render_template, request, send_file, url_for)
 from flask_babel import _
 from flask_login import fresh_login_required, login_required
@@ -12,14 +11,15 @@ from flask_login import fresh_login_required, login_required
 from MMCs.decorators import root_required
 from MMCs.extensions import db
 from MMCs.forms import (AboutEditForm, AboutImageUploadForm,
-                        ButtonChangePasswordForm, ButtonChangeUsernameForm,
-                        ButtonEditProfileForm, ChangeUsernameForm,
-                        CompetitionSettingForm, EditProfileForm,
-                        ErrorImageUploadForm, IndexImageUploadForm,
-                        NoticeEditForm, RegisterForm, RootChangePasswordForm)
-from MMCs.models import Competition, Solution, Task, User
+                        ChangeUsernameForm, CompetitionNameForm,
+                        CompetitionSettingForm, DownloadLogForm,
+                        EditProfileForm, ErrorImageUploadForm,
+                        IndexImageUploadForm, NoticeEditForm, RegisterForm,
+                        RootChangePasswordForm)
+from MMCs.models import Competition, User
 from MMCs.settings import basedir
-from MMCs.utils import flash_errors, redirect_back, zip2here
+from MMCs.utils import (download_solution_score, download_teacher_result,
+                        flash_errors, redirect_back, zip2here)
 
 root_bp = Blueprint('root', __name__)
 
@@ -42,8 +42,9 @@ def manage_competition():
 @root_required
 @login_required
 def behavior():
+    form = CompetitionNameForm()
     return render_template(
-        'backstage/root/manage_competition/behavior.html')
+        'backstage/root/manage_competition/behavior.html', form=form)
 
 
 @root_bp.route('/competition/history')
@@ -108,10 +109,14 @@ def competition_settings():
 @root_required
 @login_required
 def start_competition():
-    com = Competition(flag=True)
-    db.session.add(com)
-    db.session.commit()
-    flash(_('A new competition start now.'), 'success')
+    form = CompetitionNameForm()
+    if form.validate_on_submit():
+        com = Competition(name=form.name.data, flag=True)
+        db.session.add(com)
+        db.session.commit()
+        flash(_('A new competition start now.'), 'success')
+
+    flash_errors(form)
 
     return redirect_back()
 
@@ -151,91 +156,70 @@ def personnel_list():
     pagination = User.query.order_by(
         User.id.desc()).paginate(page, current_app.config['USER_PER_PAGE'])
 
-    edit_profile_form = ButtonEditProfileForm()
-    change_username_form = ButtonChangeUsernameForm()
-    change_password_form = ButtonChangePasswordForm()
-
     return render_template(
         'backstage/root/manage_personnel/personnel_list.html',
-        pagination=pagination, page=page,
-        edit_profile_form=edit_profile_form,
-        change_username_form=change_username_form,
-        change_password_form=change_password_form)
+        pagination=pagination, page=page)
 
 
-@root_bp.route('/personnel/list/change-password/<int:user_id>', methods=['POST'])
+@root_bp.route('/personnel/list/change-password/<int:user_id>', methods=['GET', 'POST'])
 @fresh_login_required
 @root_required
 @login_required
 def change_password(user_id):
-    form = ButtonChangePasswordForm()
-    if form.change_pwd.data and form.validate_on_submit():
-        form = RootChangePasswordForm()
-        if form.validate_on_submit():
-            user = User.query.get_or_404(user_id)
-            user.set_password(form.password.data)
-            db.session.commit()
+    form = RootChangePasswordForm()
+    if form.validate_on_submit():
+        user = User.query.get_or_404(user_id)
+        user.set_password(form.password.data)
+        db.session.commit()
 
-            flash(_('Password updated.'), 'success')
-            return redirect(url_for('.personnel_list'))
-    else:
-        abort(404)
+        flash(_('Password updated.'), 'success')
+        return redirect(url_for('.personnel_list'))
 
     return render_template(
-        'backstage/root/manage_personnel/personnel_list_edit.html', form=form)
+        'backstage/root/manage_personnel/personnel_edit.html', form=form)
 
 
-@root_bp.route('/personnel/list/edit-profile/<int:user_id>', methods=['POST'])
+@root_bp.route('/personnel/list/edit-profile/<int:user_id>', methods=['GET', 'POST'])
 @fresh_login_required
 @root_required
 @login_required
 def edit_profile(user_id):
-    form = ButtonEditProfileForm()
-    if form.edit.data and form.validate_on_submit():
-        user = User.query.get_or_404(user_id)
-        form = EditProfileForm()
-        if form.validate_on_submit():
-            user.realname = form.realname.data
-            user.remark = form.remark.data
-            db.session.commit()
+    user = User.query.get_or_404(user_id)
+    form = EditProfileForm()
+    if form.validate_on_submit():
+        user.realname = form.realname.data
+        user.remark = form.remark.data
+        db.session.commit()
 
-            flash(_('Profile updated.'), 'success')
-            return redirect(url_for('.personnel_list'))
+        flash(_('Profile updated.'), 'success')
+        return redirect(url_for('.personnel_list'))
 
-        form.realname.data = user.realname
-        form.remark.data = user.remark
-
-    else:
-        abort(404)
+    form.realname.data = user.realname
+    form.remark.data = user.remark
 
     return render_template(
-        'backstage/root/manage_personnel/personnel_list_edit.html', form=form)
+        'backstage/root/manage_personnel/personnel_edit.html', form=form)
 
 
-@root_bp.route('/personnel/list/change-username/<int:user_id>', methods=['POST'])
+@root_bp.route('/personnel/list/change-username/<int:user_id>', methods=['GET', 'POST'])
 @fresh_login_required
 @root_required
 @login_required
 def change_username(user_id):
-    form = ButtonChangeUsernameForm()
-    if form.change_username.data and form.validate_on_submit():
-        user = User.query.get_or_404(user_id)
-        form = ChangeUsernameForm()
-        if form.validate_on_submit():
-            user.username = form.username.data
-            db.session.commit()
+    user = User.query.get_or_404(user_id)
+    form = ChangeUsernameForm()
+    if form.validate_on_submit():
+        user.username = form.username.data
+        db.session.commit()
 
-            flash(_('Username updated.'), 'success')
-            return redirect(url_for('.personnel_list'))
+        flash(_('Username updated.'), 'success')
+        return redirect(url_for('.personnel_list'))
 
-        form.username.data = user.username
-        form.username2.data = user.username
-
-    else:
-        abort(404)
+    form.username.data = user.username
+    form.username2.data = user.username
 
     return render_template(
-        'backstage/root/manage_personnel/personnel_list_edit.html', form=form)
+        'backstage/root/manage_personnel/personnel_edit.html', form=form)
 
 
 @root_bp.route('/personnel/register', methods=['GET', 'POST'])
@@ -282,49 +266,12 @@ def delete_user(user_id):
 def download_teacher(competition_id):
     com = Competition.query.get_or_404(competition_id)
     if com.tasks:
-        teachers = User.teachers()
-        teacher_dic = {teacher.id: (teacher.username, teacher.realname)
-                       for teacher in teachers}
-        solutions = Solution.query.filter_by(competition_id=com.id).all()
-        solution_dic = {solution.id: (solution.name,
-                                      solution.index,
-                                      solution.problem,
-                                      solution.team_number,
-                                      solution.team_player)
-                        for solution in solutions}
-        df = pd.read_sql_query(
-            Task.query.filter_by(competition_id=com.id).statement, db.engine)
-
-        df['username'] = (
-            df['teacher_id'].apply(lambda x: teacher_dic.get(x)[0]))
-        df['realname'] = (
-            df['teacher_id'].apply(lambda x: teacher_dic.get(x)[1]))
-        df['filename'] = (
-            df['solution_id'].apply(lambda x: solution_dic.get(x)[0]))
-        df['index'] = (
-            df['solution_id'].apply(lambda x: solution_dic.get(x)[1]))
-        df['problem'] = (
-            df['solution_id'].apply(lambda x: solution_dic.get(x)[2]))
-        df['team_number'] = (
-            df['solution_id'].apply(lambda x: solution_dic.get(x)[3]))
-        df['team_player'] = (
-            df['solution_id'].apply(lambda x: '_'.join(solution_dic.get(x)[4])))
-
-        del df['teacher_id']
-        del df['solution_id']
-        del df['competition_id']
-
-        file = os.path.join(
-            current_app.config['FILE_CACHE_PATH'], uuid4().hex+'.xlsx')
-        df.to_excel(file, index=False)
-
-        zipfile = file.replace('.xlsx', '.zip')
-        zip2here(file, zipfile)
+        zfile = download_teacher_result(competition_id)
 
         flash(_('The result file is already downloaded.'), 'success')
-        return send_file(zipfile, as_attachment=True)
+        return send_file(zfile, as_attachment=True)
     else:
-        flash('No task.', 'warning')
+        flash(_('No task.'), 'warning')
         return redirect_back()
 
 
@@ -334,36 +281,12 @@ def download_teacher(competition_id):
 @login_required
 def download_result(competition_id):
     com = Competition.query.get_or_404(competition_id)
-    solutions = com.solutions
-    if solutions:
-        for solution in solutions:
-            tasks = solution.tasks
-            solution.score = (
-                sum([task.score for task in tasks if task.score is not None]) / len(tasks))
-            try:
-                db.session.commit()
-            except:
-                db.session.rollback()
-
-        df = pd.read_sql_query(
-            Solution.query.filter_by(competition_id=com.id).statement, db.engine)
-        df['index'] = (df['name'].apply(lambda x: x.split('_')[0]))
-        df['problem'] = (df['name'].apply(lambda x: x.split('_')[1]))
-        df['team_number'] = (df['name'].apply(lambda x: x.split('_')[2]))
-        df['team_player'] = (
-            df['name'].apply(lambda x: '_'.join(x.split('_')[3:])))
-
-        del df['competition_id']
-
-        file = os.path.join(
-            current_app.config['FILE_CACHE_PATH'], uuid4().hex+'.xlsx')
-        df.to_excel(file, index=False)
-
-        zipfile = file.replace('.xlsx', '.zip')
-        zip2here(file, zipfile)
+    if com.solutions:
+        zfile = download_solution_score(competition_id)
 
         flash(_('The result file is already downloaded.'), 'success')
-        return send_file(zipfile, as_attachment=True)
+        return send_file(zfile, as_attachment=True)
+
     else:
         flash('No solution.', 'warning')
         return redirect_back()
@@ -381,7 +304,9 @@ def system_settings():
 @root_required
 @login_required
 def logs():
-    return render_template('backstage/root/manage_settings/logs.html')
+    form = DownloadLogForm()
+    return render_template(
+        'backstage/root/manage_settings/logs.html', form=form)
 
 
 @root_bp.route('/settings/logs/download', methods=['POST'])
@@ -391,7 +316,7 @@ def logs():
 def logs_download():
     if os.path.exists(os.path.join(basedir, 'logs', 'MMCs.log')):
         file = os.path.join(
-            current_app.config['FILE_CACHE_PATH'], uuid4().hex+'.zip')
+            current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.zip')
         zip2here(os.path.join(basedir, 'logs'), file)
 
         return send_file(file, as_attachment=True)

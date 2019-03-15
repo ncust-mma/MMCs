@@ -2,16 +2,16 @@
 {% from 'bootstrap/form.html' import render_form %}
 
 {% block setting_content %}
-<div class="card w-100 bg-light">
-    <h3 class="card-header">{{ _('Edit Profile') }}</h3>
-    <div class="card-body">
-        {{ render_form(form) }}
+    <div class="card w-100 bg-light">
+        <h3 class="card-header">{{ _('Edit Profile') }}</h3>
+        <div class="card-body">
+            {{ render_form(form) }}
+        </div>
     </div>
-</div>
 {% endblock %}
 
 
 {% block scripts %}
-{{ super() }}
-{{ ckeditor.load() }}
+    {{ super() }}
+    {{ ckeditor.load() }}
 {% endblock %}

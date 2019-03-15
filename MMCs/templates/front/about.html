@@ -3,20 +3,20 @@
 {% block title %}About{% endblock %}
 
 {% block content %}
-<div class="row justify-content-md-center">
-    <div class="card w-100 bg-light">
-        <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/about.jpg') }}" alt="about">
-        <div class="card-body">
-            <h2 class="card-title">About</h2>
-            <div class="card-text">
-                {% include "showing/about.html" %}
+    <div class="row justify-content-md-center">
+        <div class="card w-100 bg-light">
+            <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/about.jpg') }}" alt="about">
+            <div class="card-body">
+                <h2 class="card-title">About</h2>
+                <div class="card-text">
+                    {% include "showing/about.html" %}
+                </div>
             </div>
-        </div>
-        <div class="card-footer">
-            <div class="float-right">
-                <a class="btn btn-primary" href="{{ url_for('front.index') }}">{{ _('Back Home') }}</a>
+            <div class="card-footer">
+                <div class="float-right">
+                    <a class="btn btn-primary" href="{{ url_for('front.index') }}">{{ _('Back Home') }}</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

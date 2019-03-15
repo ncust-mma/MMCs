@@ -3,18 +3,18 @@
 {% block title %}Competition{% endblock %}
 
 {% block setting_content %}
-<div class="card w-100 bg-light">
-    <div class="card-header">
-        <div class="nav nav-tabs card-header-tabs" role="tablist">
-            {{ render_nav_item("root.behavior", _("Competition")) }}
-            {{ render_nav_item("root.history", _("History")) }}
-            {{ render_nav_item("root.notice", _("Notice")) }}
-            {{ render_nav_item("root.competition_settings", _("Settings")) }}
+    <div class="card w-100 bg-light">
+        <div class="card-header">
+            <div class="nav nav-tabs card-header-tabs" role="tablist">
+                {{ render_nav_item("root.behavior", _("Competition")) }}
+                {{ render_nav_item("root.history", _("History")) }}
+                {{ render_nav_item("root.notice", _("Notice")) }}
+                {{ render_nav_item("root.competition_settings", _("Settings")) }}
+            </div>
+        </div>
+        <div class="card-body">
+            {% block competition_content %}
+            {% endblock %}
         </div>
     </div>
-    <div class="card-body">
-        {% block competition_content %}
-        {% endblock %}
-    </div>
-</div>
 {% endblock %}

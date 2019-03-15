@@ -3,29 +3,31 @@
 {% block title %}Personnel{% endblock %}
 
 {% block setting_content %}
-<div class="card w-100 bg-light">
-    <div class="card-header">
-        <div class="nav nav-tabs card-header-tabs" role="tablist">
-            {{ render_nav_item("root.personnel_list", _("Personnel List")) }}
-            {{ render_nav_item("root.register", _("Register")) }}
-
-            {% set endpoint = "root.edit_profile" %}
-            <a class="nav-link {% if request.endpoint and request.endpoint == endpoint %}active{% endif %} disabled">
-                {{ _("Edit Profile") }}
-            </a>
-            {% set endpoint = "root.change_username" %}
-            <a class="nav-link {% if request.endpoint and request.endpoint == endpoint %}active{% endif %} disabled">
-                {{ _("Change Username") }}
-            </a>
-            {% set endpoint = "root.change_password" %}
-            <a class="nav-link {% if request.endpoint and request.endpoint == endpoint %}active{% endif %} disabled">
-                {{ _("Change Password") }}
-            </a>
+    <div class="card w-100 bg-light">
+        <div class="card-header">
+            <div class="nav nav-tabs card-header-tabs" role="tablist">
+                {{ render_nav_item("root.personnel_list", _("Personnel List")) }}
+                {{ render_nav_item("root.register", _("Register")) }}
+                {% if request.endpoint and request.endpoint == "root.edit_profile" %}
+                    <a class="nav-link active">
+                        {{ _("Edit Profile") }}
+                    </a>
+                {% endif %}
+                {% if request.endpoint and request.endpoint == "root.change_username" %}
+                    <a class="nav-link active">
+                        {{ _("Change Username") }}
+                    </a>
+                {% endif %}
+                {% if request.endpoint and request.endpoint == "root.change_password" %}
+                    <a class="nav-link active">
+                        {{ _("Change Password") }}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card-body">
+            {% block personnel_content %}
+            {% endblock %}
         </div>
     </div>
-    <div class="card-body">
-        {% block personnel_content %}
-        {% endblock %}
-    </div>
-</div>
 {% endblock %}

@@ -1,19 +1,19 @@
 {% macro link_field(link_name, link_url, link_title) %}
-<a href="{{link_url}}" title="{{link_title}}" target="_blank" data-toggle="tooltip">{{link_name}}</a>
+    <a href="{{ link_url }}" title="{{ link_title }}" target="_blank" data-toggle="tooltip">{{ link_name }}</a>
 {% endmacro %}
 
 {% macro render_nav_item(endpoint, text, icon='', badge='', disable=False, use_li=False) %}
-{% if use_li %}
-<li class="nav-item">
+    {% if use_li %}
+        <li class="nav-item">
     {% endif %}
 
-    <a class="{% if not use_li %}nav-item{% endif %} nav-link {% if request.endpoint and request.endpoint == endpoint %}active{% endif %} {% if disable %}disabled{% endif %}"
-        href="{{ url_for(endpoint, **kwargs) }}">
-        {% if icon %}<span class="{{ icon }}"></span> {% endif %}{{ text }}{% if badge %}<span class="badge badge-light">{{ badge }}</span>{%
-        endif %}
-    </a>
+<a class="{% if not use_li %}nav-item{% endif %} nav-link {% if request.endpoint and request.endpoint == endpoint %}active{% endif %} {% if disable %}disabled{% endif %}"
+   href="{{ url_for(endpoint, **kwargs) }}">
+    {% if icon %}<span class="{{ icon }}"></span> {% endif %}{{ text }}{% if badge %}
+    <span class="badge badge-light">{{ badge }}</span>{% endif %}
+</a>
 
-    {% if use_li %}
-</li>
+{% if use_li %}
+    </li>
 {% endif %}
 {% endmacro %}

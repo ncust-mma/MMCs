@@ -1,12 +1,15 @@
 {% extends 'backstage/root/manage_settings/base.html' %}
+{% from 'bootstrap/form.html' import render_form %}
 
 {% block settings_content %}
-<div class="card-body">
-    <form class="btn btn-block" action="{{ url_for('root.logs_download') }}" method="post">
-        <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}" />
-        <button class="btn btn-info btn-block" type="submit">
-            <span class="oi oi-data-transfer-download"></span> {{ _("Download logs") }}
-        </button>
-    </form>
-</div>
+    <div class="card-body">
+        <div class="btn-group btn-group-vertical btn-block" role="group" aria-label="Button group with nested dropdown">
+            <form class="btn btn-block" action="{{ url_for('root.logs_download') }}" method="post">
+                <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
+                <button class="btn btn-info btn-block" type="submit">
+                    <span class="oi oi-data-transfer-download"></span> {{ _("Download logs") }}
+                </button>
+            </form>
+        </div>
+    </div>
 {% endblock %}

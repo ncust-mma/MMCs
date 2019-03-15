@@ -1,29 +1,29 @@
 {% extends 'backstage/admin/manage_solution/base.html' %}
 
 {% block styles %}
-{{ super() }}
-{{ dropzone.load_css() }}
-{{ dropzone.style("margin: 10px 0; border: 2px dashed #0087F7; min-height: 400px;") }}
+    {{ super() }}
+    {{ dropzone.load_css() }}
+    {{ dropzone.style("margin: 10px 0; border: 2px dashed #0087F7; min-height: 400px;") }}
 {% endblock styles %}
 
 
 {% block solution_content %}
-{% if is_start() %}
-<div class="col-md-12">
-    {{ dropzone.create(action='admin.upload') }}
-    <div class="page-footer">
-        <a class="btn btn-light float-right" href="{{ url_for('admin.manage_solution') }}">
-            {{ _("Finish") }}
-        </a>
-    </div>
-</div>
-{% else %}
-{% include "backstage/tips/no_start.html" %}
-{% endif %}
+    {% if is_start() %}
+        <div class="col-md-12">
+            {{ dropzone.create(action='admin.upload') }}
+            <div class="page-footer">
+                <a class="btn btn-light float-right" href="{{ url_for('admin.manage_solution') }}">
+                    {{ _("Finish") }}
+                </a>
+            </div>
+        </div>
+    {% else %}
+        {% include "backstage/tips/no_start.html" %}
+    {% endif %}
 {% endblock %}
 
-{%block scripts %}
-{{ super() }}
-{{ dropzone.load_js() }}
-{{ dropzone.config() }}
+{% block scripts %}
+    {{ super() }}
+    {{ dropzone.load_js() }}
+    {{ dropzone.config() }}
 {% endblock scripts %}

@@ -1,0 +1,51 @@
+{% extends 'backstage/admin/manage_task/base.html' %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
+
+{% block task_content %}
+    {% if is_start() %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-sm">
+                <thead>
+                <tr class="text-center">
+                    <th>#</th>
+                    <th>{{ _('Team number') }}</th>
+                    <td>{{ _('Problem') }}</td>
+                    <td>{{ _('UUID') }}</td>
+                    <td>{{ _('Tasks') }}</td>
+                    <td>{{ _('Finished') }}</td>
+                </tr>
+                </thead>
+                {% for solution in pagination.items %}
+                    <tr class="text-center">
+                        <td>
+                            {{ pagination.total - (config['SOLUTION_PER_PAGE']*(page-1) + loop.index) + 1 }}
+                        </td>
+                        <td>{{ solution.team_number }}</td>
+                        <td>{{ solution.problem }}</td>
+                        <td>
+                            <a href="{{ url_for('backstage.get_solution', filename=solution.uuid) }}"
+                               target="_blank">
+                                {{ solution.uuid }}
+                            </a>
+                        </td>
+                        <td>
+                            <span class="badge badge-pill badge-secondary">
+                                {{ solution.tasks|length }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge badge-pill badge-success">
+                                {{ solution.finished_task|length }}
+                            </span>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="page-footer">
+                {{ render_pagination(pagination) }}
+            </div>
+        </div>
+    {% else %}
+        {% include "backstage/tips/no_start.html" %}
+    {% endif %}
+{% endblock %}

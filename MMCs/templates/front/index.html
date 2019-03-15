@@ -3,22 +3,22 @@
 {% block title %}Index{% endblock title %}
 
 {% block content %}
-<div class="jumbotron">
-    <div class="row">
-        <div class="col-md-8">
-            <img src="{{ url_for('static', filename='images/index.jpg') }}" class="rounded img-fluid"  alt="index"/>
-        </div>
-        <div class="col-md-4 align-self-center">
-            <h1>MMCs</h1>
-            <p>
-                {{ _("North China University of Science and Technology Mathematical Modeling Competition Management System") }}
-            </p>
-            <p>
-                <a class="btn btn-primary btn-lg" href="{{ url_for('auth.login', next=request.full_path) }}">
-                    {{ _("Sign in Now") }}
-                </a>
-            </p>
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-8">
+                <img src="{{ url_for('static', filename='images/index.jpg') }}" class="rounded img-fluid" alt="index"/>
+            </div>
+            <div class="col-md-4 align-self-center">
+                <h1>MMCs</h1>
+                <p>
+                    {{ _("North China University of Science and Technology Mathematical Modeling Competition Management System") }}
+                </p>
+                <p>
+                    <a class="btn btn-primary btn-lg" href="{{ url_for('auth.login', next=request.full_path) }}">
+                        {{ _("Sign in Now") }}
+                    </a>
+                </p>
+            </div>
         </div>
     </div>
-</div>
 {% endblock content %}

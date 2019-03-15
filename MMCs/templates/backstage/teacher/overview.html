@@ -3,54 +3,52 @@
 {% block title %}Overview{% endblock %}
 
 {% block setting_content %}
-<div class="card w-100 bg-light">
-    <h3 class="card-header">
-        {{ _('Progress') }}
-        {% if is_start() and task_all and task_finished %}
-        <small>
-            {{ task_finished }} / {{ task_all }}
-        </small>
-        {% endif %}
-    </h3>
-    {% if is_start() %}
-    {% if task_all %}
-    {% if task_finished %}
-    <div class="card-body">
-        <div class="progress">
-            {% set progress = task_finished / task_all %}
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ progress|default(0) }}%">
-                {{ _('Finished') }}: {{ '%0.2f'|format(progress|float)|default(0) }}%
-            </div>
-        </div>
-    </div>
-    <div class="card-footer">
-        <div class="float-right">
-            {% if task_finished == task_all %}
-            <a class="btn btn-success" href="{{ url_for('teacher.manage_task') }}">
-                {{ _('Done') }}
-            </a>
-            {% elif 0 < progress < task_all %}
-            <a class="btn btn-primary" href="{{ url_for('teacher.manage_task') }}">
-                {{ _('Contiue') }}
-            </a>
-            {% else %}
-            <a class="btn btn-info" href="{{ url_for('teacher.manage_task') }}">
-                {{ _('Start') }}
-            </a>
+    <div class="card w-100 bg-light">
+        <h3 class="card-header">
+            {{ _('Progress') }}
+            {% if is_start() and task_all is number %}
+                <small>
+                    {{ task_finished }} / {{ task_all }}
+                </small>
             {% endif %}
-        </div>
+        </h3>
+        {% if is_start() %}
+            {% if task_all is number %}
+                {% if task_all > 0 %}
+                    <div class="card-body">
+                        <div class="progress">
+                            {% set progress = task_finished / task_all %}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                 style="width: {{ progress|default(0) }}%">
+                                {{ _('Finished') }}: {{ '%0.2f'|format(progress|float)|default(0) }}%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="float-right">
+                            {% if task_finished == task_all %}
+                                <a class="btn btn-success" href="{{ url_for('teacher.manage_task') }}">
+                                    {{ _('Done') }}
+                                </a>
+                            {% elif 0 < progress < task_all %}
+                                <a class="btn btn-primary" href="{{ url_for('teacher.manage_task') }}">
+                                    {{ _('Contiue') }}
+                                </a>
+                            {% else %}
+                                <a class="btn btn-info" href="{{ url_for('teacher.manage_task') }}">
+                                    {{ _('Start') }}
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% else %}
+                    {% include "backstage/tips/no_task.html" %}
+                {% endif %}
+            {% else %}
+                {% include "backstage/tips/no_solution.html" %}
+            {% endif %}
+        {% else %}
+            {% include "backstage/tips/no_start.html" %}
+        {% endif %}
     </div>
-    {% else %}
-    <div class="tip text-center">
-        <span class="oi oi-ban"></span>
-        {{ _('No Tasks.') }}
-    </div>
-    {% endif %}
-    {% else %}
-    {% include "backstage/tips/no_solution.html" %}
-    {% endif %}
-    {% else %}
-    {% include "backstage/tips/no_start.html" %}
-    {% endif %}
-</div>
 {% endblock %}

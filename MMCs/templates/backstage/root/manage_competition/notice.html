@@ -2,10 +2,10 @@
 {% from 'bootstrap/form.html' import render_form %}
 
 {% block competition_content %}
-{{ render_form(form) }}
+    {{ render_form(form) }}
 {% endblock %}
 
 {% block scripts %}
-{{ super() }}
-{{ ckeditor.load() }}
+    {{ super() }}
+    {{ ckeditor.load() }}
 {% endblock %}

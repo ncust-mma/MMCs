@@ -10,6 +10,7 @@ $ cd MMCs
 $ pipenv install --dev
 $ pipenv shell
 $ flask forge
+$ flask translate compile
 $ flask run
 * Running on http://127.0.0.1:5000/
 ```
@@ -21,4 +22,3 @@ $ flask run
 ## TODO
 
 -   [ ] 序号排序功能
--   [ ] 多表格提交错误 ❌，当按下一个按钮时，另一个表格也出现错误

@@ -3,27 +3,28 @@
 {% block title %}Score{% endblock %}
 
 {% block setting_content %}
-<div class="card w-100 bg-light">
-    <h3 class="card-header">{{ _('Score Management') }}</h3>
-    {% if is_start() %}
-    <div class="card-body">
-        <div class="btn-group btn-group-vertical btn-block" role="group" aria-label="Button group with nested dropdown">
-            <form class="btn" action="{{ url_for('admin.download_teacher') }}" method="post">
-                <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}" />
-                <button class="btn btn-info" type="submit">
-                    <span class="oi oi-data-transfer-download"></span> {{ _("Download all teachers result") }}
-                </button>
-            </form>
-            <form class="btn" action="{{ url_for('admin.download_result') }}" method="post">
-                <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}" />
-                <button class="btn btn-info" type="submit">
-                    <span class="oi oi-data-transfer-download"></span> {{ _("Download the final result") }}
-                </button>
-            </form>
-        </div>
+    <div class="card w-100 bg-light">
+        <h3 class="card-header">{{ _('Score Management') }}</h3>
+        {% if is_start() %}
+            <div class="card-body">
+                <div class="btn-group btn-group-vertical btn-block" role="group"
+                     aria-label="Button group with nested dropdown">
+                    <form class="btn" action="{{ url_for('admin.download_teacher') }}" method="post">
+                        <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button class="btn btn-info" type="submit">
+                            <span class="oi oi-data-transfer-download"></span> {{ _("Download all teachers result") }}
+                        </button>
+                    </form>
+                    <form class="btn" action="{{ url_for('admin.download_result') }}" method="post">
+                        <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button class="btn btn-info" type="submit">
+                            <span class="oi oi-data-transfer-download"></span> {{ _("Download the final result") }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            {% include "backstage/tips/no_start.html" %}
+        {% endif %}
     </div>
-    {% else %}
-    {% include "backstage/tips/no_start.html" %}
-    {% endif %}
-</div>
 {% endblock %}

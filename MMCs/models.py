@@ -151,6 +151,12 @@ class Solution(db.Model):
 
         return Competition.query.get(self.competition_id).date
 
+    @property
+    def finished_task(self):
+        com = Competition.current_competition()
+        return [task for task in self.tasks
+                if task.score is not None and task.competition_id == com.id]
+
 
 class Task(db.Model):
     """Task table
@@ -204,6 +210,7 @@ class Competition(db.Model):
     """
 
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30), nullable=False)
     date = db.Column(db.Date, index=True, nullable=False, default=date.today)
     flag = db.Column(db.Boolean, default=False)
 
@@ -231,3 +238,17 @@ class Competition(db.Model):
         """
 
         return set(solution.problem for solution in self.solutions)
+
+    @classmethod
+    def update_socre(self, com_id):
+        com = Competition.query.get_or_404(com_id)
+        solutions = com.solutions
+        if solutions:
+            for solution in solutions:
+                tasks = solution.tasks
+                solution.score = (
+                    sum([task.score for task in tasks if task.score is not None]) / len(tasks))
+                try:
+                    db.session.commit()
+                except:
+                    db.session.rollback()

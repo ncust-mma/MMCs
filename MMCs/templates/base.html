@@ -9,58 +9,54 @@
 {% from 'macros.html' import link_field %}
 <!DOCTYPE html>
 <html lang="zh">
-
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        {% block head %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block head %}
         <title>{% block title %}{% endblock %} · MMCs</title>
         <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
-
         {% block styles %}
-        {{ bootstrap.load_css() }}
-        <link rel="stylesheet" href="{{ url_for('static', filename='open-iconic/font/css/open-iconic-bootstrap.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+            {{ bootstrap.load_css() }}
+            <link rel="stylesheet"
+                  href="{{ url_for('static', filename='open-iconic/font/css/open-iconic-bootstrap.css') }}">
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
         {% endblock styles %}
-
-        {% endblock head %}
-    </head>
-
-    <body>
-        {% block navbar %}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url_for('front.index') }}">
-                    <img src="{{ url_for('static', filename='navbar-brand.ico') }}" alt="MMCs" width="80">
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    {% endblock head %}
+</head>
+<body>
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('front.index') }}">
+                <img src="{{ url_for('static', filename='navbar-brand.ico') }}" alt="MMCs" width="80">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <div class="navbar-nav mr-auto">
-                        {{ render_nav_item('front.index', _('Home'), "oi oi-home") }}
-                        {{ render_nav_item('front.about', _('About'), "oi oi-bookmark") }}
-                    </div>
-                    {% if not current_user.is_authenticated %}
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="navbar-nav mr-auto">
+                    {{ render_nav_item('front.index', _('Home'), "oi oi-home") }}
+                    {{ render_nav_item('front.about', _('About'), "oi oi-bookmark") }}
+                </div>
+                {% if not current_user.is_authenticated %}
                     <div class="navbar-nav nav-item ml-auto">
                         <a class="btn btn-outline-primary" href="{{ url_for('auth.login') }}">
                             {{ _('Welcome to MMCs') }}
                         </a>
                     </div>
-                    {% endif %}
-                    <div class="dropdown nav-item navbar-nav">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                            <span class="oi oi-globe"></span> {{ _('Language') }}
-                            <span class="caret"></span>
-                        </a>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" href="{{ url_for('front.set_locale', locale='zh_Hans_CN') }}">简体中文</a>
-                            <a class="dropdown-item" href="{{ url_for('front.set_locale', locale='en_US') }}">English</a>
-                        </div>
+                {% endif %}
+                <div class="dropdown nav-item navbar-nav">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                        <span class="oi oi-globe"></span> {{ _('Language') }}
+                        <span class="caret"></span>
+                    </a>
+                    <div class="dropdown-menu" role="menu">
+                        <a class="dropdown-item" href="{{ url_for('front.set_locale', locale='zh_Hans_CN') }}">简体中文</a>
+                        <a class="dropdown-item" href="{{ url_for('front.set_locale', locale='en_US') }}">English</a>
                     </div>
-                    {% if current_user.is_authenticated %}
+                </div>
+                {% if current_user.is_authenticated %}
                     <div class="dropdown nav-item navbar-nav">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown">
                             <span class="oi oi-person"></span>
@@ -75,74 +71,73 @@
                                 <span class="oi oi-account-logout"></span> {{ _('Logout') }}</a>
                         </div>
                     </div>
-                    {% endif %}
-                </div>
+                {% endif %}
             </div>
-        </nav>
-        {% endblock navbar %}
+        </div>
+    </nav>
+{% endblock navbar %}
 
-        <main>
-            <div class="container">
-                {% for message in get_flashed_messages(with_categories=True) %}
-                <div class="alert alert-{{ message[0] }}">
-                    <button type="button" class="close" data-dismiss="alert">
-                        <span class="oi oi-delete"></span>
-                    </button>
-                    {{ message[1] }}
-                </div>
-                {% endfor %}
+<main>
+    <div class="container">
+        {% for message in get_flashed_messages(with_categories=True) %}
+            <div class="alert alert-{{ message[0] }}">
+                <button type="button" class="close" data-dismiss="alert">
+                    <span class="oi oi-delete"></span>
+                </button>
+                {{ message[1] }}
+            </div>
+        {% endfor %}
 
-                {% block content %}
-                {% endblock content %}
+        {% block content %}
+        {% endblock content %}
 
-                {% block footer %}
-                <footer>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-4">
-                                <p class="float-left">
-                                    <small> &copy; {{ current_year() }}
-                                        <a title="{{_('North China University of Science and Technology Mathematical Modeling Association') }}"
-                                            data-toggle="tooltip">
-                                            NCUST-MMA /
-                                        </a>
-                                        {{ link_field("Zero", "https://github.com/Zeroto521", "Written by Zeroto521") }}
-                                    </small>
-                                </p>
-                            </div>
-                            <div class="col-4">
-                                <P class="text-center">
-                                    <a href="http://sxjm.ncst.edu.cn" title="{{_('North China University of Science and Technology Mathematical Modeling Association') }}"
-                                        data-toggle="tooltip">
-                                        <img src="{{ url_for('static', filename='NCUST-MMA.png') }}" alt="NCUST-MMA"
-                                            width="50">
-                                    </a>
-                                </P>
-                            </div>
-                            <div class="col-4">
-                                <p class="float-right">
-                                    <small>
-                                        {{ link_field(_("Mathematical Modeling Competition system"), "https://github.com/Zeroto521/MMCs", _("Fork me on GitHub")) }}
-                                    </small>
-                                </p>
-                            </div>
+        {% block footer %}
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4">
+                            <p class="float-left">
+                                <small> &copy; {{ current_year() }}
+                                    <a title="{{ _('North China University of Science and Technology Mathematical Modeling Association') }}"
+                                       data-toggle="tooltip">
+                                        NCUST-MMA /</a>
+                                    {{ link_field("Zero", "https://github.com/Zeroto521", "Written by Zeroto521") }}
+                                </small>
+                            </p>
+                        </div>
+                        <div class="col-4">
+                            <P class="text-center">
+                                <a href="http://sxjm.ncst.edu.cn"
+                                   title="{{ _('North China University of Science and Technology Mathematical Modeling Association') }}"
+                                   data-toggle="tooltip">
+                                    <img src="{{ url_for('static', filename='NCUST-MMA.png') }}" alt="NCUST-MMA"
+                                         width="50">
+                                </a>
+                            </P>
+                        </div>
+                        <div class="col-4">
+                            <p class="float-right">
+                                <small>
+                                    {{ link_field(_("Mathematical Modeling Competition system"), "https://github.com/Zeroto521/MMCs", _("Fork me on GitHub")) }}
+                                </small>
+                            </p>
                         </div>
                     </div>
-                </footer>
-                {% endblock footer %}
-            </div>
-        </main>
+                </div>
+            </footer>
+        {% endblock footer %}
+    </div>
+</main>
 
-        {% block scripts %}
-        {{ bootstrap.load_js() }}
-        <script type="text/javascript">
-            $(function () {
-                $("[data-toggle='tooltip']").tooltip();
-            });
-
-        </script>
-        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-        {% endblock scripts %}
-    </body>
+{% block scripts %}
+    {{ bootstrap.load_js() }}
+    <script type="text/javascript">
+        $(function () {
+            $("[data-toggle='tooltip']").tooltip();
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock scripts %}
+</body>
 
 </html>

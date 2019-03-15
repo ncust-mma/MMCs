@@ -1,0 +1,100 @@
+{% extends 'backstage/admin/manage_task/base.html' %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
+
+{% block task_content %}
+    {% if is_start() %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-sm">
+                <thead>
+                <tr class="text-center">
+                    <th>#</th>
+                    <th>{{ _('Username') }}</th>
+                    <th>{{ _('Realname') }}</th>
+                    <th>{{ _('Tasks') }}</th>
+                    <th>{{ _('Finished') }}</th>
+                    <th>{{ _('Actions') }}</th>
+                </tr>
+                </thead>
+                {% for user in pagination.items %}
+                    <tr>
+                        <td class="text-center">{{ pagination.total - (config['USER_PER_PAGE']*(page-1) + loop.index) + 1 }}</td>
+                        <td class="text-center">{{ user.username }}</td>
+                        <td class="text-center">{{ user.realname }}</td>
+                        <td class="text-center">
+                            <span class="badge badge-pill badge-secondary">
+                                {{ user.current_all_tasks|length }}
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <span class="badge badge-pill badge-success">
+                                {{ user.current_finished_task|length }}
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            {% if not user.is_root %}
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-info dropdown-toggle" type="button"
+                                            id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="oi oi-cog"></span> {{ _("Edit") }}
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <form method="post" action="{{ url_for('admin.check_user', user_id=user.id) }}">
+                                            {{ check_form.csrf_token }}
+                                            {{ check_form.submit(class="dropdown-item") }}
+                                        </form>
+                                        <form method="post" action="{{ url_for('admin.task_add_list', user_id=user.id) }}">
+                                            {{ add_form.csrf_token }}
+                                            {{ add_form.submit(class="dropdown-item") }}
+                                        </form>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item badge-danger" data-toggle="modal"
+                                           data-target="#confirm-delete"
+                                           data-href="{{ url_for('admin.delete_user_task', user_id=user.id) }}">
+                                            <span class="oi oi-trash" aria-hidden="true"></span> {{ _('Delete') }}
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="page-footer">
+                {{ render_pagination(pagination) }}
+            </div>
+        </div>
+    {% else %}
+        {% include "backstage/tips/no_start.html" %}
+    {% endif %}
+
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">
+                        {{ _('Delete Confirm') }}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ _('Are you sure you want to delete this item?') }}</p>
+                </div>
+                <div class="modal-footer">
+                    <form class="delete-form" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <span class="oi oi-action-undo"></span> {{ _('Cancel') }}
+                        </button>
+                        <button class="btn btn-danger btn-confirm" type="submit">
+                            <span class="oi oi-trash"></span> {{ _('Delete') }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

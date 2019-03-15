@@ -161,18 +161,6 @@ class ButtonCheckForm(FlaskForm):
     submit = SubmitField(_l('Check'))
 
 
-class ButtonEditProfileForm(FlaskForm):
-    edit = SubmitField(_l('Edit Profile'))
-
-
-class ButtonChangeUsernameForm(FlaskForm):
-    change_username = SubmitField(_l('Change Username'))
-
-
-class ButtonChangePasswordForm(FlaskForm):
-    change_pwd = SubmitField(_l('Change Password'))
-
-
 class CompetitionSettingForm(FlaskForm):
     solution_task_number = IntegerField(
         _l('SOLUTION TASK NUMBER'), validators=[Optional()])
@@ -222,3 +210,15 @@ class IndexImageUploadForm(FlaskForm):
     )
 
     index_upload = SubmitField(_l('Upload'))
+
+
+class CompetitionNameForm(FlaskForm):
+    name = StringField(
+        _l('Competition name'),
+        validators=[InputRequired(), DataRequired(), Length(1, 30)]
+    )
+    submit = SubmitField(_l('Submit'))
+
+
+class DownloadLogForm(FlaskForm):
+    download = SubmitField(_l('Download logs'))

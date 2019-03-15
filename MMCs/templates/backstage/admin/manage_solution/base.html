@@ -1,18 +1,18 @@
-{% extends 'backstage/admin/base.html' %} 
+{% extends 'backstage/admin/base.html' %}
 
-{% block title %}Task{% endblock %} 
+{% block title %}Task{% endblock %}
 
 {% block setting_content %}
-<div class="card w-100 bg-light">
-    <div class="card-header">
-        <div class="nav nav-tabs card-header-tabs" role="tablist">
-            {{ render_nav_item("admin.solution_list", _("Solution List")) }}
-            {{ render_nav_item("admin.upload", _("Upload")) }}
+    <div class="card w-100 bg-light">
+        <div class="card-header">
+            <div class="nav nav-tabs card-header-tabs" role="tablist">
+                {{ render_nav_item("admin.solution_list", _("Solution List")) }}
+                {{ render_nav_item("admin.upload", _("Upload")) }}
+            </div>
+        </div>
+        <div class="card-body">
+            {% block solution_content %}
+            {% endblock %}
         </div>
     </div>
-    <div class="card-body">
-        {% block solution_content %} 
-        {% endblock %}
-    </div>
-</div>
 {% endblock %}

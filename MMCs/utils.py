@@ -7,18 +7,19 @@ except ImportError:
 
 import os
 import random
-import uuid
+from uuid import uuid4
 import zipfile
 from math import ceil
 
 import numba as nb
+import pandas as pd
 from flask import abort, current_app, flash, redirect, request, url_for
 from flask_babel import _
 from pypinyin import lazy_pinyin
 from werkzeug.utils import secure_filename
 
-from MMCs.extensions import scheduler
-from MMCs.models import Competition, User
+from MMCs.extensions import db, scheduler
+from MMCs.models import Competition, Solution, Task, User
 
 
 def is_safe_url(target):
@@ -228,3 +229,74 @@ def zip2here(input_path, output_path):
             z.write(input_path, os.path.split(input_path)[1])
         else:
             abort(404)
+
+
+def download_teacher_result(competition_id):
+    """Download one competition all teacher result
+    """
+
+    teachers = User.teachers()
+    teacher_dic = {teacher.id: (teacher.username, teacher.realname)
+                   for teacher in teachers}
+    solutions = Solution.query.filter_by(competition_id=competition_id).all()
+    solution_dic = {solution.id: (solution.name,
+                                  solution.index,
+                                  solution.problem,
+                                  solution.team_number,
+                                  solution.team_player)
+                    for solution in solutions}
+    df = pd.read_sql_query(
+        Task.query.filter_by(competition_id=competition_id).statement, db.engine)
+
+    df['username'] = (
+        df['teacher_id'].apply(lambda x: teacher_dic.get(x)[0]))
+    df['realname'] = (
+        df['teacher_id'].apply(lambda x: teacher_dic.get(x)[1]))
+    df['filename'] = (
+        df['solution_id'].apply(lambda x: solution_dic.get(x)[0]))
+    df['index'] = (
+        df['solution_id'].apply(lambda x: solution_dic.get(x)[1]))
+    df['problem'] = (
+        df['solution_id'].apply(lambda x: solution_dic.get(x)[2]))
+    df['team_number'] = (
+        df['solution_id'].apply(lambda x: solution_dic.get(x)[3]))
+    df['team_player'] = (
+        df['solution_id'].apply(lambda x: '_'.join(solution_dic.get(x)[4])))
+
+    del df['teacher_id']
+    del df['solution_id']
+    del df['competition_id']
+
+    file = os.path.join(
+        current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.xlsx')
+    df.to_excel(file, index=False)
+
+    zfile = file.replace('.xlsx', '.zip')
+    zip2here(file, zfile)
+
+    return zfile
+
+
+def download_solution_score(competition_id):
+    """Download one competition all solution result
+    """
+
+    Competition.update_socre(competition_id)
+    df = pd.read_sql_query(
+        Solution.query.filter_by(competition_id=competition_id).statement, db.engine)
+    df['index'] = (df['name'].apply(lambda x: x.split('_')[0]))
+    df['problem'] = (df['name'].apply(lambda x: x.split('_')[1]))
+    df['team_number'] = (df['name'].apply(lambda x: x.split('_')[2]))
+    df['team_player'] = (
+        df['name'].apply(lambda x: '_'.join(x.split('_')[3:])))
+
+    del df['competition_id']
+
+    file = os.path.join(
+        current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.xlsx')
+    df.to_excel(file, index=False)
+
+    zfile = file.replace('.xlsx', '.zip')
+    zip2here(file, zfile)
+
+    return zfile

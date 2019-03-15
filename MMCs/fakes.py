@@ -80,14 +80,14 @@ def fake_teacher(count=10):
 def fake_solution(count=30):
     """Generate random solutions
     """
-
+    com = Competition.current_competition()
     for _ in range(count):
         name = '2019_{}_{}_{}_{}_{}.pdf'.format(
             fake.random_element(elements=('A', 'B', 'C', 'D')),
             fake.random_int(min=0, max=999),
             fake_zh.name(), fake_zh.name(), fake_zh.name())
         filename, uuid = new_filename(name)
-        solution = Solution(name=filename, uuid=uuid, competition_id=1)
+        solution = Solution(name=filename, uuid=uuid, competition_id=com.id)
 
         db.session.add(solution)
         try:
@@ -100,7 +100,7 @@ def fake_competition():
     """Generate defautl competition
     """
 
-    com = Competition()
+    com = Competition(name=fake_zh.sentence())
     db.session.add(com)
     db.session.commit()
 
@@ -114,7 +114,7 @@ def fake_task():
             task = Task(
                 teacher_id=teacher.id,
                 solution_id=solution.id,
-                competition_id=1
+                competition_id=com.id
             )
 
             db.session.add(task)
