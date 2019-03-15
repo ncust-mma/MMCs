@@ -108,8 +108,8 @@ def fake_competition():
 def fake_task():
     """Generate random tasks
     """
-
-    for solution in Solution.query.filter_by(competition_id=1).all():
+    com = Competition.current_competition()
+    for solution in Solution.query.filter_by(competition_id=com.id).all():
         for teacher in User.query.filter_by(permission='Teacher').order_by(func.random()).limit(3).all():
             task = Task(
                 teacher_id=teacher.id,

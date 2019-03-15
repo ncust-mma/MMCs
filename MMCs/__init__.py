@@ -253,6 +253,15 @@ def register_commands(app):
         fake_task()
         click.echo('Generating the task...')
 
+        fake_competition()
+        click.echo('Generating the competition...')
+
+        fake_solution(solution)
+        click.echo('Generating %d solution...' % solution)
+
+        fake_task()
+        click.echo('Generating the task...')
+
         click.echo('Done.')
 
     @app.cli.command()
