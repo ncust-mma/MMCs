@@ -9,7 +9,7 @@
             <div class="card-body">
                 <h2 class="card-title">About</h2>
                 <div class="card-text">
-                    {% include "showing/about.html" %}
+                    {{ render_text("showing/about.html")|safe }}
                 </div>
             </div>
             <div class="card-footer">

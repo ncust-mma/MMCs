@@ -2,7 +2,7 @@
 
 import os
 import sys
-import uuid
+from uuid import uuid4
 
 from flask_babel import lazy_gettext as _l
 
@@ -84,7 +84,7 @@ class TestingConfig(BaseConfig):
 
 class ProductionConfig(BaseConfig):
     FLASK_ENV = 'production'
-    SECRET_KEY = os.getenv('SECRET_KEY', uuid.uuid4().hex)
+    SECRET_KEY = os.getenv('SECRET_KEY', uuid4().hex)
     SQLALCHEMY_POOL_RECYCLE = 280
     SQLALCHEMY_DATABASE_URI = os.getenv(
         'DATABASE_URL', prefix + os.path.join(basedir, 'data.db'))

@@ -98,7 +98,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    {% include "showing/notice.html" %}
+                    {{ render_text("showing/notice.html")|safe }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">

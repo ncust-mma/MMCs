@@ -6,7 +6,8 @@ from datetime import datetime
 from logging.handlers import RotatingFileHandler, SMTPHandler
 
 import click
-from flask import Flask, render_template, request
+from flask import (Flask, Markup, render_template, render_template_string,
+                   request)
 from flask_babel import _
 from flask_wtf.csrf import CSRFError
 
@@ -177,6 +178,14 @@ def register_global_func(app):
     @app.template_global()
     def is_start():
         return Competition.is_start()
+
+    @app.template_global()
+    def render_text(file):
+        path = os.path.join(
+            basedir, app.name, app.template_folder, file)
+
+        with open(path, 'r', encoding='utf-8') as f:
+            return render_template_string(f.read())
 
 
 def register_commands(app):

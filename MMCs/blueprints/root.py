@@ -3,8 +3,9 @@
 import os
 from uuid import uuid4
 
-from flask import (Blueprint, current_app, flash, redirect,
-                   render_template, request, send_file, url_for)
+from flask import (Blueprint, Markup, current_app, flash, redirect,
+                   render_template, render_template_string, request, send_file,
+                   url_for)
 from flask_babel import _
 from flask_login import fresh_login_required, login_required
 
@@ -66,16 +67,17 @@ def history():
 @login_required
 def notice():
     form = NoticeEditForm()
+    path = os.path.join(
+        basedir, current_app.name, current_app.template_folder, 'showing/notice.html')
     if form.validate_on_submit():
-        path = os.path.join(
-            basedir, current_app.name, 'templates', 'showing/notice.html')
         with open(path, 'w', encoding='utf-8') as f:
-            f.write(form.notice.data)
+            f.write(Markup(form.notice.data))
 
         flash(_('Setting updated.'), 'success')
         return redirect_back()
 
-    form.notice.data = render_template('showing/notice.html')
+    with open(path, 'r', encoding='utf-8') as f:
+        form.notice.data = render_template_string(f.read())
 
     return render_template(
         'backstage/root/manage_competition/notice.html', form=form)
@@ -331,16 +333,17 @@ def logs_download():
 @login_required
 def about():
     form = AboutEditForm()
+    path = os.path.join(
+        basedir, current_app.name, current_app.template_folder, 'showing/about.html')
     if form.validate_on_submit():
-        path = os.path.join(
-            basedir, current_app.name, 'templates', 'showing/about.html')
         with open(path, 'w', encoding='utf-8') as f:
-            f.write(form.about.data)
+            f.write(Markup(form.about.data))
 
         flash(_('Setting updated.'), 'success')
         return redirect_back()
 
-    form.about.data = render_template('showing/about.html')
+    with open(path, 'r', encoding='utf-8') as f:
+        form.about.data = render_template_string(f.read())
 
     return render_template('backstage/root/manage_settings/about.html', form=form)
 
