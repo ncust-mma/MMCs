@@ -15,12 +15,14 @@ $ flask run
 * Running on http://127.0.0.1:5000/
 ```
 
+> More details look for [this](docs/INSTALLATION.md).
+
 ## Features
 
 <p align="center"><img src="assets/features.png" alt="feature"></p>
 
 ## TODO
 
--   [ ] 序号排序功能
+-   [ ] sort problem
 -   [ ] 使用说明一份
 -   [ ] 小贴士附在页面内
