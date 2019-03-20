@@ -146,6 +146,11 @@ def register_errors(app):
         code = 405
         return render_template('errors.html', code=code, info=_('Method not allowed')), code
 
+    @app.errorhandler(413)
+    def too_large(e):
+        code = 413
+        return render_template('errors.html', code=code, info=_('Upload too large')), code
+
     @app.errorhandler(500)
     def internal_server_error(e):
         code = 500
