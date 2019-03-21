@@ -127,7 +127,7 @@ class Solution(db.Model):
         """return problem number
         """
 
-        return self.name.split('_')[1]
+        return self.name.split('_')[1].upper()
 
     @property
     def team_number(self):
