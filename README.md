@@ -22,8 +22,6 @@ $ flask run
 
 <p align="center"><img src="assets/features.png" alt="feature"></p>
 
-## 中文介绍
-
 ## TODO
 
 -   [ ] table sort problem
