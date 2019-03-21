@@ -7,17 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: zeroto521@gmail.com\n"
-"POT-Creation-Date: 2019-03-20 17:57+0800\n"
+"POT-Creation-Date: 2019-03-21 09:53+0800\n"
 "PO-Revision-Date: 2019-03-20 17:58+0800\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: zh_Hans_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.6.0\n"
-"X-Generator: Poedit 2.2.1\n"
 
 #: MMCs/__init__.py:127
 msgid "Bad Request"
@@ -199,7 +198,7 @@ msgstr "检查"
 
 #: MMCs/forms.py:166
 msgid "SOLUTION TASK NUMBER"
-msgstr "每页展示任务数"
+msgstr "作品任务数"
 
 #: MMCs/forms.py:168
 msgid "USER PER PAGE"
@@ -411,16 +410,14 @@ msgid "Logout"
 msgstr "注销"
 
 #: MMCs/templates/base.html:101 MMCs/templates/base.html:111
-msgid "North China University of Science and Technology Mathematical Modeling Association"
+msgid ""
+"North China University of Science and Technology Mathematical Modeling "
+"Association"
 msgstr "华北理工大学数学建模协会"
 
 #: MMCs/templates/base.html:121
 msgid "Mathematical Modeling Competition system"
 msgstr "数学建模竞赛系统"
-
-#: MMCs/templates/base.html:121
-msgid "Fork me on GitHub"
-msgstr "在Github上拷贝该项目"
 
 #: MMCs/templates/errors.html:15 MMCs/templates/front/about.html:17
 msgid "Back Home"
@@ -753,7 +750,9 @@ msgid "No tasks"
 msgstr "无任务"
 
 #: MMCs/templates/front/index.html:14
-msgid "North China University of Science and Technology Mathematical Modeling Competition Management System"
+msgid ""
+"North China University of Science and Technology Mathematical Modeling "
+"Competition Management System"
 msgstr "华北理工大学数学建模竞赛管理系统"
 
 #: MMCs/templates/front/index.html:18
@@ -846,3 +845,7 @@ msgstr "现在登入"
 
 #~ msgid "No Tasks."
 #~ msgstr "无任务。"
+
+#~ msgid "Fork me on GitHub"
+#~ msgstr "在Github上拷贝该项目"
+

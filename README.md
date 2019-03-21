@@ -1,4 +1,5 @@
 <p align="center"><img src="assets/logo.png" alt="MMCs"></p>
+<p align="center"><a href='docs/DESCRIPTION.md'>[中文说明]</a></p>
 <p align="center"><i>NCUST <b>M</b>athematical <b>M</b>odeling <b>C</b>ompetition <b>s</b>ystem</i></p>
 <p align="center"><img src="assets/indexPage.png" alt="IndexPage"></p>
 
@@ -21,8 +22,8 @@ $ flask run
 
 <p align="center"><img src="assets/features.png" alt="feature"></p>
 
+## 中文介绍
+
 ## TODO
 
--   [ ] sort problem
--   [ ] 使用说明一份
--   [ ] 小贴士附在页面内
+-   [ ] table sort problem
