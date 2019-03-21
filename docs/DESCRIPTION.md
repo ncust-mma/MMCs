@@ -186,10 +186,13 @@ root 用户内置，建议上线后立即**修改**相应用户名和密码。
 
 上传文件名示例: `index_problem_teamnumber_name1_name2_name3`
 
-`index`: 表示竞赛编号，如 2019。若一年内有多次竞赛建议**自定义**一套竞赛命名方法
-`problem`: 题号，建议统一**大写**
-`teamnumber`: 队号
-`name1_name2_name3`: 名字
+1. `index`: 表示竞赛编号，如 2019。若一年内有多次竞赛建议**自定义**一套竞赛命名方法
+
+1. `problem`: 题号，建议统一**大写**
+
+1. `teamnumber`: 队号
+
+1. `name1_name2_name3`: 名字
 
 #### 分配作品
 
