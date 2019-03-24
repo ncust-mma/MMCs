@@ -21,7 +21,6 @@ from MMCs.extensions import (babel, bootstrap, cache, ckeditor, csrf, db,
                              dropzone, login_manager, scheduler, toolbar)
 from MMCs.models import Competition, Solution, Task, User
 from MMCs.settings import basedir, config
-from MMCs.utils import redirect_back
 
 
 def create_app(config_name=None):
