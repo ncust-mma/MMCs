@@ -7,46 +7,47 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: zeroto521@gmail.com\n"
-"POT-Creation-Date: 2019-03-21 09:53+0800\n"
-"PO-Revision-Date: 2019-03-20 17:58+0800\n"
+"POT-Creation-Date: 2019-03-24 12:06+0800\n"
+"PO-Revision-Date: 2019-03-24 12:07+0800\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: zh_Hans_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.6.0\n"
+"X-Generator: Poedit 2.2.1\n"
 
-#: MMCs/__init__.py:127
+#: MMCs/__init__.py:126
 msgid "Bad Request"
 msgstr "请求无效"
 
-#: MMCs/__init__.py:132
+#: MMCs/__init__.py:131
 msgid "Unauthorized"
 msgstr "未授权"
 
-#: MMCs/__init__.py:137
+#: MMCs/__init__.py:136
 msgid "Forbidden"
 msgstr "禁止访问"
 
-#: MMCs/__init__.py:142
+#: MMCs/__init__.py:141
 msgid "Page Not Found"
 msgstr "页面未找到"
 
-#: MMCs/__init__.py:147
+#: MMCs/__init__.py:146
 msgid "Method not allowed"
 msgstr "方法不允许"
 
-#: MMCs/__init__.py:152
+#: MMCs/__init__.py:151
 msgid "Upload too large"
 msgstr "上传文件过大"
 
-#: MMCs/__init__.py:157
+#: MMCs/__init__.py:156
 msgid "Internal Server Error Explained"
 msgstr "服务器出错"
 
-#: MMCs/__init__.py:162
+#: MMCs/__init__.py:161
 msgid "Handle CSRF Error"
 msgstr "CSRF验证错误"
 
@@ -177,13 +178,13 @@ msgid "The task is not existed."
 msgstr "该任务未存在。"
 
 #: MMCs/forms.py:147 MMCs/templates/backstage/base.html:22
-#: MMCs/templates/backstage/base.html:95
+#: MMCs/templates/backstage/base.html:92
 #: MMCs/templates/backstage/root/manage_competition/base.html:11
 msgid "Notice"
 msgstr "公告"
 
 #: MMCs/forms.py:152 MMCs/templates/backstage/root/manage_settings/base.html:10
-#: MMCs/templates/base.html:40
+#: MMCs/templates/base.html:42
 msgid "About"
 msgstr "关于"
 
@@ -253,7 +254,7 @@ msgstr "拖拽文件上传或点击上传。"
 #: MMCs/utils.py:74
 #, python-format
 msgid "Error in the %(name)s field - %(error)s."
-msgstr "%(name)s：%(error)s"
+msgstr "%(name)s：%(error)s。"
 
 #: MMCs/utils.py:113
 msgid "Invalid filename."
@@ -383,39 +384,41 @@ msgstr "分数超出%(lower)s-%(upper)s范围。"
 msgid "Invalid score."
 msgstr "无效分数。"
 
-#: MMCs/templates/base.html:39
+#: MMCs/templates/base.html:41
 msgid "Home"
 msgstr "主页"
 
-#: MMCs/templates/base.html:45
+#: MMCs/templates/base.html:47
 msgid "Welcome to MMCs"
 msgstr "欢迎登入"
 
-#: MMCs/templates/backstage/base.html:58 MMCs/templates/base.html:51
+#: MMCs/templates/backstage/base.html:57 MMCs/templates/base.html:53
 msgid "Language"
 msgstr "语言"
 
-#: MMCs/templates/backstage/base.html:73 MMCs/templates/base.html:66
+#: MMCs/templates/backstage/base.html:70 MMCs/templates/base.html:68
 msgid "Logged in as"
 msgstr "登录为"
 
-#: MMCs/templates/backstage/base.html:75
+#: MMCs/templates/backstage/base.html:72
 #: MMCs/templates/backstage/root/manage_competition/base.html:12
-#: MMCs/templates/backstage/settings/base.html:8 MMCs/templates/base.html:68
+#: MMCs/templates/backstage/settings/base.html:8 MMCs/templates/base.html:70
 msgid "Settings"
 msgstr "设置"
 
-#: MMCs/templates/backstage/base.html:79 MMCs/templates/base.html:71
+#: MMCs/templates/backstage/base.html:76 MMCs/templates/base.html:73
 msgid "Logout"
 msgstr "注销"
 
-#: MMCs/templates/base.html:101 MMCs/templates/base.html:111
-msgid ""
-"North China University of Science and Technology Mathematical Modeling "
-"Association"
+#: MMCs/templates/base.html:104
+msgid "North China University of Science and Technology University Mathematical Modeling Association"
 msgstr "华北理工大学数学建模协会"
 
-#: MMCs/templates/base.html:121
+#: MMCs/templates/base.html:114
+msgid "North China University of Science and Technology University Mathematical Modeling Competition system"
+msgstr "华北理工大学数学建模竞赛管理系统"
+
+#: MMCs/templates/base.html:115
 msgid "Mathematical Modeling Competition system"
 msgstr "数学建模竞赛系统"
 
@@ -436,40 +439,40 @@ msgid "Manage"
 msgstr "管理"
 
 #: MMCs/templates/backstage/admin/base.html:14
-#: MMCs/templates/backstage/base.html:34 MMCs/templates/backstage/base.html:41
-#: MMCs/templates/backstage/base.html:50
+#: MMCs/templates/backstage/base.html:33 MMCs/templates/backstage/base.html:40
+#: MMCs/templates/backstage/base.html:49
 #: MMCs/templates/backstage/teacher/base.html:14
 msgid "Overview"
 msgstr "预览"
 
-#: MMCs/templates/backstage/base.html:36
+#: MMCs/templates/backstage/base.html:35
 #: MMCs/templates/backstage/root/base.html:13
 msgid "Competition Management"
 msgstr "竞赛管理"
 
-#: MMCs/templates/backstage/base.html:38
+#: MMCs/templates/backstage/base.html:37
 #: MMCs/templates/backstage/root/base.html:14
 msgid "Personnel Management"
 msgstr "用户管理"
 
 #: MMCs/templates/backstage/admin/base.html:15
-#: MMCs/templates/backstage/base.html:43
+#: MMCs/templates/backstage/base.html:42
 msgid "Solution Management"
 msgstr "作品管理"
 
 #: MMCs/templates/backstage/admin/base.html:16
-#: MMCs/templates/backstage/base.html:45 MMCs/templates/backstage/base.html:52
+#: MMCs/templates/backstage/base.html:44 MMCs/templates/backstage/base.html:51
 #: MMCs/templates/backstage/teacher/base.html:15
 msgid "Task Management"
 msgstr "任务管理"
 
 #: MMCs/templates/backstage/admin/base.html:17
 #: MMCs/templates/backstage/admin/manage_score.html:7
-#: MMCs/templates/backstage/base.html:47
+#: MMCs/templates/backstage/base.html:46
 msgid "Score Management"
 msgstr "分数管理"
 
-#: MMCs/templates/backstage/base.html:105
+#: MMCs/templates/backstage/base.html:102
 msgid "Close"
 msgstr "关闭"
 
@@ -750,14 +753,12 @@ msgid "No tasks"
 msgstr "无任务"
 
 #: MMCs/templates/front/index.html:14
-msgid ""
-"North China University of Science and Technology Mathematical Modeling "
-"Competition Management System"
+msgid "North China University of Science and Technology University Mathematical Modeling Competition Management System"
 msgstr "华北理工大学数学建模竞赛管理系统"
 
 #: MMCs/templates/front/index.html:18
 msgid "Sign in Now"
-msgstr "现在登入"
+msgstr "立即登录"
 
 #~ msgid "Error in the %(name)s field - %(error)s"
 #~ msgstr "%(name)s字段中的错误-%(error)s"
@@ -849,3 +850,13 @@ msgstr "现在登入"
 #~ msgid "Fork me on GitHub"
 #~ msgstr "在Github上拷贝该项目"
 
+#~ msgid ""
+#~ "North China University of Science and"
+#~ " Technology Mathematical Modeling Association"
+#~ msgstr "华北理工大学数学建模协会"
+
+#~ msgid ""
+#~ "North China University of Science and"
+#~ " Technology Mathematical Modeling Competition "
+#~ "Management System"
+#~ msgstr "华北理工大学数学建模竞赛管理系统"
