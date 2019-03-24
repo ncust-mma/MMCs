@@ -1,5 +1,5 @@
-{% from 'macros.html' import render_nav_item %}
 {% extends 'base.html' %}
+{% from 'macros.html' import render_nav_item %}
 
 {% block title %}Dashboard{% endblock %}
 
@@ -26,25 +26,25 @@
                         <div class="dropdown-menu" role="menu">
                             {% if current_user.is_root %}
                                 <a class="dropdown-item"
-                                    href="{{ url_for('root.index') }}">{{ _('Overview') }}</a>
+                                   href="{{ url_for('root.index') }}">{{ _('Overview') }}</a>
                                 <a class="dropdown-item"
-                                    href="{{ url_for('root.manage_competition') }}">{{ _('Competition Management') }}</a>
+                                   href="{{ url_for('root.manage_competition') }}">{{ _('Competition Management') }}</a>
                                 <a class="dropdown-item"
-                                    href="{{ url_for('root.manage_personnel') }}">{{ _('Personnel Management') }}</a>
+                                   href="{{ url_for('root.manage_personnel') }}">{{ _('Personnel Management') }}</a>
                             {% elif current_user.is_admin %}
                                 <a class="dropdown-item"
-                                    href="{{ url_for('admin.index') }}">{{ _('Overview') }}</a>
+                                   href="{{ url_for('admin.index') }}">{{ _('Overview') }}</a>
                                 <a class="dropdown-item"
-                                    href="{{ url_for('admin.manage_solution') }}">{{ _('Solution Management') }}</a>
+                                   href="{{ url_for('admin.manage_solution') }}">{{ _('Solution Management') }}</a>
                                 <a class="dropdown-item"
-                                    href="{{ url_for('admin.manage_task') }}">{{ _('Task Management') }}</a>
+                                   href="{{ url_for('admin.manage_task') }}">{{ _('Task Management') }}</a>
                                 <a class="dropdown-item"
-                                    href="{{ url_for('admin.manage_score') }}">{{ _('Score Management') }}</a>
+                                   href="{{ url_for('admin.manage_score') }}">{{ _('Score Management') }}</a>
                             {% elif current_user.is_teacher %}
                                 <a class="dropdown-item"
-                                    href="{{ url_for('teacher.index') }}">{{ _('Overview') }}</a>
+                                   href="{{ url_for('teacher.index') }}">{{ _('Overview') }}</a>
                                 <a class="dropdown-item"
-                                    href="{{ url_for('teacher.manage_task') }}">{{ _('Task Management') }}</a>
+                                   href="{{ url_for('teacher.manage_task') }}">{{ _('Task Management') }}</a>
                             {% endif %}
                         </div>
                     </div>
@@ -54,8 +54,9 @@
                         </a>
                         <div class="dropdown-menu" role="menu">
                             <a class="dropdown-item"
-                                href="{{ url_for('front.set_locale', locale='zh_Hans_CN') }}">简体中文</a>
-                            <a class="dropdown-item" href="{{ url_for('front.set_locale', locale='en_US') }}">English</a>
+                               href="{{ url_for('front.set_locale', locale='zh_Hans_CN') }}">简体中文</a>
+                            <a class="dropdown-item"
+                               href="{{ url_for('front.set_locale', locale='en_US') }}">English</a>
                         </div>
                     </div>
                     <div class="dropdown nav-item">
@@ -68,7 +69,7 @@
                                 <span class="oi oi-cog"></span> {{ _('Settings') }}</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item"
-                                href="{{ url_for('auth.logout', next=request.full_path) }}">
+                               href="{{ url_for('auth.logout', next=request.full_path) }}">
                                 <span class="oi oi-account-logout"></span> {{ _('Logout') }}</a>
                         </div>
                     </div>
