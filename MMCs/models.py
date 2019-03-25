@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import date
+import datetime
 
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -210,7 +210,8 @@ class Competition(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
-    date = db.Column(db.Date, index=True, nullable=False, default=date.today)
+    date = db.Column(db.Date, index=True, nullable=False,
+                     default=datetime.date.today)
     flag = db.Column(db.Boolean, default=False)
 
     tasks = db.relationship('Task', cascade='all, delete-orphan')
@@ -251,3 +252,14 @@ class Competition(db.Model):
                     db.session.commit()
                 except:
                     db.session.rollback()
+
+
+class Log(db.Model):
+    """User operation log
+    """
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    time = db.Column(db.DateTime, index=True, default=datetime.datetime.now)
+
+    content = db.Column(db.Text)
