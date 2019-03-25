@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from flask import (Blueprint, abort, current_app, flash, redirect,
-                   render_template, request, url_for)
+from flask import Blueprint, current_app, flash, render_template, request
 from flask_babel import _
 from flask_login import current_user, login_required
 
 from MMCs.decorators import teacher_required
 from MMCs.extensions import db
 from MMCs.forms import ChangeScoreForm
-from MMCs.models import Competition, Task
+from MMCs.models import Competition, Task, Solution
 from MMCs.utils import flash_errors, log_user, redirect_back
 
 teacher_bp = Blueprint('teacher', __name__)
@@ -49,7 +48,7 @@ def manage_task():
         pagination = Task.query.filter(
             Task.competition_id == com.id,
             Task.teacher_id == current_user.id
-        ).order_by(Task.id.desc()).paginate(page, current_app.config['SOLUTION_PER_PAGE'])
+        ).join(Solution).order_by(Solution.name).paginate(page, current_app.config['SOLUTION_PER_PAGE'])
 
         return render_template(
             'backstage/teacher/manage_task.html',

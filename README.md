@@ -35,4 +35,4 @@ $ flask run
 
 ## TODO
 
--   [ ] table sort problem
+-   [ ] Verification code

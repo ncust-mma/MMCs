@@ -286,7 +286,7 @@ def solution_view():
     page = request.args.get('page', 1, type=int)
     com = Competition.current_competition()
     pagination = Solution.query.filter_by(competition_id=com.id).order_by(
-        Solution.id.desc()).paginate(page, current_app.config['SOLUTION_PER_PAGE'])
+        Solution.name).paginate(page, current_app.config['SOLUTION_PER_PAGE'])
 
     return render_template(
         'backstage/admin/manage_task/solution_view.html',
