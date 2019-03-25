@@ -3,10 +3,10 @@
 
 {% block solution_content %}
     {% if is_start() %}
-        <h3>
+        <h4>
             {{ _('Solutions') }}
             <small class="text-muted">{{ pagination.total|default(0) }}</small>
-        </h3>
+        </h4>
         {% if pagination.items %}
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm">

@@ -17,9 +17,8 @@
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
     {% block styles %}
         {{ bootstrap.load_css() }}
-        <link rel="stylesheet"
-              href="{{ url_for('static', filename='open-iconic/font/css/open-iconic-bootstrap.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/css/flat-ui.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% endblock styles %}
 </head>
@@ -129,7 +128,6 @@
         $(function () {
             $("[data-toggle='tooltip']").tooltip();
         });
-
     </script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 {% endblock scripts %}
