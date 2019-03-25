@@ -160,7 +160,13 @@ root 类型用户主要负责把控全局，记录并控制所有竞赛情况。
 
     - log 日志
 
-        > 下载 error 错误日志
+        - Download user operation logs
+
+            > 下载用户操作日志
+
+        - Download system error logs
+
+            > 下载系统错误日志
 
     - about 关于
 
