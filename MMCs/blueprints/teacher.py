@@ -9,7 +9,7 @@ from MMCs.decorators import teacher_required
 from MMCs.extensions import db
 from MMCs.forms import ChangeScoreForm
 from MMCs.models import Competition, Task
-from MMCs.utils import flash_errors, redirect_back
+from MMCs.utils import flash_errors, log_user, redirect_back
 
 teacher_bp = Blueprint('teacher', __name__)
 
@@ -66,6 +66,9 @@ def change(task_id):
     upper = current_app.config['SCORE_UPPER_LIMIT']
     lower = current_app.config['SCORE_LOWER_LIMIT']
     if form.validate_on_submit:
+        content = render_template('logs/teacher/update.txt')
+        log_user(content)
+
         if form.score.data:
             if lower <= form.score.data <= upper:
                 task = Task.query.get_or_404(task_id)

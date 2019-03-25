@@ -2,14 +2,13 @@
 
 {% block task_content %}
     {% if is_start() %}
-        <div class="btn-group btn-group-vertical btn-block" role="group" aria-label="Button group with nested dropdown">
+        <div class="btn-group btn-group-vertical btn-block" role="group">
             <a class="btn btn-danger text-white" data-toggle="modal" data-target="#confirm-random"
                data-href="{{ url_for('admin.method_random') }}">
                 <span class="oi oi-random"></span> {{ _('Random') }}</a>
             <a class="btn btn-primary text-white" href="{{ url_for('admin.teacher_view') }}">
                 <span class="oi oi-pencil"></span> {{ _('Manual') }}</a>
         </div>
-
     {% else %}
         {% include "backstage/tips/no_start.html" %}
     {% endif %}

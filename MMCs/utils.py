@@ -16,11 +16,12 @@ import pandas as pd
 from flask import (Markup, abort, current_app, flash, redirect,
                    render_template_string, request, url_for)
 from flask_babel import _
+from flask_login import current_user
 from pypinyin import lazy_pinyin
 from werkzeug.utils import secure_filename
 
 from MMCs.extensions import db, scheduler
-from MMCs.models import Competition, Solution, Task, User
+from MMCs.models import Competition, Log, Solution, Task, User, Log
 
 
 def is_safe_url(target):
@@ -241,6 +242,7 @@ def download_teacher_result(competition_id):
                    for teacher in teachers}
     solutions = Solution.query.filter_by(competition_id=competition_id).all()
     solution_dic = {solution.id: (solution.name,
+                                  solution.uuid,
                                   solution.index,
                                   solution.problem,
                                   solution.team_number,
@@ -255,15 +257,18 @@ def download_teacher_result(competition_id):
         df['teacher_id'].apply(lambda x: teacher_dic.get(x)[1]))
     df['filename'] = (
         df['solution_id'].apply(lambda x: solution_dic.get(x)[0]))
-    df['index'] = (
+    df['uuid'] = (
         df['solution_id'].apply(lambda x: solution_dic.get(x)[1]))
-    df['problem'] = (
+    df['index'] = (
         df['solution_id'].apply(lambda x: solution_dic.get(x)[2]))
-    df['team_number'] = (
+    df['problem'] = (
         df['solution_id'].apply(lambda x: solution_dic.get(x)[3]))
+    df['team_number'] = (
+        df['solution_id'].apply(lambda x: solution_dic.get(x)[4]))
     df['team_player'] = (
-        df['solution_id'].apply(lambda x: '_'.join(solution_dic.get(x)[4])))
+        df['solution_id'].apply(lambda x: '_'.join(solution_dic.get(x)[5])))
 
+    del df['id']
     del df['teacher_id']
     del df['solution_id']
     del df['competition_id']
@@ -291,6 +296,7 @@ def download_solution_score(competition_id):
     df['team_player'] = (
         df['name'].apply(lambda x: '_'.join(x.split('_')[3:])))
 
+    del df['id']
     del df['competition_id']
 
     file = os.path.join(
@@ -303,7 +309,29 @@ def download_solution_score(competition_id):
     return zfile
 
 
-def write_loaclfile(path, content, is_markup=True):
+def download_user_operation():
+    df = pd.read_sql_query(Log.query.statement, db.engine)
+    users = User.query.all()
+    user_dic = {user.id: (user.username, user.realname, user.permission)
+                for user in users}
+    df['username'] = (df['user_id'].apply(lambda x: user_dic.get(x)[0]))
+    df['realname'] = (df['user_id'].apply(lambda x: user_dic.get(x)[1]))
+    df['permission'] = (df['user_id'].apply(lambda x: user_dic.get(x)[2]))
+
+    del df['id']
+    del df['user_id']
+
+    file = os.path.join(
+        current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.xlsx')
+    df.to_excel(file, index=False)
+
+    zfile = file.replace('.xlsx', '.zip')
+    zip2here(file, zfile)
+
+    return zfile
+
+
+def write_localfile(path, content, is_markup=True):
     with open(path, 'w', encoding='utf-8') as f:
         if is_markup:
             content = Markup(content)
@@ -317,3 +345,14 @@ def read_localfile(path, is_render=True):
             content = render_template_string(content)
 
     return content
+
+
+def log_user(content):
+    log = Log(
+        user_id=current_user.id,
+        ip=request.remote_addr,
+        content=content
+    )
+
+    db.session.add(log)
+    db.session.commit()

@@ -7,8 +7,7 @@
         <h4 class="card-header">{{ _('Score Management') }}</h4>
         {% if is_start() %}
             <div class="card-body">
-                <div class="btn-group btn-group-vertical btn-block" role="group"
-                     aria-label="Button group with nested dropdown">
+                <div class="btn-group btn-group-vertical btn-block" role="group">
                     <form class="btn" action="{{ url_for('admin.download_teacher') }}" method="post">
                         <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
                         <button class="btn btn-info" type="submit">

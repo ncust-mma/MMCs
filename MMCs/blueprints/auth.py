@@ -7,7 +7,7 @@ from flask_login import (confirm_login, current_user, login_fresh,
 
 from MMCs.forms import LoginForm
 from MMCs.models import User
-from MMCs.utils import redirect_back
+from MMCs.utils import log_user, redirect_back
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -22,6 +22,9 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user and user.validate_password(form.password.data):
             if login_user(user, form.remember_me.data):
+                content = render_template('logs/auth/login.txt')
+                log_user(content)
+
                 flash(_('Login success.'), 'info')
                 return redirect_back()
         else:
@@ -33,6 +36,9 @@ def login():
 @auth_bp.route('/logout')
 @login_required
 def logout():
+    content = render_template('logs/auth/logout.txt')
+    log_user(content)
+
     logout_user()
     flash(_('Logout success.'), 'info')
 
@@ -48,5 +54,9 @@ def re_authenticate():
     form = LoginForm()
     if form.validate_on_submit() and current_user.validate_password(form.password.data):
         confirm_login()
+
+        content = render_template('logs/auth/login.txt')
+        log_user(content)
+
         return redirect_back()
     return render_template('auth/login.html', form=form)

@@ -10,7 +10,7 @@ from flask_login import current_user, fresh_login_required, login_required
 from MMCs.extensions import db
 from MMCs.forms import ChangePasswordForm, ChangeUsernameForm, EditProfileForm
 from MMCs.models import Competition
-from MMCs.utils import redirect_back
+from MMCs.utils import log_user, redirect_back
 
 backstage_bp = Blueprint('backstage', __name__)
 
@@ -23,6 +23,9 @@ def edit_profile():
         current_user.realname = form.realname.data
         current_user.remark = form.remark.data
         db.session.commit()
+
+        content = render_template('logs/settings/edit_profile.txt')
+        log_user(content)
 
         flash(_('Profile updated.'), 'success')
         return redirect_back()
@@ -42,6 +45,9 @@ def change_username():
         current_user.username = form.username.data
         db.session.commit()
 
+        content = render_template('logs/settings/change_username.txt')
+        log_user(content)
+
         flash(_('Username updated.'), 'success')
         return redirect_back()
 
@@ -56,6 +62,9 @@ def change_username():
 def change_password():
     form = ChangePasswordForm()
     if form.validate_on_submit():
+        content = render_template('logs/settings/change_password.txt')
+        log_user(content)
+
         if current_user.validate_password(form.old_password.data):
             current_user.set_password(form.password.data)
             db.session.commit()
@@ -71,6 +80,9 @@ def change_password():
 @backstage_bp.route('/solution/<path:filename>')
 @login_required
 def get_solution(filename):
+    content = render_template('logs/download.txt')
+    log_user(content)
+
     if Competition.is_start():
         path = os.path.join(
             current_app.config['SOLUTION_SAVE_PATH'], filename)

@@ -36,4 +36,3 @@ $ flask run
 ## TODO
 
 -   [ ] table sort problem
--   [ ] user operation log

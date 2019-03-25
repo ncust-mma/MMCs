@@ -12,8 +12,8 @@ from MMCs.extensions import db
 from MMCs.forms import ButtonAddForm, ButtonCheckForm
 from MMCs.models import Competition, Solution, Task, User
 from MMCs.utils import (allowed_file, check_filename, download_solution_score,
-                        download_teacher_result, new_filename, random_sample,
-                        redirect_back)
+                        download_teacher_result, log_user, new_filename,
+                        random_sample, redirect_back)
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -69,9 +69,8 @@ def solution_list():
 @login_required
 def upload():
     if request.method == 'POST' and 'file' in request.files:
-        path = current_app.config['SOLUTION_SAVE_PATH']
-        if not os.path.exists(path):
-            os.mkdir(path)
+        content = render_template('logs/admin/solution/upload.txt')
+        log_user(content)
 
         if Competition.is_start():
             file = request.files.get('file')
@@ -79,12 +78,14 @@ def upload():
             if allowed_file(filename):
                 flag, info = check_filename(filename)
                 if flag:
+                    path = current_app.config['SOLUTION_SAVE_PATH']
+                    file.save(os.path.join(path, uuid))
+
                     com = Competition.current_competition()
                     solution = Solution(
                         name=filename, uuid=uuid, competition_id=com.id)
                     db.session.add(solution)
                     db.session.commit()
-                    file.save(os.path.join(path, uuid))
                 else:
                     return info, 400
             else:
@@ -104,6 +105,9 @@ def delete_solution_task(solution_id):
     solution = Solution.query.get_or_404(solution_id)
     db.session.delete(solution)
     db.session.commit()
+
+    content = render_template('logs/admin/solution/delete.txt')
+    log_user(content)
 
     flash(_('Solution deleted.'), 'info')
     return redirect_back()
@@ -128,6 +132,9 @@ def method():
 @admin_required
 @login_required
 def method_random():
+    content = render_template('logs/admin/solution/random.txt')
+    log_user(content)
+
     com = Competition.current_competition()
     Task.query.filter_by(competition_id=com.id).delete()
     db.session.commit()
@@ -181,6 +188,9 @@ def teacher_view():
 @admin_required
 @login_required
 def check_user(user_id):
+    content = render_template('logs/admin/task/check.txt')
+    log_user(content)
+
     com = Competition.current_competition()
     page = request.args.get('page', 1, type=int)
 
@@ -199,6 +209,9 @@ def check_user(user_id):
 @admin_required
 @login_required
 def delete_user_task(user_id):
+    content = render_template('logs/admin/task/delete.txt')
+    log_user(content)
+
     com = Competition.current_competition()
     Task.query.filter(
         Task.teacher_id == user_id,
@@ -214,6 +227,9 @@ def delete_user_task(user_id):
 @admin_required
 @login_required
 def method_delete_task(task_id):
+    content = render_template('logs/admin/task/check.txt')
+    log_user(content)
+
     task = Task.query.get_or_404(task_id)
     db.session.delete(task)
     db.session.commit()
@@ -247,6 +263,9 @@ def task_add_list(user_id):
 @admin_required
 @login_required
 def task_add(user_id, solution_id):
+    content = render_template('logs/admin/task/add.txt')
+    log_user(content)
+
     com = Competition.current_competition()
     task = Task(
         teacher_id=user_id,
@@ -286,6 +305,9 @@ def manage_score():
 @admin_required
 @login_required
 def download_teacher():
+    content = render_template('logs/admin/score/download.txt')
+    log_user(content)
+
     com = Competition.current_competition()
     if com.tasks:
         zfile = download_teacher_result(com.id)
@@ -302,6 +324,9 @@ def download_teacher():
 @admin_required
 @login_required
 def download_result():
+    content = render_template('logs/admin/score/download.txt')
+    log_user(content)
+
     com = Competition.current_competition()
     if com.solutions:
         zfile = download_solution_score(com.id)
