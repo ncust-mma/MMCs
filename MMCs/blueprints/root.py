@@ -21,7 +21,7 @@ from MMCs.settings import basedir
 from MMCs.utils import (download_solution_score, download_teacher_result,
                         download_user_operation, flash_errors, log_user,
                         read_localfile, redirect_back, write_localfile,
-                        write_localfile, zip2here)
+                        zip2here)
 
 root_bp = Blueprint('root', __name__)
 
