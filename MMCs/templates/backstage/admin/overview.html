@@ -17,7 +17,7 @@
                         <div class="progress">
                             {% set progress = task_finished / task_all %}
                             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                                style="width: {{ progress|default(0) }}%">
+                                 style="width: {{ progress|default(0) }}%">
                                 {{ _('All tasks finished') }}: {{ '%0.2f'|format(progress|float)|default(0) }}%
                             </div>
                         </div>
