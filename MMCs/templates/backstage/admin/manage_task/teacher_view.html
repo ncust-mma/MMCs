@@ -17,7 +17,7 @@
                 </thead>
                 {% for user in pagination.items %}
                     <tr>
-                        <td class="text-center">{{ pagination.total - (config['USER_PER_PAGE']*(page-1) + loop.index) + 1 }}</td>
+                        <td class="text-center">{{ config['USER_PER_PAGE']*(page-1) + loop.index }}</td>
                         <td class="text-center">{{ user.username }}</td>
                         <td class="text-center">{{ user.realname }}</td>
                         <td class="text-center">

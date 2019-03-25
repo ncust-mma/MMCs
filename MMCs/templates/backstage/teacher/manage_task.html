@@ -4,7 +4,7 @@
 {% block title %}Task{% endblock %}
 
 {% block setting_content %}
-    <div class="card w-100 bg-light">
+    <div class="card w-100">
         <h4 class="card-header">
             {{ _('Tasks') }}
             {% if is_start() %}
@@ -30,7 +30,7 @@
                             </thead>
                             {% for task in pagination.items %}
                                 <tr class="text-center">
-                                    <td scope="row">{{ pagination.total - (config['SOLUTION_PER_PAGE']*(page-1) + loop.index) + 1 }}</td>
+                                    <td scope="row">{{ config['SOLUTION_PER_PAGE']*(page-1) + loop.index }}</td>
                                     <td>
                                         <span class="badge badge-pill badge-primary">
                                             {{ task.problem }}
