@@ -3,9 +3,8 @@
 import os
 from uuid import uuid4
 
-from flask import (Blueprint, Markup, current_app, flash, redirect,
-                   render_template, render_template_string, request, send_file,
-                   url_for)
+from flask import (Blueprint, current_app, flash, redirect, render_template,
+                   request, send_file, url_for)
 from flask_babel import _
 from flask_login import fresh_login_required, login_required
 
@@ -20,7 +19,8 @@ from MMCs.forms import (AboutEditForm, AboutImageUploadForm,
 from MMCs.models import Competition, User
 from MMCs.settings import basedir
 from MMCs.utils import (download_solution_score, download_teacher_result,
-                        flash_errors, redirect_back, zip2here)
+                        flash_errors, read_localfile, redirect_back,
+                        write_loaclfile, zip2here)
 
 root_bp = Blueprint('root', __name__)
 
@@ -70,14 +70,10 @@ def notice():
     path = os.path.join(
         basedir, current_app.name, current_app.template_folder, 'showing/notice.html')
     if form.validate_on_submit():
-        with open(path, 'w', encoding='utf-8') as f:
-            f.write(Markup(form.notice.data))
-
+        write_loaclfile(path, form.notice.data)
         flash(_('Setting updated.'), 'success')
         return redirect_back()
-
-    with open(path, 'r', encoding='utf-8') as f:
-        form.notice.data = render_template_string(f.read())
+    form.notice.data = read_localfile(path)
 
     return render_template(
         'backstage/root/manage_competition/notice.html', form=form)
@@ -336,14 +332,11 @@ def about():
     path = os.path.join(
         basedir, current_app.name, current_app.template_folder, 'showing/about.html')
     if form.validate_on_submit():
-        with open(path, 'w', encoding='utf-8') as f:
-            f.write(Markup(form.about.data))
-
+        write_localfile(path, form.about.data)
         flash(_('Setting updated.'), 'success')
         return redirect_back()
 
-    with open(path, 'r', encoding='utf-8') as f:
-        form.about.data = render_template_string(f.read())
+    form.about.data = read_localfile(path)
 
     return render_template('backstage/root/manage_settings/about.html', form=form)
 

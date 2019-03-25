@@ -6,8 +6,7 @@ from datetime import datetime
 from logging.handlers import RotatingFileHandler, SMTPHandler
 
 import click
-from flask import (Flask, Markup, render_template, render_template_string,
-                   request)
+from flask import Flask, Markup, render_template, request
 from flask_babel import _
 from flask_wtf.csrf import CSRFError
 
@@ -21,6 +20,7 @@ from MMCs.extensions import (babel, bootstrap, cache, ckeditor, csrf, db,
                              dropzone, login_manager, scheduler, toolbar)
 from MMCs.models import Competition, Solution, Task, User
 from MMCs.settings import basedir, config
+from MMCs.utils import read_localfile
 
 
 def create_app(config_name=None):
@@ -188,8 +188,7 @@ def register_global_func(app):
         path = os.path.join(
             basedir, app.name, app.template_folder, file)
 
-        with open(path, 'r', encoding='utf-8') as f:
-            return render_template_string(f.read())
+        return read_localfile(path)
 
 
 def register_commands(app):

@@ -13,7 +13,8 @@ from uuid import uuid1, uuid4
 
 import numba as nb
 import pandas as pd
-from flask import abort, current_app, flash, redirect, request, url_for
+from flask import (Markup, abort, current_app, flash, redirect,
+                   render_template_string, request, url_for)
 from flask_babel import _
 from pypinyin import lazy_pinyin
 from werkzeug.utils import secure_filename
@@ -300,3 +301,19 @@ def download_solution_score(competition_id):
     zip2here(file, zfile)
 
     return zfile
+
+
+def write_loaclfile(path, content, is_markup=True):
+    with open(path, 'w', encoding='utf-8') as f:
+        if is_markup:
+            content = Markup(content)
+        f.write(content)
+
+
+def read_localfile(path, is_render=True):
+    with open(path, 'r', encoding='utf-8') as f:
+        content = f.read()
+        if is_render:
+            content = render_template_string(content)
+
+    return content
