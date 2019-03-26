@@ -246,8 +246,12 @@ class Competition(db.Model):
         if solutions:
             for solution in solutions:
                 tasks = solution.tasks
-                solution.score = (
-                    sum([task.score for task in tasks if task.score is not None]) / len(tasks))
+                if tasks:
+                    solution.score = (
+                        sum([task.score for task in tasks if task.score is not None]) / len(tasks))
+                else:
+                    solution.score = 0
+
                 try:
                     db.session.commit()
                 except:
