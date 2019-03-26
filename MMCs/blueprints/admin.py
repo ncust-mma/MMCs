@@ -251,7 +251,7 @@ def task_add_list(user_id):
     pagination = Solution.query.filter(
         ~Solution.id.in_(map(str, solution_ids)),
         Solution.competition_id == com.id
-    ).order_by(Solution.id.desc()).paginate(page, current_app.config['SOLUTION_PER_PAGE'])
+    ).order_by(Solution.name).paginate(page, current_app.config['SOLUTION_PER_PAGE'])
 
     return render_template(
         'backstage/admin/manage_task/add.html',

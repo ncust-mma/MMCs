@@ -20,8 +20,15 @@
                         <td>
                             {{ config['SOLUTION_PER_PAGE']*(page-1) + loop.index }}
                         </td>
-                        <td>{{ solution.team_number }}</td>
-                        <td>{{ solution.problem }}</td>
+                        <td>
+                            <span class="badge badge-pill badge-info">
+                                {{ solution.team_number }}</td>
+                            </span>
+                        <td>
+                            <span class="badge badge-pill badge-primary">
+                                {{ solution.problem }}
+                            </span>
+                        </td>
                         <td>
                             <a href="{{ url_for('backstage.get_solution', filename=solution.uuid) }}"
                                target="_blank">

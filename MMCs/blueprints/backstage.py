@@ -51,9 +51,6 @@ def change_username():
         flash(_('Username updated.'), 'success')
         return redirect_back()
 
-    form.username.data = current_user.username
-    form.username2.data = current_user.username
-
     return render_template('backstage/settings/change_username.html', form=form)
 
 
