@@ -30,7 +30,7 @@
                             </thead>
                             {% for task in pagination.items %}
                                 <tr class="text-center">
-                                    <td scope="row">{{ config['SOLUTION_PER_PAGE']*(page-1) + loop.index }}</td>
+                                    <td>{{ config['SOLUTION_PER_PAGE']*(page-1) + loop.index }}</td>
                                     <td>
                                         <span class="badge badge-pill badge-primary">
                                             {{ task.problem }}
