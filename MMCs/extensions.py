@@ -39,6 +39,8 @@ login_manager.needs_refresh_message = _l(
     'In order to protect your account security, please log in again.')
 login_manager.needs_refresh_message_category = 'warning'
 
+login_manager.session_protection = "strong"
+
 
 class Guest(AnonymousUserMixin):
 

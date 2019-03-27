@@ -2,11 +2,11 @@
 
 import logging
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from logging.handlers import RotatingFileHandler, SMTPHandler
 
 import click
-from flask import Flask, Markup, render_template, request
+from flask import Flask, Markup, render_template, request, session
 from flask_babel import _
 from flask_wtf.csrf import CSRFError
 
@@ -18,7 +18,7 @@ from MMCs.blueprints.root import root_bp
 from MMCs.blueprints.teacher import teacher_bp
 from MMCs.extensions import (babel, bootstrap, cache, ckeditor, csrf, db,
                              dropzone, login_manager, scheduler, toolbar)
-from MMCs.models import Competition, Solution, Task, User
+from MMCs.models import Competition, Log, Solution, Task, User
 from MMCs.settings import basedir, config
 from MMCs.utils import read_localfile
 
@@ -43,6 +43,7 @@ def create_app(config_name=None):
     register_commands(app)
     register_shell_context(app)
     register_logging(app)
+    register_hook(app)
 
     return app
 
@@ -167,8 +168,9 @@ def register_shell_context(app):
 
     @app.shell_context_processor
     def make_shell_context():
-        return dict(db=db, User=User, Competition=Competition,
-                    Solution=Solution, Task=Task)
+        return dict(Competition=Competition,
+                    db=db, User=User, Task=Task,
+                    Solution=Solution, Log=Log)
 
 
 def register_global_func(app):
@@ -334,3 +336,10 @@ def register_commands(app):
         """Compile all languages."""
         if os.system('pybabel compile -d MMCs/translations'):
             raise RuntimeError('compile command failed')
+
+
+def register_hook(app):
+    @app.before_request
+    def before_request():
+        session.permanent = True
+        app.permanent_session_lifetime = timedelta(minutes=3)
