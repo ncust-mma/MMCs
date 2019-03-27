@@ -10,7 +10,7 @@ from flask_login import fresh_login_required, login_required
 
 from MMCs.decorators import root_required
 from MMCs.extensions import db
-from MMCs.forms import (AboutEditForm, AboutImageUploadForm,
+from MMCs.forms.root import (AboutEditForm, AboutImageUploadForm,
                         ChangeUsernameForm, CompetitionNameForm,
                         CompetitionSettingForm, DownloadLogForm,
                         EditProfileForm, ErrorImageUploadForm,

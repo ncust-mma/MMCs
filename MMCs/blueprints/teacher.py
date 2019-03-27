@@ -6,7 +6,7 @@ from flask_login import current_user, login_required
 
 from MMCs.decorators import teacher_required
 from MMCs.extensions import db
-from MMCs.forms import ChangeScoreForm
+from MMCs.forms.teacher import ChangeScoreForm
 from MMCs.models import Competition, Task, Solution
 from MMCs.utils import flash_errors, log_user, redirect_back
 

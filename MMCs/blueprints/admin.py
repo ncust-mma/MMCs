@@ -9,7 +9,7 @@ from flask_login import fresh_login_required, login_required
 
 from MMCs.decorators import admin_required
 from MMCs.extensions import db
-from MMCs.forms import ButtonAddForm, ButtonCheckForm
+from MMCs.forms.admin import ButtonAddForm, ButtonCheckForm
 from MMCs.models import Competition, Solution, Task, User
 from MMCs.utils import (allowed_file, check_filename, download_solution_score,
                         download_teacher_result, log_user, new_filename,

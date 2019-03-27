@@ -5,7 +5,7 @@ from flask_babel import _
 from flask_login import (confirm_login, current_user, login_fresh,
                          login_required, login_user, logout_user)
 
-from MMCs.forms import LoginForm
+from MMCs.forms.auth import LoginForm
 from MMCs.models import User
 from MMCs.utils import log_user, redirect_back
 

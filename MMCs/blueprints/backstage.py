@@ -8,7 +8,8 @@ from flask_babel import _
 from flask_login import current_user, fresh_login_required, login_required
 
 from MMCs.extensions import db
-from MMCs.forms import ChangePasswordForm, ChangeUsernameForm, EditProfileForm
+from MMCs.forms.backstage import (ChangePasswordForm, ChangeUsernameForm,
+                                  EditProfileForm)
 from MMCs.models import Competition
 from MMCs.utils import log_user, redirect_back
 

@@ -5,31 +5,12 @@ from flask_ckeditor import CKEditorField
 from flask_login import current_user
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileField, FileRequired
-from wtforms import (BooleanField, FloatField, IntegerField, PasswordField,
-                     RadioField, StringField, SubmitField, TextField,
-                     ValidationError)
+from wtforms import (IntegerField, PasswordField, RadioField, StringField,
+                     SubmitField, ValidationError)
 from wtforms.validators import (AnyOf, DataRequired, EqualTo, InputRequired,
                                 Length, Optional, Regexp)
 
-from MMCs.models import Task, User
-
-
-class LoginForm(FlaskForm):
-    username = StringField(
-        _l('Username'),
-        validators=[
-            DataRequired(),
-            Length(1, 30),
-            InputRequired()]
-    )
-    password = PasswordField(
-        _l('Password'), validators=[DataRequired(), InputRequired()])
-    remember_me = BooleanField(_l('Remember me'))
-    submit = SubmitField(_l('Log in'))
-
-    def validate_username(self, field):
-        if not User.query.filter_by(username=field.data).first():
-            raise ValidationError(_l('The username is not existed.'))
+from MMCs.models import User
 
 
 class RegisterForm(FlaskForm):
@@ -119,30 +100,6 @@ class RootChangePasswordForm(FlaskForm):
     submit = SubmitField(_l('Change'))
 
 
-class ChangeScoreForm(FlaskForm):
-    id = IntegerField(
-        _l('Task ID'),
-        validators=[DataRequired()]
-    )
-
-    score = FloatField(
-        _l('Score'),
-        validators=[DataRequired(), InputRequired()]
-    )
-
-    remark = TextField(
-        _l('Remark'),
-        validators=[Optional()],
-        render_kw={'placeholder': _l('Leave your ideas')}
-    )
-
-    submit = SubmitField(_l('Change'))
-
-    def validate_id(self, field):
-        if Task.query.get(field.data) is None:
-            raise ValidationError(_l('The task is not existed.'))
-
-
 class NoticeEditForm(FlaskForm):
     notice = CKEditorField(_l('Notice'), validators=[Optional()])
     edit = SubmitField(_l('Edit'))
@@ -151,14 +108,6 @@ class NoticeEditForm(FlaskForm):
 class AboutEditForm(FlaskForm):
     about = CKEditorField(_l('About'), validators=[Optional()])
     edit = SubmitField(_l('Edit'))
-
-
-class ButtonAddForm(FlaskForm):
-    submit = SubmitField(_l('Add'))
-
-
-class ButtonCheckForm(FlaskForm):
-    submit = SubmitField(_l('Check'))
 
 
 class CompetitionSettingForm(FlaskForm):
