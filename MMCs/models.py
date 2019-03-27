@@ -22,7 +22,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(128), nullable=False)
     locale = db.Column(db.String(20), default='zh_Hans_CN')
 
-    tasks = db.relationship('Task', cascade='all, delete-orphan')
+    tasks = db.relationship('Task')
 
     def set_password(self, password):
         """Set pwd for current user

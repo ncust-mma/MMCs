@@ -252,9 +252,9 @@ def download_teacher_result(competition_id):
         Task.query.filter_by(competition_id=competition_id).statement, db.engine)
 
     df['username'] = (
-        df['teacher_id'].apply(lambda x: teacher_dic.get(x)[0]))
+        df['teacher_id'].apply(lambda x: teacher_dic.get(x)[0] if teacher_dic.get(x) else x))
     df['realname'] = (
-        df['teacher_id'].apply(lambda x: teacher_dic.get(x)[1]))
+        df['teacher_id'].apply(lambda x: teacher_dic.get(x)[1] if teacher_dic.get(x) else x))
     df['filename'] = (
         df['solution_id'].apply(lambda x: solution_dic.get(x)[0]))
     df['uuid'] = (
