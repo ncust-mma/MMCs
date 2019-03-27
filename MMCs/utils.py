@@ -21,7 +21,7 @@ from pypinyin import lazy_pinyin
 from werkzeug.utils import secure_filename
 
 from MMCs.extensions import db, scheduler
-from MMCs.models import Competition, Log, Solution, Task, User, Log
+from MMCs.models import Competition, Log, Solution, Task, User
 
 
 def is_safe_url(target):
@@ -178,10 +178,10 @@ def _random_sample(this_problem, teachers_view, is_notempty):
     if is_notempty:
         teacher_ids = []
         for teacher_id, teacher_problem in teachers_view.items():
-            if (teacher_problem[this_problem] and teacher_problem[this_problem] < cal_teacher_task_number()):
+            if (len(teacher_ids) <= solution_task_number and
+                    teacher_problem[this_problem] and
+                    teacher_problem[this_problem] < cal_teacher_task_number()):
                 teacher_ids.append(teacher_id)
-                if len(teacher_ids) >= solution_task_number:
-                    break
     else:
         teacher_ids = random.sample(teachers_view.keys(), solution_task_number)
 

@@ -13,9 +13,14 @@ from MMCs.utils import flash_errors, log_user, redirect_back
 teacher_bp = Blueprint('teacher', __name__)
 
 
-@teacher_bp.route('/')
+@teacher_bp.before_request
 @teacher_required
 @login_required
+def login_protect():
+    pass
+
+
+@teacher_bp.route('/')
 def index():
     com = Competition.current_competition()
     if com and com.is_start():
@@ -37,8 +42,6 @@ def index():
 
 
 @teacher_bp.route('/task')
-@teacher_required
-@login_required
 def manage_task():
     com = Competition.current_competition()
     if com:
@@ -58,8 +61,6 @@ def manage_task():
 
 
 @teacher_bp.route('/task/change/<int:task_id>', methods=['POST'])
-@teacher_required
-@login_required
 def change(task_id):
     form = ChangeScoreForm()
     upper = current_app.config['SCORE_UPPER_LIMIT']

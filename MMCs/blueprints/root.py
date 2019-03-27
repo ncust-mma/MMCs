@@ -26,23 +26,24 @@ from MMCs.utils import (download_solution_score, download_teacher_result,
 root_bp = Blueprint('root', __name__)
 
 
-@root_bp.route('/')
+@root_bp.before_request
 @root_required
 @login_required
+def login_protect():
+    pass
+
+
+@root_bp.route('/')
 def index():
     return redirect(url_for('.manage_competition'))
 
 
 @root_bp.route('/competition')
-@root_required
-@login_required
 def manage_competition():
     return redirect(url_for('root.behavior'))
 
 
 @root_bp.route('/competition/behavior')
-@root_required
-@login_required
 def behavior():
     form = CompetitionNameForm()
     return render_template(
@@ -50,8 +51,6 @@ def behavior():
 
 
 @root_bp.route('/competition/history')
-@root_required
-@login_required
 def history():
     page = request.args.get('page', 1, type=int)
     pagination = Competition.query.order_by(
@@ -64,8 +63,6 @@ def history():
 
 @root_bp.route('/competition/notice', methods=['GET', 'POST'])
 @fresh_login_required
-@root_required
-@login_required
 def notice():
     form = NoticeEditForm()
     path = os.path.join(
@@ -85,8 +82,6 @@ def notice():
 
 @root_bp.route('/competition/settings', methods=['GET', 'POST'])
 @fresh_login_required
-@root_required
-@login_required
 def competition_settings():
     form = CompetitionSettingForm()
     if form.validate_on_submit():
@@ -111,8 +106,6 @@ def competition_settings():
 
 @root_bp.route('/competition/behavior/start', methods=['POST'])
 @fresh_login_required
-@root_required
-@login_required
 def start_competition():
     form = CompetitionNameForm()
     if form.validate_on_submit():
@@ -131,8 +124,6 @@ def start_competition():
 
 @root_bp.route('/competition/behavior/switch', methods=['POST'])
 @fresh_login_required
-@root_required
-@login_required
 def switch_state():
     com = Competition.current_competition()
     if com:
@@ -159,15 +150,11 @@ def switch_state():
 
 
 @root_bp.route('/personnel')
-@root_required
-@login_required
 def manage_personnel():
     return redirect(url_for('.personnel_list'))
 
 
 @root_bp.route('/personnel/list')
-@root_required
-@login_required
 def personnel_list():
     page = request.args.get('page', 1, type=int)
     pagination = User.query.order_by(
@@ -180,8 +167,6 @@ def personnel_list():
 
 @root_bp.route('/personnel/list/change-password/<int:user_id>', methods=['GET', 'POST'])
 @fresh_login_required
-@root_required
-@login_required
 def change_password(user_id):
     form = RootChangePasswordForm()
     if form.validate_on_submit():
@@ -201,8 +186,6 @@ def change_password(user_id):
 
 @root_bp.route('/personnel/list/edit-profile/<int:user_id>', methods=['GET', 'POST'])
 @fresh_login_required
-@root_required
-@login_required
 def edit_profile(user_id):
     user = User.query.get_or_404(user_id)
     form = EditProfileForm()
@@ -226,8 +209,6 @@ def edit_profile(user_id):
 
 @root_bp.route('/personnel/list/change-username/<int:user_id>', methods=['GET', 'POST'])
 @fresh_login_required
-@root_required
-@login_required
 def change_username(user_id):
     user = User.query.get_or_404(user_id)
     form = ChangeUsernameForm()
@@ -250,8 +231,6 @@ def change_username(user_id):
 
 @root_bp.route('/personnel/register', methods=['GET', 'POST'])
 @fresh_login_required
-@root_required
-@login_required
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
@@ -275,8 +254,6 @@ def register():
 
 @root_bp.route('/delete/user/<int:user_id>', methods=['POST'])
 @fresh_login_required
-@root_required
-@login_required
 def delete_user(user_id):
     content = render_template('logs/root/personnel/delete.txt')
     log_user(content)
@@ -291,8 +268,6 @@ def delete_user(user_id):
 
 @root_bp.route('/score/download/<int:competition_id>/teacher', methods=['POST'])
 @fresh_login_required
-@root_required
-@login_required
 def download_teacher(competition_id):
     content = render_template('logs/root/competition/history.txt')
     log_user(content)
@@ -310,8 +285,6 @@ def download_teacher(competition_id):
 
 @root_bp.route('/score/download/<int:competition_id>/result', methods=['POST'])
 @fresh_login_required
-@root_required
-@login_required
 def download_result(competition_id):
     content = render_template('logs/root/competition/history.txt')
     log_user(content)
@@ -329,16 +302,12 @@ def download_result(competition_id):
 
 
 @root_bp.route('/settings')
-@root_required
-@login_required
 def system_settings():
     return redirect(url_for('root.logs'))
 
 
 @root_bp.route('/settings/logs')
 @fresh_login_required
-@root_required
-@login_required
 def logs():
     form = DownloadLogForm()
     return render_template(
@@ -347,8 +316,6 @@ def logs():
 
 @root_bp.route('/settings/logs/error', methods=['POST'])
 @fresh_login_required
-@root_required
-@login_required
 def logs_error():
     content = render_template('logs/root/setting/log.txt')
     log_user(content)
@@ -366,8 +333,6 @@ def logs_error():
 
 @root_bp.route('/settings/logs/operation', methods=['POST'])
 @fresh_login_required
-@root_required
-@login_required
 def logs_operation():
     content = render_template('logs/root/setting/log.txt')
     log_user(content)
@@ -379,8 +344,6 @@ def logs_operation():
 
 @root_bp.route('/settings/about', methods=['GET', 'POST'])
 @fresh_login_required
-@root_required
-@login_required
 def about():
     form = AboutEditForm()
     path = os.path.join(
@@ -400,8 +363,6 @@ def about():
 
 @root_bp.route('/settings/images', methods=['GET', 'POST'])
 @fresh_login_required
-@root_required
-@login_required
 def images():
     index_form = IndexImageUploadForm()
     about_form = AboutImageUploadForm()

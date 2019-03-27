@@ -42,7 +42,7 @@
                 </div>
                 {% if not current_user.is_authenticated %}
                     <div class="navbar-nav nav-item ml-auto">
-                        <a class="btn btn-outline-success" href="{{ url_for('auth.login') }}">
+                        <a class="btn btn-outline-success" href="{{ url_for('auth.login', next=request.full_path) }}">
                             {{ _('Welcome to MMCs') }}
                         </a>
                     </div>

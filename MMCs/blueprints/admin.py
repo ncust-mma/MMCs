@@ -18,9 +18,14 @@ from MMCs.utils import (allowed_file, check_filename, download_solution_score,
 admin_bp = Blueprint('admin', __name__)
 
 
-@admin_bp.route('/')
+@admin_bp.before_request
 @admin_required
 @login_required
+def login_protect():
+    pass
+
+
+@admin_bp.route('/')
 def index():
     com = Competition.current_competition()
     if com and com.is_start():
@@ -38,15 +43,11 @@ def index():
 
 
 @admin_bp.route('/solution')
-@admin_required
-@login_required
 def manage_solution():
     return redirect(url_for('admin.solution_list'))
 
 
 @admin_bp.route('/solution/list')
-@admin_required
-@login_required
 def solution_list():
     com = Competition.current_competition()
     if com:
@@ -65,8 +66,6 @@ def solution_list():
 
 @admin_bp.route('/solution/upload', methods=['GET', 'POST'])
 @fresh_login_required
-@admin_required
-@login_required
 def upload():
     if request.method == 'POST' and 'file' in request.files:
         content = render_template('logs/admin/solution/upload.txt')
@@ -99,8 +98,6 @@ def upload():
 
 @admin_bp.route('/solution/delete/<int:solution_id>', methods=['POST'])
 @fresh_login_required
-@admin_required
-@login_required
 def delete_solution_task(solution_id):
     solution = Solution.query.get_or_404(solution_id)
     db.session.delete(solution)
@@ -114,23 +111,17 @@ def delete_solution_task(solution_id):
 
 
 @admin_bp.route('/task')
-@admin_required
-@login_required
 def manage_task():
     return redirect(url_for('admin.teacher_view'))
 
 
 @admin_bp.route('/task/method', methods=['GET', 'POST'])
-@admin_required
-@login_required
 def method():
     return render_template('backstage/admin/manage_task/method.html')
 
 
 @admin_bp.route('/task/method/random', methods=['POST'])
 @fresh_login_required
-@admin_required
-@login_required
 def method_random():
     content = render_template('logs/admin/solution/random.txt')
     log_user(content)
@@ -168,8 +159,6 @@ def method_random():
 
 
 @admin_bp.route('/task/teacher')
-@admin_required
-@login_required
 def teacher_view():
     page = request.args.get('page', 1, type=int)
     pagination = User.query.filter(User.permission == 'Teacher').order_by(
@@ -185,8 +174,6 @@ def teacher_view():
 
 
 @admin_bp.route('/task/teacher/check/<int:user_id>/tasks', methods=['GET', 'POST'])
-@admin_required
-@login_required
 def check_user(user_id):
     content = render_template('logs/admin/task/check.txt')
     log_user(content)
@@ -206,10 +193,8 @@ def check_user(user_id):
 
 @admin_bp.route('/task/teacher/delete/<int:user_id>', methods=['POST'])
 @fresh_login_required
-@admin_required
-@login_required
 def delete_user_task(user_id):
-    content = render_template('logs/admin/task/delete.txt')
+    content = render_template('logs/admin/task/clean.txt')
     log_user(content)
 
     com = Competition.current_competition()
@@ -224,10 +209,8 @@ def delete_user_task(user_id):
 
 @admin_bp.route('/task/teacher/check/delete/<int:task_id>', methods=['POST'])
 @fresh_login_required
-@admin_required
-@login_required
 def method_delete_task(task_id):
-    content = render_template('logs/admin/task/check.txt')
+    content = render_template('logs/admin/task/delete.txt')
     log_user(content)
 
     task = Task.query.get_or_404(task_id)
@@ -239,8 +222,6 @@ def method_delete_task(task_id):
 
 
 @admin_bp.route('/task/teacher/check/<int:user_id>/add', methods=['GET', 'POST'])
-@admin_required
-@login_required
 def task_add_list(user_id):
     page = request.args.get('page', 1, type=int)
     com = Competition.current_competition()
@@ -260,8 +241,6 @@ def task_add_list(user_id):
 
 @admin_bp.route('/task/teacher/check/<int:user_id>/add/<int:solution_id>', methods=['POST'])
 @fresh_login_required
-@admin_required
-@login_required
 def task_add(user_id, solution_id):
     content = render_template('logs/admin/task/add.txt')
     log_user(content)
@@ -280,8 +259,6 @@ def task_add(user_id, solution_id):
 
 
 @admin_bp.route('/task/solution')
-@admin_required
-@login_required
 def solution_view():
     page = request.args.get('page', 1, type=int)
     com = Competition.current_competition()
@@ -294,16 +271,12 @@ def solution_view():
 
 
 @admin_bp.route('/score')
-@admin_required
-@login_required
 def manage_score():
     return render_template('backstage/admin/manage_score.html')
 
 
 @admin_bp.route('/score/download/teacher', methods=['POST'])
 @fresh_login_required
-@admin_required
-@login_required
 def download_teacher():
     content = render_template('logs/admin/score/download.txt')
     log_user(content)
@@ -321,8 +294,6 @@ def download_teacher():
 
 @admin_bp.route('/score/download/result', methods=['POST'])
 @fresh_login_required
-@admin_required
-@login_required
 def download_result():
     content = render_template('logs/admin/score/download.txt')
     log_user(content)

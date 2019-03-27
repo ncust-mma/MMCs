@@ -7,47 +7,46 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: zeroto521@gmail.com\n"
-"POT-Creation-Date: 2019-03-27 16:07+0800\n"
+"POT-Creation-Date: 2019-03-27 18:59+0800\n"
 "PO-Revision-Date: 2019-03-27 16:09+0800\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: zh_Hans_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.6.0\n"
-"X-Generator: Poedit 2.2.1\n"
 
-#: MMCs/__init__.py:126
+#: MMCs/__init__.py:127
 msgid "Bad Request"
 msgstr "请求无效"
 
-#: MMCs/__init__.py:131
+#: MMCs/__init__.py:132
 msgid "Unauthorized"
 msgstr "未授权"
 
-#: MMCs/__init__.py:136
+#: MMCs/__init__.py:137
 msgid "Forbidden"
 msgstr "禁止访问"
 
-#: MMCs/__init__.py:141
+#: MMCs/__init__.py:142
 msgid "Page Not Found"
 msgstr "页面未找到"
 
-#: MMCs/__init__.py:146
+#: MMCs/__init__.py:147
 msgid "Method not allowed"
 msgstr "方法不允许"
 
-#: MMCs/__init__.py:151
+#: MMCs/__init__.py:152
 msgid "Upload too large"
 msgstr "上传文件过大"
 
-#: MMCs/__init__.py:156
+#: MMCs/__init__.py:157
 msgid "Internal Server Error Explained"
 msgstr "服务器出错"
 
-#: MMCs/__init__.py:161
+#: MMCs/__init__.py:162
 msgid "Handle CSRF Error"
 msgstr "CSRF验证错误"
 
@@ -268,44 +267,44 @@ msgstr "队号不正确。"
 msgid "Problem is not right."
 msgstr "题号不正确。"
 
-#: MMCs/blueprints/admin.py:95
+#: MMCs/blueprints/admin.py:94
 msgid "Competition of current year don't start."
 msgstr "今年校赛尚未开始。"
 
-#: MMCs/blueprints/admin.py:112
+#: MMCs/blueprints/admin.py:109
 msgid "Solution deleted."
 msgstr "作品已删除。"
 
-#: MMCs/blueprints/admin.py:161
+#: MMCs/blueprints/admin.py:152
 msgid "Randomly assigned."
 msgstr "任务已随机分配。"
 
-#: MMCs/blueprints/admin.py:163
+#: MMCs/blueprints/admin.py:154
 msgid "Please add teacher to assign task."
 msgstr "请先添加教师再来分配任务。"
 
-#: MMCs/blueprints/admin.py:165
+#: MMCs/blueprints/admin.py:156
 msgid "No solutions."
 msgstr "无作品。"
 
-#: MMCs/blueprints/admin.py:221
+#: MMCs/blueprints/admin.py:206
 msgid "All tasks of User deleted."
 msgstr "该用户所有任务已删除。"
 
-#: MMCs/blueprints/admin.py:237
+#: MMCs/blueprints/admin.py:220
 msgid "Task deleted."
 msgstr "任务删除。"
 
-#: MMCs/blueprints/admin.py:278
+#: MMCs/blueprints/admin.py:257
 msgid "Added successed."
 msgstr "添加成功。"
 
-#: MMCs/blueprints/admin.py:315 MMCs/blueprints/admin.py:334
-#: MMCs/blueprints/root.py:304 MMCs/blueprints/root.py:323
+#: MMCs/blueprints/admin.py:288 MMCs/blueprints/admin.py:305
+#: MMCs/blueprints/root.py:279 MMCs/blueprints/root.py:296
 msgid "The result file is already downloaded."
 msgstr "文件已下载。"
 
-#: MMCs/blueprints/admin.py:318 MMCs/blueprints/root.py:307
+#: MMCs/blueprints/admin.py:291 MMCs/blueprints/root.py:282
 msgid "No task."
 msgstr "无任务。"
 
@@ -321,15 +320,15 @@ msgstr "用户名或密码无效。"
 msgid "Logout success."
 msgstr "注销成功。"
 
-#: MMCs/blueprints/backstage.py:30 MMCs/blueprints/root.py:217
+#: MMCs/blueprints/backstage.py:30 MMCs/blueprints/root.py:200
 msgid "Profile updated."
 msgstr "账户已更新。"
 
-#: MMCs/blueprints/backstage.py:51 MMCs/blueprints/root.py:241
+#: MMCs/blueprints/backstage.py:51 MMCs/blueprints/root.py:222
 msgid "Username updated."
 msgstr "用户名已更新。"
 
-#: MMCs/blueprints/backstage.py:69 MMCs/blueprints/root.py:195
+#: MMCs/blueprints/backstage.py:69 MMCs/blueprints/root.py:180
 msgid "Password updated."
 msgstr "密码已更新。"
 
@@ -337,50 +336,50 @@ msgstr "密码已更新。"
 msgid "Old password is incorrect."
 msgstr "旧密码不正确。"
 
-#: MMCs/blueprints/front.py:44 MMCs/blueprints/root.py:78
-#: MMCs/blueprints/root.py:393
+#: MMCs/blueprints/front.py:44 MMCs/blueprints/root.py:75
+#: MMCs/blueprints/root.py:356
 msgid "Setting updated."
 msgstr "设置已更新。"
 
-#: MMCs/blueprints/root.py:125
+#: MMCs/blueprints/root.py:118
 msgid "A new competition start now."
 msgstr "新的比赛现在开始。"
 
-#: MMCs/blueprints/root.py:146
+#: MMCs/blueprints/root.py:137
 msgid "Competition stopped."
 msgstr "比赛暂停。"
 
-#: MMCs/blueprints/root.py:154
+#: MMCs/blueprints/root.py:145
 msgid "Competition continued."
 msgstr "比赛继续。"
 
-#: MMCs/blueprints/root.py:156
+#: MMCs/blueprints/root.py:147
 msgid "Please start new competition before do it."
 msgstr "请在开始竞赛后进行该项操。"
 
-#: MMCs/blueprints/root.py:270
+#: MMCs/blueprints/root.py:249
 msgid "Account registered."
 msgstr "账号已注册。"
 
-#: MMCs/blueprints/root.py:288
+#: MMCs/blueprints/root.py:265
 msgid "User deleted."
 msgstr "账号已删除。"
 
-#: MMCs/blueprints/root.py:417 MMCs/blueprints/root.py:421
-#: MMCs/blueprints/root.py:425
+#: MMCs/blueprints/root.py:378 MMCs/blueprints/root.py:382
+#: MMCs/blueprints/root.py:386
 msgid "Image updated."
 msgstr "图像已更新。"
 
-#: MMCs/blueprints/teacher.py:78
+#: MMCs/blueprints/teacher.py:79
 msgid "Score Updated."
 msgstr "分数已更新。"
 
-#: MMCs/blueprints/teacher.py:80
+#: MMCs/blueprints/teacher.py:81
 #, python-format
 msgid "Score out of range from %(lower)s to %(upper)s."
 msgstr "分数超出%(lower)s-%(upper)s范围。"
 
-#: MMCs/blueprints/teacher.py:83
+#: MMCs/blueprints/teacher.py:84
 msgid "Invalid score."
 msgstr "无效分数。"
 
@@ -411,11 +410,15 @@ msgid "Logout"
 msgstr "注销"
 
 #: MMCs/templates/base.html:103
-msgid "North China University of Science and Technology University Mathematical Modeling Association"
+msgid ""
+"North China University of Science and Technology University Mathematical "
+"Modeling Association"
 msgstr "华北理工大学数学建模协会"
 
 #: MMCs/templates/base.html:113
-msgid "North China University of Science and Technology University Mathematical Modeling Competition system"
+msgid ""
+"North China University of Science and Technology University Mathematical "
+"Modeling Competition system"
 msgstr "华北理工大学数学建模竞赛管理系统"
 
 #: MMCs/templates/base.html:114
@@ -775,7 +778,9 @@ msgid "No tasks"
 msgstr "无任务"
 
 #: MMCs/templates/front/index.html:14
-msgid "North China University of Science and Technology University Mathematical Modeling Competition Management System"
+msgid ""
+"North China University of Science and Technology University Mathematical "
+"Modeling Competition Management System"
 msgstr "华北理工大学数学建模竞赛管理系统"
 
 #: MMCs/templates/front/index.html:18
@@ -882,3 +887,4 @@ msgstr "立即登录"
 #~ " Technology Mathematical Modeling Competition "
 #~ "Management System"
 #~ msgstr "华北理工大学数学建模竞赛管理系统"
+
