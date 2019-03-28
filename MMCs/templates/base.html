@@ -18,7 +18,8 @@
     {% block styles %}
         {{ bootstrap.load_css() }}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/css/flat-ui.min.css"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css"/>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% endblock styles %}
 </head>
@@ -27,26 +28,26 @@
 {% block navbar %}
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container">
-            <a class="navbar-brand" href="{{ url_for('front.index') }}">
+            <a class="navbar-brand navbar-header float-left" href="{{ url_for('front.index') }}">
                 <img src="{{ url_for('static', filename='navbar-brand.ico') }}" alt="MMCs" width="80">
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="navbar-nav mr-auto">
                     {{ render_nav_item('front.index', _('Home'), "oi oi-home") }}
                     {{ render_nav_item('front.about', _('About'), "oi oi-bookmark") }}
                 </div>
-                {% if not current_user.is_authenticated %}
-                    <div class="navbar-nav nav-item ml-auto">
-                        <a class="btn btn-outline-success" href="{{ url_for('auth.login', next=request.full_path) }}">
-                            {{ _('Welcome to MMCs') }}
-                        </a>
-                    </div>
-                {% endif %}
+                <div class="navbar-nav nav-item ml-auto">
+                    <a class="btn btn-outline-success" href="{{ url_for('auth.login', next=request.full_path) }}">
+                        {{ _('Welcome to MMCs') }}
+                    </a>
+                </div>
                 <div class="dropdown nav-item navbar-nav">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown">
                         <span class="oi oi-globe"></span> {{ _('Language') }}
@@ -58,21 +59,6 @@
                            href="{{ url_for('front.set_locale', locale='en_US') }}">English</a>
                     </div>
                 </div>
-                {% if current_user.is_authenticated %}
-                    <div class="dropdown nav-item navbar-nav">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                            <span class="oi oi-person"></span>
-                        </a>
-                        <div class="dropdown-menu" role="menu">
-                            <h6 class="dropdown-header">{{ _('Logged in as') }} {{ current_user.realname }}</h6>
-                            <a class="dropdown-item" href="{{ url_for('backstage.edit_profile') }}">
-                                <span class="oi oi-cog"></span> {{ _('Settings') }}</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ url_for('auth.logout', next=request.full_path) }}">
-                                <span class="oi oi-account-logout"></span> {{ _('Logout') }}</a>
-                        </div>
-                    </div>
-                {% endif %}
             </div>
         </div>
     </nav>
