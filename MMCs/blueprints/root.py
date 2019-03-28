@@ -297,7 +297,7 @@ def download_result(competition_id):
         return send_file(zfile, as_attachment=True)
 
     else:
-        flash('No solution.', 'warning')
+        flash(_('No solutions.'), 'warning')
         return redirect_back()
 
 

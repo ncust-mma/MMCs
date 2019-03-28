@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: zeroto521@gmail.com\n"
-"POT-Creation-Date: 2019-03-28 17:01+0800\n"
+"POT-Creation-Date: 2019-03-28 21:20+0800\n"
 "PO-Revision-Date: 2019-03-27 16:09+0800\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
@@ -95,28 +95,29 @@ msgstr "任务已随机分配。"
 msgid "Please add teacher to assign task."
 msgstr "请先添加教师再来分配任务。"
 
-#: MMCs/blueprints/admin.py:156
+#: MMCs/blueprints/admin.py:156 MMCs/blueprints/admin.py:306
+#: MMCs/blueprints/root.py:300
 msgid "No solutions."
 msgstr "无作品。"
 
-#: MMCs/blueprints/admin.py:206
+#: MMCs/blueprints/admin.py:204
 msgid "All tasks of User deleted."
 msgstr "该用户所有任务已删除。"
 
-#: MMCs/blueprints/admin.py:220
+#: MMCs/blueprints/admin.py:218
 msgid "Task deleted."
 msgstr "任务删除。"
 
-#: MMCs/blueprints/admin.py:257
+#: MMCs/blueprints/admin.py:255
 msgid "Added successed."
 msgstr "添加成功。"
 
-#: MMCs/blueprints/admin.py:288 MMCs/blueprints/admin.py:305
+#: MMCs/blueprints/admin.py:286 MMCs/blueprints/admin.py:303
 #: MMCs/blueprints/root.py:279 MMCs/blueprints/root.py:296
 msgid "The result file is already downloaded."
 msgstr "文件已下载。"
 
-#: MMCs/blueprints/admin.py:291 MMCs/blueprints/root.py:282
+#: MMCs/blueprints/admin.py:289 MMCs/blueprints/root.py:282
 msgid "No task."
 msgstr "无任务。"
 
@@ -894,4 +895,7 @@ msgstr "立即登录"
 #~ " Technology Mathematical Modeling Competition "
 #~ "Management System"
 #~ msgstr "华北理工大学数学建模竞赛管理系统"
+
+#~ msgid "No solution."
+#~ msgstr "无作品。"
 

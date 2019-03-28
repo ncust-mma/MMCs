@@ -303,5 +303,5 @@ def download_result():
         flash(_('The result file is already downloaded.'), 'success')
         return send_file(zfile, as_attachment=True)
     else:
-        flash('No solution.', 'warning')
+        flash(_('No solutions.'), 'warning')
         return redirect_back()
