@@ -39,10 +39,8 @@
                                         <span class="oi oi-cog"></span> {{ _("Edit") }}
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <form method="post" action="{{ url_for('admin.check_user', user_id=user.id) }}">
-                                            {{ check_form.csrf_token }}
-                                            {{ check_form.submit(class="dropdown-item") }}
-                                        </form>
+                                        <a class="dropdown-item" href="{{ url_for('admin.check_user', user_id=user.id) }}">
+                                            {{ _('Check') }}</a>
                                         <form method="post" action="{{ url_for('admin.task_add_list', user_id=user.id) }}">
                                             {{ add_form.csrf_token }}
                                             {{ add_form.submit(class="dropdown-item") }}

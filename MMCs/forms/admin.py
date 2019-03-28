@@ -7,7 +7,3 @@ from wtforms import SubmitField
 
 class ButtonAddForm(FlaskForm):
     submit = SubmitField(_l('Add'))
-
-
-class ButtonCheckForm(FlaskForm):
-    submit = SubmitField(_l('Check'))

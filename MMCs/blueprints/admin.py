@@ -9,7 +9,7 @@ from flask_login import fresh_login_required, login_required
 
 from MMCs.decorators import admin_required
 from MMCs.extensions import db
-from MMCs.forms.admin import ButtonAddForm, ButtonCheckForm
+from MMCs.forms.admin import ButtonAddForm
 from MMCs.models import Competition, Solution, Task, User
 from MMCs.utils import (allowed_file, check_filename, download_solution_score,
                         download_teacher_result, log_user, new_filename,
@@ -164,16 +164,14 @@ def teacher_view():
     pagination = User.query.filter(User.permission == 'Teacher').order_by(
         User.id.desc()).paginate(page, current_app.config['USER_PER_PAGE'])
 
-    check_form = ButtonCheckForm()
     add_form = ButtonAddForm()
 
     return render_template(
         'backstage/admin/manage_task/teacher_view.html',
-        pagination=pagination, page=page,
-        check_form=check_form, add_form=add_form)
+        pagination=pagination, page=page, add_form=add_form)
 
 
-@admin_bp.route('/task/teacher/check/<int:user_id>/tasks', methods=['GET', 'POST'])
+@admin_bp.route('/task/teacher/check/<int:user_id>/tasks')
 def check_user(user_id):
     content = render_template('logs/admin/task/check.txt')
     log_user(content)

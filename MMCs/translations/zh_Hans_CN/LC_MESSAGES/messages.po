@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: zeroto521@gmail.com\n"
-"POT-Creation-Date: 2019-03-27 18:59+0800\n"
+"POT-Creation-Date: 2019-03-28 17:01+0800\n"
 "PO-Revision-Date: 2019-03-27 16:09+0800\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
@@ -57,194 +57,6 @@ msgstr "请登录后访问这个页面。"
 #: MMCs/extensions.py:38
 msgid "In order to protect your account security, please log in again."
 msgstr "为了保护您的帐户安全, 请重新登录。"
-
-#: MMCs/forms.py:19 MMCs/forms.py:37
-#: MMCs/templates/backstage/admin/manage_task/teacher_view.html:11
-#: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:14
-msgid "Username"
-msgstr "账户"
-
-#: MMCs/forms.py:26 MMCs/forms.py:56
-msgid "Password"
-msgstr "密码"
-
-#: MMCs/forms.py:27
-msgid "Remember me"
-msgstr "记住我"
-
-#: MMCs/forms.py:28
-msgid "Log in"
-msgstr "登入"
-
-#: MMCs/forms.py:32
-msgid "The username is not existed."
-msgstr "用户名不存在。"
-
-#: MMCs/forms.py:39 MMCs/forms.py:78
-msgid "The username should contain only a-z, A-Z and 0-9."
-msgstr "用户名应仅包含\"a-z\", \"A-Z\"和\"0-9\"。"
-
-#: MMCs/forms.py:42 MMCs/forms.py:93
-#: MMCs/templates/backstage/admin/manage_task/teacher_view.html:12
-#: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:15
-msgid "Realname"
-msgstr "姓名"
-
-#: MMCs/forms.py:45
-#: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:16
-msgid "Permission"
-msgstr "权限"
-
-#: MMCs/forms.py:49
-msgid "As teacher user"
-msgstr "教师用户"
-
-#: MMCs/forms.py:50
-msgid "As administrator user"
-msgstr "协管员"
-
-#: MMCs/forms.py:51
-msgid "As root user"
-msgstr "管理员"
-
-#: MMCs/forms.py:54 MMCs/forms.py:96 MMCs/forms.py:134
-#: MMCs/templates/backstage/admin/manage_task/check.html:14
-#: MMCs/templates/backstage/teacher/manage_task.html:27
-msgid "Remark"
-msgstr "备注"
-
-#: MMCs/forms.py:59
-msgid "Confirm password"
-msgstr "密码确认"
-
-#: MMCs/forms.py:61 MMCs/templates/backstage/root/manage_personnel/base.html:10
-msgid "Register"
-msgstr "注册"
-
-#: MMCs/forms.py:65 MMCs/forms.py:88
-msgid "The username is already in use."
-msgstr "用户名已存在。"
-
-#: MMCs/forms.py:69
-msgid "The permission must select from Teacher, Admin and Root."
-msgstr "权限必须从\"Teacher\", \"Admin\"和\"Root\"中选择。"
-
-#: MMCs/forms.py:75
-msgid "New Username"
-msgstr "新用户名"
-
-#: MMCs/forms.py:81
-msgid "Confirm Username"
-msgstr "用户名确认"
-
-#: MMCs/forms.py:84 MMCs/forms.py:109 MMCs/forms.py:119 MMCs/forms.py:139
-msgid "Change"
-msgstr "更新"
-
-#: MMCs/forms.py:97 MMCs/forms.py:148 MMCs/forms.py:153
-#: MMCs/templates/backstage/admin/manage_task/teacher_view.html:39
-#: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:48
-msgid "Edit"
-msgstr "编辑"
-
-#: MMCs/forms.py:102
-msgid "Old Password"
-msgstr "旧密码"
-
-#: MMCs/forms.py:104 MMCs/forms.py:114
-msgid "New Password"
-msgstr "新密码"
-
-#: MMCs/forms.py:107 MMCs/forms.py:117
-msgid "Confirm Password"
-msgstr "密码确认"
-
-#: MMCs/forms.py:124
-msgid "Task ID"
-msgstr "任务号"
-
-#: MMCs/forms.py:129 MMCs/templates/backstage/admin/manage_task/check.html:13
-#: MMCs/templates/backstage/teacher/manage_task.html:26
-msgid "Score"
-msgstr "分数"
-
-#: MMCs/forms.py:136
-msgid "Leave your ideas"
-msgstr "留下您的评论"
-
-#: MMCs/forms.py:143
-msgid "The task is not existed."
-msgstr "该任务未存在。"
-
-#: MMCs/forms.py:147 MMCs/templates/backstage/base.html:21
-#: MMCs/templates/backstage/base.html:87
-#: MMCs/templates/backstage/root/manage_competition/base.html:11
-msgid "Notice"
-msgstr "公告"
-
-#: MMCs/forms.py:152 MMCs/templates/backstage/root/manage_settings/base.html:10
-#: MMCs/templates/base.html:41
-msgid "About"
-msgstr "关于"
-
-#: MMCs/forms.py:157 MMCs/templates/backstage/admin/manage_task/add.html:42
-#: MMCs/templates/backstage/admin/manage_task/base.html:19
-msgid "Add"
-msgstr "添加"
-
-#: MMCs/forms.py:161 MMCs/templates/backstage/admin/manage_task/base.html:14
-msgid "Check"
-msgstr "检查"
-
-#: MMCs/forms.py:166
-msgid "SOLUTION TASK NUMBER"
-msgstr "作品任务数"
-
-#: MMCs/forms.py:168
-msgid "USER PER PAGE"
-msgstr "每页展示用户数"
-
-#: MMCs/forms.py:170
-msgid "SOLUTION PER PAGE"
-msgstr "每页展示作品数"
-
-#: MMCs/forms.py:172
-msgid "COMPETITION PER PAGE"
-msgstr "每页展示竞赛数"
-
-#: MMCs/forms.py:174
-msgid "DROPZONE MAX FILES"
-msgstr "最大上传数量"
-
-#: MMCs/forms.py:176 MMCs/forms.py:220
-msgid "Submit"
-msgstr "提交"
-
-#: MMCs/forms.py:181
-msgid "About Image"
-msgstr "关于页面图像"
-
-#: MMCs/forms.py:188 MMCs/forms.py:200 MMCs/forms.py:212
-#: MMCs/templates/backstage/admin/manage_solution/base.html:10
-msgid "Upload"
-msgstr "上传"
-
-#: MMCs/forms.py:193
-msgid "Error Image"
-msgstr "错误页面图像"
-
-#: MMCs/forms.py:205
-msgid "Index Image"
-msgstr "首页图像"
-
-#: MMCs/forms.py:217
-#: MMCs/templates/backstage/root/manage_competition/history.html:16
-msgid "Competition name"
-msgstr "竞赛名称"
-
-#: MMCs/forms.py:224
-msgid "Download logs"
-msgstr "日志下载"
 
 #: MMCs/settings.py:45
 msgid "Drop files here or click to upload."
@@ -320,19 +132,19 @@ msgstr "用户名或密码无效。"
 msgid "Logout success."
 msgstr "注销成功。"
 
-#: MMCs/blueprints/backstage.py:30 MMCs/blueprints/root.py:200
+#: MMCs/blueprints/backstage.py:31 MMCs/blueprints/root.py:200
 msgid "Profile updated."
 msgstr "账户已更新。"
 
-#: MMCs/blueprints/backstage.py:51 MMCs/blueprints/root.py:222
+#: MMCs/blueprints/backstage.py:52 MMCs/blueprints/root.py:222
 msgid "Username updated."
 msgstr "用户名已更新。"
 
-#: MMCs/blueprints/backstage.py:69 MMCs/blueprints/root.py:180
+#: MMCs/blueprints/backstage.py:70 MMCs/blueprints/root.py:180
 msgid "Password updated."
 msgstr "密码已更新。"
 
-#: MMCs/blueprints/backstage.py:72
+#: MMCs/blueprints/backstage.py:73
 msgid "Old password is incorrect."
 msgstr "旧密码不正确。"
 
@@ -382,6 +194,196 @@ msgstr "分数超出%(lower)s-%(upper)s范围。"
 #: MMCs/blueprints/teacher.py:84
 msgid "Invalid score."
 msgstr "无效分数。"
+
+#: MMCs/forms/admin.py:9 MMCs/templates/backstage/admin/manage_task/add.html:42
+#: MMCs/templates/backstage/admin/manage_task/base.html:19
+msgid "Add"
+msgstr "添加"
+
+#: MMCs/forms/auth.py:19 MMCs/forms/root.py:18
+#: MMCs/templates/backstage/admin/manage_task/teacher_view.html:11
+#: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:14
+msgid "Username"
+msgstr "账户"
+
+#: MMCs/forms/auth.py:26 MMCs/forms/root.py:37
+msgid "Password"
+msgstr "密码"
+
+#: MMCs/forms/auth.py:27
+msgid "Remember me"
+msgstr "记住我"
+
+#: MMCs/forms/auth.py:28
+msgid "Log in"
+msgstr "登入"
+
+#: MMCs/forms/auth.py:32
+msgid "The username is not existed."
+msgstr "用户名不存在。"
+
+#: MMCs/forms/backstage.py:16 MMCs/forms/root.py:56
+msgid "New Username"
+msgstr "新用户名"
+
+#: MMCs/forms/backstage.py:19 MMCs/forms/root.py:20 MMCs/forms/root.py:59
+msgid "The username should contain only a-z, A-Z and 0-9."
+msgstr "用户名应仅包含\"a-z\", \"A-Z\"和\"0-9\"。"
+
+#: MMCs/forms/backstage.py:22 MMCs/forms/root.py:62
+msgid "Confirm Username"
+msgstr "用户名确认"
+
+#: MMCs/forms/backstage.py:25 MMCs/forms/backstage.py:51 MMCs/forms/root.py:65
+#: MMCs/forms/root.py:90 MMCs/forms/root.py:100 MMCs/forms/teacher.py:29
+msgid "Change"
+msgstr "更新"
+
+#: MMCs/forms/backstage.py:29 MMCs/forms/root.py:46 MMCs/forms/root.py:69
+msgid "The username is already in use."
+msgstr "用户名已存在。"
+
+#: MMCs/forms/backstage.py:35 MMCs/forms/root.py:23 MMCs/forms/root.py:74
+#: MMCs/templates/backstage/admin/manage_task/teacher_view.html:12
+#: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:15
+msgid "Realname"
+msgstr "姓名"
+
+#: MMCs/forms/backstage.py:38 MMCs/forms/root.py:35 MMCs/forms/root.py:77
+#: MMCs/forms/teacher.py:24
+#: MMCs/templates/backstage/admin/manage_task/check.html:14
+#: MMCs/templates/backstage/teacher/manage_task.html:27
+msgid "Remark"
+msgstr "备注"
+
+#: MMCs/forms/backstage.py:39 MMCs/forms/root.py:78 MMCs/forms/root.py:105
+#: MMCs/forms/root.py:110
+#: MMCs/templates/backstage/admin/manage_task/teacher_view.html:39
+#: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:48
+msgid "Edit"
+msgstr "编辑"
+
+#: MMCs/forms/backstage.py:44 MMCs/forms/root.py:83
+msgid "Old Password"
+msgstr "旧密码"
+
+#: MMCs/forms/backstage.py:46 MMCs/forms/root.py:85 MMCs/forms/root.py:95
+msgid "New Password"
+msgstr "新密码"
+
+#: MMCs/forms/backstage.py:49 MMCs/forms/root.py:88 MMCs/forms/root.py:98
+msgid "Confirm Password"
+msgstr "密码确认"
+
+#: MMCs/forms/root.py:26
+#: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:16
+msgid "Permission"
+msgstr "权限"
+
+#: MMCs/forms/root.py:30
+msgid "As teacher user"
+msgstr "教师用户"
+
+#: MMCs/forms/root.py:31
+msgid "As administrator user"
+msgstr "协管员"
+
+#: MMCs/forms/root.py:32
+msgid "As root user"
+msgstr "管理员"
+
+#: MMCs/forms/root.py:40
+msgid "Confirm password"
+msgstr "密码确认"
+
+#: MMCs/forms/root.py:42
+#: MMCs/templates/backstage/root/manage_personnel/base.html:10
+msgid "Register"
+msgstr "注册"
+
+#: MMCs/forms/root.py:50
+msgid "The permission must select from Teacher, Admin and Root."
+msgstr "权限必须从\"Teacher\", \"Admin\"和\"Root\"中选择。"
+
+#: MMCs/forms/root.py:104 MMCs/templates/backstage/base.html:21
+#: MMCs/templates/backstage/base.html:87
+#: MMCs/templates/backstage/root/manage_competition/base.html:11
+msgid "Notice"
+msgstr "公告"
+
+#: MMCs/forms/root.py:109
+#: MMCs/templates/backstage/root/manage_settings/base.html:10
+#: MMCs/templates/base.html:41
+msgid "About"
+msgstr "关于"
+
+#: MMCs/forms/root.py:115
+msgid "SOLUTION TASK NUMBER"
+msgstr "作品任务数"
+
+#: MMCs/forms/root.py:117
+msgid "USER PER PAGE"
+msgstr "每页展示用户数"
+
+#: MMCs/forms/root.py:119
+msgid "SOLUTION PER PAGE"
+msgstr "每页展示作品数"
+
+#: MMCs/forms/root.py:121
+msgid "COMPETITION PER PAGE"
+msgstr "每页展示竞赛数"
+
+#: MMCs/forms/root.py:123
+msgid "DROPZONE MAX FILES"
+msgstr "最大上传数量"
+
+#: MMCs/forms/root.py:125 MMCs/forms/root.py:169
+msgid "Submit"
+msgstr "提交"
+
+#: MMCs/forms/root.py:130
+msgid "About Image"
+msgstr "关于页面图像"
+
+#: MMCs/forms/root.py:137 MMCs/forms/root.py:149 MMCs/forms/root.py:161
+#: MMCs/templates/backstage/admin/manage_solution/base.html:10
+msgid "Upload"
+msgstr "上传"
+
+#: MMCs/forms/root.py:142
+msgid "Error Image"
+msgstr "错误页面图像"
+
+#: MMCs/forms/root.py:154
+msgid "Index Image"
+msgstr "首页图像"
+
+#: MMCs/forms/root.py:166
+#: MMCs/templates/backstage/root/manage_competition/history.html:16
+msgid "Competition name"
+msgstr "竞赛名称"
+
+#: MMCs/forms/root.py:173
+msgid "Download logs"
+msgstr "日志下载"
+
+#: MMCs/forms/teacher.py:14
+msgid "Task ID"
+msgstr "任务号"
+
+#: MMCs/forms/teacher.py:19
+#: MMCs/templates/backstage/admin/manage_task/check.html:13
+#: MMCs/templates/backstage/teacher/manage_task.html:26
+msgid "Score"
+msgstr "分数"
+
+#: MMCs/forms/teacher.py:26
+msgid "Leave your ideas"
+msgstr "留下您的评论"
+
+#: MMCs/forms/teacher.py:33
+msgid "The task is not existed."
+msgstr "该任务未存在。"
 
 #: MMCs/templates/base.html:40
 msgid "Home"
@@ -546,7 +548,7 @@ msgstr "操作"
 #: MMCs/templates/backstage/admin/manage_solution/solution_list.html:85
 #: MMCs/templates/backstage/admin/manage_task/check.html:38
 #: MMCs/templates/backstage/admin/manage_task/check.html:74
-#: MMCs/templates/backstage/admin/manage_task/teacher_view.html:93
+#: MMCs/templates/backstage/admin/manage_task/teacher_view.html:91
 #: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:61
 #: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:98
 msgid "Delete"
@@ -554,21 +556,21 @@ msgstr "删除"
 
 #: MMCs/templates/backstage/admin/manage_solution/solution_list.html:69
 #: MMCs/templates/backstage/admin/manage_task/check.html:58
-#: MMCs/templates/backstage/admin/manage_task/teacher_view.html:77
+#: MMCs/templates/backstage/admin/manage_task/teacher_view.html:75
 #: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:83
 msgid "Delete Confirm"
 msgstr "删除确认"
 
 #: MMCs/templates/backstage/admin/manage_solution/solution_list.html:76
 #: MMCs/templates/backstage/admin/manage_task/check.html:65
-#: MMCs/templates/backstage/admin/manage_task/teacher_view.html:84
+#: MMCs/templates/backstage/admin/manage_task/teacher_view.html:82
 msgid "Are you sure you want to delete this item?"
 msgstr "你确定要删除当前任务吗？"
 
 #: MMCs/templates/backstage/admin/manage_solution/solution_list.html:82
 #: MMCs/templates/backstage/admin/manage_task/check.html:71
 #: MMCs/templates/backstage/admin/manage_task/method.html:35
-#: MMCs/templates/backstage/admin/manage_task/teacher_view.html:90
+#: MMCs/templates/backstage/admin/manage_task/teacher_view.html:88
 #: MMCs/templates/backstage/root/manage_competition/behavior.html:42
 #: MMCs/templates/backstage/root/manage_competition/behavior.html:71
 #: MMCs/templates/backstage/root/manage_competition/behavior.html:100
@@ -591,6 +593,11 @@ msgstr "教师视图"
 #: MMCs/templates/backstage/admin/manage_task/base.html:11
 msgid "Solution View"
 msgstr "作品视图"
+
+#: MMCs/templates/backstage/admin/manage_task/base.html:14
+#: MMCs/templates/backstage/admin/manage_task/teacher_view.html:43
+msgid "Check"
+msgstr "检查"
 
 #: MMCs/templates/backstage/admin/manage_task/method.html:8
 msgid "Random"
@@ -631,7 +638,7 @@ msgstr "任务"
 msgid "Finished"
 msgstr "完成"
 
-#: MMCs/templates/backstage/admin/manage_task/teacher_view.html:54
+#: MMCs/templates/backstage/admin/manage_task/teacher_view.html:52
 msgid "Clean"
 msgstr "清空"
 
