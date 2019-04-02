@@ -4,18 +4,12 @@
 {% block settings_content %}
     <div class="card-body">
         <div class="btn-group btn-group-vertical btn-block" role="group">
-            <form class="btn btn-block" action="{{ url_for('root.logs_operation') }}" method="post">
-                <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
-                <button class="btn btn-info btn-block" type="submit">
-                    <span class="oi oi-data-transfer-download"></span> {{ _("Download user operation logs") }}
-                </button>
-            </form>
-            <form class="btn btn-block" action="{{ url_for('root.logs_error') }}" method="post">
-                <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
-                <button class="btn btn-info btn-block" type="submit">
-                    <span class="oi oi-data-transfer-download"></span> {{ _("Download system error logs") }}
-                </button>
-            </form>
+            <a class="btn btn-info btn-block" href="{{ url_for('root.logs_operation') }}">
+                <span class="oi oi-data-transfer-download"></span> {{ _("Download user operation logs") }}
+            </a>
+            <a class="btn btn-info btn-block" href="{{ url_for('root.logs_error') }}">
+                <span class="oi oi-data-transfer-download"></span> {{ _("Download system error logs") }}
+            </a>
         </div>
     </div>
 {% endblock %}

@@ -19,4 +19,13 @@ $(function () {
     $('#confirm-continue').on('show.bs.modal', function (e) {
         $('.continue-form').attr('action', $(e.relatedTarget).data('href'));
     });
+
+    $("[data-toggle='tooltip']").tooltip();
+
+    $(".btn").click(function () {
+        $(this).button('loading').delay(1000).queue(function () {
+            $(this).button('reset');
+            $(this).dequeue();
+        });
+    });
 });

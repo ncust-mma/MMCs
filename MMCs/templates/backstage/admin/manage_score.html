@@ -8,18 +8,12 @@
         {% if is_start() %}
             <div class="card-body">
                 <div class="btn-group btn-group-vertical btn-block" role="group">
-                    <form class="btn" action="{{ url_for('admin.download_teacher') }}" method="post">
-                        <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
-                        <button class="btn btn-info" type="submit">
-                            <span class="oi oi-data-transfer-download"></span> {{ _("Download all teachers result") }}
-                        </button>
-                    </form>
-                    <form class="btn" action="{{ url_for('admin.download_result') }}" method="post">
-                        <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
-                        <button class="btn btn-info" type="submit">
-                            <span class="oi oi-data-transfer-download"></span> {{ _("Download the final result") }}
-                        </button>
-                    </form>
+                    <a class="btn btn-info" href="{{ url_for('admin.download_teacher') }}">
+                        <span class="oi oi-data-transfer-download"></span> {{ _("Download all teachers result") }}
+                    </a>
+                    <a class="btn btn-info" href="{{ url_for('admin.download_result') }}">
+                        <span class="oi oi-data-transfer-download"></span> {{ _("Download the final result") }}
+                    </a>
                 </div>
             </div>
         {% else %}

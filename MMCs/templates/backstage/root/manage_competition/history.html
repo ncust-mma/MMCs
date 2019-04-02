@@ -27,30 +27,19 @@
                         <td class="text-center">{{ com.date }}</td>
                         <td class="text-center">
                             <div class="btn-group dropleft">
-                                <button class="btn btn-sm btn-info dropdown-toggle" type="button"
-                                        id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button class="btn-sm btn-info dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown">
                                     <span class="oi oi-cloud-download"></span> {{ _("Download") }}
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <form role="form"
-                                          action="{{ url_for('root.download_teacher', competition_id=com.id) }}"
-                                          method="post">
-                                        <input type="hidden" id="csrf_token" name="csrf_token"
-                                               value="{{ csrf_token() }}"/>
-                                        <button class="dropdown-item">
-                                            <span class="oi oi-data-transfer-download"></span> {{ _("Download all teachers result") }}
-                                        </button>
-                                    </form>
-                                    <form role="form"
-                                          action="{{ url_for('root.download_teacher', competition_id=com.id) }}"
-                                          method="post">
-                                        <input type="hidden" id="csrf_token" name="csrf_token"
-                                               value="{{ csrf_token() }}"/>
-                                        <button class="dropdown-item">
-                                            <span class="oi oi-data-transfer-download"></span> {{ _("Download the final result") }}
-                                        </button>
-                                    </form>
+                                    <a class="dropdown-item"
+                                       href="{{ url_for('root.download_teacher', competition_id=com.id) }}">
+                                        <span class="oi oi-data-transfer-download"></span> {{ _("Download all teachers result") }}
+                                    </a>
+                                    <a class="dropdown-item"
+                                       href="{{ url_for('root.download_teacher', competition_id=com.id) }}">
+                                        <span class="oi oi-data-transfer-download"></span> {{ _("Download the final result") }}
+                                    </a>
                                 </div>
                             </div>
                         </td>
