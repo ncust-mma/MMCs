@@ -233,7 +233,7 @@ def zip2here(input_path, output_path):
             abort(404)
 
 
-def download_teacher_result(competition_id):
+def gen_teacher_result(competition_id):
     """Download one competition all teacher result
     """
 
@@ -280,10 +280,12 @@ def download_teacher_result(competition_id):
     zfile = file.replace('.xlsx', '.zip')
     zip2here(file, zfile)
 
+    flash(_('The result file is already downloaded.'), 'success')
+
     return zfile
 
 
-def download_solution_score(competition_id):
+def gen_solution_score(competition_id):
     """Download one competition all solution result
     """
 
@@ -305,6 +307,8 @@ def download_solution_score(competition_id):
 
     zfile = file.replace('.xlsx', '.zip')
     zip2here(file, zfile)
+
+    flash(_('The result file is already downloaded.'), 'success')
 
     return zfile
 

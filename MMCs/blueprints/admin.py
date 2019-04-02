@@ -11,8 +11,8 @@ from MMCs.decorators import admin_required
 from MMCs.extensions import db
 from MMCs.forms.admin import ButtonAddForm
 from MMCs.models import Competition, Solution, Task, User
-from MMCs.utils import (allowed_file, check_filename, download_solution_score,
-                        download_teacher_result, log_user, new_filename,
+from MMCs.utils import (allowed_file, check_filename, gen_solution_score,
+                        gen_teacher_result, log_user, new_filename,
                         random_sample, redirect_back)
 
 admin_bp = Blueprint('admin', __name__)
@@ -273,7 +273,7 @@ def manage_score():
     return render_template('backstage/admin/manage_score.html')
 
 
-@admin_bp.route('/score/download/teacher', methods=['POST'])
+@admin_bp.route('/score/download/teacher')
 @fresh_login_required
 def download_teacher():
     content = render_template('logs/admin/score/download.txt')
@@ -281,16 +281,15 @@ def download_teacher():
 
     com = Competition.current_competition()
     if com.tasks:
-        zfile = download_teacher_result(com.id)
+        zfile = gen_teacher_result(com.id)
 
-        flash(_('The result file is already downloaded.'), 'success')
         return send_file(zfile, as_attachment=True)
     else:
         flash(_('No task.'), 'warning')
         return redirect_back()
 
 
-@admin_bp.route('/score/download/result', methods=['POST'])
+@admin_bp.route('/score/download/result')
 @fresh_login_required
 def download_result():
     content = render_template('logs/admin/score/download.txt')
@@ -298,9 +297,8 @@ def download_result():
 
     com = Competition.current_competition()
     if com.solutions:
-        zfile = download_solution_score(com.id)
+        zfile = gen_solution_score(com.id)
 
-        flash(_('The result file is already downloaded.'), 'success')
         return send_file(zfile, as_attachment=True)
     else:
         flash(_('No solutions.'), 'warning')

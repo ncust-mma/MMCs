@@ -11,15 +11,15 @@ from flask_login import fresh_login_required, login_required
 from MMCs.decorators import root_required
 from MMCs.extensions import db
 from MMCs.forms.root import (AboutEditForm, AboutImageUploadForm,
-                        ChangeUsernameForm, CompetitionNameForm,
-                        CompetitionSettingForm, DownloadLogForm,
-                        EditProfileForm, ErrorImageUploadForm,
-                        IndexImageUploadForm, NoticeEditForm, RegisterForm,
-                        RootChangePasswordForm)
+                             ChangeUsernameForm, CompetitionNameForm,
+                             CompetitionSettingForm, DownloadLogForm,
+                             EditProfileForm, ErrorImageUploadForm,
+                             IndexImageUploadForm, NoticeEditForm,
+                             RegisterForm, RootChangePasswordForm)
 from MMCs.models import Competition, User
 from MMCs.settings import basedir
-from MMCs.utils import (download_solution_score, download_teacher_result,
-                        download_user_operation, flash_errors, log_user,
+from MMCs.utils import (download_user_operation, flash_errors,
+                        gen_solution_score, gen_teacher_result, log_user,
                         read_localfile, redirect_back, write_localfile,
                         zip2here)
 
@@ -266,7 +266,7 @@ def delete_user(user_id):
     return redirect_back()
 
 
-@root_bp.route('/score/download/<int:competition_id>/teacher', methods=['POST'])
+@root_bp.route('/score/download/<int:competition_id>/teacher')
 @fresh_login_required
 def download_teacher(competition_id):
     content = render_template('logs/root/competition/history.txt')
@@ -274,16 +274,15 @@ def download_teacher(competition_id):
 
     com = Competition.query.get_or_404(competition_id)
     if com.tasks:
-        zfile = download_teacher_result(competition_id)
+        zfile = gen_teacher_result(competition_id)
 
-        flash(_('The result file is already downloaded.'), 'success')
         return send_file(zfile, as_attachment=True)
     else:
         flash(_('No task.'), 'warning')
         return redirect_back()
 
 
-@root_bp.route('/score/download/<int:competition_id>/result', methods=['POST'])
+@root_bp.route('/score/download/<int:competition_id>/result')
 @fresh_login_required
 def download_result(competition_id):
     content = render_template('logs/root/competition/history.txt')
@@ -291,9 +290,8 @@ def download_result(competition_id):
 
     com = Competition.query.get_or_404(competition_id)
     if com.solutions:
-        zfile = download_solution_score(competition_id)
+        zfile = gen_solution_score(competition_id)
 
-        flash(_('The result file is already downloaded.'), 'success')
         return send_file(zfile, as_attachment=True)
 
     else:
@@ -314,7 +312,7 @@ def logs():
         'backstage/root/manage_settings/logs.html', form=form)
 
 
-@root_bp.route('/settings/logs/error', methods=['POST'])
+@root_bp.route('/settings/logs/error')
 @fresh_login_required
 def logs_error():
     content = render_template('logs/root/setting/log.txt')
@@ -331,7 +329,7 @@ def logs_error():
         return redirect_back()
 
 
-@root_bp.route('/settings/logs/operation', methods=['POST'])
+@root_bp.route('/settings/logs/operation')
 @fresh_login_required
 def logs_operation():
     content = render_template('logs/root/setting/log.txt')
