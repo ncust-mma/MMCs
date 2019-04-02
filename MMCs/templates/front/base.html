@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import render_nav_item %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ url_for('front.index') }}">
+                <img src="{{ url_for('static', filename='navbar-brand.ico') }}" alt="MMCs" width="80">
+            </a>
+        </div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="navbar-nav mr-auto">
+                {{ render_nav_item('front.index', _('Home'), "oi oi-home") }}
+                {{ render_nav_item('front.about', _('About'), "oi oi-bookmark") }}
+            </div>
+            <div class="navbar-nav nav-item">
+                <a class="nav-link btn btn-outline-success" href="{{ url_for('auth.login', next=request.full_path) }}">
+                    {{ _('Welcome to MMCs') }}
+                </a>
+            </div>
+            <div class="navbar-nav dropdown nav-item">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <span class="oi oi-globe"></span> {{ _('Language') }}
+                </a>
+                <div class="dropdown-menu" role="menu">
+                    <a class="dropdown-item" href="{{ url_for('front.set_locale', locale='zh_Hans_CN') }}">简体中文</a>
+                    <a class="dropdown-item" href="{{ url_for('front.set_locale', locale='en_US') }}">English</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock navbar %}
