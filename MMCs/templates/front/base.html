@@ -21,11 +21,13 @@
                 {{ render_nav_item('front.index', _('Home'), "oi oi-home") }}
                 {{ render_nav_item('front.about', _('About'), "oi oi-bookmark") }}
             </div>
+            {% if current_user.is_anonymous %}
             <div class="navbar-nav nav-item">
                 <a class="nav-link btn btn-outline-success" href="{{ url_for('auth.login', next=request.full_path) }}">
                     {{ _('Welcome to MMCs') }}
                 </a>
             </div>
+            {% endif %}
             <div class="navbar-nav dropdown nav-item">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown">
                     <span class="oi oi-globe"></span> {{ _('Language') }}
