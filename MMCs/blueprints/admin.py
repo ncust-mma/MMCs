@@ -8,11 +8,11 @@ from flask_babel import _
 from flask_login import fresh_login_required, login_required
 
 from MMCs.decorators import admin_required
+from MMCs.downloader import gen_solution_score, gen_teacher_result
 from MMCs.extensions import db
 from MMCs.forms.admin import ButtonAddForm
 from MMCs.models import Competition, Solution, Task, User
-from MMCs.utils import (allowed_file, check_filename, gen_solution_score,
-                        gen_teacher_result, log_user, new_filename,
+from MMCs.utils import (allowed_file, check_filename, log_user, new_filename,
                         random_sample, redirect_back)
 
 admin_bp = Blueprint('admin', __name__)

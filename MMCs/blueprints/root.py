@@ -9,6 +9,8 @@ from flask_babel import _
 from flask_login import fresh_login_required, login_required
 
 from MMCs.decorators import root_required
+from MMCs.downloader import (download_user_operation, gen_solution_score,
+                             gen_teacher_result)
 from MMCs.extensions import db
 from MMCs.forms.root import (AboutEditForm, AboutImageUploadForm,
                              ChangeUsernameForm, CompetitionNameForm,
@@ -18,10 +20,8 @@ from MMCs.forms.root import (AboutEditForm, AboutImageUploadForm,
                              RegisterForm, RootChangePasswordForm)
 from MMCs.models import Competition, User
 from MMCs.settings import basedir
-from MMCs.utils import (download_user_operation, flash_errors,
-                        gen_solution_score, gen_teacher_result, log_user,
-                        read_localfile, redirect_back, write_localfile,
-                        zip2here)
+from MMCs.utils import (flash_errors, log_user, read_localfile, redirect_back,
+                        write_localfile, zip2here)
 
 root_bp = Blueprint('root', __name__)
 

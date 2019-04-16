@@ -6,22 +6,16 @@ except ImportError:
     from urllib.parse import urlparse, urljoin
 
 import os
-import random
-import zipfile
-from math import ceil
-from uuid import uuid1, uuid4
+from random import sample
 
 import numba as nb
-import pandas as pd
 from flask import (Markup, abort, current_app, flash, redirect,
                    render_template_string, request, url_for)
 from flask_babel import _
 from flask_login import current_user
-from pypinyin import lazy_pinyin
-from werkzeug.utils import secure_filename
 
-from MMCs.extensions import db, scheduler
-from MMCs.models import Competition, Log, Solution, Task, User
+from MMCs.extensions import db
+from MMCs.models import Competition, Log, User
 
 
 def is_safe_url(target):
@@ -85,6 +79,7 @@ def gen_uuid(filename):
     Returns:
         str -- uuid
     """
+    from uuid import uuid1
 
     ext = os.path.splitext(filename)[1]
     name = uuid1().hex + ext
@@ -98,6 +93,8 @@ def new_filename(filename):
     Arguments:
         filename {str} -- upload filename
     """
+    from pypinyin import lazy_pinyin
+    from werkzeug.utils import secure_filename
 
     filename = secure_filename(''.join(lazy_pinyin(filename)))
 
@@ -133,6 +130,7 @@ def cal_teacher_task_number():
     Returns:
         int -- task number
     """
+    from math import ceil
 
     com = Competition.current_competition()
     task_number = ceil(
@@ -183,7 +181,8 @@ def _random_sample(this_problem, teachers_view, is_notempty):
                     teacher_problem[this_problem] < cal_teacher_task_number()):
                 teacher_ids.append(teacher_id)
     else:
-        teacher_ids = random.sample(teachers_view.keys(), solution_task_number)
+
+        teacher_ids = sample(teachers_view.keys(), solution_task_number)
 
     return teacher_ids
 
@@ -197,20 +196,6 @@ def random_sample(this_problem):
     return _random_sample(this_problem, teachers_view, is_notempty)
 
 
-@scheduler.task('interval', id='clear_cache', weeks=3)
-def clear_cache():
-    """Regular clean the cache
-    """
-
-    with scheduler.app.app_context():
-        for root, _, files in os.walk(current_app.config['FILE_CACHE_PATH']):
-            for file in files:
-                if file == '.gitkeep':
-                    continue
-                path = os.path.join(root, file)
-                os.remove(path)
-
-
 def zip2here(input_path, output_path):
     """pack a file or folder to dis path
 
@@ -219,7 +204,9 @@ def zip2here(input_path, output_path):
         output_path {str}
     """
 
-    with zipfile.ZipFile(output_path, 'w') as z:
+    from zipfile import ZipFile
+
+    with ZipFile(output_path, 'w') as z:
         if os.path.isdir(input_path):
             for root, _, files in os.walk(input_path):
                 for file in files:
@@ -231,94 +218,6 @@ def zip2here(input_path, output_path):
             z.write(input_path, os.path.split(input_path)[1])
         else:
             abort(404)
-
-
-def gen_teacher_result(competition_id):
-    """Download one competition all teacher result
-    """
-
-    statement = Task.query.filter_by(competition_id=competition_id).statement
-    df = pd.read_sql_query(statement, db.engine)
-
-    df['username'] = (
-        df['teacher_id'].apply(lambda x: User.query.get(x).username))
-    df['realname'] = (
-        df['teacher_id'].apply(lambda x: User.query.get(x).realname))
-
-    df['uuid'] = (
-        df['solution_id'].apply(lambda x: Solution.query.get(x).uuid))
-    df['index'] = (
-        df['solution_id'].apply(lambda x: Solution.query.get(x).index))
-    df['problem'] = (
-        df['solution_id'].apply(lambda x: Solution.query.get(x).problem))
-    df['team_number'] = (
-        df['solution_id'].apply(lambda x: Solution.query.get(x).team_number))
-    df['team_player'] = (
-        df['solution_id'].apply(lambda x: '_'.join(Solution.query.get(x).team_player)))
-
-    df.drop(
-        columns=['id', 'teacher_id', 'solution_id', 'competition_id'], inplace=True)
-
-    file = os.path.join(
-        current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.xlsx')
-    df.to_excel(file, index=False)
-
-    zfile = file.replace('.xlsx', '.zip')
-    zip2here(file, zfile)
-
-    flash(_('The result file is already downloaded.'), 'success')
-
-    return zfile
-
-
-def gen_solution_score(competition_id):
-    """Download one competition all solution result
-    """
-
-    Competition.update_socre(competition_id)
-    statement = Solution.query.filter_by(
-        competition_id=competition_id).statement
-    df = pd.read_sql_query(statement, db.engine)
-
-    df['index'] = (df['name'].apply(lambda x: x.split('_')[0]))
-    df['problem'] = (df['name'].apply(lambda x: x.split('_')[1]))
-    df['team_number'] = (df['name'].apply(lambda x: x.split('_')[2]))
-    df['team_player'] = (df['name'].apply(lambda x: '_'.join(x.split('_')[3:])))
-
-    df.drop(columns=['id', 'competition_id', 'name'], inplace=True)
-
-    file = os.path.join(
-        current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.xlsx')
-    df.to_excel(file, index=False)
-
-    zfile = file.replace('.xlsx', '.zip')
-    zip2here(file, zfile)
-
-    flash(_('The result file is already downloaded.'), 'success')
-
-    return zfile
-
-
-def download_user_operation():
-    df = pd.read_sql_query(Log.query.statement, db.engine)
-    
-    df['username'] = (
-        df['user_id'].apply(lambda x: User.query.get(x).username))
-    df['realname'] = (
-        df['user_id'].apply(lambda x: User.query.get(x).realname))
-    df['permission'] = (
-        df['user_id'].apply(lambda x: User.query.get(x).permission))
-
-    df.drop(columns=['id', 'user_id'], inplace=True)
-
-    file = os.path.join(
-        current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.xlsx')
-    df.to_excel(file, index=False)
-
-    zfile = file.replace('.xlsx', '.zip')
-    zip2here(file, zfile)
-
-    return zfile
 
 
 def write_localfile(path, content, is_markup=True):
