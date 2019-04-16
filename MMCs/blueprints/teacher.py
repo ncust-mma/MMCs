@@ -33,8 +33,8 @@ def index():
             task_finished = Task.query.filter(
                 Task.competition_id == com.id,
                 Task.teacher_id == current_user.id,
-                Task.score is not None).count()
-
+                Task.score).count()
+            
         return render_template(
             'backstage/teacher/overview.html', task_finished=task_finished, task_all=task_all)
 
