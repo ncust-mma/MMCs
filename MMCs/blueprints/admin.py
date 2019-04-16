@@ -283,7 +283,7 @@ def download_teacher():
     if com.tasks:
         zfile = gen_teacher_result(com.id)
 
-        return send_file(zfile, as_attachment=True)
+        return send_file(zfile, as_attachment=True, attachment_filename='teacher result.zip')
     else:
         flash(_('No task.'), 'warning')
         return redirect_back()
@@ -299,7 +299,7 @@ def download_result():
     if com.solutions:
         zfile = gen_solution_score(com.id)
 
-        return send_file(zfile, as_attachment=True)
+        return send_file(zfile, as_attachment=True, attachment_filename='final result.zip')
     else:
         flash(_('No solutions.'), 'warning')
         return redirect_back()

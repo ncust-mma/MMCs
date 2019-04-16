@@ -141,7 +141,7 @@ class Solution(db.Model):
         """return team player name
         """
 
-        return self.name.split('_')[3:]
+        return self.name.split('.')[0].split('_')[3:]
 
     @property
     def date(self):

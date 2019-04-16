@@ -237,41 +237,27 @@ def gen_teacher_result(competition_id):
     """Download one competition all teacher result
     """
 
-    teachers = User.teachers()
-    teacher_dic = {teacher.id: (teacher.username, teacher.realname)
-                   for teacher in teachers}
-    solutions = Solution.query.filter_by(competition_id=competition_id).all()
-    solution_dic = {solution.id: (solution.name,
-                                  solution.uuid,
-                                  solution.index,
-                                  solution.problem,
-                                  solution.team_number,
-                                  solution.team_player)
-                    for solution in solutions}
-    df = pd.read_sql_query(
-        Task.query.filter_by(competition_id=competition_id).statement, db.engine)
+    statement = Task.query.filter_by(competition_id=competition_id).statement
+    df = pd.read_sql_query(statement, db.engine)
 
     df['username'] = (
-        df['teacher_id'].apply(lambda x: teacher_dic.get(x)[0] if teacher_dic.get(x) else x))
+        df['teacher_id'].apply(lambda x: User.query.get(x).username))
     df['realname'] = (
-        df['teacher_id'].apply(lambda x: teacher_dic.get(x)[1] if teacher_dic.get(x) else x))
-    df['filename'] = (
-        df['solution_id'].apply(lambda x: solution_dic.get(x)[0]))
-    df['uuid'] = (
-        df['solution_id'].apply(lambda x: solution_dic.get(x)[1]))
-    df['index'] = (
-        df['solution_id'].apply(lambda x: solution_dic.get(x)[2]))
-    df['problem'] = (
-        df['solution_id'].apply(lambda x: solution_dic.get(x)[3]))
-    df['team_number'] = (
-        df['solution_id'].apply(lambda x: solution_dic.get(x)[4]))
-    df['team_player'] = (
-        df['solution_id'].apply(lambda x: '_'.join(solution_dic.get(x)[5])))
+        df['teacher_id'].apply(lambda x: User.query.get(x).realname))
 
-    del df['id']
-    del df['teacher_id']
-    del df['solution_id']
-    del df['competition_id']
+    df['uuid'] = (
+        df['solution_id'].apply(lambda x: Solution.query.get(x).uuid))
+    df['index'] = (
+        df['solution_id'].apply(lambda x: Solution.query.get(x).index))
+    df['problem'] = (
+        df['solution_id'].apply(lambda x: Solution.query.get(x).problem))
+    df['team_number'] = (
+        df['solution_id'].apply(lambda x: Solution.query.get(x).team_number))
+    df['team_player'] = (
+        df['solution_id'].apply(lambda x: '_'.join(Solution.query.get(x).team_player)))
+
+    df.drop(
+        columns=['id', 'teacher_id', 'solution_id', 'competition_id'], inplace=True)
 
     file = os.path.join(
         current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.xlsx')
@@ -290,16 +276,16 @@ def gen_solution_score(competition_id):
     """
 
     Competition.update_socre(competition_id)
-    df = pd.read_sql_query(
-        Solution.query.filter_by(competition_id=competition_id).statement, db.engine)
+    statement = Solution.query.filter_by(
+        competition_id=competition_id).statement
+    df = pd.read_sql_query(statement, db.engine)
+
     df['index'] = (df['name'].apply(lambda x: x.split('_')[0]))
     df['problem'] = (df['name'].apply(lambda x: x.split('_')[1]))
     df['team_number'] = (df['name'].apply(lambda x: x.split('_')[2]))
-    df['team_player'] = (
-        df['name'].apply(lambda x: '_'.join(x.split('_')[3:])))
+    df['team_player'] = (df['name'].apply(lambda x: '_'.join(x.split('_')[3:])))
 
-    del df['id']
-    del df['competition_id']
+    df.drop(columns=['id', 'competition_id', 'name'], inplace=True)
 
     file = os.path.join(
         current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.xlsx')
@@ -315,15 +301,15 @@ def gen_solution_score(competition_id):
 
 def download_user_operation():
     df = pd.read_sql_query(Log.query.statement, db.engine)
-    users = User.query.all()
-    user_dic = {user.id: (user.username, user.realname, user.permission)
-                for user in users}
-    df['username'] = (df['user_id'].apply(lambda x: user_dic.get(x)[0]))
-    df['realname'] = (df['user_id'].apply(lambda x: user_dic.get(x)[1]))
-    df['permission'] = (df['user_id'].apply(lambda x: user_dic.get(x)[2]))
+    
+    df['username'] = (
+        df['user_id'].apply(lambda x: User.query.get(x).username))
+    df['realname'] = (
+        df['user_id'].apply(lambda x: User.query.get(x).realname))
+    df['permission'] = (
+        df['user_id'].apply(lambda x: User.query.get(x).permission))
 
-    del df['id']
-    del df['user_id']
+    df.drop(columns=['id', 'user_id'], inplace=True)
 
     file = os.path.join(
         current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.xlsx')

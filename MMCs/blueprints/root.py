@@ -276,7 +276,7 @@ def download_teacher(competition_id):
     if com.tasks:
         zfile = gen_teacher_result(competition_id)
 
-        return send_file(zfile, as_attachment=True)
+        return send_file(zfile, as_attachment=True, attachment_filename='teacher result.zip')
     else:
         flash(_('No task.'), 'warning')
         return redirect_back()
@@ -292,7 +292,7 @@ def download_result(competition_id):
     if com.solutions:
         zfile = gen_solution_score(competition_id)
 
-        return send_file(zfile, as_attachment=True)
+        return send_file(zfile, as_attachment=True, attachment_filename='final result.zip')
 
     else:
         flash(_('No solutions.'), 'warning')
@@ -323,7 +323,7 @@ def logs_error():
             current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.zip')
         zip2here(os.path.join(basedir, 'logs'), file)
 
-        return send_file(file, as_attachment=True)
+        return send_file(file, as_attachment=True, attachment_filename='system error log.zip')
     else:
         flash('No logs.', 'warning')
         return redirect_back()
@@ -337,7 +337,7 @@ def logs_operation():
 
     zfile = download_user_operation()
 
-    return send_file(zfile, as_attachment=True)
+    return send_file(zfile, as_attachment=True, attachment_filename='user operation log.zip')
 
 
 @root_bp.route('/settings/about', methods=['GET', 'POST'])

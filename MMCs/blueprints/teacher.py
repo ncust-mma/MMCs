@@ -33,7 +33,7 @@ def index():
             task_finished = Task.query.filter(
                 Task.competition_id == com.id,
                 Task.teacher_id == current_user.id,
-                Task.score != None).count()
+                Task.score is not None).count()
 
         return render_template(
             'backstage/teacher/overview.html', task_finished=task_finished, task_all=task_all)
@@ -69,19 +69,16 @@ def change(task_id):
         content = render_template('logs/teacher/update.txt')
         log_user(content)
 
-        if form.score.data:
-            if lower <= form.score.data <= upper:
-                task = Task.query.get_or_404(task_id)
-                task.score = form.score.data
-                task.remark = form.remark.data
-                db.session.commit()
+        if lower <= form.score.data <= upper:
+            task = Task.query.get_or_404(task_id)
+            task.score = form.score.data
+            task.remark = form.remark.data
+            db.session.commit()
 
-                flash(_('Score Updated.'), 'success')
-            else:
-                flash(_(
-                    'Score out of range from %(lower)s to %(upper)s.', lower=lower, upper=upper), 'warning')
+            flash(_('Score Updated.'), 'success')
         else:
-            flash(_('Invalid score.'), 'warning')
+            flash(_(
+                'Score out of range from %(lower)s to %(upper)s.', lower=lower, upper=upper), 'warning')
 
     flash_errors(form)
     return redirect_back()
