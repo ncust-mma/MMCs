@@ -9,6 +9,7 @@ autopep8 = "*"
 pylint = "*"
 
 [packages]
+Jinja2 = ">=2.10.1"
 flask = "*"
 python-dotenv = "*"
 bootstrap-flask = "*"
