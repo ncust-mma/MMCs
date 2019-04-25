@@ -10,7 +10,7 @@ Flask-Dropzone
 Flask-Login
 Flask-SQLAlchemy
 Flask-WTF
-Jinja2
+Jinja2>=2.10.1
 pypinyin
 python-dotenv
 SQLAlchemy
