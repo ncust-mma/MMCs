@@ -5,7 +5,7 @@ from sqlalchemy.sql.expression import func
 
 from MMCs import db
 from MMCs.models import Competition, Solution, Task, User
-from MMCs.utils import new_filename
+from MMCs.utils.upload import new_filename
 
 fake = Faker()
 fake_zh = Faker('zh_CN')
