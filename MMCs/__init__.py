@@ -20,7 +20,7 @@ from MMCs.extensions import (babel, bootstrap, cache, ckeditor, csrf, db,
                              dropzone, login_manager, scheduler, toolbar)
 from MMCs.models import Competition, Log, Solution, Task, User
 from MMCs.settings import basedir, config
-from MMCs.utils import read_localfile
+from MMCs.utils.localfile import read_localfile
 
 
 def create_app(config_name=None):

@@ -6,7 +6,7 @@ from flask_babel import _
 from flask_login import current_user
 
 from MMCs.extensions import cache, db
-from MMCs.utils import redirect_back
+from MMCs.utils.link import redirect_back
 
 front_bp = Blueprint('front', __name__)
 

@@ -7,8 +7,9 @@ from flask_login import current_user, login_required
 from MMCs.decorators import teacher_required
 from MMCs.extensions import db
 from MMCs.forms.teacher import ChangeScoreForm
-from MMCs.models import Competition, Task, Solution
-from MMCs.utils import flash_errors, log_user, redirect_back
+from MMCs.models import Competition, Solution, Task
+from MMCs.utils.link import redirect_back
+from MMCs.utils.table import flash_errors
 
 teacher_bp = Blueprint('teacher', __name__)
 

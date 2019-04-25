@@ -20,8 +20,11 @@ from MMCs.forms.root import (AboutEditForm, AboutImageUploadForm,
                              RegisterForm, RootChangePasswordForm)
 from MMCs.models import Competition, User
 from MMCs.settings import basedir
-from MMCs.utils import (flash_errors, log_user, read_localfile, redirect_back,
-                        write_localfile, zip2here)
+from MMCs.utils.link import redirect_back
+from MMCs.utils.localfile import read_localfile, write_localfile
+from MMCs.utils.log import log_user
+from MMCs.utils.table import flash_errors
+from MMCs.utils.zip import zip2here
 
 root_bp = Blueprint('root', __name__)
 

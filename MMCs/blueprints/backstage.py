@@ -11,7 +11,8 @@ from MMCs.extensions import db
 from MMCs.forms.backstage import (ChangePasswordForm, ChangeUsernameForm,
                                   EditProfileForm)
 from MMCs.models import Competition
-from MMCs.utils import log_user, redirect_back
+from MMCs.utils.link import redirect_back
+from MMCs.utils.log import log_user
 
 backstage_bp = Blueprint('backstage', __name__)
 

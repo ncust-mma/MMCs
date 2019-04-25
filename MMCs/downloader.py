@@ -9,7 +9,7 @@ from flask_babel import _
 
 from MMCs.extensions import db
 from MMCs.models import Competition, Log, Solution, Task, User
-from MMCs.utils import zip2here
+from MMCs.utils.zip import zip2here
 
 
 def gen_teacher_result(competition_id):

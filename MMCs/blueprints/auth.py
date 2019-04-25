@@ -7,7 +7,8 @@ from flask_login import (confirm_login, current_user, login_fresh,
 
 from MMCs.forms.auth import LoginForm
 from MMCs.models import User
-from MMCs.utils import log_user, redirect_back
+from MMCs.utils.link import redirect_back
+from MMCs.utils.log import log_user
 
 auth_bp = Blueprint('auth', __name__)
 
