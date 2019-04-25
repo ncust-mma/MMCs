@@ -8,6 +8,7 @@
             <div class="nav nav-tabs card-header-tabs" role="tablist">
                 {{ render_nav_item("root.personnel_list", _("Personnel List")) }}
                 {{ render_nav_item("root.register", _("Register")) }}
+                {{ render_nav_item("root.account_import", _("Account Import")) }}
                 {% if request.endpoint and request.endpoint == "root.edit_profile" %}
                     <a class="nav-link active">
                         {{ _("Edit Profile") }}

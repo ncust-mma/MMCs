@@ -7,16 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: zeroto521@gmail.com\n"
-"POT-Creation-Date: 2019-04-02 18:39+0800\n"
-"PO-Revision-Date: 2019-03-27 16:09+0800\n"
+"POT-Creation-Date: 2019-04-25 14:45+0800\n"
+"PO-Revision-Date: 2019-04-25 14:45+0800\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: zh_Hans_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.6.0\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: MMCs/__init__.py:127
 msgid "Bad Request"
@@ -50,6 +51,10 @@ msgstr "服务器出错"
 msgid "Handle CSRF Error"
 msgstr "CSRF验证错误"
 
+#: MMCs/downloader.py:48 MMCs/downloader.py:77
+msgid "The result file is already downloaded."
+msgstr "文件已下载。"
+
 #: MMCs/extensions.py:35
 msgid "Please log in to access this page."
 msgstr "请登录后访问这个页面。"
@@ -62,123 +67,106 @@ msgstr "为了保护您的帐户安全, 请重新登录。"
 msgid "Drop files here or click to upload."
 msgstr "拖拽文件上传或点击上传。"
 
-#: MMCs/utils.py:76
-#, python-format
-msgid "Error in the %(name)s field - %(error)s."
-msgstr "%(name)s：%(error)s。"
-
-#: MMCs/utils.py:115
-msgid "Invalid filename."
-msgstr "无效的文件名。"
-
-#: MMCs/utils.py:123
-msgid "Team number is not right."
-msgstr "队号不正确。"
-
-#: MMCs/utils.py:125
-msgid "Problem is not right."
-msgstr "题号不正确。"
-
-#: MMCs/utils.py:283 MMCs/utils.py:311
-msgid "The result file is already downloaded."
-msgstr "文件已下载。"
-
-#: MMCs/blueprints/admin.py:94
+#: MMCs/blueprints/admin.py:96
 msgid "Competition of current year don't start."
 msgstr "今年校赛尚未开始。"
 
-#: MMCs/blueprints/admin.py:109
+#: MMCs/blueprints/admin.py:111
 msgid "Solution deleted."
 msgstr "作品已删除。"
 
-#: MMCs/blueprints/admin.py:152
+#: MMCs/blueprints/admin.py:154
 msgid "Randomly assigned."
 msgstr "任务已随机分配。"
 
-#: MMCs/blueprints/admin.py:154
+#: MMCs/blueprints/admin.py:156
 msgid "Please add teacher to assign task."
 msgstr "请先添加教师再来分配任务。"
 
-#: MMCs/blueprints/admin.py:156 MMCs/blueprints/admin.py:304
-#: MMCs/blueprints/root.py:298
+#: MMCs/blueprints/admin.py:158 MMCs/blueprints/admin.py:306
+#: MMCs/blueprints/root.py:337
 msgid "No solutions."
 msgstr "无作品。"
 
-#: MMCs/blueprints/admin.py:204
+#: MMCs/blueprints/admin.py:206
 msgid "All tasks of User deleted."
 msgstr "该用户所有任务已删除。"
 
-#: MMCs/blueprints/admin.py:218
+#: MMCs/blueprints/admin.py:220
 msgid "Task deleted."
 msgstr "任务删除。"
 
-#: MMCs/blueprints/admin.py:255
+#: MMCs/blueprints/admin.py:257
 msgid "Added successed."
 msgstr "添加成功。"
 
-#: MMCs/blueprints/admin.py:288 MMCs/blueprints/root.py:281
+#: MMCs/blueprints/admin.py:290 MMCs/blueprints/root.py:320
 msgid "No task."
 msgstr "无任务。"
 
-#: MMCs/blueprints/auth.py:28
+#: MMCs/blueprints/auth.py:29
 msgid "Login success."
 msgstr "登入成功。"
 
-#: MMCs/blueprints/auth.py:31
+#: MMCs/blueprints/auth.py:32
 msgid "Invalid username or password."
 msgstr "用户名或密码无效。"
 
-#: MMCs/blueprints/auth.py:43
+#: MMCs/blueprints/auth.py:44
 msgid "Logout success."
 msgstr "注销成功。"
 
-#: MMCs/blueprints/backstage.py:31 MMCs/blueprints/root.py:200
+#: MMCs/blueprints/backstage.py:32 MMCs/blueprints/root.py:205
 msgid "Profile updated."
 msgstr "账户已更新。"
 
-#: MMCs/blueprints/backstage.py:52 MMCs/blueprints/root.py:222
+#: MMCs/blueprints/backstage.py:53 MMCs/blueprints/root.py:227
 msgid "Username updated."
 msgstr "用户名已更新。"
 
-#: MMCs/blueprints/backstage.py:70 MMCs/blueprints/root.py:180
+#: MMCs/blueprints/backstage.py:71 MMCs/blueprints/root.py:185
 msgid "Password updated."
 msgstr "密码已更新。"
 
-#: MMCs/blueprints/backstage.py:73
+#: MMCs/blueprints/backstage.py:74
 msgid "Old password is incorrect."
 msgstr "旧密码不正确。"
 
-#: MMCs/blueprints/front.py:44 MMCs/blueprints/root.py:75
-#: MMCs/blueprints/root.py:354
+#: MMCs/blueprints/front.py:44 MMCs/blueprints/root.py:80
+#: MMCs/blueprints/root.py:393
 msgid "Setting updated."
 msgstr "设置已更新。"
 
-#: MMCs/blueprints/root.py:118
+#: MMCs/blueprints/root.py:123
 msgid "A new competition start now."
 msgstr "新的比赛现在开始。"
 
-#: MMCs/blueprints/root.py:137
+#: MMCs/blueprints/root.py:142
 msgid "Competition stopped."
 msgstr "比赛暂停。"
 
-#: MMCs/blueprints/root.py:145
+#: MMCs/blueprints/root.py:150
 msgid "Competition continued."
 msgstr "比赛继续。"
 
-#: MMCs/blueprints/root.py:147
+#: MMCs/blueprints/root.py:152
 msgid "Please start new competition before do it."
 msgstr "请在开始竞赛后进行该项操。"
 
-#: MMCs/blueprints/root.py:249
+#: MMCs/blueprints/root.py:254
 msgid "Account registered."
 msgstr "账号已注册。"
 
-#: MMCs/blueprints/root.py:265
+#: MMCs/blueprints/root.py:287
+msgid "Account imported."
+msgstr "账号已导入。"
+
+#: MMCs/blueprints/root.py:304
 msgid "User deleted."
 msgstr "账号已删除。"
 
-#: MMCs/blueprints/root.py:376 MMCs/blueprints/root.py:380
-#: MMCs/blueprints/root.py:384
+#: MMCs/blueprints/root.py:415 MMCs/blueprints/root.py:419
+#: MMCs/blueprints/root.py:423
 msgid "Image updated."
 msgstr "图像已更新。"
 
@@ -190,10 +178,6 @@ msgstr "分数已更新。"
 #, python-format
 msgid "Score out of range from %(lower)s to %(upper)s."
 msgstr "分数超出%(lower)s-%(upper)s范围。"
-
-#: MMCs/blueprints/teacher.py:84
-msgid "Invalid score."
-msgstr "无效分数。"
 
 #: MMCs/forms/admin.py:9 MMCs/templates/backstage/admin/manage_task/add.html:42
 #: MMCs/templates/backstage/admin/manage_task/base.html:19
@@ -222,56 +206,56 @@ msgstr "登入"
 msgid "The username is not existed."
 msgstr "用户名不存在。"
 
-#: MMCs/forms/backstage.py:16 MMCs/forms/root.py:56
+#: MMCs/forms/backstage.py:16 MMCs/forms/root.py:68
 msgid "New Username"
 msgstr "新用户名"
 
-#: MMCs/forms/backstage.py:19 MMCs/forms/root.py:20 MMCs/forms/root.py:59
+#: MMCs/forms/backstage.py:19 MMCs/forms/root.py:20 MMCs/forms/root.py:71
 msgid "The username should contain only a-z, A-Z and 0-9."
 msgstr "用户名应仅包含\"a-z\", \"A-Z\"和\"0-9\"。"
 
-#: MMCs/forms/backstage.py:22 MMCs/forms/root.py:62
+#: MMCs/forms/backstage.py:22 MMCs/forms/root.py:74
 msgid "Confirm Username"
 msgstr "用户名确认"
 
-#: MMCs/forms/backstage.py:25 MMCs/forms/backstage.py:51 MMCs/forms/root.py:65
-#: MMCs/forms/root.py:90 MMCs/forms/root.py:100 MMCs/forms/teacher.py:29
+#: MMCs/forms/backstage.py:25 MMCs/forms/backstage.py:51 MMCs/forms/root.py:77
+#: MMCs/forms/root.py:102 MMCs/forms/root.py:112 MMCs/forms/teacher.py:29
 msgid "Change"
 msgstr "更新"
 
-#: MMCs/forms/backstage.py:29 MMCs/forms/root.py:46 MMCs/forms/root.py:69
+#: MMCs/forms/backstage.py:29 MMCs/forms/root.py:46 MMCs/forms/root.py:81
 msgid "The username is already in use."
 msgstr "用户名已存在。"
 
-#: MMCs/forms/backstage.py:35 MMCs/forms/root.py:23 MMCs/forms/root.py:74
+#: MMCs/forms/backstage.py:35 MMCs/forms/root.py:23 MMCs/forms/root.py:86
 #: MMCs/templates/backstage/admin/manage_task/teacher_view.html:12
 #: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:15
 msgid "Realname"
 msgstr "姓名"
 
-#: MMCs/forms/backstage.py:38 MMCs/forms/root.py:35 MMCs/forms/root.py:77
+#: MMCs/forms/backstage.py:38 MMCs/forms/root.py:35 MMCs/forms/root.py:89
 #: MMCs/forms/teacher.py:24
 #: MMCs/templates/backstage/admin/manage_task/check.html:14
 #: MMCs/templates/backstage/teacher/manage_task.html:27
 msgid "Remark"
 msgstr "备注"
 
-#: MMCs/forms/backstage.py:39 MMCs/forms/root.py:78 MMCs/forms/root.py:105
-#: MMCs/forms/root.py:110
+#: MMCs/forms/backstage.py:39 MMCs/forms/root.py:90 MMCs/forms/root.py:117
+#: MMCs/forms/root.py:122
 #: MMCs/templates/backstage/admin/manage_task/teacher_view.html:38
 #: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:47
 msgid "Edit"
 msgstr "编辑"
 
-#: MMCs/forms/backstage.py:44 MMCs/forms/root.py:83
+#: MMCs/forms/backstage.py:44 MMCs/forms/root.py:95
 msgid "Old Password"
 msgstr "旧密码"
 
-#: MMCs/forms/backstage.py:46 MMCs/forms/root.py:85 MMCs/forms/root.py:95
+#: MMCs/forms/backstage.py:46 MMCs/forms/root.py:97 MMCs/forms/root.py:107
 msgid "New Password"
 msgstr "新密码"
 
-#: MMCs/forms/backstage.py:49 MMCs/forms/root.py:88 MMCs/forms/root.py:98
+#: MMCs/forms/backstage.py:49 MMCs/forms/root.py:100 MMCs/forms/root.py:110
 msgid "Confirm Password"
 msgstr "密码确认"
 
@@ -305,65 +289,78 @@ msgstr "注册"
 msgid "The permission must select from Teacher, Admin and Root."
 msgstr "权限必须从\"Teacher\", \"Admin\"和\"Root\"中选择。"
 
-#: MMCs/forms/root.py:104 MMCs/templates/backstage/base.html:20
+#: MMCs/forms/root.py:56
+msgid "Account"
+msgstr "账号"
+
+#: MMCs/forms/root.py:59
+msgid "xls or xlsx only!"
+msgstr "只允许上传 xls 和 xlsx 类型文件！"
+
+#: MMCs/forms/root.py:63 MMCs/forms/root.py:149 MMCs/forms/root.py:161
+#: MMCs/forms/root.py:173
+#: MMCs/templates/backstage/admin/manage_solution/base.html:10
+msgid "Upload"
+msgstr "上传"
+
+#: MMCs/forms/root.py:116 MMCs/templates/backstage/base.html:20
 #: MMCs/templates/backstage/base.html:86
 #: MMCs/templates/backstage/root/manage_competition/base.html:11
 msgid "Notice"
 msgstr "公告"
 
-#: MMCs/forms/root.py:109
+#: MMCs/forms/root.py:121
 #: MMCs/templates/backstage/root/manage_settings/base.html:10
 #: MMCs/templates/front/base.html:22
 msgid "About"
 msgstr "关于"
 
-#: MMCs/forms/root.py:115
+#: MMCs/forms/root.py:127
 msgid "SOLUTION TASK NUMBER"
 msgstr "作品任务数"
 
-#: MMCs/forms/root.py:117
+#: MMCs/forms/root.py:129
 msgid "USER PER PAGE"
 msgstr "每页展示用户数"
 
-#: MMCs/forms/root.py:119
+#: MMCs/forms/root.py:131
 msgid "SOLUTION PER PAGE"
 msgstr "每页展示作品数"
 
-#: MMCs/forms/root.py:121
+#: MMCs/forms/root.py:133
 msgid "COMPETITION PER PAGE"
 msgstr "每页展示竞赛数"
 
-#: MMCs/forms/root.py:123
+#: MMCs/forms/root.py:135
 msgid "DROPZONE MAX FILES"
 msgstr "最大上传数量"
 
-#: MMCs/forms/root.py:125 MMCs/forms/root.py:169
+#: MMCs/forms/root.py:137 MMCs/forms/root.py:181
 msgid "Submit"
 msgstr "提交"
 
-#: MMCs/forms/root.py:130
+#: MMCs/forms/root.py:142
 msgid "About Image"
 msgstr "关于页面图像"
 
-#: MMCs/forms/root.py:137 MMCs/forms/root.py:149 MMCs/forms/root.py:161
-#: MMCs/templates/backstage/admin/manage_solution/base.html:10
-msgid "Upload"
-msgstr "上传"
+#: MMCs/forms/root.py:145 MMCs/forms/root.py:157 MMCs/forms/root.py:169
+msgid "jpg, jpeg or png only!"
+msgstr "只允许上传 jpg、jpeg 或 png 类型文件!"
 
-#: MMCs/forms/root.py:142
+#: MMCs/forms/root.py:154
 msgid "Error Image"
 msgstr "错误页面图像"
 
-#: MMCs/forms/root.py:154
+#: MMCs/forms/root.py:166
 msgid "Index Image"
 msgstr "首页图像"
 
-#: MMCs/forms/root.py:166
+#: MMCs/forms/root.py:178
 #: MMCs/templates/backstage/root/manage_competition/history.html:16
 msgid "Competition name"
 msgstr "竞赛名称"
 
-#: MMCs/forms/root.py:173
+#: MMCs/forms/root.py:185
 msgid "Download logs"
 msgstr "日志下载"
 
@@ -386,15 +383,11 @@ msgid "The task is not existed."
 msgstr "该任务未存在。"
 
 #: MMCs/templates/base.html:52
-msgid ""
-"North China University of Science and Technology University Mathematical "
-"Modeling Association"
+msgid "North China University of Science and Technology University Mathematical Modeling Association"
 msgstr "华北理工大学数学建模协会"
 
 #: MMCs/templates/base.html:62
-msgid ""
-"North China University of Science and Technology University Mathematical "
-"Modeling Competition system"
+msgid "North China University of Science and Technology University Mathematical Modeling Competition system"
 msgstr "华北理工大学数学建模竞赛管理系统"
 
 #: MMCs/templates/base.html:63
@@ -478,12 +471,12 @@ msgid "Admin"
 msgstr "协管理员，您好"
 
 #: MMCs/templates/backstage/admin/manage_score.html:12
-#: MMCs/templates/backstage/root/manage_competition/history.html:36
+#: MMCs/templates/backstage/root/manage_competition/history.html:37
 msgid "Download all teachers result"
 msgstr "下载教师评阅结果"
 
 #: MMCs/templates/backstage/admin/manage_score.html:15
-#: MMCs/templates/backstage/root/manage_competition/history.html:40
+#: MMCs/templates/backstage/root/manage_competition/history.html:41
 msgid "Download the final result"
 msgstr "下载最终结果"
 
@@ -699,21 +692,25 @@ msgstr "下载"
 msgid "Personnel List"
 msgstr "人事管理"
 
-#: MMCs/templates/backstage/root/manage_personnel/base.html:13
+#: MMCs/templates/backstage/root/manage_personnel/base.html:11
+msgid "Account Import"
+msgstr "账号导入"
+
+#: MMCs/templates/backstage/root/manage_personnel/base.html:14
 #: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:51
 #: MMCs/templates/backstage/settings/base.html:13
 #: MMCs/templates/backstage/settings/edit_profile.html:6
 msgid "Edit Profile"
 msgstr "账户设置"
 
-#: MMCs/templates/backstage/root/manage_personnel/base.html:18
+#: MMCs/templates/backstage/root/manage_personnel/base.html:19
 #: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:53
 #: MMCs/templates/backstage/settings/base.html:14
 #: MMCs/templates/backstage/settings/change_username.html:7
 msgid "Change Username"
 msgstr "更改用户名"
 
-#: MMCs/templates/backstage/root/manage_personnel/base.html:23
+#: MMCs/templates/backstage/root/manage_personnel/base.html:24
 #: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:55
 #: MMCs/templates/backstage/settings/base.html:15
 #: MMCs/templates/backstage/settings/change_password.html:7
@@ -785,14 +782,29 @@ msgid "Welcome to MMCs"
 msgstr "欢迎登入"
 
 #: MMCs/templates/front/index.html:14
-msgid ""
-"North China University of Science and Technology University Mathematical "
-"Modeling Competition Management System"
+msgid "North China University of Science and Technology University Mathematical Modeling Competition Management System"
 msgstr "华北理工大学数学建模竞赛管理系统"
 
 #: MMCs/templates/front/index.html:18
 msgid "Sign in Now"
 msgstr "立即登录"
+
+#: MMCs/utils/table.py:15
+#, python-format
+msgid "Error in the %(name)s field - %(error)s"
+msgstr "%(name)s：%(error)s"
+
+#: MMCs/utils/upload.py:57
+msgid "Invalid filename."
+msgstr "无效的文件名。"
+
+#: MMCs/utils/upload.py:65
+msgid "Team number is not right."
+msgstr "队号不正确。"
+
+#: MMCs/utils/upload.py:67
+msgid "Problem is not right."
+msgstr "题号不正确。"
 
 #~ msgid "Error in the %(name)s field - %(error)s"
 #~ msgstr "%(name)s字段中的错误-%(error)s"
@@ -898,3 +910,11 @@ msgstr "立即登录"
 #~ msgid "No solution."
 #~ msgstr "无作品。"
 
+#~ msgid "Error in the %(name)s field - %(error)s."
+#~ msgstr "%(name)s：%(error)s。"
+
+#~ msgid "Invalid score."
+#~ msgstr "无效分数。"
+
+#~ msgid "Accounts imported."
+#~ msgstr ""

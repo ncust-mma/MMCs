@@ -51,6 +51,18 @@ class RegisterForm(FlaskForm):
                 'The permission must select from Teacher, Admin and Root.'))
 
 
+class AccountImportForm(FlaskForm):
+    file = FileField(
+        _l("Account"),
+        validators=[
+            FileRequired(),
+            FileAllowed(['xls', 'xlsx'], _l('xls or xlsx only!'))
+        ]
+    )
+
+    upload = SubmitField(_l('Upload'))
+
+
 class ChangeUsernameForm(FlaskForm):
     username = StringField(
         _l('New Username'),
@@ -130,7 +142,7 @@ class AboutImageUploadForm(FlaskForm):
         _l("About Image"),
         validators=[
             FileRequired(),
-            FileAllowed(['jpg', 'jpeg', 'png'], 'jpg, jpeg or png only!')
+            FileAllowed(['jpg', 'jpeg', 'png'], _l('jpg, jpeg or png only!'))
         ]
     )
 
@@ -142,7 +154,7 @@ class ErrorImageUploadForm(FlaskForm):
         _l("Error Image"),
         validators=[
             FileRequired(),
-            FileAllowed(['jpg', 'jpeg', 'png'], 'jpg, jpeg or png only!')
+            FileAllowed(['jpg', 'jpeg', 'png'], _l('jpg, jpeg or png only!'))
         ]
     )
 
@@ -154,7 +166,7 @@ class IndexImageUploadForm(FlaskForm):
         _l("Index Image"),
         validators=[
             FileRequired(),
-            FileAllowed(['jpg', 'jpeg', 'png'], 'jpg, jpeg or png only!')
+            FileAllowed(['jpg', 'jpeg', 'png'], _l('jpg, jpeg or png only!'))
         ]
     )
 

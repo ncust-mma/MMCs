@@ -13,17 +13,19 @@ from MMCs.downloader import (download_user_operation, gen_solution_score,
                              gen_teacher_result)
 from MMCs.extensions import db
 from MMCs.forms.root import (AboutEditForm, AboutImageUploadForm,
-                             ChangeUsernameForm, CompetitionNameForm,
-                             CompetitionSettingForm, DownloadLogForm,
-                             EditProfileForm, ErrorImageUploadForm,
-                             IndexImageUploadForm, NoticeEditForm,
-                             RegisterForm, RootChangePasswordForm)
+                             AccountImportForm, ChangeUsernameForm,
+                             CompetitionNameForm, CompetitionSettingForm,
+                             DownloadLogForm, EditProfileForm,
+                             ErrorImageUploadForm, IndexImageUploadForm,
+                             NoticeEditForm, RegisterForm,
+                             RootChangePasswordForm)
 from MMCs.models import Competition, User
 from MMCs.settings import basedir
 from MMCs.utils.link import redirect_back
 from MMCs.utils.localfile import read_localfile, write_localfile
 from MMCs.utils.log import log_user
 from MMCs.utils.table import flash_errors
+from MMCs.utils.upload import new_filename
 from MMCs.utils.zip import zip2here
 
 root_bp = Blueprint('root', __name__)
@@ -253,6 +255,43 @@ def register():
         return redirect_back()
 
     return render_template('backstage/root/manage_personnel/register.html', form=form)
+
+
+@root_bp.route('/personnel/import', methods=['GET', 'POST'])
+@fresh_login_required
+def account_import():
+    form = AccountImportForm()
+    if form.validate_on_submit():
+        import pandas as pd
+        file = request.files.get('file')
+        path = os.path.join(
+            current_app.config['FILE_CACHE_PATH'],
+            new_filename(file.filename)[0])
+        file.save(path)
+        df = pd.read_excel(path)
+
+        for index, row in df.iterrows():
+            content = render_template('logs/root/personnel/account_import.txt')
+            log_user(content)
+
+            user = User(
+                username=row['username'],
+                realname=row['realname'],
+                remark=row['remark']
+            )
+            user.set_password(row['password'])
+            db.session.add(user)
+
+            try:
+                db.session.commit()
+            except:
+                db.session.rollback()
+
+        flash(_('Account imported.'), 'info')
+
+    flash_errors(form)
+
+    return render_template('backstage/root/manage_personnel/account_import.html', form=form)
 
 
 @root_bp.route('/delete/user/<int:user_id>', methods=['POST'])
