@@ -106,73 +106,85 @@ admin 类型用户主要负责一场竞赛。
 
 root 类型用户主要负责把控全局，记录并控制所有竞赛情况。
 
-1. competition management 竞赛管理
+1.  competition management 竞赛管理
 
-    - competition 竞赛
+    -   competition 竞赛
 
-        - start 开始
+        -   start 开始
 
             > 开始新比赛
 
-        - stop 暂停/结束
+        -   stop 暂停/结束
 
             > 暂停/中止/结束比赛
 
-        - continue 继续
+        -   continue 继续
 
             > 继续比赛
 
-    - history 历史信息
+    -   history 历史信息
 
         > 在这里可以下载历届的竞赛信息
 
-    - notice 公告
+    -   notice 公告
 
         > 类似于 about 页面，不过这里的信息是给登入用户看的
 
-    - settings 竞赛设置
+    -   settings 竞赛设置
 
-        - SOLUTION TASK NUMBER 作品任务数
+        -   SOLUTION TASK NUMBER 作品任务数
 
             > 作品需要评阅次数
 
-        - USER PER PAGE 每页展示用户数
+        -   USER PER PAGE 每页展示用户数
 
-        - SOLUTION TASK NUMBER 每页展示作品数
+        -   SOLUTION TASK NUMBER 每页展示作品数
 
-        - COMPETITION PER PAGE 每页展示竞赛数
+        -   COMPETITION PER PAGE 每页展示竞赛数
 
-        - DROPZONE MAX FILES 最大上传数量
+        -   DROPZONE MAX FILES 最大上传数量
 
             > 一次文件最大上传数量
 
-1. Personnel Management 用户管理
+1.  Personnel Management 用户管理
 
-    - list 用户列表
+    -   list 用户列表
 
         > 显示用户信息同时可以对非 root 用户进行各项操作
 
-    - register 注册
+    -   register 注册
 
         > 添加用户，一旦添加，权限不可修改。
 
-1. system settings 系统设置
+    -   account import 账号导入
 
-    - log 日志
+        > 限批量导入**教师**用户功能。
+        >
+        > | username | realname |        remark         | password  |
+        > | :------: | :------: | :-------------------: | :-------: |
+        > |   3567   |  杜红霞  | 的话工具根据不会有些. | mmcs4sxjm |
+        > |   3467   |   黄伟   |                       | mmcs4sxjm |
+        > |   3531   |   余洋   |                       | mmcs4sxjm |
 
-        - Download user operation logs
+        > 导入示例，类型为 `xls` 和 `xlsx`。
+
+1.  system settings 系统设置
+
+    -   log 日志
+
+        -   Download user operation logs
 
             > 下载用户操作日志
 
-        - Download system error logs
+        -   Download system error logs
 
             > 下载系统错误日志
 
-    - about 关于
+    -   about 关于
 
         > 编辑关于页面信息
 
-    - image 图像
+    -   image 图像
 
         > 用于定制个性化图片
 
