@@ -9,6 +9,7 @@ from MMCs.extensions import db
 from MMCs.forms.teacher import ChangeScoreForm
 from MMCs.models import Competition, Solution, Task
 from MMCs.utils.link import redirect_back
+from MMCs.utils.log import log_user
 from MMCs.utils.table import flash_errors
 
 teacher_bp = Blueprint('teacher', __name__)
