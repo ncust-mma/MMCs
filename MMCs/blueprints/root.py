@@ -270,7 +270,7 @@ def account_import():
         file.save(path)
         df = pd.read_excel(path)
 
-        for index, row in df.iterrows():
+        for _, row in df.iterrows():
             content = render_template('logs/root/personnel/account_import.txt')
             log_user(content)
 
