@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: zeroto521@gmail.com\n"
-"POT-Creation-Date: 2019-04-25 14:45+0800\n"
-"PO-Revision-Date: 2019-04-25 14:45+0800\n"
+"POT-Creation-Date: 2019-05-21 16:39+0800\n"
+"PO-Revision-Date: 2019-05-21 16:40+0800\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: zh_Hans_CN <LL@li.org>\n"
@@ -84,7 +84,7 @@ msgid "Please add teacher to assign task."
 msgstr "请先添加教师再来分配任务。"
 
 #: MMCs/blueprints/admin.py:158 MMCs/blueprints/admin.py:306
-#: MMCs/blueprints/root.py:337
+#: MMCs/blueprints/root.py:340
 msgid "No solutions."
 msgstr "无作品。"
 
@@ -100,7 +100,7 @@ msgstr "任务删除。"
 msgid "Added successed."
 msgstr "添加成功。"
 
-#: MMCs/blueprints/admin.py:290 MMCs/blueprints/root.py:320
+#: MMCs/blueprints/admin.py:290 MMCs/blueprints/root.py:323
 msgid "No task."
 msgstr "无任务。"
 
@@ -133,7 +133,7 @@ msgid "Old password is incorrect."
 msgstr "旧密码不正确。"
 
 #: MMCs/blueprints/front.py:44 MMCs/blueprints/root.py:80
-#: MMCs/blueprints/root.py:393
+#: MMCs/blueprints/root.py:396
 msgid "Setting updated."
 msgstr "设置已更新。"
 
@@ -157,24 +157,24 @@ msgstr "请在开始竞赛后进行该项操。"
 msgid "Account registered."
 msgstr "账号已注册。"
 
-#: MMCs/blueprints/root.py:287
+#: MMCs/blueprints/root.py:290
 msgid "Account imported."
 msgstr "账号已导入。"
 
-#: MMCs/blueprints/root.py:304
+#: MMCs/blueprints/root.py:307
 msgid "User deleted."
 msgstr "账号已删除。"
 
-#: MMCs/blueprints/root.py:415 MMCs/blueprints/root.py:419
-#: MMCs/blueprints/root.py:423
+#: MMCs/blueprints/root.py:418 MMCs/blueprints/root.py:422
+#: MMCs/blueprints/root.py:426
 msgid "Image updated."
 msgstr "图像已更新。"
 
-#: MMCs/blueprints/teacher.py:79
+#: MMCs/blueprints/teacher.py:82
 msgid "Score Updated."
 msgstr "分数已更新。"
 
-#: MMCs/blueprints/teacher.py:81
+#: MMCs/blueprints/teacher.py:84
 #, python-format
 msgid "Score out of range from %(lower)s to %(upper)s."
 msgstr "分数超出%(lower)s-%(upper)s范围。"
@@ -644,7 +644,7 @@ msgid "History"
 msgstr "历史信息"
 
 #: MMCs/templates/backstage/root/manage_competition/behavior.html:7
-#: MMCs/templates/backstage/teacher/overview.html:29
+#: MMCs/templates/backstage/teacher/overview.html:32
 msgid "Start"
 msgstr "开始"
 
@@ -753,11 +753,15 @@ msgstr "教师，您好"
 msgid "Update"
 msgstr "更新"
 
-#: MMCs/templates/backstage/teacher/overview.html:33
+#: MMCs/templates/backstage/teacher/overview.html:28
+msgid "Download all tasks"
+msgstr "下载所有任务"
+
+#: MMCs/templates/backstage/teacher/overview.html:36
 msgid "Contiue"
 msgstr "继续"
 
-#: MMCs/templates/backstage/teacher/overview.html:37
+#: MMCs/templates/backstage/teacher/overview.html:40
 msgid "Done"
 msgstr "已完成"
 

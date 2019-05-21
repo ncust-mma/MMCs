@@ -342,4 +342,6 @@ def register_hook(app):
     @app.before_request
     def before_request():
         session.permanent = True
-        app.permanent_session_lifetime = timedelta(minutes=10)
+        app.permanent_session_lifetime = timedelta(
+            minutes=int(app.config['SESSION_LIFETIME_MINUTES'])
+        )

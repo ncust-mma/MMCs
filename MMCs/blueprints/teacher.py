@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, current_app, flash, render_template, request
+from flask import (Blueprint, current_app, flash, render_template, request,
+                   send_file)
 from flask_babel import _
 from flask_login import current_user, login_required
 
@@ -11,6 +12,7 @@ from MMCs.models import Competition, Solution, Task
 from MMCs.utils.link import redirect_back
 from MMCs.utils.log import log_user
 from MMCs.utils.table import flash_errors
+from MMCs.utils.zip import zip2here
 
 teacher_bp = Blueprint('teacher', __name__)
 
@@ -36,7 +38,7 @@ def index():
                 Task.competition_id == com.id,
                 Task.teacher_id == current_user.id,
                 Task.score).count()
-            
+
         return render_template(
             'backstage/teacher/overview.html', task_finished=task_finished, task_all=task_all)
 
@@ -84,3 +86,24 @@ def change(task_id):
 
     flash_errors(form)
     return redirect_back()
+
+
+@teacher_bp.route('/task/download')
+def download():
+    from os import path
+    from uuid import uuid4
+
+    content = render_template('logs/download.txt')
+    log_user(content)
+
+    com = Competition.current_competition()
+    tasks = [task for task in current_user.tasks if task.competition_id == com.id]
+
+    paths = [path.join(current_app.config['SOLUTION_SAVE_PATH'], task.solution_uuid)
+             for task in tasks]
+
+    file = path.join(
+        current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.zip')
+    zip2here(paths, file)
+
+    return send_file(file, as_attachment=True, attachment_filename='tasks.zip')

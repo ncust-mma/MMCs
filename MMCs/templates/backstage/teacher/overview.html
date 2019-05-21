@@ -24,6 +24,9 @@
                     </div>
                     <div class="card-footer">
                         <div class="float-right">
+                            <a class="btn btn-info" href="{{ url_for('teacher.download') }}">
+                                {{ _('Download all tasks') }}
+                            </a>
                             {% if task_finished == 0 %}
                                 <a class="btn btn-info" href="{{ url_for('teacher.manage_task') }}">
                                     {{ _('Start') }}
