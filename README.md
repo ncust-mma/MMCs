@@ -12,6 +12,8 @@
     <i>NCUST <b>M</b>athematical <b>M</b>odeling <b>C</b>ompetition <b>s</b>ystem</i>
 </p>
 
+## Demo
+
 <p align="center"><img src="assets/indexPage.png" alt="IndexPage"></p>
 
 ## Installation
@@ -35,4 +37,7 @@ $ flask run
 
 ## TODO
 
--   [ ] Verification code
+-   [ ] verification code
+-   [ ] add tests
+-   [ ] form multi-selection
+-   [ ] use flask hook function replace local file handy log
