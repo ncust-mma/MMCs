@@ -43,7 +43,7 @@ def gen_teacher_result(competition_id):
     df.to_excel(file, index=False)
 
     zfile = file.replace('.xlsx', '.zip')
-    zip2here(file, zfile)
+    zip2here(file, zfile, diff=True)
 
     flash(_('The result file is already downloaded.'), 'success')
 
@@ -72,7 +72,7 @@ def gen_solution_score(competition_id):
     df.to_excel(file, index=False)
 
     zfile = file.replace('.xlsx', '.zip')
-    zip2here(file, zfile)
+    zip2here(file, zfile, diff=True)
 
     flash(_('The result file is already downloaded.'), 'success')
 
@@ -80,22 +80,16 @@ def gen_solution_score(competition_id):
 
 
 def download_user_operation():
+    # transform file type to excel file type from reading database
     df = pd.read_sql_query(Log.query.statement, db.engine)
+    df.drop(columns=['id'], inplace=True)
 
-    df['username'] = (
-        df['user_id'].apply(lambda x: User.query.get(x).username))
-    df['realname'] = (
-        df['user_id'].apply(lambda x: User.query.get(x).realname))
-    df['permission'] = (
-        df['user_id'].apply(lambda x: User.query.get(x).permission))
-
-    df.drop(columns=['id', 'user_id'], inplace=True)
-
+    # write file to local and pack up it
     file = os.path.join(
         current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.xlsx')
-    df.to_excel(file, index=False)
-
     zfile = file.replace('.xlsx', '.zip')
-    zip2here(file, zfile)
+    df.to_excel(file, index=False)
+    zip2here(file, zfile, diff=True)
 
+    flash(_('User logs dowdloaded.'), 'info')
     return zfile

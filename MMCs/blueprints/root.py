@@ -23,7 +23,6 @@ from MMCs.models import Competition, User
 from MMCs.settings import basedir
 from MMCs.utils.link import redirect_back
 from MMCs.utils.localfile import read_localfile, write_localfile
-from MMCs.utils.log import log_user
 from MMCs.utils.table import flash_errors
 from MMCs.utils.upload import new_filename
 from MMCs.utils.zip import zip2here
@@ -73,8 +72,6 @@ def notice():
     path = os.path.join(
         basedir, current_app.name, current_app.template_folder, 'showing/notice.html')
     if form.validate_on_submit():
-        content = render_template('logs/root/competition/notice.txt')
-        log_user(content)
 
         write_localfile(path, form.notice.data)
         flash(_('Setting updated.'), 'success')
@@ -90,9 +87,6 @@ def notice():
 def competition_settings():
     form = CompetitionSettingForm()
     if form.validate_on_submit():
-        content = render_template('logs/root/competition/setting.txt')
-        log_user(content)
-
         current_app.config['SOLUTION_TASK_NUMBER'] = form.solution_task_number.data
         current_app.config['USER_PER_PAGE'] = form.user_per_page.data
         current_app.config['SOLUTION_PER_PAGE'] = form.solution_per_page.data
@@ -114,9 +108,6 @@ def competition_settings():
 def start_competition():
     form = CompetitionNameForm()
     if form.validate_on_submit():
-        content = render_template('logs/root/competition/start.txt')
-        log_user(content)
-
         com = Competition(name=form.name.data, flag=True)
         db.session.add(com)
         db.session.commit()
@@ -136,16 +127,10 @@ def switch_state():
             com.flag = False
             db.session.commit()
 
-            content = render_template('logs/root/competition/stop.txt')
-            log_user(content)
-
             flash(_('Competition stopped.'), 'success')
         else:
             com.flag = True
             db.session.commit()
-
-            content = render_template('logs/root/competition/start.txt')
-            log_user(content)
 
             flash(_('Competition continued.'), 'success')
     else:
@@ -175,9 +160,6 @@ def personnel_list():
 def change_password(user_id):
     form = RootChangePasswordForm()
     if form.validate_on_submit():
-        content = render_template('logs/root/personnel/change_password.txt')
-        log_user(content)
-
         user = User.query.get_or_404(user_id)
         user.set_password(form.password.data)
         db.session.commit()
@@ -195,9 +177,6 @@ def edit_profile(user_id):
     user = User.query.get_or_404(user_id)
     form = EditProfileForm()
     if form.validate_on_submit():
-        content = render_template('logs/root/personnel/edit.txt')
-        log_user(content)
-
         user.realname = form.realname.data
         user.remark = form.remark.data
         db.session.commit()
@@ -218,9 +197,6 @@ def change_username(user_id):
     user = User.query.get_or_404(user_id)
     form = ChangeUsernameForm()
     if form.validate_on_submit():
-        content = render_template('logs/root/personnel/change_username.txt')
-        log_user(content)
-
         user.username = form.username.data
         db.session.commit()
 
@@ -239,9 +215,6 @@ def change_username(user_id):
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        content = render_template('logs/root/personnel/register.txt')
-        log_user(content)
-
         user = User(
             username=form.username.data,
             realname=form.realname.data,
@@ -270,10 +243,7 @@ def account_import():
         file.save(path)
         df = pd.read_excel(path)
 
-        for _, row in df.iterrows():
-            content = render_template('logs/root/personnel/account_import.txt')
-            log_user(content)
-
+        for i, row in df.iterrows():
             user = User(
                 username=row['username'],
                 realname=row['realname'],
@@ -297,9 +267,6 @@ def account_import():
 @root_bp.route('/delete/user/<int:user_id>', methods=['POST'])
 @fresh_login_required
 def delete_user(user_id):
-    content = render_template('logs/root/personnel/delete.txt')
-    log_user(content)
-
     user = User.query.get_or_404(user_id)
     db.session.delete(user)
     db.session.commit()
@@ -311,9 +278,6 @@ def delete_user(user_id):
 @root_bp.route('/score/download/<int:competition_id>/teacher')
 @fresh_login_required
 def download_teacher(competition_id):
-    content = render_template('logs/root/competition/history.txt')
-    log_user(content)
-
     com = Competition.query.get_or_404(competition_id)
     if com.tasks:
         zfile = gen_teacher_result(competition_id)
@@ -327,9 +291,6 @@ def download_teacher(competition_id):
 @root_bp.route('/score/download/<int:competition_id>/result')
 @fresh_login_required
 def download_result(competition_id):
-    content = render_template('logs/root/competition/history.txt')
-    log_user(content)
-
     com = Competition.query.get_or_404(competition_id)
     if com.solutions:
         zfile = gen_solution_score(competition_id)
@@ -357,13 +318,10 @@ def logs():
 @root_bp.route('/settings/logs/error')
 @fresh_login_required
 def logs_error():
-    content = render_template('logs/root/setting/log.txt')
-    log_user(content)
-
     if os.path.exists(os.path.join(basedir, 'logs', 'MMCs.log')):
         file = os.path.join(
             current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.zip')
-        zip2here(os.path.join(basedir, 'logs'), file)
+        zip2here(os.path.join(basedir, 'logs'), file, diff=True)
 
         return send_file(file, as_attachment=True, attachment_filename='system error log.zip')
     else:
@@ -374,9 +332,6 @@ def logs_error():
 @root_bp.route('/settings/logs/operation')
 @fresh_login_required
 def logs_operation():
-    content = render_template('logs/root/setting/log.txt')
-    log_user(content)
-
     zfile = download_user_operation()
 
     return send_file(zfile, as_attachment=True, attachment_filename='user operation log.zip')
@@ -389,9 +344,6 @@ def about():
     path = os.path.join(
         basedir, current_app.name, current_app.template_folder, 'showing/about.html')
     if form.validate_on_submit():
-        content = render_template('logs/root/setting/about.txt')
-        log_user(content)
-
         write_localfile(path, form.about.data)
         flash(_('Setting updated.'), 'success')
         return redirect_back()
@@ -408,9 +360,6 @@ def images():
     about_form = AboutImageUploadForm()
     error_form = ErrorImageUploadForm()
     if request.method == 'POST':
-        content = render_template('logs/root/setting/image.txt')
-        log_user(content)
-
         path = os.path.join(basedir, current_app.name, 'static', 'images')
         img = request.files.get('file')
         if index_form.index_upload.data and index_form.validate_on_submit():

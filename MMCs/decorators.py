@@ -23,10 +23,10 @@ def admin_required(func):
 
 
 def root_required(func):
-    
+
     return permission_required('Root')(func)
 
 
 def teacher_required(func):
-    
+
     return permission_required('Teacher')(func)

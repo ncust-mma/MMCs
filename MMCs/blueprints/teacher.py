@@ -10,7 +10,6 @@ from MMCs.extensions import db
 from MMCs.forms.teacher import ChangeScoreForm
 from MMCs.models import Competition, Solution, Task
 from MMCs.utils.link import redirect_back
-from MMCs.utils.log import log_user
 from MMCs.utils.table import flash_errors
 from MMCs.utils.zip import zip2here
 
@@ -70,9 +69,6 @@ def change(task_id):
     upper = current_app.config['SCORE_UPPER_LIMIT']
     lower = current_app.config['SCORE_LOWER_LIMIT']
     if form.validate_on_submit:
-        content = render_template('logs/teacher/update.txt')
-        log_user(content)
-
         if lower <= form.score.data <= upper:
             task = Task.query.get_or_404(task_id)
             task.score = form.score.data
@@ -92,9 +88,6 @@ def change(task_id):
 def download():
     from os import path
     from uuid import uuid4
-
-    content = render_template('logs/download.txt')
-    log_user(content)
 
     com = Competition.current_competition()
     tasks = [task for task in current_user.tasks if task.competition_id == com.id]

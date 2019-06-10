@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: zeroto521@gmail.com\n"
-"POT-Creation-Date: 2019-05-21 16:39+0800\n"
-"PO-Revision-Date: 2019-05-21 16:40+0800\n"
+"POT-Creation-Date: 2019-06-10 17:45+0800\n"
+"PO-Revision-Date: 2019-06-10 17:46+0800\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: zh_Hans_CN <LL@li.org>\n"
@@ -17,43 +17,47 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.6.0\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.3\n"
 
-#: MMCs/__init__.py:127
+#: MMCs/__init__.py:128
 msgid "Bad Request"
 msgstr "请求无效"
 
-#: MMCs/__init__.py:132
+#: MMCs/__init__.py:133
 msgid "Unauthorized"
 msgstr "未授权"
 
-#: MMCs/__init__.py:137
+#: MMCs/__init__.py:138
 msgid "Forbidden"
 msgstr "禁止访问"
 
-#: MMCs/__init__.py:142
+#: MMCs/__init__.py:143
 msgid "Page Not Found"
 msgstr "页面未找到"
 
-#: MMCs/__init__.py:147
+#: MMCs/__init__.py:148
 msgid "Method not allowed"
 msgstr "方法不允许"
 
-#: MMCs/__init__.py:152
+#: MMCs/__init__.py:153
 msgid "Upload too large"
 msgstr "上传文件过大"
 
-#: MMCs/__init__.py:157
+#: MMCs/__init__.py:158
 msgid "Internal Server Error Explained"
 msgstr "服务器出错"
 
-#: MMCs/__init__.py:162
+#: MMCs/__init__.py:163
 msgid "Handle CSRF Error"
 msgstr "CSRF验证错误"
 
 #: MMCs/downloader.py:48 MMCs/downloader.py:77
 msgid "The result file is already downloaded."
 msgstr "文件已下载。"
+
+#: MMCs/downloader.py:94
+msgid "User logs dowdloaded."
+msgstr "用户日志已下载。"
 
 #: MMCs/extensions.py:35
 msgid "Please log in to access this page."
@@ -67,114 +71,114 @@ msgstr "为了保护您的帐户安全, 请重新登录。"
 msgid "Drop files here or click to upload."
 msgstr "拖拽文件上传或点击上传。"
 
-#: MMCs/blueprints/admin.py:96
+#: MMCs/blueprints/admin.py:93
 msgid "Competition of current year don't start."
 msgstr "今年校赛尚未开始。"
 
-#: MMCs/blueprints/admin.py:111
+#: MMCs/blueprints/admin.py:105
 msgid "Solution deleted."
 msgstr "作品已删除。"
 
-#: MMCs/blueprints/admin.py:154
+#: MMCs/blueprints/admin.py:145
 msgid "Randomly assigned."
 msgstr "任务已随机分配。"
 
-#: MMCs/blueprints/admin.py:156
+#: MMCs/blueprints/admin.py:147
 msgid "Please add teacher to assign task."
 msgstr "请先添加教师再来分配任务。"
 
-#: MMCs/blueprints/admin.py:158 MMCs/blueprints/admin.py:306
-#: MMCs/blueprints/root.py:340
+#: MMCs/blueprints/admin.py:149 MMCs/blueprints/admin.py:279
+#: MMCs/blueprints/root.py:301
 msgid "No solutions."
 msgstr "无作品。"
 
-#: MMCs/blueprints/admin.py:206
+#: MMCs/blueprints/admin.py:191
 msgid "All tasks of User deleted."
 msgstr "该用户所有任务已删除。"
 
-#: MMCs/blueprints/admin.py:220
+#: MMCs/blueprints/admin.py:202
 msgid "Task deleted."
 msgstr "任务删除。"
 
-#: MMCs/blueprints/admin.py:257
+#: MMCs/blueprints/admin.py:236
 msgid "Added successed."
 msgstr "添加成功。"
 
-#: MMCs/blueprints/admin.py:290 MMCs/blueprints/root.py:323
+#: MMCs/blueprints/admin.py:266 MMCs/blueprints/root.py:287
 msgid "No task."
 msgstr "无任务。"
 
-#: MMCs/blueprints/auth.py:29
+#: MMCs/blueprints/auth.py:26
 msgid "Login success."
 msgstr "登入成功。"
 
-#: MMCs/blueprints/auth.py:32
+#: MMCs/blueprints/auth.py:29
 msgid "Invalid username or password."
 msgstr "用户名或密码无效。"
 
-#: MMCs/blueprints/auth.py:44
+#: MMCs/blueprints/auth.py:38
 msgid "Logout success."
 msgstr "注销成功。"
 
-#: MMCs/blueprints/backstage.py:32 MMCs/blueprints/root.py:205
+#: MMCs/blueprints/backstage.py:28 MMCs/blueprints/root.py:184
 msgid "Profile updated."
 msgstr "账户已更新。"
 
-#: MMCs/blueprints/backstage.py:53 MMCs/blueprints/root.py:227
+#: MMCs/blueprints/backstage.py:46 MMCs/blueprints/root.py:203
 msgid "Username updated."
 msgstr "用户名已更新。"
 
-#: MMCs/blueprints/backstage.py:71 MMCs/blueprints/root.py:185
+#: MMCs/blueprints/backstage.py:61 MMCs/blueprints/root.py:167
 msgid "Password updated."
 msgstr "密码已更新。"
 
-#: MMCs/blueprints/backstage.py:74
+#: MMCs/blueprints/backstage.py:64
 msgid "Old password is incorrect."
 msgstr "旧密码不正确。"
 
-#: MMCs/blueprints/front.py:44 MMCs/blueprints/root.py:80
-#: MMCs/blueprints/root.py:396
+#: MMCs/blueprints/front.py:44 MMCs/blueprints/root.py:77
+#: MMCs/blueprints/root.py:348
 msgid "Setting updated."
 msgstr "设置已更新。"
 
-#: MMCs/blueprints/root.py:123
+#: MMCs/blueprints/root.py:114
 msgid "A new competition start now."
 msgstr "新的比赛现在开始。"
 
-#: MMCs/blueprints/root.py:142
+#: MMCs/blueprints/root.py:130
 msgid "Competition stopped."
 msgstr "比赛暂停。"
 
-#: MMCs/blueprints/root.py:150
+#: MMCs/blueprints/root.py:135
 msgid "Competition continued."
 msgstr "比赛继续。"
 
-#: MMCs/blueprints/root.py:152
+#: MMCs/blueprints/root.py:137
 msgid "Please start new competition before do it."
 msgstr "请在开始竞赛后进行该项操。"
 
-#: MMCs/blueprints/root.py:254
+#: MMCs/blueprints/root.py:227
 msgid "Account registered."
 msgstr "账号已注册。"
 
-#: MMCs/blueprints/root.py:290
+#: MMCs/blueprints/root.py:260
 msgid "Account imported."
 msgstr "账号已导入。"
 
-#: MMCs/blueprints/root.py:307
+#: MMCs/blueprints/root.py:274
 msgid "User deleted."
 msgstr "账号已删除。"
 
-#: MMCs/blueprints/root.py:418 MMCs/blueprints/root.py:422
-#: MMCs/blueprints/root.py:426
+#: MMCs/blueprints/root.py:367 MMCs/blueprints/root.py:371
+#: MMCs/blueprints/root.py:375
 msgid "Image updated."
 msgstr "图像已更新。"
 
-#: MMCs/blueprints/teacher.py:82
+#: MMCs/blueprints/teacher.py:78
 msgid "Score Updated."
 msgstr "分数已更新。"
 
-#: MMCs/blueprints/teacher.py:84
+#: MMCs/blueprints/teacher.py:80
 #, python-format
 msgid "Score out of range from %(lower)s to %(upper)s."
 msgstr "分数超出%(lower)s-%(upper)s范围。"

@@ -264,19 +264,18 @@ class Log(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
     ip = db.Column(db.String(128))
-    time = db.Column(db.DateTime, index=True, default=datetime.datetime.now)
+    url = db.Column(db.String)
+    method = db.Column(db.String(10))
 
-    content = db.Column(db.Text)
+    charset = db.Column(db.String)
+    endpoint = db.Column(db.String)
 
-    @property
-    def permission(self):
-        return User.query.get(self.user_id).permission
+    user_agent = db.Column(db.String)
+    browser = db.Column(db.String)
+    language = db.Column(db.String)
+    platform = db.Column(db.String)
+    version = db.Column(db.String)
 
-    @property
-    def username(self):
-        return User.query.get(self.user_id).username
-
-    @property
-    def realname(self):
-        return User.query.get(self.user_id).realname
+    time = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)

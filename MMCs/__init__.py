@@ -8,6 +8,7 @@ from logging.handlers import RotatingFileHandler, SMTPHandler
 import click
 from flask import Flask, Markup, render_template, request, session
 from flask_babel import _
+from flask_login import current_user
 from flask_wtf.csrf import CSRFError
 
 from MMCs.blueprints.admin import admin_bp
@@ -340,8 +341,27 @@ def register_commands(app):
 
 def register_hook(app):
     @app.before_request
-    def before_request():
+    def session_protect():
         session.permanent = True
         app.permanent_session_lifetime = timedelta(
-            minutes=int(app.config['SESSION_LIFETIME_MINUTES'])
+            minutes=app.config['SESSION_LIFETIME_MINUTES'])
+
+    @app.before_request
+    def log():
+        log = Log(
+            ip=request.remote_addr,
+            url=request.url,
+            method=request.method,
+            charset=request.charset,
+            endpoint=request.endpoint,
+            user_agent=request.user_agent.string,
+            browser=request.user_agent.browser,
+            language=request.user_agent.language,
+            platform=request.user_agent.platform,
+            version=request.user_agent.version
         )
+        if current_user.is_authenticated:
+            log.user_id = current_user.id
+
+        db.session.add(log)
+        db.session.commit()
