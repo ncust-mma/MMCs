@@ -40,3 +40,15 @@ $ flask run
 -   [ ] verification code
 -   [ ] add tests
 -   [ ] form multi-selection
+
+## Others
+
+It may be not so good, but also not so bad.
+
+Any way this is my first time to start web development.
+
+From here I learned a lot.
+
+I think I will try my best to complete it.
+
+Hope that flag is not real.
