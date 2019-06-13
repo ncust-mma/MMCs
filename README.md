@@ -40,4 +40,3 @@ $ flask run
 -   [ ] verification code
 -   [ ] add tests
 -   [ ] form multi-selection
--   [ ] use flask hook function replace local file handy log
