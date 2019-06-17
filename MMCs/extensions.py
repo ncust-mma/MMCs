@@ -10,6 +10,8 @@ from flask_ckeditor import CKEditor
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_dropzone import Dropzone
 from flask_login import AnonymousUserMixin, LoginManager, current_user
+from flask_session_captcha import FlaskSessionCaptcha
+from flask_sessionstore import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 
@@ -23,6 +25,8 @@ toolbar = DebugToolbarExtension()
 babel = Babel()
 cache = Cache()
 scheduler = APScheduler()
+session = Session()
+captcha = FlaskSessionCaptcha()
 
 
 @login_manager.user_loader

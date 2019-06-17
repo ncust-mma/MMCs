@@ -17,8 +17,9 @@ from MMCs.blueprints.backstage import backstage_bp
 from MMCs.blueprints.front import front_bp
 from MMCs.blueprints.root import root_bp
 from MMCs.blueprints.teacher import teacher_bp
-from MMCs.extensions import (babel, bootstrap, cache, ckeditor, csrf, db,
-                             dropzone, login_manager, scheduler, toolbar)
+from MMCs.extensions import (babel, bootstrap, cache, captcha, ckeditor, csrf,
+                             db, dropzone, login_manager, scheduler, session,
+                             toolbar)
 from MMCs.models import Competition, Log, Solution, Task, User
 from MMCs.settings import basedir, config
 from MMCs.utils.localfile import read_localfile
@@ -102,6 +103,9 @@ def register_extensions(app):
     babel.init_app(app)
     cache.init_app(app)
     toolbar.init_app(app)
+    session.init_app(app)
+    captcha.init_app(app)
+
     scheduler.init_app(app)
     scheduler.start()
 

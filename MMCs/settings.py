@@ -19,6 +19,8 @@ else:
 class BaseConfig(object):
     SECRET_KEY = os.getenv('SECRET_KEY', 'secret key')
 
+    SESSION_TYPE = 'sqlalchemy'
+
     USER_PER_PAGE = 30
     SOLUTION_PER_PAGE = 20
     COMPETITION_PER_PAGE = 10
@@ -80,6 +82,7 @@ class DevelopmentConfig(BaseConfig):
 
 class TestingConfig(BaseConfig):
     TESTING = True
+    CAPTCHA_ENABLE = False
     WTF_CSRF_ENABLED = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'  # in-memory database
 

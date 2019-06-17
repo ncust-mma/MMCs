@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 
+from flask import flash
+from flask_babel import _
 from flask_babel import lazy_gettext as _l
-from flask_ckeditor import CKEditorField
-from flask_login import current_user
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileAllowed, FileField, FileRequired
-from wtforms import (BooleanField, FloatField, IntegerField, PasswordField,
-                     RadioField, StringField, SubmitField, TextField,
+from wtforms import (BooleanField, PasswordField, StringField, SubmitField,
                      ValidationError)
-from wtforms.validators import (AnyOf, DataRequired, EqualTo, InputRequired,
-                                Length, Optional, Regexp)
+from wtforms.validators import DataRequired, InputRequired, Length
 
-from MMCs.models import Task, User
+from MMCs.extensions import captcha
+from MMCs.models import User
 
 
 class LoginForm(FlaskForm):
@@ -24,9 +22,15 @@ class LoginForm(FlaskForm):
     )
     password = PasswordField(
         _l('Password'), validators=[DataRequired(), InputRequired()])
+    captcha = StringField(_l('Captcha'))
     remember_me = BooleanField(_l('Remember me'))
     submit = SubmitField(_l('Log in'))
 
     def validate_username(self, field):
         if not User.query.filter_by(username=field.data).first():
-            raise ValidationError(_l('The username is not existed.'))
+            raise ValidationError(_l('Invalid username or password.'))
+
+    def validate_captcha(self, field):
+        if not captcha.validate():
+            flash(_('Invalid captcha.'), 'warning')
+            raise ValidationError(_l('Invalid captcha.'))

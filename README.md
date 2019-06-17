@@ -37,7 +37,6 @@ $ flask run
 
 ## TODO
 
--   [ ] verification code
 -   [ ] add tests
 -   [ ] form multi-selection
 

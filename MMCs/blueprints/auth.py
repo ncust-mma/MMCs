@@ -22,7 +22,6 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user and user.validate_password(form.password.data):
             if login_user(user, form.remember_me.data):
-
                 flash(_('Login success.'), 'info')
                 return redirect_back()
         else:
@@ -49,6 +48,6 @@ def re_authenticate():
     form = LoginForm()
     if form.validate_on_submit() and current_user.validate_password(form.password.data):
         confirm_login()
-
         return redirect_back()
+
     return render_template('auth/login.html', form=form)

@@ -1,5 +1,5 @@
 {% extends 'front/base.html' %}
-{% from 'bootstrap/form.html' import render_form %}
+{% from 'bootstrap/form.html' import render_field %}
 
 {% block title %}Login{% endblock %}
 
@@ -15,7 +15,18 @@
                         <h4>{{ _("Sign into MMCs") }}</h4>
                     </div>
                     <div class="card-body">
-                        {{ render_form(form) }}
+                        <form method=post action="{{ url_for('auth.login') }}">
+                            {{ form.csrf_token() }}
+                            {{ render_field(form.username) }}
+                            {{ render_field(form.password) }}
+                            <div class="form-group">
+                                {{ form.captcha.label(class="form-control-label") }}
+                                {{ captcha() }}
+                                {{ form.captcha(class="form-control") }}
+                            </div>
+                            {{ render_field(form.remember_me) }}
+                            {{ render_field(form.submit) }}
+                        </form>
                     </div>
                 </div>
             </div>
