@@ -8,7 +8,6 @@ except ImportError:
 import os
 from random import sample
 
-import numba as nb
 from flask import (Markup, abort, current_app, flash, redirect,
                    render_template_string, request, url_for)
 from flask_babel import _
