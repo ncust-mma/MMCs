@@ -5,16 +5,8 @@ try:
 except ImportError:
     from urllib.parse import urlparse, urljoin
 
-import os
-from random import sample
 
-from flask import (Markup, abort, current_app, flash, redirect,
-                   render_template_string, request, url_for)
-from flask_babel import _
-from flask_login import current_user
-
-from MMCs.extensions import db
-from MMCs.models import Competition, Log, User
+from flask import redirect, request, url_for
 
 
 def is_safe_url(target):
