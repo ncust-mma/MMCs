@@ -14,6 +14,7 @@ from flask_wtf.csrf import CSRFError
 from MMCs.blueprints.admin import admin_bp
 from MMCs.blueprints.auth import auth_bp
 from MMCs.blueprints.backstage import backstage_bp
+from MMCs.blueprints.download import download_bp
 from MMCs.blueprints.front import front_bp
 from MMCs.blueprints.root import root_bp
 from MMCs.blueprints.teacher import teacher_bp
@@ -120,6 +121,7 @@ def register_blueprints(app):
     app.register_blueprint(admin_bp, url_prefix='/admin')
     app.register_blueprint(root_bp, url_prefix='/root')
     app.register_blueprint(teacher_bp, url_prefix='/teacher')
+    app.register_blueprint(download_bp, url_prefix='/download')
 
 
 def register_errors(app):
@@ -185,6 +187,10 @@ def register_global_func(app):
     @app.template_global()
     def current_year():
         return datetime.now().year
+
+    @app.template_global()
+    def current_competition():
+        return Competition.current_competition()
 
     @app.template_global()
     def is_start():

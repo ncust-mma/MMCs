@@ -24,7 +24,7 @@
                     </div>
                     <div class="card-footer">
                         <div class="float-right">
-                            <a class="btn btn-info" href="{{ url_for('teacher.download') }}">
+                            <a class="btn btn-info" href="{{ url_for('download.task', competition_id=current_competition().id) }}">
                                 {{ _('Download all tasks') }}
                             </a>
                             {% if task_finished == 0 %}

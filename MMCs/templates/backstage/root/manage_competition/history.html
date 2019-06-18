@@ -33,11 +33,11 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item"
-                                       href="{{ url_for('root.download_teacher', competition_id=com.id) }}">
+                                       href="{{ url_for('download.result_teacher', competition_id=com.id) }}">
                                         <span class="oi oi-data-transfer-download"></span> {{ _("Download all teachers result") }}
                                     </a>
                                     <a class="dropdown-item"
-                                       href="{{ url_for('root.download_result', competition_id=com.id) }}">
+                                       href="{{ url_for('download.result_final', competition_id=com.id) }}">
                                         <span class="oi oi-data-transfer-download"></span> {{ _("Download the final result") }}
                                     </a>
                                 </div>

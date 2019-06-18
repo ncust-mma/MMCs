@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import os
-from uuid import uuid4
 
 from flask import (Blueprint, current_app, flash, redirect, render_template,
-                   request, send_file, url_for)
+                   request, url_for)
 from flask_babel import _
 from flask_login import fresh_login_required, login_required
 
 from MMCs.decorators import root_required
-from MMCs.downloader import (download_user_operation, gen_solution_score,
-                             gen_teacher_result)
 from MMCs.extensions import db
 from MMCs.forms.root import (AboutEditForm, AboutImageUploadForm,
                              AccountImportForm, ChangeUsernameForm,
@@ -25,7 +22,6 @@ from MMCs.utils.link import redirect_back
 from MMCs.utils.localfile import read_localfile, write_localfile
 from MMCs.utils.table import flash_errors
 from MMCs.utils.upload import new_filename
-from MMCs.utils.zip import zip2here
 
 root_bp = Blueprint('root', __name__)
 
@@ -275,33 +271,6 @@ def delete_user(user_id):
     return redirect_back()
 
 
-@root_bp.route('/score/download/<int:competition_id>/teacher')
-@fresh_login_required
-def download_teacher(competition_id):
-    com = Competition.query.get_or_404(competition_id)
-    if com.tasks:
-        zfile = gen_teacher_result(competition_id)
-
-        return send_file(zfile, as_attachment=True, attachment_filename='teacher result.zip')
-    else:
-        flash(_('No task.'), 'warning')
-        return redirect_back()
-
-
-@root_bp.route('/score/download/<int:competition_id>/result')
-@fresh_login_required
-def download_result(competition_id):
-    com = Competition.query.get_or_404(competition_id)
-    if com.solutions:
-        zfile = gen_solution_score(competition_id)
-
-        return send_file(zfile, as_attachment=True, attachment_filename='final result.zip')
-
-    else:
-        flash(_('No solutions.'), 'warning')
-        return redirect_back()
-
-
 @root_bp.route('/settings')
 def system_settings():
     return redirect(url_for('root.logs'))
@@ -313,28 +282,6 @@ def logs():
     form = DownloadLogForm()
     return render_template(
         'backstage/root/manage_settings/logs.html', form=form)
-
-
-@root_bp.route('/settings/logs/error')
-@fresh_login_required
-def logs_error():
-    if os.path.exists(os.path.join(basedir, 'logs', 'MMCs.log')):
-        file = os.path.join(
-            current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.zip')
-        zip2here(os.path.join(basedir, 'logs'), file, diff=True)
-
-        return send_file(file, as_attachment=True, attachment_filename='system error log.zip')
-    else:
-        flash('No logs.', 'warning')
-        return redirect_back()
-
-
-@root_bp.route('/settings/logs/operation')
-@fresh_login_required
-def logs_operation():
-    zfile = download_user_operation()
-
-    return send_file(zfile, as_attachment=True, attachment_filename='user operation log.zip')
 
 
 @root_bp.route('/settings/about', methods=['GET', 'POST'])

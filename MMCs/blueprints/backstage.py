@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import os
-
-from flask import (Blueprint, abort, current_app, flash, render_template,
-                   send_file)
+from flask import Blueprint, flash, render_template
 from flask_babel import _
 from flask_login import current_user, fresh_login_required, login_required
 
 from MMCs.extensions import db
 from MMCs.forms.backstage import (ChangePasswordForm, ChangeUsernameForm,
                                   EditProfileForm)
-from MMCs.models import Competition
 from MMCs.utils.link import redirect_back
 
 backstage_bp = Blueprint('backstage', __name__)
@@ -64,17 +60,3 @@ def change_password():
             flash(_('Old password is incorrect.'), 'warning')
 
     return render_template('backstage/settings/change_password.html', form=form)
-
-
-@backstage_bp.route('/solution/<path:filename>')
-@login_required
-def get_solution(filename):
-    if Competition.is_start():
-        path = os.path.join(
-            current_app.config['SOLUTION_SAVE_PATH'], filename)
-        if os.path.exists(path):
-            return send_file(path, as_attachment=True)
-        else:
-            abort(404)
-    else:
-        abort(403)

@@ -8,7 +8,6 @@ from flask_babel import _
 from flask_login import fresh_login_required, login_required
 
 from MMCs.decorators import admin_required
-from MMCs.downloader import gen_solution_score, gen_teacher_result
 from MMCs.extensions import db
 from MMCs.forms.admin import ButtonAddForm
 from MMCs.models import Competition, Solution, Task, User
@@ -252,29 +251,3 @@ def solution_view():
 @admin_bp.route('/score')
 def manage_score():
     return render_template('backstage/admin/manage_score.html')
-
-
-@admin_bp.route('/score/download/teacher')
-@fresh_login_required
-def download_teacher():
-    com = Competition.current_competition()
-    if com.tasks:
-        zfile = gen_teacher_result(com.id)
-
-        return send_file(zfile, as_attachment=True, attachment_filename='teacher result.zip')
-    else:
-        flash(_('No task.'), 'warning')
-        return redirect_back()
-
-
-@admin_bp.route('/score/download/result')
-@fresh_login_required
-def download_result():
-    com = Competition.current_competition()
-    if com.solutions:
-        zfile = gen_solution_score(com.id)
-
-        return send_file(zfile, as_attachment=True, attachment_filename='final result.zip')
-    else:
-        flash(_('No solutions.'), 'warning')
-        return redirect_back()

@@ -8,10 +8,10 @@
         {% if is_start() %}
             <div class="card-body">
                 <div class="btn-group btn-group-vertical btn-block" role="group">
-                    <a class="btn btn-info" href="{{ url_for('admin.download_teacher') }}">
+                    <a class="btn btn-info" href="{{ url_for('download.result_teacher', competition_id=current_competition().id) }}">
                         <span class="oi oi-data-transfer-download"></span> {{ _("Download all teachers result") }}
                     </a>
-                    <a class="btn btn-info" href="{{ url_for('admin.download_result') }}">
+                    <a class="btn btn-info" href="{{ url_for('download.result_final', competition_id=current_competition().id) }}">
                         <span class="oi oi-data-transfer-download"></span> {{ _("Download the final result") }}
                     </a>
                 </div>
