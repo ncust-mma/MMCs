@@ -7,178 +7,176 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: zeroto521@gmail.com\n"
-"POT-Creation-Date: 2019-06-10 17:45+0800\n"
-"PO-Revision-Date: 2019-06-10 17:46+0800\n"
+"POT-Creation-Date: 2019-06-18 10:47+0800\n"
+"PO-Revision-Date: 2019-06-18 10:31+0800\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: zh_Hans_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.6.0\n"
-"X-Generator: Poedit 2.2.3\n"
+"Generated-By: Babel 2.7.0\n"
 
-#: MMCs/__init__.py:128
+#: MMCs/__init__.py:134
 msgid "Bad Request"
 msgstr "请求无效"
 
-#: MMCs/__init__.py:133
+#: MMCs/__init__.py:139
 msgid "Unauthorized"
 msgstr "未授权"
 
-#: MMCs/__init__.py:138
+#: MMCs/__init__.py:144
 msgid "Forbidden"
 msgstr "禁止访问"
 
-#: MMCs/__init__.py:143
+#: MMCs/__init__.py:149
 msgid "Page Not Found"
 msgstr "页面未找到"
 
-#: MMCs/__init__.py:148
+#: MMCs/__init__.py:154
 msgid "Method not allowed"
 msgstr "方法不允许"
 
-#: MMCs/__init__.py:153
+#: MMCs/__init__.py:159
 msgid "Upload too large"
 msgstr "上传文件过大"
 
-#: MMCs/__init__.py:158
+#: MMCs/__init__.py:164
 msgid "Internal Server Error Explained"
 msgstr "服务器出错"
 
-#: MMCs/__init__.py:163
+#: MMCs/__init__.py:169
 msgid "Handle CSRF Error"
 msgstr "CSRF验证错误"
 
-#: MMCs/downloader.py:48 MMCs/downloader.py:77
-msgid "The result file is already downloaded."
-msgstr "文件已下载。"
-
-#: MMCs/downloader.py:94
-msgid "User logs dowdloaded."
-msgstr "用户日志已下载。"
-
-#: MMCs/extensions.py:35
+#: MMCs/extensions.py:39
 msgid "Please log in to access this page."
 msgstr "请登录后访问这个页面。"
 
-#: MMCs/extensions.py:38
+#: MMCs/extensions.py:42
 msgid "In order to protect your account security, please log in again."
 msgstr "为了保护您的帐户安全, 请重新登录。"
 
-#: MMCs/settings.py:45
+#: MMCs/settings.py:47
 msgid "Drop files here or click to upload."
 msgstr "拖拽文件上传或点击上传。"
 
-#: MMCs/blueprints/admin.py:93
+#: MMCs/blueprints/admin.py:92
 msgid "Competition of current year don't start."
 msgstr "今年校赛尚未开始。"
 
-#: MMCs/blueprints/admin.py:105
+#: MMCs/blueprints/admin.py:104
 msgid "Solution deleted."
 msgstr "作品已删除。"
 
-#: MMCs/blueprints/admin.py:145
+#: MMCs/blueprints/admin.py:144
 msgid "Randomly assigned."
 msgstr "任务已随机分配。"
 
-#: MMCs/blueprints/admin.py:147
+#: MMCs/blueprints/admin.py:146
 msgid "Please add teacher to assign task."
 msgstr "请先添加教师再来分配任务。"
 
-#: MMCs/blueprints/admin.py:149 MMCs/blueprints/admin.py:279
-#: MMCs/blueprints/root.py:301
+#: MMCs/blueprints/admin.py:148 MMCs/blueprints/download.py:96
 msgid "No solutions."
 msgstr "无作品。"
 
-#: MMCs/blueprints/admin.py:191
+#: MMCs/blueprints/admin.py:190
 msgid "All tasks of User deleted."
 msgstr "该用户所有任务已删除。"
 
-#: MMCs/blueprints/admin.py:202
+#: MMCs/blueprints/admin.py:201
 msgid "Task deleted."
 msgstr "任务删除。"
 
-#: MMCs/blueprints/admin.py:236
+#: MMCs/blueprints/admin.py:235
 msgid "Added successed."
 msgstr "添加成功。"
 
-#: MMCs/blueprints/admin.py:266 MMCs/blueprints/root.py:287
-msgid "No task."
-msgstr "无任务。"
-
-#: MMCs/blueprints/auth.py:26
+#: MMCs/blueprints/auth.py:25
 msgid "Login success."
 msgstr "登入成功。"
 
-#: MMCs/blueprints/auth.py:29
+#: MMCs/blueprints/auth.py:28 MMCs/forms/auth.py:31
 msgid "Invalid username or password."
 msgstr "用户名或密码无效。"
 
-#: MMCs/blueprints/auth.py:38
+#: MMCs/blueprints/auth.py:37
 msgid "Logout success."
 msgstr "注销成功。"
 
-#: MMCs/blueprints/backstage.py:28 MMCs/blueprints/root.py:184
+#: MMCs/blueprints/backstage.py:24 MMCs/blueprints/root.py:180
 msgid "Profile updated."
 msgstr "账户已更新。"
 
-#: MMCs/blueprints/backstage.py:46 MMCs/blueprints/root.py:203
+#: MMCs/blueprints/backstage.py:42 MMCs/blueprints/root.py:199
 msgid "Username updated."
 msgstr "用户名已更新。"
 
-#: MMCs/blueprints/backstage.py:61 MMCs/blueprints/root.py:167
+#: MMCs/blueprints/backstage.py:57 MMCs/blueprints/root.py:163
 msgid "Password updated."
 msgstr "密码已更新。"
 
-#: MMCs/blueprints/backstage.py:64
+#: MMCs/blueprints/backstage.py:60
 msgid "Old password is incorrect."
 msgstr "旧密码不正确。"
 
-#: MMCs/blueprints/front.py:44 MMCs/blueprints/root.py:77
-#: MMCs/blueprints/root.py:348
+#: MMCs/blueprints/download.py:60 MMCs/blueprints/download.py:92
+msgid "The result file is already downloaded."
+msgstr "文件已下载。"
+
+#: MMCs/blueprints/download.py:64
+msgid "No task."
+msgstr "无任务。"
+
+#: MMCs/blueprints/download.py:116
+msgid "User logs dowdloaded."
+msgstr "用户日志已下载。"
+
+#: MMCs/blueprints/front.py:44 MMCs/blueprints/root.py:73
+#: MMCs/blueprints/root.py:295
 msgid "Setting updated."
 msgstr "设置已更新。"
 
-#: MMCs/blueprints/root.py:114
+#: MMCs/blueprints/root.py:110
 msgid "A new competition start now."
 msgstr "新的比赛现在开始。"
 
-#: MMCs/blueprints/root.py:130
+#: MMCs/blueprints/root.py:126
 msgid "Competition stopped."
 msgstr "比赛暂停。"
 
-#: MMCs/blueprints/root.py:135
+#: MMCs/blueprints/root.py:131
 msgid "Competition continued."
 msgstr "比赛继续。"
 
-#: MMCs/blueprints/root.py:137
+#: MMCs/blueprints/root.py:133
 msgid "Please start new competition before do it."
 msgstr "请在开始竞赛后进行该项操。"
 
-#: MMCs/blueprints/root.py:227
+#: MMCs/blueprints/root.py:223
 msgid "Account registered."
 msgstr "账号已注册。"
 
-#: MMCs/blueprints/root.py:260
+#: MMCs/blueprints/root.py:256
 msgid "Account imported."
 msgstr "账号已导入。"
 
-#: MMCs/blueprints/root.py:274
+#: MMCs/blueprints/root.py:270
 msgid "User deleted."
 msgstr "账号已删除。"
 
-#: MMCs/blueprints/root.py:367 MMCs/blueprints/root.py:371
-#: MMCs/blueprints/root.py:375
+#: MMCs/blueprints/root.py:314 MMCs/blueprints/root.py:318
+#: MMCs/blueprints/root.py:322
 msgid "Image updated."
 msgstr "图像已更新。"
 
-#: MMCs/blueprints/teacher.py:78
+#: MMCs/blueprints/teacher.py:76
 msgid "Score Updated."
 msgstr "分数已更新。"
 
-#: MMCs/blueprints/teacher.py:80
+#: MMCs/blueprints/teacher.py:79
 #, python-format
 msgid "Score out of range from %(lower)s to %(upper)s."
 msgstr "分数超出%(lower)s-%(upper)s范围。"
@@ -188,27 +186,31 @@ msgstr "分数超出%(lower)s-%(upper)s范围。"
 msgid "Add"
 msgstr "添加"
 
-#: MMCs/forms/auth.py:19 MMCs/forms/root.py:18
+#: MMCs/forms/auth.py:17 MMCs/forms/root.py:18
 #: MMCs/templates/backstage/admin/manage_task/teacher_view.html:11
 #: MMCs/templates/backstage/root/manage_personnel/personnel_list.html:14
 msgid "Username"
 msgstr "账户"
 
-#: MMCs/forms/auth.py:26 MMCs/forms/root.py:37
+#: MMCs/forms/auth.py:24 MMCs/forms/root.py:37
 msgid "Password"
 msgstr "密码"
 
-#: MMCs/forms/auth.py:27
+#: MMCs/forms/auth.py:25
+msgid "Captcha"
+msgstr "验证码"
+
+#: MMCs/forms/auth.py:26
 msgid "Remember me"
 msgstr "记住我"
 
-#: MMCs/forms/auth.py:28
+#: MMCs/forms/auth.py:27
 msgid "Log in"
 msgstr "登入"
 
-#: MMCs/forms/auth.py:32
-msgid "The username is not existed."
-msgstr "用户名不存在。"
+#: MMCs/forms/auth.py:35 MMCs/forms/auth.py:36
+msgid "Invalid captcha."
+msgstr "无效验证码。"
 
 #: MMCs/forms/backstage.py:16 MMCs/forms/root.py:68
 msgid "New Username"
@@ -387,11 +389,15 @@ msgid "The task is not existed."
 msgstr "该任务未存在。"
 
 #: MMCs/templates/base.html:52
-msgid "North China University of Science and Technology University Mathematical Modeling Association"
+msgid ""
+"North China University of Science and Technology University Mathematical "
+"Modeling Association"
 msgstr "华北理工大学数学建模协会"
 
 #: MMCs/templates/base.html:62
-msgid "North China University of Science and Technology University Mathematical Modeling Competition system"
+msgid ""
+"North China University of Science and Technology University Mathematical "
+"Modeling Competition system"
 msgstr "华北理工大学数学建模竞赛管理系统"
 
 #: MMCs/templates/base.html:63
@@ -790,7 +796,9 @@ msgid "Welcome to MMCs"
 msgstr "欢迎登入"
 
 #: MMCs/templates/front/index.html:14
-msgid "North China University of Science and Technology University Mathematical Modeling Competition Management System"
+msgid ""
+"North China University of Science and Technology University Mathematical "
+"Modeling Competition Management System"
 msgstr "华北理工大学数学建模竞赛管理系统"
 
 #: MMCs/templates/front/index.html:18
@@ -926,3 +934,7 @@ msgstr "题号不正确。"
 
 #~ msgid "Accounts imported."
 #~ msgstr ""
+
+#~ msgid "The username is not existed."
+#~ msgstr "用户名不存在。"
+
