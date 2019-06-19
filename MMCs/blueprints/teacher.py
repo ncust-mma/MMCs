@@ -61,7 +61,7 @@ def manage_task():
     return render_template('backstage/teacher/manage_task.html')
 
 
-@teacher_bp.route('/task/change/<int:task_id>', methods=['POST'])
+@teacher_bp.route('/task/<int:task_id>/change', methods=['POST'])
 def change(task_id):
     form = ChangeScoreForm()
     upper = current_app.config['SCORE_UPPER_LIMIT']

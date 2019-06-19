@@ -3,7 +3,7 @@
 import os
 
 from flask import (Blueprint, current_app, flash, redirect, render_template,
-                   request, send_file, url_for)
+                   request, url_for)
 from flask_babel import _
 from flask_login import fresh_login_required, login_required
 
@@ -28,18 +28,14 @@ def login_protect():
 @admin_bp.route('/')
 def index():
     com = Competition.current_competition()
-    if com and com.is_start():
-        tasks = com.tasks
-        task_all = task_finished = 0
-        if tasks:
-            task_all = len(tasks)
-            task_finished = len([
-                task for task in tasks if task.score is not None])
+    task_all = task_finished = 0
+    if com and com.is_start() and com.tasks:
+        task_all = len(com.tasks)
+        task_finished = len(
+            list(filter(lambda x: x.score is not None, com.tasks)))
 
-        return render_template(
-            'backstage/admin/overview.html', task_finished=task_finished, task_all=task_all)
-
-    return render_template('backstage/admin/overview.html')
+    return render_template(
+        'backstage/admin/overview.html', task_finished=task_finished, task_all=task_all)
 
 
 @admin_bp.route('/solution')
@@ -68,7 +64,6 @@ def solution_list():
 @fresh_login_required
 def upload():
     if request.method == 'POST' and 'file' in request.files:
-
         if Competition.is_start():
             file = request.files.get('file')
             filename, uuid = new_filename(file.filename)
@@ -94,7 +89,7 @@ def upload():
     return render_template('backstage/admin/manage_solution/upload.html')
 
 
-@admin_bp.route('/solution/delete/<int:solution_id>', methods=['POST'])
+@admin_bp.route('/solution/<int:solution_id>/delete', methods=['POST'])
 @fresh_login_required
 def delete_solution_task(solution_id):
     solution = Solution.query.get_or_404(solution_id)
@@ -122,14 +117,11 @@ def method_random():
     Task.query.filter_by(competition_id=com.id).delete()
     db.session.commit()
 
-    solutions = com.solutions
-    if solutions:
-        teachers = User.teachers()
-        if teachers:
-            solutions = sorted(solutions, key=lambda x: x.problem)
+    if com.solutions:
+        if User.teachers:
+            solutions = sorted(com.solutions, key=lambda x: x.problem)
             for solution in solutions:
-                this_problem = solution.problem
-                for teacher_id in random_sample(this_problem):
+                for teacher_id in random_sample(solution.problem):
                     task = Task(
                         teacher_id=teacher_id,
                         solution_id=solution.id,
@@ -178,7 +170,7 @@ def check_user(user_id):
         pagination=pagination, page=page)
 
 
-@admin_bp.route('/task/teacher/delete/<int:user_id>', methods=['POST'])
+@admin_bp.route('/task/teacher/<int:user_id>/delete', methods=['POST'])
 @fresh_login_required
 def delete_user_task(user_id):
     com = Competition.current_competition()
@@ -191,7 +183,7 @@ def delete_user_task(user_id):
     return redirect_back()
 
 
-@admin_bp.route('/task/teacher/check/delete/<int:task_id>', methods=['POST'])
+@admin_bp.route('/task/teacher/check/<int:task_id>/delete', methods=['POST'])
 @fresh_login_required
 def method_delete_task(task_id):
     task = Task.query.get_or_404(task_id)

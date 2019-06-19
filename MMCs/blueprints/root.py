@@ -151,7 +151,7 @@ def personnel_list():
         pagination=pagination, page=page)
 
 
-@root_bp.route('/personnel/list/change-password/<int:user_id>', methods=['GET', 'POST'])
+@root_bp.route('/personnel/list/<int:user_id>/change-password', methods=['GET', 'POST'])
 @fresh_login_required
 def change_password(user_id):
     form = RootChangePasswordForm()
@@ -167,7 +167,7 @@ def change_password(user_id):
         'backstage/root/manage_personnel/personnel_edit.html', form=form)
 
 
-@root_bp.route('/personnel/list/edit-profile/<int:user_id>', methods=['GET', 'POST'])
+@root_bp.route('/personnel/list/<int:user_id>/edit-profile', methods=['GET', 'POST'])
 @fresh_login_required
 def edit_profile(user_id):
     user = User.query.get_or_404(user_id)
@@ -187,7 +187,7 @@ def edit_profile(user_id):
         'backstage/root/manage_personnel/personnel_edit.html', form=form)
 
 
-@root_bp.route('/personnel/list/change-username/<int:user_id>', methods=['GET', 'POST'])
+@root_bp.route('/personnel/list/<int:user_id>/change-username', methods=['GET', 'POST'])
 @fresh_login_required
 def change_username(user_id):
     user = User.query.get_or_404(user_id)
