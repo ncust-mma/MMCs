@@ -12,6 +12,8 @@
     <i>NCUST <b>M</b>athematical <b>M</b>odeling <b>C</b>ompetition <b>s</b>ystem</i>
 </p>
 
+[![Build Status](https://travis-ci.com/ncust-mma/MMCs.svg?branch=master)](https://travis-ci.com/ncust-mma/MMCs) [![codecov](https://codecov.io/gh/zeroto521/MMCs/branch/master/graph/badge.svg)](https://codecov.io/gh/zeroto521/MMCs)
+
 ## Demo
 
 <p align="center"><img src="assets/indexPage.png" alt="IndexPage"></p>
