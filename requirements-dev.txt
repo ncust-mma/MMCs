@@ -1,3 +1,5 @@
 flask-debugtoolbar
 autopep8
 pylint
+codecov
+coverage

@@ -14,13 +14,12 @@ class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(
-        db.String(20), unique=True,
-        index=True, nullable=False)
+        db.String(20), unique=True, index=True, nullable=False)
     realname = db.Column(db.String(20), nullable=False)
     permission = db.Column(db.String(10), nullable=False, default='Teacher')
     remark = db.Column(db.Text)
     password_hash = db.Column(db.String(128), nullable=False)
-    locale = db.Column(db.String(20), default='zh_Hans_CN')
+    locale = db.Column(db.String(20), default='en_US')
 
     tasks = db.relationship('Task')
 
@@ -36,7 +35,7 @@ class User(db.Model, UserMixin):
 
         return check_password_hash(self.password_hash, password)
 
-    @classmethod
+    @property
     def teachers(self):
         """Return all teachers
         """
@@ -210,8 +209,8 @@ class Competition(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
-    date = db.Column(db.Date, index=True, nullable=False,
-                     default=datetime.date.today)
+    date = db.Column(
+        db.Date, index=True, nullable=False, default=datetime.date.today)
     flag = db.Column(db.Boolean, default=False)
 
     tasks = db.relationship('Task', cascade='all, delete-orphan')

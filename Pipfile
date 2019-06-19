@@ -7,6 +7,8 @@ name = "pypi"
 flask-debugtoolbar = "*"
 autopep8 = "*"
 pylint = "*"
+coverage = "*"
+codecov = "*"
 
 [packages]
 Jinja2 = ">=2.10.1"

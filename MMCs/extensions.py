@@ -25,7 +25,7 @@ toolbar = DebugToolbarExtension()
 babel = Babel()
 cache = Cache()
 scheduler = APScheduler()
-session = Session()
+sessionstore = Session()
 captcha = FlaskSessionCaptcha()
 
 

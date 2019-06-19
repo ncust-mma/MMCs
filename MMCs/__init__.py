@@ -19,8 +19,8 @@ from MMCs.blueprints.front import front_bp
 from MMCs.blueprints.root import root_bp
 from MMCs.blueprints.teacher import teacher_bp
 from MMCs.extensions import (babel, bootstrap, cache, captcha, ckeditor, csrf,
-                             db, dropzone, login_manager, scheduler, session,
-                             toolbar)
+                             db, dropzone, login_manager, scheduler,
+                             sessionstore, toolbar)
 from MMCs.models import Competition, Log, Solution, Task, User
 from MMCs.settings import basedir, config
 from MMCs.utils.localfile import read_localfile
@@ -67,18 +67,12 @@ def register_logging(app):
         '%(levelname)s in %(module)s: %(message)s'
     )
 
-    if not app.debug:
-        file_handler = RotatingFileHandler(
-            os.path.join(basedir, 'logs/MMCs.log'),
-            maxBytes=10 * 1024 * 1024, backupCount=10)
-    else:
-        file_handler = RotatingFileHandler(
-            os.path.join(basedir, 'logs/MMCs-dev.log'),
-            maxBytes=10 * 1024 * 1024, backupCount=10)
+    file_handler = RotatingFileHandler(
+        os.path.join(basedir, 'logs/MMCs.log'),
+        maxBytes=10 * 1024 * 1024, backupCount=10)
 
     file_handler.setFormatter(request_formatter)
     file_handler.setLevel(logging.INFO)
-    app.logger.addHandler(file_handler)
 
     mail_handler = SMTPHandler(
         mailhost=app.config['MAIL_SERVER'],
@@ -86,9 +80,12 @@ def register_logging(app):
         toaddrs=app.config['ADMIN_EMAIL'],
         subject='MMCs Application Error',
         credentials=('apikey', app.config['MAIL_PASSWORD']))
-    mail_handler.setLevel(logging.INFO)
     mail_handler.setFormatter(request_formatter)
-    app.logger.addHandler(mail_handler)
+    mail_handler.setLevel(logging.ERROR)
+
+    if not app.debug:
+        app.logger.addHandler(mail_handler)
+        app.logger.addHandler(file_handler)
 
 
 def register_extensions(app):
@@ -104,11 +101,12 @@ def register_extensions(app):
     babel.init_app(app)
     cache.init_app(app)
     toolbar.init_app(app)
-    session.init_app(app)
+    sessionstore.init_app(app)
     captcha.init_app(app)
 
-    scheduler.init_app(app)
-    scheduler.start()
+    if not app.config.get('TESTING', False):
+        scheduler.init_app(app)
+        scheduler.start()
 
 
 def register_blueprints(app):
@@ -166,7 +164,7 @@ def register_errors(app):
     @app.errorhandler(CSRFError)
     def handle_csrf_error(e):
         code = 400
-        return render_template('errors.html', code=code, info=_('Handle CSRF Error')), 400
+        return render_template('errors.html', code=code, info=_('Handle CSRF Error')), code
 
 
 def register_shell_context(app):
@@ -210,23 +208,8 @@ def register_commands(app):
 
     @app.cli.command()
     @click.option('--drop', is_flag=True, help='Create after drop.')
-    def initdb(drop):
-        """Initialize the database."""
-        if drop:
-            click.confirm(
-                'This operation will delete the database, do you want to continue?', abort=True)
-            db.drop_all()
-            click.echo('Drop tables.')
-
-        db.create_all()
-        click.echo('Initialized database.')
-
-    @app.cli.command()
-    @click.option('--drop', is_flag=True, help='Create after drop.')
     def init(drop):
         """Initialize MMCs."""
-
-        from MMCs.fakes import fake_root
 
         if drop:
             click.confirm(
@@ -236,12 +219,6 @@ def register_commands(app):
 
         click.echo('Initializing the database...')
         db.create_all()
-
-        fake_root()
-        click.echo('Generating the default root administrator...')
-
-        if os.system('pybabel compile -d MMCs/translations'):
-            raise RuntimeError('compile command failed')
 
         click.echo('Done.')
 
@@ -257,35 +234,26 @@ def register_commands(app):
         db.drop_all()
         db.create_all()
 
-        fake_root()
         click.echo('Generating the default root administrator...')
+        fake_root()
 
-        fake_admin()
         click.echo('Generating the default administrator...')
+        fake_admin()
 
-        fake_default_teacher()
         click.echo('Generating the default teacher...')
+        fake_default_teacher()
 
-        fake_teacher(teacher)
         click.echo('Generating %d teacher...' % teacher)
+        fake_teacher(teacher)
 
-        fake_competition()
         click.echo('Generating the competition...')
-
-        fake_solution(solution)
-        click.echo('Generating %d solution...' % solution)
-
-        fake_task()
-        click.echo('Generating the task...')
-
         fake_competition()
-        click.echo('Generating the competition...')
 
-        fake_solution(solution)
         click.echo('Generating %d solution...' % solution)
+        fake_solution(solution)
 
-        fake_task()
         click.echo('Generating the task...')
+        fake_task()
 
         click.echo('Done.')
 
@@ -294,26 +262,8 @@ def register_commands(app):
         """Generate root user."""
         from MMCs.fakes import fake_root
 
-        fake_root()
         click.echo('Generating the default root administrator...')
-        click.echo('Done.')
-
-    @app.cli.command()
-    def gen_admin():
-        """Generate admin user."""
-        from MMCs.fakes import fake_admin
-
-        fake_admin()
-        click.echo('Generating the default administrator...')
-        click.echo('Done.')
-
-    @app.cli.command()
-    def gen_teacher():
-        """Generate teacher user."""
-        from MMCs.fakes import fake_default_teacher
-
-        fake_default_teacher()
-        click.echo('Generating the default teacher...')
+        fake_root()
         click.echo('Done.')
 
     @app.cli.group()

@@ -16,14 +16,18 @@
                     </div>
                     <div class="card-body">
                         <form method=post action="{{ url_for('auth.login') }}">
-                            {{ form.csrf_token() }}
+                            {% if not config['TESTING'] %}
+                                {{ form.csrf_token() }}
+                            {% endif %}
                             {{ render_field(form.username) }}
                             {{ render_field(form.password) }}
-                            <div class="form-group">
-                                {{ form.captcha.label(class="form-control-label") }}
-                                {{ captcha() }}
-                                {{ form.captcha(class="form-control") }}
-                            </div>
+                            {% if not config['CAPTCHA_ENABLE'] %}
+                                <div class="form-group">
+                                    {{ form.captcha.label(class="form-control-label") }}
+                                    {{ captcha() }}
+                                    {{ form.captcha(class="form-control") }}
+                                </div>
+                            {% endif %}
                             {{ render_field(form.remember_me) }}
                             {{ render_field(form.submit) }}
                         </form>
