@@ -100,6 +100,15 @@ def delete_solution_task(solution_id):
     return redirect_back()
 
 
+@admin_bp.route('/solution/delete', methods=['POST'])
+@fresh_login_required
+def delete_solution_tasks():
+    flash(request.form.getlist('check'), 'info')
+
+    flash(_('Solution deleted.'), 'info')
+    return redirect_back()
+
+
 @admin_bp.route('/task')
 def manage_task():
     return redirect(url_for('admin.teacher_view'))
