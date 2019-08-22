@@ -11,6 +11,7 @@ coverage = "*"
 codecov = "*"
 
 [packages]
+werkzeug = ">=0.15.3"
 Jinja2 = ">=2.10.1"
 flask = "*"
 python-dotenv = "*"
